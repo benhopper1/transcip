@@ -1,0 +1,178 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+	//link(rel="stylesheet" href="/public/js/skeleton/css/normalize.css")
+	//link(rel="stylesheet" href="/public/js/skeleton/css/skeleton.css")
+
+	//script(type='text/javascript', src='/public/js/jquery/jquery-2.0.3.min.js')
+	//script(type='text/javascript', src='/public/js/qrcode/jquery.qrcode.js')
+	//script(type='text/javascript', src='/public/js/qrcode/qrcode.js')
+	//
+	//script(type='text/javascript', src='/public/js/commmanager/commmanager.js')
+	//script(type='text/javascript', src='/public/js/clientutil/clientutil.js')
+	//
+	//
+	//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	////script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+	//
+	//script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+	//script(type='text/javascript', src='/public/js/async/async.js')
+	//
+	//script(type='text/javascript', src='/public/js/reportview/reportview.js')
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+	script.
+		/*var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}*/
+
+
+
+
+
+
+	//==========================================================================
+	//------- H T M L ----------------------------------------------------------
+	//==========================================================================
+	div(id="reportViewPanel" style="position: relative;height:200px; width:800px;")
+		#reportView(style="position: absolute; ")
+	//div(id="reportViewPanel" class="easyui-panel" style="position: absolute;")
+		//#reportView(style="position: absolute; height:100%; width:100%;overflow:scroll;")
+
+
+
+
+
+
+
+
+
+
+
+script.
+	$('#widgetContactsCollectionDiv').window({
+		title:'  Contacts Window',
+		closed:false,
+		width:'986px',
+		height:'468px',
+		modal:false,
+		minimizable:false,
+		maximizable:false,
+		onBeforeClose: function(){}
+	});
+
+	$(document).ready(function(){
+		$('#reportView').panel({
+			//width:500,
+			//height:150,
+			fit:true,
+			padding:'5px',
+			title:'My Panel',
+			tools:
+				[
+					{
+						iconCls:'icon-add',
+						handler:function(){
+							alert('new')
+						}
+					},{
+						iconCls:'icon-save',
+						handler:function(){
+							alert('save')
+						}
+					}
+				]
+			}
+		); 
+
+		var reportView = new ReportView(
+			{
+				elementId:'reportView',
+				lineSpace:3
+			}
+		);
+
+		
+		//- reportView.addText(0, 0,'Matt');
+		//- reportView.addText(0, 3,'ddddd');
+		//- reportView.addText(0, 6,'zzzzzz');
+
+		var reqData = !{JSON.stringify(data)}
+
+		// row, col
+		reportView.setRowFontSize(1, 15);
+		reportView.setRowFontSize(2, 15);
+		reportView.setRowFontSize(3, 15);
+		reportView.addText(1, 0,'Name','bold');
+		reportView.addText(2, 0,'Number','bold');
+		reportView.addText(3, 0,'Time','bold');
+
+		reportView.addText(1, 3,reqData.rel_value_0);
+		reportView.addText(2, 3,phoneDisplayFormat(reqData.phoneNumber));
+		reportView.addText(3, 3,reqData.rel_value_3);
+
+		reportView.setRowFontSize(5, 15);
+		reportView.addText(5, 0,'Note:','bold');
+
+		reportView.setRowFontSize(5, 10);
+		//inRow, inCol, inText, inMaxLineWidthCap, inWeight, inStyle
+		reportView.addTextArea(
+			{
+				text:reqData.note,
+				row:7,
+				column:0,
+				columns:50,
+				rows:7
+
+			}
+		);//7, 1,reqData.note, 40);
+
+
+		//- for(i =1; i< 6; i++){
+		//- 	reportView.addText(i, 0,'Testing', 'bold');
+		//- 	reportView.addText(i, 3,'Testing2');
+		//- }
+
+		 console.log('req.body');
+		
+		
+		//alert('!{JSON.stringify(data)}');
+		console.dir(reqData);
+
+
+		console.log('-------------------test-----------------------------------------');
+		var str = "Visit W3Schools."             + "\n" +
+			"Learn JavaScript."              + "\n" +
+			"lets try a real long line and see what happens hoper it doe not leave the line brek in there!!"
+		;
+
+		console.dir(reportView.newLineInfo(str, 17));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	});
+
+
+

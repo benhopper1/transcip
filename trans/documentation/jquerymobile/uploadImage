@@ -1,0 +1,32 @@
+body
+	form(action="/upload", method="post", enctype="multipart/form-data" style="display: none;")
+		input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+//===============================
+// CHANGE IMAGE
+//===============================
+
+$('#upload').trigger('click');
+$('#contactEdit_image').click(function(){
+	$('#upload').trigger('click');
+});
+$('#upload').change(function(){
+	$ajaxFilePostVariableRoute(
+		{
+			uploadRoute:'/upload/contact/image',
+			fileInputElement:'upload',
+
+			options:
+				{
+					command:'imageStore',
+					theme:'normalUserImage'
+				},
+
+			onComplete:function(inResponse){
+				if(inResponse.domainFilePath){
+					$('#contactEdit_image').attr('src', inResponse.domainFilePath);
+				}
+			}
+		}
+	);
+});

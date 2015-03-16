@@ -1,0 +1,9 @@
+soft-connected:
+state after varible 'isConnected' is set true. This occures only after user name and password verified.
+Maintained in websocketclient.js(client side)
+
+routingLayer types:
+
+commandForClient -> server emitted for instructing client to take certain actions.
+
+transactionToClient -> server response to 'transactionToServer' by client. Usually would be for a query or specific task. The postFunction only runs once.

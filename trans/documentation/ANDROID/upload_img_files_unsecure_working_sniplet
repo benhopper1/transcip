@@ -1,0 +1,17 @@
+//---upload test -----------------------------------------------------------------------------		
+       	
+		console.log("fileUpload" + Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera" + "/img1.jpg");
+		InputStream uploadFile_is = fileToInputStream(Environment.getExternalStorageDirectory().getPath()  + "/DCIM/Camera" + "/img1.jpg");
+		console.log("fileUploadSize:" + uploadFile_is.toString());
+        //UploadFile uploadFile = new UploadFile(LocalUserStore.getValueAsString("domain") + "/uploadAsTemp", Environment.getExternalStorageDirectory().getPath()  + "/DCIM" + "/img1.jpg");
+		UploadFile uploadFile = new UploadFile( LocalUserStore.getValueAsString("domain") + LocalUserStore.getValueAsString("phoneCacheRoute"), uploadFile_is);
+        Pair<String,String> pair = new Pair("forceExt","jpg");
+        Pair<String,String> hashCode_0_pair = new Pair("hashCode_0", "testName");	
+        Pair<String,String> hashCode_1_pair = new Pair("hashCode_1", "[MOBILE]");
+        Pair<String,String> hashCode_2_pair = new Pair("hashCode_2", "NOT A URI");
+        Pair<String,String> typePair = new Pair("type", "image");
+        uploadFile.createCookieByLogin( LocalUserStore.getValueAsString("domain") + "/user/mobileLogin", LocalUserStore.getValueAsString("userName"), LocalUserStore.getValueAsString("password"), "0", "$$AGENT$$", "na", "androidApp");
+		String resultString = uploadFile.uploadByStream(pair);
+		console.log("fileUpload done..." + resultString);
+		//---------------------------------------------------------------------------------------------
+       

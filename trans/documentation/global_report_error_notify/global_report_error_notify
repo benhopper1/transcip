@@ -1,0 +1,56 @@
+
+
+global.reportNotify('CIP', 'INTERFACE STARTING', 0);
+global.reportError('CIP', 'INTERFACE STARTING', 0);
+
+
+
+
+
+
+CLASS:
+0 - general
+1 - comm data like transport layer stuff
+
+
+
+
+
+
+
+
+//==========================================================
+// REPORT ERROR --------------------------------------------
+//==========================================================
+var genErrorLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/generror.log'
+	}
+);
+global.reportError = function(inCaption, inData, inClass){
+	console.log('===============  REPORT ERROR  =====================================');
+	console.log('CAPTION:' + inCaption + '        CLASS:' + inClass);
+	console.log('--------------------------------------------------------------------');
+	console.dir(inData);
+	console.log('====================================================================');
+	genErrorLog.reportError(inCaption, inData);
+}
+//==========================================================
+// REPORT NOTIFICATION -------------------------------------
+//==========================================================
+var genNotifyLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/gennotify.log'
+	}
+);
+global.reportNotify = function(inCaption, inData, inClass){
+	//console.log(util.inspect({"FFFFFFFFFFF":'sss',ddd:888}, false, 2, true));
+	console.log(util.inspect('===============  REPORT NOTIFY  =====================================', false, 2, true));
+	console.log(util.inspect('CAPTION:' + inCaption + '        CLASS:' + inClass, false, 1, true));
+	console.log('---------------------------------------------------------------------');
+	console.dir(inData, false, 2, true);
+	console.log(util.inspect('=====================================================================', false, 2, true));
+	genNotifyLog.reportError(inCaption, inData);
+}

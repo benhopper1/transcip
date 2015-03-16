@@ -1,0 +1,73 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+
+	link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
+
+
+
+	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+
+	script(src="/public/js/footable/js/footable.js")
+
+
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+	//arfsync.jqm   CSS ---------
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
+	script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+
+
+
+
+body
+	h1 trans.jqm.jade
+
+	for key in activeServersHash
+		p #{key.serverName}
+
+	h1 Connections:
+	table(data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable")
+		thead
+			tr
+				th
+					p Server Name
+				th
+					p User Id
+				th
+					p Device Id
+				th
+					p Server Cip Connection Id
+				th
+					p Device Token Id
+				th
+					p Connected Time
+
+		tbody
+			for connection in connections
+				tr
+					th
+						p #{connection.serverName}
+					th
+						p #{connection.userId}
+					th
+						p #{connection.deviceId}
+					th
+						p #{connection.serverConnectionId}
+					th
+						p #{connection.deviceTokenId}
+					th
+						p #{connection.entryTime}
+

@@ -1,0 +1,308 @@
+doctype html
+html
+	head(lang="en")
+		title Account
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+
+
+		link(rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+		script(src="http://code.jquery.com/jquery-1.11.1.min.js")
+		script(src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+		//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+		//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+		//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+		body(style="")
+
+			style.
+				.imgAndData{
+					font-size: 13px;
+					font-style: normal;
+					font-weight: normal;
+					padding-left: 5px;
+					LINE-HEIGHT:15px;
+					background-color: #eee;
+
+				}
+
+				.magicCirc{
+					padding:4px;
+					display:inline-block;
+					font:12px/14px Arial, Helvetica, sans-serif;
+					color:#666;
+					border:1px solid #999;
+					background-color:#eee;
+					-moz-border-radius:10px;
+					-webkit-border-radius: 150px;
+					-moz-box-shadow:#999 2px 0px 3px;
+					-webkit-box-shadow:#999 2px 0px 3px;
+					margin-bottom:4px;
+				}
+
+				.magicCircPnt{
+					padding:4px;
+					display:inline-block;
+					cursor:pointer;
+					font:12px/14px Arial, Helvetica, sans-serif;
+					color:#666;
+					border:1px solid #999;
+					background-color:#eee;
+					-moz-border-radius:10px;
+					-webkit-border-radius: 150px;
+					-moz-box-shadow:#999 2px 0px 3px;
+					-webkit-box-shadow:#999 2px 0px 3px;
+					margin-bottom:4px;
+				}
+
+				.center{
+					margin-left: auto;
+					margin-right: auto;
+					width: 70%;
+					background-color: #b0e0e6;
+				}
+
+				.magicSquarePnt{
+					cursor:pointer;
+					padding:4px;
+					display:inline-block;
+					font:12px/14px Arial, Helvetica, sans-serif;
+					color:#666;
+					border:1px solid #999;
+					background-color:#eee;
+					-moz-border-radius:00px;
+					-webkit-border-radius: 15px;
+					-moz-box-shadow:#999 2px 0px 3px;
+					-webkit-box-shadow:#999 2px 0px 3px;
+					margin-bottom:4px;
+				}
+
+
+				@-webkit-keyframes spaceboots {
+					0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+					10% { -webkit-transform: translate(-1px, -2px) rotate(-40deg); }
+					20% { -webkit-transform: translate(-3px, 0px) rotate(40deg); }
+					30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+					40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+					50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+					60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+					70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+					80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+					90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+					100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+				}
+				.shake {
+					-webkit-animation-name: spaceboots;
+					-webkit-animation-duration: 0.8s;
+					-webkit-transform-origin:50% 50%;
+					-webkit-animation-iteration-count: 15;
+					-webkit-animation-timing-function: linear;
+				}
+
+				img{
+					max-width: 100%;
+				}
+
+				.ui-page {
+					background: transparent;
+					//max-width: 400px;
+				}
+				.ui-content{
+					background: transparent;
+				}
+				.center-me {
+					//margin: 0 auto !important;
+				}
+
+				body {
+					background: url(/public/images/ui/accountbkg.png);
+					background-repeat:repeat-y;
+					background-position:center center;
+					background-attachment:scroll;
+					background-size:100% 100%;
+				}
+
+
+			form(action="/upload", method="post", enctype="multipart/form-data")
+				input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+			div(id="page_userForm" data-role="page" data-dialog="true" data-theme="b" style="" class=".center-me")
+				center
+					img(src="/public/images/ui/arfsync_logo.png")
+
+				div(id="contactsWindow" data-role="main"  class="ui-content" style="")
+					form(method="post" id="userForm")
+						div(class="ui-field-contain")
+							input(tabindex="1" type="text" id="widget_userForm_firstName" 	name="fname" 		placeholder="First Name...")
+							input(tabindex="2" type="text" id="widget_userForm_lastName" 	name="lName" 		placeholder="Last Name...")
+							input(tabindex="3" type="tel" id="widget_userForm_phone" 		name="phoneNumber" 	placeholder="Phone Number...")
+							input(tabindex="4" type="email" id="widget_userForm_email" 		name="email" 		placeholder="Email Address...")
+							input(tabindex="5" type="text" id="widget_userForm_userName" 	name="userName" 	placeholder="User Name...")
+							input(tabindex="6" type="password" id="widget_userForm_password" 	name="password" 	placeholder="Password...")
+							input(tabindex="7" type="password" id="widget_userForm_password2" 	name="password2" 	placeholder="Password Again (sorry!!)...")
+							input(tabindex="8" type="text" id="widget_userForm_address" 		name="address" 		placeholder="Address...")
+							input(tabindex="9" type="text" id="widget_userForm_city" 		name="city" 		placeholder="City...")
+							input(tabindex="10" type="text" id="widget_userForm_state" 		name="state" 		placeholder="State...")
+							input(tabindex="11" type="text" id="widget_userForm_zipcode" 		name="zip" 			placeholder="Zip Code...")
+							input(tabindex="12" type="text" id="widget_userForm_country" 		name="country" 		placeholder="Country...")
+							center
+								h6 (click to change)
+								img(id="widget_userForm_image" name="uImg" class="magicSquarePnt contactAddImage" src="#{defaultUserImageUrl}" style="height:100px;" onclick="Widget_userFormScript.chooseFile();")
+								h5 This is you 
+							input(data-icon="action" id="addEditUser_save" 	type="button" value="Save")
+							input(data-icon="back" id="addEditUser_clear" 	type="button" value="Cancel")
+
+			div(id="page_userForm2" data-role="page" data-dialog="true" data-theme="b" style="" class=".center-me")
+			#xxxxx
+				//input(data-icon="action" id="bt_login_postMail" 	type="button" value="Login" style="")
+
+			script.
+				var Widget_userFormScript;
+				$(document).ready(function(){
+
+					Widget_userFormScript = new function(){
+						var _this = this;
+
+						$('#upload').change(function(){
+							//new image to dispay.
+							_this.uploadImage();
+						});
+						this.load = function(){
+							//- $('#userForm_window').window({
+							//- 	title:'User Form',
+							//- 	closed:true,
+							//- 	width:'100%',
+							//- 	height:'100%',
+							//- 	modal:true,
+							//- 	minimizable:false,
+							//- 	maximizable:false,
+							//- 	onBeforeClose: function(){
+							//- 	},
+							//- 	onBeforeOpen: function(){
+							//- 	},
+							//- });
+
+
+							//==============================================
+							// EVENT SETUP
+							//==============================================
+							$('#addEditUser_save').click(function(){
+								_this.addToStore();
+							});
+							$('#addEditUser_clear').click(function(){
+								_this.cancel();
+							});
+							
+						}
+
+						this.updateImageSource = function(inSrc){
+							$('#widget_userForm_image').attr('src', inSrc);
+						}
+
+						this.cancel = function(){
+							window.location = "/user/mobilelogin";
+						}
+
+						this.close = function(){
+							//$('#userForm_window').window('close');
+						}
+
+						this.show = function(){
+							//$('#userForm_window').window('open');
+						}
+
+						this.chooseFile = function(){
+							$('#upload').trigger('click');
+						}
+
+						this.uploadImage = function(){
+						//- 	$ajaxFilePost(
+						//- 		{
+						//- 			fileInputElement:'upload',
+
+						//- 			options:
+						//- 				{
+						//- 					command:'imageStore',
+						//- 					theme:'normalUserImage'
+						//- 				},
+
+						//- 			onComplete:function(inResponse){
+						//- 				if(inResponse.domainFilePath){
+						//- 					$('#widget_userForm_image').attr('src', inResponse.domainFilePath);
+						//- 				}
+						//- 			}
+						//- 		}
+						//- 	);
+						//- }
+							//$('#upload').change(function(){
+								$ajaxFilePostVariableRoute(
+									{
+										uploadRoute:'/upload/contact/image',
+										fileInputElement:'upload',
+
+										options:
+											{
+												command:'imageStore',
+												theme:'normalUserImage'
+											},
+
+										onComplete:function(inResponse){
+											if(inResponse.domainFilePath){
+												$('#widget_userForm_image').attr('src', inResponse.domainFilePath);
+											}
+										}
+									}
+								);
+							//});
+						}
+						this.addToStore = function(){
+							$postAjax(
+								{
+									url:'/user/database/addUser',
+									send:
+										{
+											firstName:		$('#widget_userForm_firstName').val(),
+											lastName:		$('#widget_userForm_lastName').val(),
+											phoneNumber:	$('#widget_userForm_phone').val(),
+											emailAddress:	$('#widget_userForm_email').val(),
+											userName:		$('#widget_userForm_userName').val(),
+											password:		$('#widget_userForm_password').val(),
+											address:		$('#widget_userForm_address').val(),
+											city:			$('#widget_userForm_city').val(),
+											state:			$('#widget_userForm_state').val(),
+											zipcode:		$('#widget_userForm_zipcode').val(),
+											country:		$('#widget_userForm_country').val(),
+											screenImage:	$('#widget_userForm_image').attr('src'),
+										},
+									onAjaxSuccess:function(inHtml){
+										inResponseText = JSON.parse(inHtml);
+										console.log('loading');
+										$('#xxxxx').load("/users/checkemail #remoteLoadHereDiv");
+										//$('#page_checkMail').trigger('click');
+										$.mobile.changePage("#xxxxx");
+									}
+								}
+							);
+
+						}
+
+						_this.load();
+						_this.show();
+					}();
+
+				});
+
+				//
+
+				$('#widget_userForm_phone').blur(function(){
+					//alert('blured!!!');
+					$(this).val('tttttt');
+
+				});

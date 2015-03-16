@@ -1,0 +1,107 @@
+doctype html
+html(lang="en")
+	head 
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		title(Banner Rotator Demo - Jssor Slider, Carousel, Slideshow with Javascript Source Code)
+
+body(style="background:#fff;")
+	script(type='text/javascript', src='/public/js/jquery/jquery-2.0.3.min.js')
+	script(type="text/javascript" src="/public/js/slider/js/jssor.slider.mini.js")
+	link(rel="stylesheet" href="/public/js/slider/css/slider.css")
+
+
+	style.
+		.magicSquarePnt{
+			padding:4px;
+			cursor:pointer;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+
+	//==============================================================================================
+	//-------- - H T M L ---------------------------------------------------------------------------
+	//==============================================================================================
+
+	center
+		#bigContainer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	script.
+		var contactsSlider;
+		$( document ).ready(function(){
+
+			var imgUrl = '/public/images/users/6adeb540-ae04-11e4-b82f-e3b00bee22f5.png';
+
+			var contactsSlider = new ContactsSlider(
+				{
+					containerId:'bigContainer',
+					width:300,
+					onSwipe:function(inIndex){
+						//alert('you' + inIndex);
+					},
+					onClick:function(inIndex, inLookupId){
+						alert('inIndex, inLookupId' +inIndex +' , '+inLookupId);
+					},
+					imageClass:' magicSquarePnt'
+				}
+			);
+
+			contactsSlider.addImageSlide(111, imgUrl);
+			contactsSlider.addImageSlide(112, '/public/images/contacts/183793c0-abc5-11e4-9000-0561b0dc4720.jpg');
+			contactsSlider.addSlide(113, '<div class="contactClickable" lookupId="inser555"><h1 onclick="alert(\'hello\')">Ben Hopper</h1></div>');
+			var testArray = 
+				[
+					{
+						lookupId:500,
+						imageUrl:'/public/images/contacts/18a82fe0-abc5-11e4-9000-0561b0dc4720.jpg'
+					},
+					{
+						lookupId:501,
+						imageUrl:'/public/images/contacts/19dcb840-abc5-11e4-9000-0561b0dc4720.jpg'
+					}
+				]
+
+
+
+
+			contactsSlider.setSlideSize('300px', '150px');
+
+			contactsSlider.redraw();
+
+			contactsSlider.addImageSlide(113, '/public/images/contacts/183793c0-abc5-11e4-9000-0561b0dc4720.jpg');
+
+
+			contactsSlider.addImageSlideArray(testArray);
+			contactsSlider.redraw();
+			contactsSlider.startAutoSlide();
+
+			contactsSlider.setSlideByIndex(1);
+		});

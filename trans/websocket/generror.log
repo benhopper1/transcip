@@ -1,0 +1,62 @@
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 14:09:01","data":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"}}
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 14:09:34","data":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"}}
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 14:11:33","data":{"error":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"},"possible":"cip server not up and client trying to connect"}}
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 15:29:18","data":{"error":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"},"possible":"cip server not up and client trying to connect"}}
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 15:35:05","data":{"error":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"},"possible":"cip server not up and client trying to connect"}}
+{"debugObject":"general","label":"CipClient.net.socket.client.onError","when":"2015-03-14 15:35:25","data":{"error":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect"},"possible":"cip server not up and client trying to connect"}}
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-14 15:38:46'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-14 15:57:00'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-14 15:57:35'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-15 06:57:15'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-15 06:58:16'[39m,
+  data: 
+   { error: [Error: This socket is closed.],
+     possible: [32m'cip server not up and client trying to connect'[39m } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-16 07:38:02'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }

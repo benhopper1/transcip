@@ -1,0 +1,59 @@
+{
+	"characters":
+		[
+			{
+				"name":"Alpha Jones",
+				"companyName":"Alpha Jones",
+				"department":"Information",
+				"emailAddress":"",
+				"imageUrl":"/public/images/characters/alpha_jones.png",
+				"phoneNumber":"12561112222",
+				"refNumber":"",
+				"title":"Information Agent",
+				"type":"[MOBILE]"
+			},
+			{
+				"name":"Bravo Jones",
+				"companyName":"Alpha Jones",
+				"department":"Information",
+				"emailAddress":"",
+				"imageUrl":"/public/images/characters/bravo_jones.png",
+				"phoneNumber":"12562223333",
+				"refNumber":"",
+				"title":"Information Agent 2",
+				"type":"[MOBILE]"
+			}
+		],
+
+	"sms":
+		[
+
+			{
+				"smsId":"1",
+				"smsContext":"inBox",
+				"contactName":"",
+				"contactPhoneNumber":"12561112222",
+				"cleanContactPhoneNumber":"12561112222",
+				"date":"",
+				"dateSent":"",
+				"thread":"1",
+				"isActive":"1",
+				"userId":0,
+				"body":"I like to welcome you to ArfSyn. Please send me an SMS inquery for any information about using ArfSync."
+			},
+			{
+				"smsId":"2",
+				"smsContext":"inBox",
+				"contactName":"",
+				"contactPhoneNumber":"12561112222",
+				"cleanContactPhoneNumber":"12561112222",
+				"date":"",
+				"dateSent":"",
+				"thread":"1",
+				"isActive":"1",
+				"userId":0,
+				"body":"B. I like to welcome you to ArfSyn. Please contact me for any information about using ArfSync."
+			}
+
+		]
+}

@@ -1,0 +1,138 @@
+{
+	"jsonId":"1",
+	"jsonTag":"resume_2014_10_20",
+
+	"resumeType":"computerProgramming",
+
+	"name":"Benjamin Hopper",
+	"phone":"256.466.2496",
+	"email":"hopperdevelopment@gmail.com",
+
+
+
+	"experience":
+		[
+			{
+				"heading":"Web Designer and Programmer, 2014",
+				"description":"Southern Garden Tools, (Remote Project)",
+				"detail":
+					[
+						"Produced a Nodejs app to schedule remote LINUX administrative functions.",
+						"Implemented a MySql database/server for app statistics and logs.",
+						"Created a web interface for reporting and email response on error system."
+					]
+			},
+
+			{
+				"heading":"Web Programmer, 2013",
+				"description":"Judson Co, Decatur, Alabama",
+				"detail":
+					[
+						"Produced solutions and code fixes for a proprietary web system.",
+						"Helped maintain and evolve an eCommerce site."
+					]
+			},
+
+			{
+				"heading":"Accounting and Production Analyst, 2008- 2013",
+				"description":"UNICOR, Talladega, Alabama",
+				"detail":
+					[
+						"Created a successful add-on system to SAP for Accounting Department querying purposes.",
+						"Designed and implemented new database for querying and reporting of product analysis.",
+						"Wrote a VBA MsExcell/Access app that tracked all utilities and reported cross department billing.",
+						"Provided IT solutions for multiple departments."
+					]
+			},
+
+			{
+				"heading":"Installation and Repair Technician / ISP Field Technician, 2001-2002",
+				"description":"Mr. TV, Manchester, Alabama",
+				"detail":
+					[
+						"Field Support Technician for Internet service.",
+						"Performed installation and repair for security systems, satellites, custom audio and entertainment systems, computer networking and phone systems for commercial and residential sites.",
+						"System Phones and Data Networking."
+					]
+			}
+		],
+
+
+
+
+	"technicalSummary":
+		[
+			{
+				"heading":"Specialization",
+				"detail":"Cross-device communication between Android Applications and Web Applications"
+			},
+
+			{
+				"heading":"Web Programming and Scripting",
+				"detail":"JS, Jquery, Json, nodejs, JADE, AJAX, Python, PHP, SQL, HTML5, CSS, WebWorkers(browser multi-threading), Mustache, Pheasant, MVC style development / OO programming"
+			},
+
+			{
+				"heading":"Mobile Application Development",
+				"detail":"JAVA with eclipse, Android SDK"
+			},
+
+			{	"heading":"General Linux and Windows Programming",
+				"detail":"GNU C/C++, MS Visual C++(managed/unmanaged), C#, Visual Basic"
+			},
+
+			{
+				"heading":"Cross-platform Development",
+				"detail":"Qt framework for C++ GUI/QSql/QTcp..."
+			},
+
+			{
+				"heading":"SQL Database Programming and Reporting",
+				"detail":"MySql, MySqlite, MS SQL Server, MS Access, MSDE, SAP, CrystalReport, (worked heavily with sql since 1994)"
+			},
+
+			{
+				"heading":"HTML, JSON, CSS, hand-coded",
+				"detail":"Eclipse, Sublime Text 2/3, Geany, Gedit"
+			},
+
+			{
+				"heading":"Original Design & Image Editing",
+				"detail":"Fireworks, GIMP"
+			},
+
+			{
+				"heading":"Source Control",
+				"detail":"GIT Hub"
+			},
+
+			{
+				"heading":"Webserver installation & configuration:",
+				"detail":"Apache, NodeJs"
+			},
+
+
+			{
+				"heading":"Administration / Development Environments",
+				"detail":"LINUX(UBUNTU/CENTOS servers and VPS) light admin functions, WHM, CPANEL, SSH, FTP..."
+			}
+
+		],
+
+	"studies":
+	[
+		"Embedded PIC microcontrollers, PIC 16 and 18 family chips",
+		"USB 2.0 implementation for firmware communication/LINUX driver development (URB)",
+		"LINUX kernel/driver development",
+		"Analog to digital/digital to analog interfaces and conversions",
+		"SPI, Microwire, I2c, RS-232/422/485 hardware communications"
+	],
+
+	"education":
+		[
+			"A+ certification by COMPTIA (PC hardware/software installation, repair, upgrade, maintenance and support.)",
+			"Universal EPA refrigeration licensed",
+			"DeVilbis 02 concentrator certification"
+		]
+
+}

@@ -1,0 +1,27 @@
+-rwxrw-r-- 1   hope   hopestaff  123   Feb 03 15:36   file.txt
+Here's what each part of this information means:
+-
+The first character represents the file type: "-" for a regular file, "d" for a directory, "l" for a symbolic link.
+rwx
+The next three characters represent the permissions for the file's owner: in this case, the owner may read from, write to, and/or execute the file.
+rw-
+The next three characters represent the permissions for members of the group that the file belongs to. In this case, any member of the file's owning group may read from or write to the file. The final dash is a placeholder; group members do not have permission to execute this file.
+r--
+The permissions for "others" (everyone else). Others may only read this file.
+1
+The number of hard links to this file.
+hope
+The file's owner.
+hopestaff
+The group to whom the file belongs.
+123
+The size of the file in blocks.
+Feb 03 15:36
+The file's mtime (date and time when the file was last modified).
+file.txt
+The name of the file.
+
+
+
+-----------------------------------------------------
+chmod 755 file.txt

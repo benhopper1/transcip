@@ -1,0 +1,221 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+	link(rel="stylesheet" href="/public/js/skeleton/css/normalize.css")
+	link(rel="stylesheet" href="/public/js/skeleton/css/skeleton.css")
+
+	script(type='text/javascript', src='/public/js/jquery/jquery-2.0.3.min.js')
+	script(type='text/javascript', src='/public/js/qrcode/jquery.qrcode.js')
+	script(type='text/javascript', src='/public/js/qrcode/qrcode.js')
+
+	script(type='text/javascript', src='/public/js/commmanager/commmanager.js')
+	script(type='text/javascript', src='/public/js/clientutil/clientutil.js')
+
+
+	script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	//script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+	link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+	script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+	script(type='text/javascript', src='/public/js/async/async.js')
+
+	script(type='text/javascript', src='/public/js/reportview/reportview.js')
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+	style.
+		.rowContainer {
+			position: relative;
+		}
+
+		.tb {
+			position: absolute;
+
+			
+		}
+		:root{
+			--tabSpace:200;
+		}
+		.tab_0{
+			position: absolute;
+			left: var(--tabSpace);
+		}
+
+
+
+		.rowUpDown {
+			position: absolute;
+			top: 0;
+		}
+
+		.wrapper {
+			display: table;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+
+		.container {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.canvas-container {
+			position: relative;
+			max-width: 1024px;
+			min-width: 320px;
+			margin: 0 auto;
+		}
+
+
+	
+
+
+	#rowContainer0(class="rowContainer" style="left:300;")
+		div(class="rowUpDown" style="position: absolute; height:70")
+			div(class="leftCol" style="position: absolute;left: 0;")
+			div(class="tb tab_0" style="position: absolute;")
+				div(style="font-size:60;") xxx
+			div(class="tb tab_1" style="position: absolute;left: 10;")
+				div(style="font-size:60;") hopper
+			div(class="tb tab_2" style="position: absolute;left: 15;")
+				h2(style="") hopper
+			div(class="tb tab_3" style="position: absolute;left: 20;")
+			div(class="tb tab_4" style="position: absolute;left: 25;")
+			div(class="tb tab_5" style="position: absolute;left: 30;")
+			div(class="tb tab_6" style="position: absolute;left: 35;")
+			div(class="tb tab_7" style="position: absolute;left: 40;")
+			div(class="tb tab_8" style="position: absolute;left: 45;")
+			div(class="tb tab_9" style="position: absolute;left: 50;")
+
+			
+
+
+	//- table(width="1000" align="center" border="2" cellspacing="0" cellpadding="0")
+	//- 	tr
+	//- 		td(width="810" valign="top")
+
+	//- 			table(width="810" align="center" border="0" cellspacing="0" cellpadding="0")
+	//- 				tr
+	//- 					td(height="29" id="menu" align="center" style="border:1px solid #ECE0C5")
+
+	//- 						table(width="800" border="0" cellspacing="0" cellpadding="0")
+	//- 							tr
+	//- 								td(align="center")
+	//- 									a(title="Quail Hunting | Pheasant Hunting | Quail Hunting | Wingshooting | Dove Hunting" href="http://wingshootingdestinations.com/")
+	//- 									img(src="http://wingshootingdestinations.com/i/p1.gif" width="32" height="14" border="0" align="middle" alt="Home")
+	//- 								td
+	//- 									img(alt="Quail Hunting | Pheasant Hunting | Quail Hunting | Wingshooting | Dove Hunting" src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3")
+	//- 								td(align="center")
+	//- 									a(href="http://wingshootingdestinations.com/ContactUs/")
+	//- 									img(src="http://wingshootingdestinations.com/i/p2.gif" width="66" height="14" border="0" alt="Contact Us")
+	//- 								td
+	//- 									img(alt="Quail Hunting | Pheasant Hunting | Quail Hunting | Wingshooting | Dove Hunting" src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3")
+	//- 								//- td(align="center"><a href="http://wingshootingdestinations.com/Wingshooting/"><img src="http://wingshootingdestinations.com/i/p3.gif" width="166" height="14" border="0" alt="Wingshooting Destinations"></a></td>
+									//- td
+									//- 	img(src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3"></td>
+									//- td(align="center"><a href="http://wingshootingdestinations.com/DiscountedHunts/"><img src="http://wingshootingdestinations.com/i/p5.gif" width="110" height="14" border="0" alt="Discounted Hunts"></a></td>
+									//- td
+									//- 	img(src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3"></td>
+									//- td(align="center"><a href="http://wingshootingdestinations.com/ImageGallery/"><img src="http://wingshootingdestinations.com/i/p6.gif" width="85" height="14" border="0" alt="Image Gallery"></a></td>
+									//- td
+									//- 	img(src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3"></td>
+									//- td(align="center"><a href="http://wingshootingdestinations.com/Advertising/"><img src="http://wingshootingdestinations.com/i/p7.gif" width="72" height="14" border="0" alt="Advertising"></a></td>
+									//- td
+									//- 	img(src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3"></td>
+									//- td(align="center"><a href="http://wingshootingdestinations.com/AboutUs/"><img src="http://wingshootingdestinations.com/i/p8.gif" width="55" height="14" border="0" alt="About Us"></a></td>
+									//- td
+									//- 	img(src="http://wingshootingdestinations.com/i/vert.gif" width="1" height="25" hspace="3"></td>
+									//- td(align="center"><a href="http://wingshootingdestinations.com/Links/"><img src="http://wingshootingdestinations.com/i/p9.gif" width="31" height="14" border="0" alt="Links"></a></td>
+										
+
+
+	
+	div(class="container")
+		
+		
+
+		div(class="row")
+			div(border="1" class="one column" style="background-color:#b0c4de;") x
+				//img(src="#{defaultUserImageUrl}")
+			div(class="two columns" style="background-color:#f0c4de;") Y
+				//img(src="#{defaultUserImageUrl}")
+				
+		div(class="row")
+			div(class="12 columns")
+				//img(src="http://wingshootingdestinations.com/upload/Ads/topad_76.jpg" style="width:60%;")
+			div(class="one column") Eleven
+
+
+		div(class="row")
+			div(class="one column") Two
+			div(class="eight columns")
+	#reportView(style="position: relative;height:200px; width:800px;")
+
+
+script.
+	$('#widgetContactsCollectionDiv').window({
+		title:'  Contacts Window',
+		closed:false,
+		width:'986px',
+		height:'468px',
+		modal:false,
+		minimizable:false,
+		maximizable:false,
+		onBeforeClose: function(){}
+	});
+
+	$(document).ready(function(){
+		//- var canvas = document.getElementById("e");
+		//- var context = canvas.getContext("2d");
+		//- context.fillStyle = "blue";
+		//- context.font = "bold 16px Arial";
+		//- context.fillText("Zibri", 100, 100);
+		//- context.fillText("Bebbbo", 200, 100);
+
+		var reportView = new ReportView(
+			{
+				elementId:'reportView'
+			}
+		);
+
+
+		reportView.setRowFontSize(0, 15);
+		reportView.addText(0, 5,'Matt');
+		reportView.addText(0, 8,'ddddd');
+		reportView.addText(0, 11,'zzzzzz');
+
+		for(i =1; i< 6; i++){
+			reportView.addText(i, 5,'             w                         Testing');
+			reportView.addText(i, 8,'Testing');
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	});
+
+
+

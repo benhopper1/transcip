@@ -1,0 +1,69 @@
+doctype html
+html
+	head(lang="en")
+		title ${1:title name}
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+		link(rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+		script(src="http://code.jquery.com/jquery-1.11.1.min.js")
+		script(src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+	//body(style="background-color: #000000; color: #ffffff;")
+	body
+		style.
+			img{
+				max-width: 100%;
+			}
+
+			.ui-page {
+				background: transparent;
+			}
+			.ui-content{
+				background: transparent;
+			}
+			body {
+				background: url(/public/images/ui/accountbkg.png);
+				background-repeat:repeat-y;
+				background-position:center center;
+				background-attachment:scroll;
+				background-size:100% 100%;
+			}
+			
+					
+
+		//#remoteLoadHereDiv
+		div(id="page_checkMail" data-role="page" data-theme="b" style="")
+			#remoteLoadHereDiv
+				//div(id="checkmaildivaa" data-role="main" class="ui-content")
+				//form(id="form_checkMail" method="post" )
+				center(id="checkMailDiv")
+					h3
+						p You will be sent an email that includes a link to activate your account.
+						| After you activate your account just click the button  below or restart 
+						| this app at any time to
+						| login to arfSync.
+
+
+				//a(href="mailto:someone@example.com?Subject=Hello%20again") linkkkkk
+				br
+				br
+				br
+				//input(data-icon="action" id="bt_login_postMail" 	type="button" value="Login" style="")
+
+				//button(id="widgetContactsCollection_buttonOk" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:AndroidFunction.save('actionName');" onclick="AndroidFunction.save('actionName');" style="width:80px") Ok
+				//button(onclick="Android.showBase();") showBase
+				//button(onclick="Android.reportOnEvent('do email man!!', {});") email
+
+
+
+
+	script.
+		//document.write("hhkuhokhkhkjhkjhk");
+		//document.write(AndroidFunction.save('actionName'));
+		$('#bt_login_postMail').click(function(){
+			$('#body_checkMail').load("/user/mobilelogin #contactsWindow");
+		});

@@ -1,0 +1,91 @@
+Comm Manager (client side javascript communication interface)
+
+-----------------------------------------------------------------------------------------------------------------
+commManager = commManagerNameSpace.getCommManagerInstance(
+	{
+		webSocketClient:{"address":"192.168.0.16","port":30300,"connectString":"hkjhkjh"},
+		connectToDeviceTypes:
+			[
+				'androidApp'
+			],
+		loginByScan:
+			{
+				onScan:function(inData){}
+			},
+		login:
+			{
+				userName:'bev',
+				password:'4747'
+			},
+		onReady:function(){},
+		onLoginSuccess:function(inTransportLayer_string, inFamilyCredentialArray){},
+		onFamilyDeviceConnect:function(inMsg, inLocal, inData, inRefObj){},
+		onFamilyDeviceDisconnect:function(inMsg, inLocal, inData, inRefObj){}
+	}
+);
+
+notes:
+	onReady jStruct is called after websocket is loaded and all dependancy files injected, this is before login/loginByScan
+
+	choose to loginByScan or login, not both, just one.
+
+	connectToDeviceTypes jStruct is an array of deviceType(like:desktopBrowser), if not present then all devices of this family will 
+		connect. 
+
+	loginByScan jStruct can be used to login using another device. too cool, secure information does not need to be entered
+		into the device. The credentials will come from the scaning device and will be entered at the server level never to be 
+		seen by the client device. Very secure for unsecure browser use.
+	login jStruct must supply user name and password to connect to server for communication.
+
+
+-----------------------------------------------------------------------------------------------------------------
+transactionToDeviceToken(
+	{
+		routing:
+			{
+				command:'getDeviceType'
+			},
+		data:
+			{
+				testDataKey:'testDataValue'
+			},
+
+		onBeforeSend:function(inDataLayer, inTransportLayer){
+			console.log('onBeforeSend transactionToDeviceToken call back entered');
+		},
+
+		onAfterSend:function(inDataLayer, inTransportLayer){
+			console.log('onAfterSend transactionToDeviceToken call back entered');
+		},
+
+		onComplete:function(inDataLayer, inTransportLayer){
+			console.log('onComplete transactionToDeviceToken call back entered');
+		}
+	}
+);
+
+notes:
+	Used to send a transaction to another device. By default the connected device is used as receiver, but 
+	you could specify in routing:{targetTokenId:'theDeviceTokenId'} to overRide. Once the transaction has been
+	received or timed out by server the onCompltete function will be executed. The routing jStruct is merged into
+	the defaults using jquery extend. So it will over write existing properties when included. The data jStruct is 
+	inserted and will over write all existing data.
+
+
+-----------------------------------------------------------------------------------------------------------------
+sendCommand(targetDeviceTokenId, filterValue, 
+	{
+		action:'browserRequestOpen'
+	}
+);
+
+notes:
+	@param 0 : String deviceTokenId for the receiving device.
+	@param 1 : String filterValue to match receiving device filter.
+	@param 2 : jStruct of dataLayer. Inserted into transportLayer.
+
+	Used to send repeating data or realtime data to a receiving device. (one way communication)
+
+
+
+

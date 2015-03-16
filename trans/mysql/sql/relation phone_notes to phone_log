@@ -1,0 +1,28 @@
+SELECT * FROM tb_phoneNotes AS tb1
+LEFT JOIN tb_phoneLog AS tb2 ON
+tb1.userId = tb2.userId
+AND
+tb1.phoneLog_guid = tb2.guid
+
+
+
+
+
+
+
+---------------
+
+SELECT *, tb2.guid AS phoneLog_guid, CONVERT(tb1.json_templateData USING utf8) AS json_data FROM tb_phoneNotes AS tb1
+LEFT JOIN tb_phoneLog AS tb2 ON
+tb1.userId = tb2.userId
+AND
+tb1.phoneLog_guid = tb2.guid
+
+WHERE 
+tb1.userId = 1
+AND
+tb1.relateTo LIKE '%'
+AND
+tb2.guid LIKE '%'
+AND 
+tb1.catagory LIKE '%'

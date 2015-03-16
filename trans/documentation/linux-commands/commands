@@ -1,0 +1,7 @@
+
+
+FIND#
+
+find -name "query"
+ignore case:
+find -iname "nginx-root"

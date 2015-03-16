@@ -1,0 +1,32 @@
+http https----------------------
+domain port:
+30000 : 30199
+
+domain secure port
+30200 : 30399
+
+
+web socket--------
+always secure on
+30400 : 30599
+
+
+CIP
+30800 : 30999
+secure 30800
+unsecure 30801
+
+
+OPEN etc...
+30600 : 30799
+
+
+
+
+-------------------------------------------------------
+will be removed so use calculated approach
+BRIDGE:
+use open ports.....
+(domain - domain.min ) + open.min
+ws is server
+

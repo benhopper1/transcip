@@ -1,0 +1,1858 @@
+
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+	//background-image: url('public/images/ui/beach_background.jpg')      background-color: #00ff00;
+	//body(style="background-image: url('public/images/ui/beach_background4.jpg')")
+
+
+
+	//script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+
+
+
+	link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
+
+
+
+	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+	//script(src="/public/js/jquery/hopper/jquery.hopper.extension.footable.js")
+
+
+	//script(src="/public/js/scrollto/vendor/jquery.js")
+	script(src="/public/js/scrollto/lib/jquery-scrollto.js")
+
+
+
+	//link(href="/public/js/objectfit/dist/polyfill.object-fit.css" rel="stylesheet" type="text/css")
+	//script(src="/public/js/objectfit/dist/polyfill.object-fit.js")
+
+
+	script(src="/public/js/footable/js/footable.js")
+
+	script(type='text/javascript', src='/js/qrcode/jquery.composite.qrcode.js')
+	//script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+	//script(type='text/javascript', src='/js/qrcode/qrcode.js')
+
+	script(type='text/javascript', src='/js/commmanager/commmanager.js')
+
+	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+	//arfsync.jqm   CSS ---------
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
+
+	//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	//script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/ui-sunny/easyui.css')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+	// iscrollView-----------------
+	//link(href="/public/js/iscrollview/lib/jquery.mobile.iscrollview.css" rel="stylesheet" type="text/css")
+	//link(href="/public/js/iscrollview/lib/jquery.mobile.iscrollview-pull.css" rel="stylesheet" type="text/css")
+	//script(src="/public/js/iscrollview/demo/source/javascripts/iscroll.js")
+	//script(src="/public/js/iscrollview/lib/jquery.mobile.iscrollview.js")
+
+
+
+
+	//script(type='text/javascript', src='public/js/hashofarray/hashofarrayobject.js')
+	script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+	script(type='text/javascript', src='/public/js/async/async.js')
+
+	//script(type='text/javascript', src='/public/js/reportview/reportview.js')
+
+	//masterMenu-----
+	//script(src="/public/js/mastermenu/src/js/jquery.mmenu.min.js" type="text/javascript")
+	//link(href="/public/js/mastermenu/src/css/jquery.mmenu.css" type="text/css" rel="stylesheet")
+	//link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.themes.css" type="text/css" rel="stylesheet")
+
+
+
+body
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getHomePageURL = function(){return '#{URL}/jqm/arfsync';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+		if (screen.width <= 800) {
+			window.location = "/mobile/arfsync";
+		}
+		/*document.addEventListener('DOMContentLoaded', function () {
+			objectFit.polyfill({
+				selector: 'img',
+				fittype: 'cover'
+			});
+		});*/
+
+	//#incomingSmsScreenMessageDiv(data-role="popup" class="ui-content" style="width:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+	#incomingSmsScreenMessageDiv()
+	div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader")
+		a(href="#" id="btBar_main_back" data-icon="back" class="ui-btn-left backButtonClass") Back
+		h1 ArfSync
+		a(id="bt_test" href="" data-icon="delete" class="ui-btn-right") Rec Delete
+		div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
+			ul
+				li
+					a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button") Login Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button") Contact Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button") User Profile
+				li
+					a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button") Sms Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_handSet" data-icon="phone" class="header-main-button") Hand Set
+
+	#allScreenMessageDiv
+
+
+
+	//data-dialog="true"
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_page_0" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" )
+
+		#contactsWindow
+		//====================================
+		//-)--> GRID--------------------------
+		//====================================
+		div(class="ui-grid-b")
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-a" syle="overflow:hidden;")
+				div(data-role="main" class="ui-content" syle="overflow:hidden;")
+					div(class="ui-field-contain" id="main_bg" style="width:300px; left:10px")
+						ul(data-role="listview" id="mainmenu" class=""  data-inset="true" )
+							li(id="contactManagerDiv" class="menu_li" )
+								a() Contact Manager
+									img(src="/public/images/ui/members.png" )
+							//br
+							li(id="smsManagerDiv" class="menu_li")
+								a() Sms Manager
+									img(src="/public/images/ui/android_sms.png" )
+							//br
+							li(id="handsetControllerDiv" class="menu_li")
+								a() Handset Controller
+									img(src="/public/images/ui/androidPhoneImg.png" )
+							li(id="userProfileDiv" class="menu_li")
+								a() User Profile
+									img(id="img_loginManager_userImg" src="/public/images/ui/unconnecteduser.png" )
+							//br
+							li(id="downloaddiv" class="menu_li")
+								a() Get Android App
+									img(src="/public/images/ui/download_android_app_button.png" )
+
+
+
+			///@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-b")
+				center
+					img(src="/public/images/ui/arfsync_logo3.png")
+				#masterDiv(style="border:0px;")
+					#qrAccord(class="center magicShadow" data-options="" style=" width:320px; ")
+						#lay1(title="Scan to login" data-options="iconCls:'icon-search',collapsed:false,collapsible:true" style="padding:10px;")
+							center
+								#qrCodeDiv(style="background-color: #ffffff;")
+
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid C @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-c")
+
+
+
+
+
+
+
+		//TODO: remove section---
+		#smsWindowDiv
+		#testHandset
+		#welcome_phoneWindowDiv
+
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 1---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="pg_page_1" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="true")
+		ul(data-role="listview" id="mainmenu2" class=""  style="width:300px" data-inset="false")
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 2-(CONTACT MANAGER)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="pg_page_2" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+
+		div(class="ui-grid-c" style="")
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			//CONTACT LIST VIEW
+			div(class="ui-block-a" style="width:25%")
+				div(class="ui-content" data-position-to="window" style="width:90%; ")
+					a(href="#contactPanel_0" data-ajax="false" style="")
+					ul(data-role="listview" id="contactsMenu" class=""   data-inset="false" style="width:100%; ")
+
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			//all tabs here
+			div(class="ui-block-b" style="width:75%;")
+				//=======================================
+				//
+				//=======================================
+				div(data-role="tabs" id="tabs" style="padding: 0px 0px 0px 0px !important;")
+					div(data-role="navbar")
+						ul
+							li
+								a(href="#tab_editContact" data-ajax="false") Edit Contact
+							li
+								a(href="#tab_import" data-ajax="false") Import
+							li
+								a(href="#tab_export" data-ajax="false") Export
+
+					//@@@@@@  TAB ---EDIT CONTACT----------------------------------------------
+					div(id="tab_editContact" class="ui-content" style="overflow: auto; ")
+
+					//@@@@@@  TAB ---IMPORT CONTACT--------------------------------------------
+					div(id="tab_import" class="ui-content" style="")
+
+					//@@@@@@  TAB ---EXPORT CONTACT--------------------------------------------
+					div(id="tab_export" class="ui-content")
+
+
+
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-c" style="width:0%") 
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-d" style="width:0%")
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 3-(USER PROFILE)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_userProfile" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+		#userProfile_contents
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 4-(USER PROFILE)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_smsManager" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+		#smsManager_contents
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 5---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_handsetController" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="true")
+
+
+
+
+
+
+
+	script.
+		//======================================================================
+		//>--- GLOBAL DECLARE SECTION-------------------------------------------
+		//======================================================================
+		var GLOBAL_USER_IMAGE_URL;
+		var GLOBAL_USER_NAME;
+		var commManager;
+		var deviceTokenId;
+
+		var LoginManagerObject;
+		var eventObject = new EventOrigin();//TODO: move inside create event
+		var widgetSmsMessageWindowScript;
+
+
+		//======================================================================
+		//>--- LOGIN PAGE EVENTS------------------------------------------------
+		//======================================================================
+
+		$( "#pg_page_0").on( "pagecreate", function( event, ui ){
+			$(".mainHeader").hide();
+			console.log('PAGE CREATE---------------------------LoginManager');
+			loginManagerObject = new LoginManagerObject();
+			loginManagerObject.load();
+			window.location.hash = '';
+			$.mobile.navigate( "#btBar_main_back", {
+				info: "info about the #bar hash"
+			});
+
+		});
+
+		$( "#pg_page_0").on( "pageshow", function( event, ui ){
+			$(".mainHeader").hide();
+			console.log('PAGE SHOW-----------------------------LoginManager');
+			window.location.hash = '';
+		});
+
+		$( "#pg_page_0").on( "pagehide", function( event, ui ){
+			$(".mainHeader").show();
+			console.log('PAGE HIDE-----------------------------LoginManager');
+			//window.location.hash = '';
+		});
+
+		//======================================================================
+		//>--- HEADER SETUP-----------------------------------------------------
+		//======================================================================
+		$(".mainHeader").toolbar();
+
+
+
+		//======================================================================
+		//>--- MAIN TOOLBAR -----/(EVENTS)--------------------------------------
+		//======================================================================
+		$('#btBar_main_back').click(function(){
+			history.back();
+			return false;
+		});
+		$('#btBar_main_loginManager').click(function(){
+			PageLoaderObject.loadPage('loginManager');
+		});
+		$('#btBar_main_contactManager').click(function(){
+			PageLoaderObject.loadPage('contactManager');
+		});
+		$('#btBar_main_userProfile').click(function(){
+			PageLoaderObject.loadPage('userProfile');
+		});
+		$('#btBar_main_smsManager').click(function(){
+			PageLoaderObject.loadPage('smsManager');
+		});
+		$('#btBar_main_handSet').click(function(){
+			PageLoaderObject.loadPage('handsetController');
+		});
+
+
+
+		//=========================================================
+		// PageLoaderObject
+		//=========================================================
+		var PageLoaderObject = new function(){
+			var _this = this;
+			var loadedHash = {};
+
+			var processHash = 
+				{
+					load:
+						{
+							loginManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'turn', reverse:'true'});
+								loadedHash['loginManager'] = true;
+							},
+							contactManager:function(){
+								$('#pg_page_2').load("/jqm/contactmanager ", function(){
+									//  setup events----------------------------
+									$('#tab_export').load("/jqm/contactexport ", function(){
+										console.log('loaded');
+										$('#tab_export').trigger('create');
+
+									});
+									$('#tab_import').load("/jqm/contactimport ", function(){
+										console.log('loaded');
+										$('#tab_import').trigger('create');
+
+									});
+									$('#tab_editContact').load("/jqm/contactedit ", function(){
+										console.log('loaded');
+										$('#tab_editContact').trigger('create');
+
+									});
+
+									loadedHash['contactManager'] = true;
+									$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_2', {reload:false, transition:'turn', reverse:'true'});
+								});
+							},
+							userProfile:function(){
+								$('#userProfile_contents').load("/jqm/userprofile ", function(){
+									console.log('loading userprofile');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', { transition:'turn', reverse:'true'});
+									loadedHash['userProfile'] = true;
+								});
+							},
+							smsManager:function(){
+								console.log('checklll');
+								$('#smsManager_contents').load("/jqm/smsManager ", function(response, status, xhr){
+									console.log('loading smsManager');
+									//console.log('response:' + response);
+									console.log('status:' + status);
+									console.log('xhr:' + xhr);
+									$('#smsManager_contents').trigger('create');
+
+									//load popup----
+									$('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
+										console.log('popup thingy loaded!');
+									});
+									loadedHash['smsManager'] = true;
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {transition:'turn', reverse:'true'});
+
+								});
+
+							},
+							handsetController:function(){
+								$('#page_handsetController').load("/handset/jqm/handsetcontroller ", function(){
+									console.log('loading /handset/jqm/handsetcontroller');
+									$('#page_handsetController').trigger('create');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
+									loadedHash['handsetController'] = true;
+								});
+							},
+
+
+
+
+						},
+					show:{
+							loginManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'turn', reverse:'true'});
+							},
+							contactManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_2', {transition:'turn', reverse:'true'});
+							},
+							userProfile:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', {transition:'turn', reverse:'true'});
+							},
+							smsManager:function(){
+								console.dir('changeing to page smsManager');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false,transition:'turn', reverse:'true'});
+								//$('#smsManager_contents').trigger('create');
+							},
+							handsetController:function(){
+								$('#page_handsetController').trigger('create');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
+							},
+						},
+
+					
+				}
+
+			var eventHash =
+				{
+					onLoad:
+						{
+							smsManager:function(){
+
+							}
+						},
+					onShow:
+						{
+							smsManager:function(){
+								
+							}
+						}
+				}
+
+
+
+			this.loadPage = function(pageName){
+				if(_this.isLoaded(pageName)){
+					processHash.show[pageName]();
+				}else{
+					processHash.load[pageName]();
+				}
+			}
+
+			this.isLoaded = function(pageName){
+				return loadedHash[pageName];
+			}
+
+			this.getLoadedPages = function(){
+				var resultArray = [];
+				for(var theKey in loadedHash){
+					if(loadedHash[theKey]){
+						resultArray.push(theKey);
+					}
+				}
+				return resultArray;
+			}
+		}();
+
+
+		//=========================================================
+		// LoginManagerObject
+		//=========================================================
+
+		var LoginManagerObject = function(){
+			this.load = function(){
+
+				setHeight();
+				//=========================================================
+				// BUTTON EVENTS (LoginManagerObject)
+				//=========================================================
+				$('#contactManagerDiv').click(function(){
+					PageLoaderObject.loadPage('contactManager');
+				});
+				$('#smsManagerDiv').click(function(){
+					PageLoaderObject.loadPage('smsManager');
+				});
+				$('#handsetControllerDiv').click(function(){
+					PageLoaderObject.loadPage('handsetController');
+				});
+				$('#userProfileDiv').click(function(){
+					PageLoaderObject.loadPage('userProfile');
+				});
+				$('#downloaddiv').click(function(){
+					window.location.href = "/public/download/androidapp/v002/Qr_Proj_3.apk";
+				});
+			}
+		}
+
+		//=========================================================
+		// GLOBAL FUNCTIONS
+		//=========================================================
+
+
+
+		//@@--> SET HEIGHT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		var setHeight = function(){
+			var screen = $.mobile.getScreenHeight();
+			var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
+			var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
+			var navbar = $(".ui-header > .ui-navbar").outerHeight();
+			
+			/* content div has padding of 1em = 16px (32px top+bottom). This step
+				can be skipped by subtracting 32px from content var directly. 
+			*/
+			var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
+
+			//var content = screen - (header + navbar) - footer - contentCurrent;
+			var content = screen - 120;  // 115;
+
+			$(".ui-content").height(content);
+			//$(".over-shot").height(content - 20);
+
+			$(".sms-top-height").height(220);
+			$(".sms-bottom-height").height(content - 220);
+
+			//$(".contact-list-onEdit").height(content - 220);
+			//$("#userFormContactsList").height(content - 220);
+
+			//$(".sms-bottom-height").css({ top: (content * .2) + 100 }); //top(content * .2);
+			//$(".sms-bottom-height").css({ top: 800}); //top(content * .2);
+			//$("#contactsMenu").height(   content -50   );
+
+			var bottomOfButton = $('#bt_smsManager_send').css('bottom');
+			$('#dynamicTable_content_sms_div').css('top', bottomOfButton);
+
+
+		}
+
+		//@@--> JQUERY . CENTER @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		jQuery.fn.center = function () {
+			this.css("position","absolute");
+			this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+			$(window).scrollTop()) + "px");
+			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+			$(window).scrollLeft()) + "px");
+			return this;
+		}
+
+
+		//=========================================================
+		// GLOBAL EVENTS
+		//=========================================================
+		$('#goBackDiv').click(function(){
+			history.back();
+			return false;
+		});
+
+
+
+
+
+
+
+
+
+
+		$( document ).ready(function(){
+			var waitingDeviceTokenId;
+			
+
+			$('#login_panel').panel({
+				title:'ArfSync',
+				width:400,
+				height:400
+			});
+
+			commManager = commManagerNameSpace.getCommManagerInstance(
+				{
+					webSocketClient:!{JSON.stringify(webSocketClient)},
+					connectToDeviceTypes:
+						[
+							'androidApp'
+						],
+
+					loginByScan:
+						{
+							onScan:function(inData){
+								waitingDeviceTokenId = inData.cd;
+								deviceTokenId = inData.cd; //maybe delete this one
+								jQuery('#qrCodeDiv').qrcode({
+									render	: "table",
+									text	: JSON.stringify(inData)
+								});
+							}
+						},
+					onReady:function(){
+						console.log('onReady');
+					},
+					onLoginSuccess:function(inTransportLayer_string, inFamilyCredentialArray, filteredCredentialsArray){
+						console.log('onLoginSuccess');
+						console.dir(inTransportLayer_string);
+
+
+
+						console.log('##############################################################################');
+						console.log('############ SECURITY VERIFICATION (start)' + now() + '	   			  #########');
+						console.log('##############################################################################');
+						sessionSetupAndValidation("loginByScan", waitingDeviceTokenId, function(inJsonStruct){
+							console.log('##############################################################################');
+							console.log('############ SECURITY VERIFICATION (done)' + now() + '	   			  #########');
+							console.log('##############################################################################');
+
+							createFilters();
+							userObject = new UserObject(function(userErr, userData){
+
+								GLOBAL_USER_IMAGE_URL = userData.screenImage;
+								GLOBAL_USER_NAME = userData.userName;
+
+								$('#img_loggedInUser').attr('src', userData.screenImage);
+								$('#lb_loggedInUserName').text(userData.fullName);
+
+								openWebMenuOnPhone();
+
+								//=======================================================
+								// CAUSE GLOBAL LOGIN EVENT -----------------------------
+								//=======================================================
+								eventObject.reportOn('loginReady', {});
+
+							});
+
+
+
+							//=====================================================================
+							// When Page changes by user catch here for remote menu purposes:
+							//=====================================================================
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE ONE -> START SCREEN @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#pg_page_0",function(){ // When entering pagetwo
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mm-m0-p0'
+										}
+									);
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE TWO -> CONTACT MANAGER @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#pg_page_2",function(){ // When entering pagetwo
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_contacts'
+										}
+									);
+							});
+							$(document).on("pagehide","#pg_page_2",function(){ // When leaving pagetwo
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE TWO -> CONTACT MANAGER @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#page_smsManager",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_sms'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_smsManager",function(){
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> USER PROFILE  @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#page_userProfile",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_userProfile'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_userProfile",function(){
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> HANDSET CONTROLLER @@@@@@@@@@
+							$(document).on("pageshow","#page_handsetController",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_handsetController'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_handsetController",function(){
+
+							});
+
+
+
+
+
+
+						});
+
+
+
+					},
+					//#############################################################################################################
+					//--------When one of your family devices dis/connect ---------------------------------------------------------
+					//#############################################################################################################
+
+					onFamilyDeviceConnect:function(inMsg, inLocal, inData, inRefObj){
+						eventObject.reportOn('reconnect', inData);
+					},
+
+					onFamilyDeviceDisconnect:function(inMsg, inLocal, inData, inRefObj){
+						eventObject.reportOn('disconnect', inData);
+					}
+				}
+			);
+		});
+
+
+
+
+
+		//#############################################################################################################
+		//-------- U s e r   O b j e c t ---------------------------------------------------------
+		//#############################################################################################################
+		var UserObject = function(inPostFunction){
+			var _this = this;
+			var userData;
+			this.getUserData = function(){
+				return userData;
+			}
+
+			this.refresh = function(inPostFunction){
+				_this.loadData(inPostFunction);
+			}
+
+			this.getImageUrl = function(){
+				if(userData){
+					if(userData.screenImage){
+						return userData.screenImage;
+					}
+				}
+				return false;
+			}
+
+			var loadData = function(inPostFunction){
+				$postAjax(
+					{
+						url:'/database/getUserData',
+						send:
+							{
+
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							//var contactInfoHashByPhone = {};
+							if(inResponseText.hadError == false){
+								console.log('inResponseText.hadError == false');
+								if(inResponseText.rows){
+									userData = inResponseText.rows[0];
+									console.log('userdata--------------------------');
+									console.dir(userData);
+									if(userData.screenImage && userData.fullName){
+										//---userimage update here??
+									}
+								}
+							}
+
+							if(inPostFunction){
+								inPostFunction(inResponseText.hadError, userData);
+							}
+						}
+					}
+				);
+			}
+			loadData(inPostFunction);
+		}//end userObj...
+
+
+
+
+
+
+
+
+
+
+		//------
+		var filterObj;
+		var createFilters = function(){
+			filterObj = new commManager.FilterObject();
+			filterObj.add('notification', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+
+
+
+				if(inTransportLayer_json.dataLayer.action == 'outgoingSms'){
+					console.log('outgoingSms--------------------');
+
+					EventLogObject.addEvent(
+						{
+							type:'outgoingSms',
+							data:
+								{
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									message:inTransportLayer_json.dataLayer.msg,
+								},
+						}
+					);
+
+					eventObject.reportOn('outgoingSms', inTransportLayer_json);
+				}//endOutgoingSms---
+
+
+
+
+				if(inTransportLayer_json.dataLayer.action == 'incomingSms'){
+					//alert('PHONE' + inTransportLayer_json.dataLayer.phoneNumber);
+					EventLogObject.addEvent(
+						{
+							type:'incomingSms',
+							data:
+								{
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									message:inTransportLayer_json.dataLayer.msg,
+								},
+						}
+					);
+
+
+
+					$.debug('showSmsIncomingSmsMessage', inTransportLayer_json.dataLayer);
+					var lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+					$.debug('lookedupContact', lookedupContact);
+					if(lookedupContact == false){
+						ContactDataCache.addtempContact(
+							{
+								imageUrl:getDefaultMemberImageUrl(),
+								name:inTransportLayer_json.dataLayer.name,
+								phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
+								type:'[MOBILE]',
+							}
+						);
+
+						lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+						$.debug('lookedupContact II', lookedupContact);
+					}
+
+
+
+
+					showSmsIncomingSmsMessage(
+						{
+							//phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
+							//message:inTransportLayer_json.dataLayer.msg,
+	
+
+							name:lookedupContact.name,
+							phoneNumber:lookedupContact.phoneNumber,
+							message:inTransportLayer_json.dataLayer.msg,
+							imageUrl:lookedupContact.imageUrl,
+						}
+					);
+					eventObject.reportOn('incomingSms', inTransportLayer_json);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'incomingPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'incomingPhoneCall',
+							data:inTransportLayer_json.dataLayer,
+						}
+					);
+					//inTransportLayer_json.dataLayer.phoneNumber
+
+					eventObject.reportOn('incomingPhoneCall', inTransportLayer_json);
+					//- $.messager.show(
+					//- 	{
+					//- 		timeout:5000,
+					//- 		title:"<img style='float: left; height:40px' src='public/images/ui/email.png'/>" + "Incoming Phone Call",
+					//- 		msg:'Name:' + inTransportLayer_json.dataLayer.name + '<br>' + 'Phone Number:' + inTransportLayer_json.dataLayer.phoneNumber,
+					//- 		showType:'slide',
+					//- 		height:'300px',
+					//- 		style:
+					//- 			{
+					//- 				right:'',
+					//- 				top:document.body.scrollTop+document.documentElement.scrollTop,
+					//- 				bottom:''
+					//- 			}
+					//- 	}
+					//- );
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'missedPhoneCall'){
+					eventObject.reportOn('missedPhoneCall', inTransportLayer_json);
+					alert("missedPhoneCall");
+				}
+
+				//- //reset----------------
+				if(inTransportLayer_json.dataLayer.action == 'reset'){
+					location.reload();
+				}
+
+
+
+
+			});
+			
+
+			// --- MENU ---------------------------
+			filterObj.add('webMenu', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				console.log('FILTER == webMenu'  );
+				if(inTransportLayer_json.dataLayer.action == 'menuClick'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.id, inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'actionRequestClick'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.actionRequest, inTransportLayer_json.dataLayer.data);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'actionRequest'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.request, inTransportLayer_json.dataLayer.data);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPanelOpenClose'){
+					eventObject.reportOn('onPanelOpenClose', inTransportLayer_json.dataLayer);
+				}
+
+			});
+
+			//=========================================================
+			// FILTER PHONE TO BROWSER ONSCREEN MESSAGE
+			//=========================================================
+			filterObj.add('phoneMessage', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				if(inTransportLayer_json.dataLayer.action == 'openMessage'){
+					eventObject.reportOn('phoneMessage_' + inTransportLayer_json.dataLayer.action , inTransportLayer_json.dataLayer);
+				}
+
+
+			});
+
+
+
+
+
+
+
+
+			//=========================================================
+			// EVENT OBJECT LOADING WINDOWS HERE
+			//=========================================================
+			eventObject.setOn('onPanelOpenClose', function(inData){
+				//=============================================
+				// WINDOW OPEN & CLOSE by remote
+				//============================================
+				//=========CONTACTS===========================
+					//==========OPEN==========================
+				if(inData.id == 'mainMenu_contacts' && inData.command == 'open'){
+					PageLoaderObject.loadPage('contactManager');
+				}
+
+				//==========CLOSE==========================
+				if(inData.id == 'mainMenu_contacts' && inData.command == 'close'){
+					console.log('CLOSEING mainMenu_contacts requested by remote');
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+
+
+				//=========SMS========================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_sms' && inData.command == 'open'){
+					PageLoaderObject.loadPage('smsManager')
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_sms' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+
+
+
+				//=========USER PROFILE=====================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_userProfile' && inData.command == 'open'){
+					PageLoaderObject.loadPage('userProfile');
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_userProfile' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+			});
+
+		}
+
+
+		//=====================================================================================================================
+		//DATA OBJECT
+		//=====================================================================================================================
+		
+		var contactDataObject = new DatabaseObject(
+			{
+				editProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/editContact',
+							send:inData,
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				selectProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/getContacts',
+							send:
+								{
+
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText).rows;
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				insertProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/addContact',
+							send:inData,
+								//{
+								//},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				deleteProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/deleteContact',
+							send:
+								{
+									id:inData.id
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				onChange:function(){
+					ContactDataCache.forceRefresh(function(inNewData){
+					});
+				}
+			}
+		);
+
+		//=====================================================================================================================
+		//DATA OBJECT
+		//=====================================================================================================================
+		
+		var userDataObject = new DatabaseObject(
+			{
+				editProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/updateUser',
+							send:inData,
+							onAjaxSuccess:function(inResponseText){
+								inPostFunction(inData);
+							}
+						}
+					);
+				},
+				selectProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/getUserData',
+							send:
+								{
+
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText).rows;
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				insertProcess:function(inData, inPostFunction){
+				},
+				deleteProcess:function(inData, inPostFunction){
+				},
+			}
+		);
+
+
+		userDataObject.getEventObject().setOn('onAfterEdit', function(inData){
+			var oldImageUrl = GLOBAL_USER_IMAGE_URL + '';
+			GLOBAL_USER_IMAGE_URL = inData.screenImage;
+
+			$('img').each(function(){
+				if(oldImageUrl == $(this).attr('src')){
+					$(this).attr('src', GLOBAL_USER_IMAGE_URL);
+				}
+			});
+		});
+
+
+
+
+
+		//=====================================================================================================================
+		//DATA CACHE
+		//=====================================================================================================================
+		var ContactDataCache = new function(){
+			var _this = this;
+			var eventObject = new EventOrigin();
+			var contactHash = {};
+			var tempContactHash = {};
+
+			contactDataObject.getEventObject().setOn('onAfterSelect', function(inData){
+			});
+
+			this.forceRefresh = function(inPostFunction){
+				contactDataObject.select({}, function(inRecords){
+					_this.updateCache(inRecords);
+					if(inPostFunction){inPostFunction(inRecords);}
+				});
+			}
+
+			this.updateCache = function(inData){
+				var freshHash = {};
+				for(var inDataIndex in inData){
+					freshHash[inData[inDataIndex].id] = inData[inDataIndex];
+				}
+
+				var oldKeys = [];
+
+				for(var theKey in contactHash){
+					oldKeys.push(parseInt(theKey));
+				}
+
+				var newKeys = [];// = Object.keys(freshHash);
+				for(var theKey in freshHash){
+					newKeys.push(parseInt(theKey));
+				}
+
+				var deletedKeys = arrayDiff(oldKeys, newKeys);
+				var addedKeys = arrayDiff(newKeys, oldKeys);
+				var keysToCheckForEdit = deletedKeys.concat(addedKeys);
+				var freshHashCopy = $.copyObject(freshHash);
+				for(var freshKey in freshHashCopy){
+					if(freshKey in keysToCheckForEdit){
+						delete freshHashCopy[freshKey];
+					}
+				}
+
+				//freshHashCopy is oldRecords minus deleted and not any added from new
+				for(var checkKey in freshHashCopy){
+					if(!(freshHash[checkKey] === 'undefined') && !(typeof contactHash[checkKey] === 'undefined')){
+						if(!($.compareObject(freshHash[checkKey], contactHash[checkKey]))){
+							//has been edited
+							eventObject.reportOn('onEdit', freshHash[checkKey]);
+						}
+					}
+				}
+
+				//fire deletes
+				$.debug('befre fire deletes', contactHash);
+				for(var theKey in deletedKeys){
+					eventObject.reportOn('onDelete', contactHash[deletedKeys[theKey]]);
+				}
+
+				//fire inserts
+				for(var theKey in addedKeys){
+					eventObject.reportOn('onInsert', freshHash[addedKeys[theKey]]);
+				}
+
+
+				//check keys for new deleted changed
+				if( JSON.stringify(Object.keys(contactHash).sort()) != JSON.stringify(Object.keys(freshHash).sort()) ){
+					contactHash = freshHash;
+					eventObject.reportOn('onChange', contactHash);
+				}else{
+					for(var theKey in contactHash){
+						var oldRecord = contactHash[theKey];
+						var freshRecord = freshHash[theKey];
+						for(recordIndex in oldRecord){
+							if(oldRecord[recordIndex] != freshRecord[recordIndex]){
+								contactHash = freshHash;
+								eventObject.reportOn('onChange', contactHash);
+								return;
+							}
+						}
+					}
+				}
+
+			}
+
+			this.getEventObject = function(){
+				return eventObject;
+			}
+
+			this.getCachedDataHash = function(){
+				return $.extend(true, {}, contactHash);
+			}
+
+			this.getUnionCachedDataHash = function(){
+				return $.extend(true, tempContactHash, contactHash);
+			}
+
+			this.getCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.extend(true, {}, contactHash)));}
+				return $.hashToArray($.extend(true, {}, contactHash));
+			}
+
+			this.getUnionCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.copyAsOne(tempContactHash, contactHash)));}
+				return $.hashToArray($.copyAsOne(tempContactHash, contactHash));
+			}
+
+			this.getTempCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.copyObject(tempContactHash)));}
+				return inOptionalPostFunction($.hashToArray($.copyObject(tempContactHash)));
+			}
+
+			this.addtempContact = function(inContact){
+				var contact = 
+					{
+						id:new Date().getTime(),
+						imageUrl:getDefaultMemberImageUrl(),
+						name:'UnKnown Name',
+						type:'[MOBILE]',
+						phoneNumber:false,
+					}
+				contact = $.extend(contact, inContact);
+				contact.phoneNumber = cleanPhoneNumber(contact.phoneNumber);
+
+				var existingContact = _this.getContactByPhoneNumber(contact.phoneNumber);
+				if(existingContact){return;}
+
+				tempContactHash[contact.id] = contact;
+				if(contact){
+					eventObject.reportOn('onTempContactInsert', contact);
+				}
+			}
+
+			this.deleteTempContact = function(inContact){
+				var contact = 
+					{
+						phoneNumber:false
+					}
+				contact = $.extend(contact, inContact);
+				contact.phoneNumber = cleanPhoneNumber(contact.phoneNumber);
+
+				var existingContact = _this.getContactByPhoneNumber(contact.phoneNumber);
+				if(existingContact){
+					var passCopy = $.copyObject(existingContact);
+					delete tempContactHash[existingContact.id];
+					eventObject.reportOn('onTempContactDelete', passCopy);
+				}
+				
+			}
+
+
+			this.getContactByPhoneNumber = function(inPhoneNumber){
+				console.log('getContactByPhoneNumber ENTERED!!!!');
+				if(!(contactHash)){
+					contactDataObject.select({}, function(inRecords){
+						contactHash = $json.arrayToHash(inRecords);
+					});
+				}
+				// busy loop, should be rare if not ever, emergency case only!!!
+				while(!(contactHash)){console.log('BUSY LOOP');};
+
+				var combinedHash = $.extend(true, tempContactHash, contactHash);
+
+				for(var contactKey in combinedHash){
+					if(phoneNumberCompare(combinedHash[contactKey].phoneNumber, inPhoneNumber)){
+						return combinedHash[contactKey];
+					}
+				}
+
+				return false;
+			}
+
+			this.test = function(){
+				//alert('ContactDataCache TEST!!!');
+			}
+
+			this.getCache = function(inOptions){
+				var options = 
+					{
+						cacheOption:'getCachedDataArray',
+						forceRefresh:false,
+						onFinish:false,
+					}
+				options = $.extend(options, inOptions);
+
+				var execute = 
+					{
+						getCachedDataArray:function(){
+							if(options.forceRefresh){
+								_this.forceRefresh(function(){
+									_this.getCachedDataArray(options.onFinish);
+								});
+							}else{
+								_this.getCachedDataArray(options.onFinish);
+							}
+						},
+						getUnionCachedDataArray:function(){
+							if(options.forceRefresh){
+								_this.forceRefresh(function(){
+									_this.getUnionCachedDataArray(options.onFinish);
+								});
+							}else{
+								_this.getUnionCachedDataArray(options.onFinish);
+							}
+						},
+						getTempCachedDataArray:function(){
+							_this.getTempCachedDataArray(options.onFinish);
+						},
+					}
+				execute[options.cacheOption]();
+
+			}
+
+			this.subscribe = function(inOptions){
+				for(var theKey in inOptions){
+					_this.getEventObject().setOn(theKey, inOptions[theKey]);
+				}
+			}
+
+
+		}();
+
+
+
+		//=====================================================================================
+		// EVENT LOG
+		//=====================================================================================
+		var EventLogObject = new function(){
+			var _this = this;
+
+			var eventLogArray = [];
+
+			this.addEvent = function(inEvent){
+				var event = 
+					{
+						type:'general',
+						when:new Date().getTime(),
+						data:false,
+					}
+				event = $.extend(event, inEvent);
+				eventLogArray.push(event);
+			}
+
+			this.getEvents = function(){
+				return eventLogArray;
+			}
+
+			this.getEventsByType = function(inType){
+				var resultArray = [];
+				for(var eventLogArrayIndex in eventLogArray){
+					if(eventLogArray[eventLogArrayIndex].type == inType){
+						resultArray.push(eventLogArray[eventLogArrayIndex]);
+					}
+				}
+				return resultArray;
+			}
+		}();
+
+
+
+		//================================================================
+		// PAGE CHANGES REPORT TO EVENT OBJECT ---------------------------
+		//================================================================
+		$(document).on("pagechange",function(event, data){
+			console.log('pagechange_id:' + $(data.toPage).attr('id'));
+			eventObject.reportOn('onPageChange', $(data.toPage).attr('id'));
+		});
+		$(document).on("pagecreate",function(event, data){
+			console.log('pageLoad_id:' + $(data.toPage).attr('id'));
+			eventObject.reportOn('onPageload', $(data.toPage).attr('id'));
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		var sessionSetupAndValidation = function(inType, inWaitingDeviceTokenId, inPostFunction){
+			$postAjax(
+				{
+					url:'/security/process',
+					send:
+						{
+							type:inType,
+							waitingDeviceTokenId:inWaitingDeviceTokenId
+						},
+					onAjaxSuccess:function(inResponseText){
+						//alert(inResponseText);
+						if(inPostFunction){inPostFunction(JSON.parse(inResponseText));}
+					}
+				}
+			);
+		}
+
+
+
+
+
+		var imageShakeByPhone = function(inPhone){
+			//$('img').addClass('shake');
+			console.log('imageShakeByPhone start' + inPhone);
+			//$( "img[phone='" + inPhone + "']" ).next().addClass('shake');
+			$( "img[phone='" + inPhone + "']" ).each(function(index){
+				$( this ).addClass('shake');
+			});
+
+			setTimeout(function(){
+				//$('img').removeClass('shake');
+				console.log('imageShakeByPhone stop' + inPhone);
+				//$( "img[phone='" + inPhone + "']" ).next().removeClass('shake');
+				$( "img[phone='" + inPhone + "']" ).each(function(index){
+					$( this ).removeClass('shake');
+				});
+			}, 15000);
+			
+		}
+
+		//- var openHandset = function(){
+		//- 	//testHandset
+		//- 	$.get( "/phone/widget_phonewindow", function(data){
+		//- 		$("#welcome_phoneWindowDiv").append(data);
+		//- 	});
+		//- }
+
+
+
+		var openWebMenuOnPhone = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'openWebMenuActivity'
+						},
+					data:
+						{
+							url:"/webmenu/normalmenu"
+							//url:"arfsync"
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+
+
+
+
+		//--outward
+		eventObject.setOn('onOpenCloseToRemote', function(inData){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('onOpenCloseToRemote');
+			console.dir(inData);
+			var openOrClose = (inData.open)? 'open' : 'close';
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'openClosePanel'
+						},
+					data:
+						{
+							id:inData.id,
+							command:openOrClose
+						},
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		});
+
+		//REQUEST REMOTE MENU TO REFRESH ITS CONTENTS-----------------------------------
+		eventObject.setOn('refreshOnRemote', function(inData){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('onOpenCloseToRemote');
+			console.dir(inData);
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'requestRefresh'
+						},
+					data:
+						{
+
+						},
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		});
+
+
+		//REMOTE MENU LINK -> CONTACT MANAGER CHANGE <-------------------------------------
+		eventObject.setOn('contactManager_onChange', function(inJstruct){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('REMOTE MENU LINK -> contactManager_onChange ');
+			console.dir(inJstruct);
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'contactManager_onChange'
+						},
+					data:inJstruct,
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken COMPLETED call back entered');
+					}
+				}
+			);
+		});
+
+
+
+
+
+
+
+
+
+		//=========================================================
+		// WINDOW STATES Object
+		//=========================================================
+		var WindowStateObject = new function(){
+			var windowStateHash = {};
+			var _this = this;
+
+			this.setState = function(inKey, inState){
+				windowStateHash[inKey] = inState;
+			}
+
+			this.getState = function(inKey){
+				var state = windowStateHash[inKey];
+				if(state){
+					console.log('xSTATE==' + state);
+					return state;
+				}else{
+					console.log('STATE==false');
+					return false;
+				}
+			}
+		}();
+
+
+
+
+
+
+
+		$(document).on("pagecreate","#page_smsManager",function(){
+			console.log('page_userProfile main pageinit!!!');
+			//alert('babbyttttt');
+		});
+
+		//==================================================================================================
+		// WELCOME MSG -------------------------------------------------------------------------------------
+		//==================================================================================================
+		var WelcomeMessage = new function(){
+			var _this = this;
+
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('loginReady', function(){
+				_this.show();
+			});
+
+			this.show = function(){
+				$('#masterDiv').hide(1000, function(){
+					//$('#img_loginManager_userImg').toggle( "explode" );
+					$('#img_loginManager_userImg').fadeOut(2000, function(){
+						$('#img_loginManager_userImg').attr('src',GLOBAL_USER_IMAGE_URL);
+						$('#img_loginManager_userImg').fadeIn(2000);
+					});
+
+					$postAjax(
+						{
+							url:'/jqm/message',
+							send:
+								{
+									messageId:'main_welcome',
+									imageUrl:GLOBAL_USER_IMAGE_URL,
+									name:GLOBAL_USER_NAME,
+								},
+							onAjaxSuccess:function(inResult){
+								$('#masterDiv').html(inResult);
+								$('#masterDiv').fadeIn(3000);
+								//noMessageHtml = inResult; TODO: add script to edit html in dom
+								return;
+							}
+						}
+					);
+				});
+			}
+		}
+
+		//==================================================================================================
+		// DISCONNECT MSG ----------------------------------------------------------------------------------
+		//==================================================================================================
+		var DisconnectMessage = new function(){
+			var _this = this;
+			var disconnectedDeviceId;
+
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('disconnect', function(inData){
+				disconnectedDeviceId = inData.routingLayer.fromDeviceTokenId;
+				PageLoaderObject.loadPage('loginManager');
+				_this.show();
+			});
+
+			this.show = function(){
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'lost_connect',
+								imageUrl:GLOBAL_USER_IMAGE_URL,
+								name:GLOBAL_USER_NAME,
+							},
+						onAjaxSuccess:function(inResult){
+							$('#allScreenMessageDiv').html(inResult);
+							return;
+						}
+					}
+				);
+			}
+
+			this.getDisconnectedDeviceTokenId = function(){
+				return disconnectedDeviceId;
+			}
+		}
+
+
+
+
+		//==================================================================================================
+		// DISCONNECT MSG ----------------------------------------------------------------------------------
+		//==================================================================================================
+		var ReconnectMessage = new function(){
+			var _this = this;
+			var reconnectedDeviceId;
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('reconnect', function(inData){
+				reconnectedDeviceId = inData.routingLayer.fromDeviceTokenId;
+				if(DisconnectMessage.getDisconnectedDeviceTokenId() != reconnectedDeviceId){return;}
+				console.log('reconnectedDeviceId:' + reconnectedDeviceId);
+				commManager.setConnectedDeviceTokenId(reconnectedDeviceId);
+				_this.show();
+			});
+
+			this.show = function(){
+				openWebMenuOnPhone();
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'reconnect',
+								imageUrl:GLOBAL_USER_IMAGE_URL,
+								name:GLOBAL_USER_NAME,
+							},
+						onAjaxSuccess:function(inResult){
+							$('#allScreenMessageDiv').html(inResult);
+							return;
+						}
+					}
+				);
+			}
+		}
+
+
+		//DEVELOPMENT DELETE ALL FOR USER (ONLY FOR DEVELOPMENT) TODO:REMOVE
+		$('#bt_test').click(function(){
+			$postAjax(
+				{
+					url:'/database/deleteAllForUser',
+					send:{},
+					onAjaxSuccess:function(inResult){
+						//$('#noSmsLogInfo').html(inResult);
+						//noMessageHtml = inResult; TODO: add script to edit html in dom
+						alert('All Files Have Been Deleted From Server!!!!');
+						return;
+					}
+				}
+			);
+		});
+
+
+
+		var showSmsIncomingSmsMessage = function(inJstruct){
+			//- $.debug('showSmsIncomingSmsMessage', inJstruct);
+			//- var lookedupContact = ContactDataCache.getContactByPhoneNumber(inJstruct.phoneNumber);
+			//- $.debug('lookedupContact', lookedupContact);
+			//- if(lookedupContact == false){
+			//- 	//alert('CREATE A TEMP CONTACT HERE');
+			//- 	ContactDataCache.addtempContact(
+			//- 		{
+			//- 			imageUrl:getDefaultMemberImageUrl(),
+			//- 			name:"UNKNOWN CONTACT",
+			//- 			phoneNumber:inJstruct.phoneNumber,
+			//- 			type:'[MOBILE]',
+			//- 		}
+			//- 	);
+
+			//- 	lookedupContact = ContactDataCache.getContactByPhoneNumber(inJstruct.phoneNumber);
+			//- 	$.debug('lookedupContact II', lookedupContact);
+			//- }
+			if( typeof IncomingSmsObject === "undefined" ){
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'incoming_sms',
+							},
+						onAjaxSuccess:function(inResult){
+							//alert(JSON.stringify(inResult));
+
+							$('#incomingSmsScreenMessageDiv').html(inResult);
+							IncomingSmsObject.load();
+							IncomingSmsObject.show(
+								{
+									speed:500,
+									duration:10000,
+									name:inJstruct.name,
+									phoneNumber:inJstruct.phoneNumber,
+									message:inJstruct.message,
+									imageUrl:inJstruct.imageUrl,
+									messageMaxCharLength:20,
+									onTimeout:function(){
+										IncomingSmsObject.hide(
+											{
+												speed:'slow',
+												onFinished:function(){
+												}
+											}
+										);
+
+									}
+								}
+							);
+						}
+					}
+				);
+
+				return;
+			}else{
+				IncomingSmsObject.show(
+					{
+						speed:500,
+						duration:10000,
+						name:inJstruct.name,
+						phoneNumber:inJstruct.phoneNumber,
+						message:inJstruct.message,
+						imageUrl:inJstruct.imageUrl,
+						messageMaxCharLength:20,
+						onTimeout:function(){
+							IncomingSmsObject.hide(
+								{
+									speed:'slow',
+									onFinished:function(){
+									}
+								}
+							);
+
+						}
+					}
+				);
+			}
+		}
+
+
+

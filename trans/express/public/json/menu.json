@@ -1,0 +1,116 @@
+{
+	"isSubMenu":false,
+	"subMenuCaption":"subMenuCapt",
+	"subMenuId":"subMenuCapt",
+	"subMenuIndex":"subMenuCapt",
+	"id":"mm-m0-p0",
+	"dataOptions":"onBackCloseWindow:true, onForwardOpenWindow:true, onBackMenuAdvance:true",
+
+	"menuData":
+		[
+			{
+				"id":"mainMenu_contacts",
+				"parentId":"mm-m0-p0",
+				"dataOptions":"onBackCloseWindow:true, onForwardOpenWindow:true, onBackMenuAdvance:false",
+				"index":0,
+				"caption":"Contact Manager",
+				"insertDiv":"sldDiv",
+				"closeParentEvent":"parentStayOpen",
+				"forceBack":true,
+				"subMenu":
+					[
+						{
+							"id":"subMenu_contacts_createAndEdit",
+							"dataOptions":"onBackCloseWindow:true, onForwardOpenWindow:true, onForwardCloseCurrentWindow:false, onBackMenuAdvance:false",
+							"parentId":"mainMenu_contacts",
+							"caption":"Create And Edit",
+							"index":0,
+							"forceBack":true,
+							"closeParentEvent":"parentStayOpen"
+						},
+						{
+							"id":"subMenu_contacts_import",
+							"caption":"Import",
+							"parentId":"mainMenu_contacts",
+							"dataOptions":"",
+							"index":1,
+							"forceBack":true
+						},
+						{
+							"id":"subMenu_contacts_export",
+							"caption":"Export",
+							"parentId":"mainMenu_contacts",
+							"dataOptions":"",
+							"index":2,
+							"forceBack":true
+						}
+					]
+			},
+
+
+			{
+				"id":"mainMenu_sms",
+				"parentId":"mm-m0-p0",
+				"dataOptions":"onBackCloseWindow:true, onForwardOpenWindow:true, onForwardCloseCurrentWindow:false, onBackMenuAdvance:false",
+				"caption":"Sms Manager",
+				"index":1,
+				"subMenu":
+					[
+
+					]
+			},
+
+
+			{
+				"id":"mainMenu_phone",
+				"parentId":"mm-m0-p0",
+				"dataOptions":"",
+				"caption":"Phone",
+				"index":2,
+				"forceBack":true,
+				"subMenu":
+					[
+						{
+							"id":"subMenu_phone_unkown0",
+							"parentId":"mainMenu_phone",
+							"dataOptions":"",
+							"caption":"unknown0",
+							"index":0,
+							"forceBack":true
+						},
+						{
+							"id":"subMenu_phone_unkown1",
+							"parentId":"mainMenu_phone",
+							"dataOptions":"",
+							"caption":"unknown1",
+							"index":1,
+							"forceBack":true
+						}
+
+					]
+			},
+
+
+
+
+
+			{
+				"id":"mainMenu_userProfile",
+				"caption":"User Profile",
+				"parentId":"mm-m0-p0",
+				"dataOptions":"onBackCloseWindow:true, onForwardOpenWindow:true, onForwardCloseCurrentWindow:false, onBackMenuAdvance:false",
+				"index":1,
+				"subMenu":
+					[
+						{
+							"id":"subMenu_sms_unkown0",
+							"parentId":"mm-m0-p0",
+							"dataOptions":"",
+							"caption":"NOT IMPLEMENTED YET",
+							"index":0,
+							"forceBack":true
+						}
+					]
+			}
+		]
+}

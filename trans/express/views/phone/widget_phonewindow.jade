@@ -1,0 +1,844 @@
+
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+	//script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+	//script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+	//script(type='text/javascript', src='/js/qrcode/qrcode.js')
+	//script(type='text/javascript', src='/js/commmanager/commmanager.js')
+	//script(type='text/javascript', src='/js/clientutil/clientutil.js')
+	//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	//script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+	//script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+	//script(type='text/javascript', src='/public/js/async/async.js')
+	//script(type='text/javascript', src='/public/js/reportview/reportview.js')
+
+
+
+
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+	style.
+		header {
+			line-height:18px;
+			background-color:e0ecff;
+			height:23px;
+			color:black;
+			text-align:top;
+			padding:0px;
+		}
+		nav {
+			line-height:22px;
+			//background-color:#eeeeee;
+			height:60px;
+			width:60px;
+			float:left;
+			padding:0px;
+		}
+		section {
+			line-height:1px;
+			width:160px;
+			float:left;
+			padding:0px;
+			vertical-align: text-top;
+		}
+		footer {
+			background-color:black;
+			color:white;
+			clear:both;
+			text-align:center;
+			padding:1px;
+		}
+				.imgAndData{
+			font-size: 13px;
+			font-style: normal;
+			font-weight: normal;
+			padding-left: 5px;
+			LINE-HEIGHT:15px;
+			background-color: #eee;
+
+		}
+
+		.magicCirc{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.magicCircPnt{
+			padding:4px;
+			display:inline-block;
+			cursor:pointer;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.center{
+			margin-left: auto;
+			margin-right: auto;
+			width: 70%;
+			background-color: #b0e0e6;
+		}
+
+		//- @-webkit-keyframes thumb {
+		//- 	0% { -webkit-transform: scale(1); }
+		//- 	50% { -webkit-transform: scale(0.5); }
+		//- 	100% { -webkit-transform: scale(1); }
+		//- }
+
+		//- .backbutton img:hover{
+		//- 	-webkit-animation-name: thumb;
+		//- 	-webkit-animation-duration: 200ms;
+		//- 	-webkit-transform-origin:50% 50%;
+		//- 	-webkit-animation-iteration-count: 2;
+		//- 	-webkit-animation-timing-function: linear;
+		//- }
+
+		@-webkit-keyframes spaceboots {
+			0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+			10% { -webkit-transform: translate(-1px, -2px) rotate(-40deg); }
+			20% { -webkit-transform: translate(-3px, 0px) rotate(40deg); }
+			30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+			40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+			50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+			60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+			70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+			80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+			90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+			100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+		}
+		.shake {
+			-webkit-animation-name: spaceboots;
+			-webkit-animation-duration: 0.8s;
+			-webkit-transform-origin:50% 50%;
+			-webkit-animation-iteration-count: 15;//infinite;
+			-webkit-animation-timing-function: linear;
+		}
+		.magicShadow{
+			-moz-box-shadow:10px 10px 5px #000000;
+			-webkit-box-shadow:10px 10px 5px #000000;
+			box-shadow:10px 10px 5px #000000;
+		}
+
+		.magicPointer{
+			cursor:pointer;
+		}
+
+	//h1 /phone/widget_phoneWindow
+	//center
+
+	//==========================================================================
+	//------- H T M L ----------------------------------------------------------
+	//==========================================================================
+	
+
+					
+	//-------------------------------------------------
+		//was space2
+	div(id="widgetPhoneWindow" class="easyui-window" title="Window Layout" data-options="modal:false,inline:false,iconCls:'icon-send'" style="padding:5px;")
+		div(id="widgetPhone_layout_0" class="easyui-layout" data-options="fit:true")
+			div(data-options="region:'west',split:true" style="width:24%")
+				a(href="javascript:void(0)" id="mb_widgetPhone_logCriteria" class="easyui-menubutton" data-options="menu:'#mm',iconCls:'icon-edit'")
+					div(id="mb_widgetPhone_logCriteriaCaption") Today
+				div(id="mm" style="width:150px;")
+					div(class="clickCriteria" data-options="iconCls:'icon-undo'" onclick="$('#mb_widgetPhone_logCriteriaCaption').text(this.innerText)") Today
+					div(class="clickCriteria" data-options="iconCls:'icon-redo'" onclick="$('#mb_widgetPhone_logCriteriaCaption').text(this.innerText)") Yesterday
+					div(class="menu-sep")
+					div(class="clickCriteria" data-options="iconCls:'icon-redo'" onclick="$('#mb_widgetPhone_logCriteriaCaption').text(this.innerText)") Past 15
+					div(class="clickCriteria" data-options="iconCls:'icon-redo'" onclick="$('#mb_widgetPhone_logCriteriaCaption').text(this.innerText)") All
+				//select(id="widgetPhonePhoneCombo" class="easyui-combobox" style="width:170px")
+				br
+				select(id="widgetPhonePhoneCombo" class="easyui-combobox" style="width:100%")
+
+				//--grid------
+				//div(data-options="region:'center', border:true, " style="width:100%; ")
+				table(id="widgetPhoneLogGrid" class="easyui-datagrid" title="" style="" data-options="fit:true,singleSelect:true,collapsible:true")
+					thead
+						tr
+
+
+
+
+			div(data-options="region:'center',split:true" style="width:24%")
+				//=============================================================================================================================
+				//------ Tab layout
+				//=============================================================================================================================
+				div(id="widgetPhone_layout_1" class="easyui-layout" data-options="fit:true")
+					//============================================================================
+					div(data-options="region:'center',split:true" style="width:40%")
+
+						#phoneWindow_handset
+								
+
+
+
+					//============================================================================
+					div(data-options="region:'east',split:true" style="width:450px")
+						div(id="widgetPhone_tabs_0" class="easyui-tabs" data-options="fit:true" style="width:700px;height:250px")
+							div(title="<span id='tab_import' class='tt-inner'>Add Note</span>" style="padding:5px")
+								//p Notes Relation :
+								//select(id="widgetPhonePhoneCombo" class="easyui-combobox" style="width:170px")
+								//button(onclick="test();") TEST
+								#phonePropertyGridWidget
+								//textarea(id="ta_phoneLogNotes" rows="10" cols="50")
+							//---VIEW NOTE
+							div(title="<span id='tab_view' class='tt-inner'>View Note</span>" style="padding:5px")
+								#poneDocumentViewDiv
+
+
+
+
+
+	script.
+
+		var Widget_phoneWindowScript = new function(){
+			var _this = this;
+
+			this.load = function(){
+				$('#widgetPhoneWindow').window({
+					//inline:true,
+					closed:false,
+					title:'Handset Controller',
+					width:'95%',
+					height:'80%',
+					modal:false,
+					minimizable:false,
+					maximizable:false,
+					onBeforeClose: function(){},
+					onBeforeOpen: function(){
+						$('#widgetPhoneWindow').window('center');
+					}
+				});
+				$('#widgetPhone_layout_0').layout(
+					{
+						fit:true
+					}
+				);
+				$('#widgetPhone_layout_1').layout(
+					{
+						fit:true
+					}
+				);
+				$('#widgetPhone_tabs_0').tabs(
+					{
+						selected:0,
+						fit:true,
+						tabWidth:100,
+						tabHeight:20,
+						width:'700px',
+						height:'250px',
+						onSelect:function(title){
+							console.log(title + ' is selected');
+						}
+					}
+				);
+				//- $('#cc').combobox({
+				//- 	url:'combobox_data.json',
+				//- 	valueField:'id',
+				//- 	textField:'text'
+				//- });
+				$('#mb_widgetPhone_logCriteria').menubutton({
+					iconCls: 'icon-edit',
+					menu: '#mm',
+					onClick:function(){
+						console.log('menu click!!!');
+					}
+				});
+
+				$('#widgetPhoneLogGrid').datagrid({
+
+					fitColumns:true,
+					onSelect:function(index,row){
+						eventObject.reportOn('widgetPhoneLogGrid_onSelect', row);
+					},
+					columns:
+						[
+							[
+								{
+									field:'entryDateTime',
+									title:'When',
+									width:'100%',
+									formatter: function(value,row,index){
+										//alert(JSON.stringify(row));
+										(row.imageUrl)? row.imageUrl : row.imageUrl = getDefaultMemberImageUrl();
+										(row.name != null)? row.name : row.name = '';
+										//console.log('formaterDump:');
+										//console.dir(row);
+										return _this.createCallLogEntryHtml(
+											{
+												imageUrl:row.imageUrl,
+												name:row.name,
+												noteCount:row.noteCount,
+												phoneNumber:phoneDisplayFormat(row.phoneNumber),
+												callDayTime:row.callDayTime,
+												status:row.status,
+											}
+										);
+									}
+
+								},
+							]
+						],
+				});
+				
+				$('#widgetPhonePhoneCombo').combobox({
+					valueField:'id',
+					textField:'text',
+					onSelect:function(record){
+						_this.refreshPhoneLogGrid();
+						console.log('record');
+						console.dir(record);
+					},
+					formatter: function(row){
+						var opts = $(this).combobox('options');
+						var phoneNumber = 'value:' + row[opts.valueField];
+						var caption = row[opts.textField];
+						return '<div class=""><img style="vertical-align:middle;" src="' + row['imageUrl'] + '" width="50px" class="magicCirc" phone="' + phoneNumber + '"></img>' + "&nbsp;&nbsp;&nbsp;&nbsp;" + phoneDisplayFormat(row[opts.textField]) + "</div>";
+					}
+				});
+				$.get( "/phone/widget_phonePropertyGrid", function(data){
+					$('#phonePropertyGridWidget').html(data);
+				});
+
+				$.get( "/phone/widget_phonedocumentview", function(data){
+					//console.log('html doc view div:' + data);
+					$('#poneDocumentViewDiv').html(data);
+				});
+
+				$.get( "/handset/widget_handset", function(data){
+					$("#phoneWindow_handset").append(data);
+				});
+				
+
+				//======================================================
+				// -----  E V E N T S ----------------------------------
+				//======================================================
+
+				$('.clickCriteria').click(function(e){
+					_this.refreshPhoneLogGrid();
+				});
+
+				this.refreshPhoneLogGrid = function(){
+					var clickCriteria = $('#mb_widgetPhone_logCriteriaCaption').html();
+					console.log('clickCriteria:' + clickCriteria);
+					console.dir($('#mb_widgetPhone_logCriteriaCaption').html());
+					var selectedPhoneNumber;
+					var selectedName;
+					var selectedType;
+					var theRecord = _this.phoneComboGetSelected();
+					if(theRecord){
+						selectedPhoneNumber = theRecord.id;
+						selectedName = theRecord.name;
+						selectedType = theRecord.type;
+					}
+					if(clickCriteria == 'Today'){
+						_this.loadDataForPhoneLogGrid(
+							{
+								queryOption:'today',
+								phoneNumber:(selectedPhoneNumber)? selectedPhoneNumber : null,
+								name:(selectedName)? selectedName : null,
+								type:(selectedType)? selectedType : null,
+
+							}, false
+						);
+					}
+					if(clickCriteria == 'Yesterday'){
+						_this.loadDataForPhoneLogGrid(
+							{
+								queryOption:'yesterday',
+								phoneNumber:(selectedPhoneNumber)? selectedPhoneNumber : null,
+								name:(selectedName)? selectedName : null,
+								type:(selectedType)? selectedType : null,
+
+							}, false
+						);
+					}
+					if(clickCriteria == 'Past 15'){
+						_this.loadDataForPhoneLogGrid(
+							{
+								queryOption:'everyday',
+								limit:15,
+								phoneNumber:(selectedPhoneNumber)? selectedPhoneNumber : null,
+								name:(selectedName)? selectedName : null,
+								type:(selectedType)? selectedType : null,
+							}, false
+						);
+					}
+					if(clickCriteria == 'All'){
+						_this.loadDataForPhoneLogGrid(
+							{
+								queryOption:'everyday',
+								phoneNumber:(selectedPhoneNumber)? selectedPhoneNumber : null,
+								name:(selectedName)? selectedName : null,
+								type:(selectedType)? selectedType : null,
+							}, false
+						);
+					}
+				}
+
+
+
+				//============================
+				//---------- > I N I T < -----
+				//============================
+				_this.loadDataForPhoneLogGrid(
+					{
+						queryOption:'today',
+						limit:'1000'
+					},
+						function(inData){
+						}
+				);
+				_this.loadAllNumberIntoPhoneCombo();
+
+			}// ===  end of load----- ========================================================
+
+		//====================================================================================
+		//---------- > M E T H O D S < -------------------------------------------------------
+		//====================================================================================
+
+			this.loadAllNumberIntoPhoneCombo = function(){
+				_this.getContactsArray(function(inContactArray){
+					//alert("getContactsArray" + JSON.stringify(inContactArray));
+					var newArrayOfHash = [];
+					for(var index in inContactArray){
+						//if(inContactArray[index].phoneNumber){
+							newArrayOfHash.push(
+								{
+									id:inContactArray[index].phoneNumber,//inContactArray[index].name + '_' + inContactArray[index].type,
+									text:phoneDisplayFormat(inContactArray[index].phoneNumber),
+									name:inContactArray[index].name,
+									type:inContactArray[index].type,
+									imageUrl:inContactArray[index].imageUrl
+								}
+							);
+						//}
+					}
+					Widget_phoneWindowScript.addArrayToPhoneCombo(newArrayOfHash);
+
+
+				});
+
+
+
+				//- _this.getUniquePhoneNumbers(
+				//- 	{
+				//- 		limit:'1000'
+
+				//- 	},function(result){
+				//- 		//alert(JSON.stringify(result));
+				//- 		var newArrayOfHash = [];
+				//- 		for(var index in result){
+				//- 			if(result[index].phoneNumber){
+				//- 				newArrayOfHash.push(
+				//- 					{
+				//- 						id:result[index].phoneNumber,
+				//- 						text:phoneDisplayFormat(result[index].phoneNumber),
+				//- 						name:result[index].name,
+				//- 						imageUrl:result[index].imageUrl
+				//- 					}
+				//- 				);
+				//- 			}
+				//- 		}
+				//- 		Widget_phoneWindowScript.addArrayToPhoneCombo(newArrayOfHash);
+				//- 	}
+				//- );
+
+
+			}
+
+
+			this.phoneComboClear = function(){
+				var insertData = 
+					[
+						{
+							id:false,
+							imageUrl:getDefaultMemberImageUrl(),
+							name:"NA",
+							text: "   ----> All Numbers <----   "
+						}
+					]
+				$('#widgetPhonePhoneCombo').combobox('clear');
+				$('#widgetPhonePhoneCombo').combobox('loadData',insertData);
+			}
+
+			this.phoneComboGetSelected = function(){
+				var comboArray = $('#widgetPhonePhoneCombo').combobox('getData');
+				var selectedId = $('#widgetPhonePhoneCombo').combobox('getValue');
+				for(index in comboArray){
+					if(comboArray[index].id == selectedId){
+						return comboArray[index];
+					}
+				}
+			}
+
+			//add one record
+			/*
+			*	@param0	jsonStruct 		the option : 
+			*							{
+			*								select:justAdded / top / false==no selection
+			*								place:start / end / second / false==end
+			*							}
+			*	@param1 jsonStruct 	the record to be inserted
+			*/
+			this.appendToPhoneCombo = function(inOptionJsonStruct, inRecordJsonStruct){
+				var option = 
+					{
+						select:false,
+						place:'end'
+					}
+				option = $.extend(option, inOptionJsonStruct);
+
+				var currentRecords = $('#widgetPhonePhoneCombo').combobox('getData');
+				var justAddedIndex = -1;
+				if(option['place'] == 'start'){
+					currentRecords.unshift(inRecordJsonStruct);
+					$('#widgetPhonePhoneCombo').combobox('loadData',currentRecords);
+					justAddedIndex = 0;
+				}
+				if(option['place'] == 'end'){
+					currentRecords.push(inRecordJsonStruct);
+					$('#widgetPhonePhoneCombo').combobox('loadData',currentRecords);
+					justAddedIndex = (currentRecords.length -1);
+				}
+				if(option['place'] == 'second'){
+					var newArray = [];
+					if(currentRecords.length < 1){
+						newArray.push(inRecordJsonStruct);
+						justAddedIndex = (currentRecords.length -1);
+					}
+					if(currentRecords.length == 1){
+						newArray.push(currentRecords[0]);
+						newArray.push(inRecordJsonStruct);
+						justAddedIndex = 1;
+					}
+					if(currentRecords.length > 1){
+						for(var currentIndex in currentRecords){
+							newArray.push(currentRecords[currentIndex]);
+							if(currentIndex == 0){
+								newArray.push(inRecordJsonStruct);
+								justAddedIndex = 1;
+							}
+						}
+					}
+					$('#widgetPhonePhoneCombo').combobox('loadData',newArray);
+				}
+
+				if(option['select'] == 'justAdded'){
+					if($('#widgetPhonePhoneCombo').combobox('getData').length > 1){
+						if(justAddedIndex != -1){
+							$('#widgetPhonePhoneCombo').combobox('select', $('#widgetPhonePhoneCombo').combobox('getData')[justAddedIndex].id);
+						}
+					}
+				}
+				if(option['select'] == 'top'){
+						$('#widgetPhonePhoneCombo').combobox('unselect', $('#widgetPhonePhoneCombo').combobox('getData')[0].id);
+						$('#widgetPhonePhoneCombo').combobox('select', $('#widgetPhonePhoneCombo').combobox('getData')[0].id);
+				}
+			}
+
+			this.addArrayToPhoneCombo = function(inJsonStruct){
+				$('#widgetPhonePhoneCombo').combobox('clear');
+				// add to beginning of array
+				inJsonStruct.unshift(
+					{
+						id:false,
+						imageUrl:getDefaultMemberImageUrl(),
+						name:"NA",
+						text: "   ----> All Numbers <----   "
+					}
+				);
+				$('#widgetPhonePhoneCombo').combobox('loadData',inJsonStruct);
+			}
+
+			this.centerWindow = function(){
+				$('#widgetPhoneWindow').window('center');
+			}
+
+			this.createCallLogEntryHtml = function(inJsonStruct){
+				//name, imageUrl, phoneNumber, when, status
+				var fieldData = 
+					{
+						imageUrl:getDefaultMemberImageUrl(),
+						phoneNumber:'',
+						name:'',
+						callDayTime:'',
+						status:'',
+						noteCount:0
+					}
+
+				fieldData = $.extend(fieldData, inJsonStruct);
+				var statusImageUrlHtml;
+				if(fieldData.status == 'MISSED'){
+					statusImageUrlHtml = '<img style="vertical-align:middle;" src="' + '/public/images/ui/misscall.png' + '" height="16px" class="magicCirc" phone="' + 'phoneNumber' + '"></img>';
+				}
+				if(fieldData.status == 'OUTGOING'){
+					statusImageUrlHtml = '<img style="vertical-align:middle;" src="' + '/public/images/ui/outgoingcall.png' + '" height="16px" class="magicCirc" phone="' + 'phoneNumber' + '"></img>';
+				}
+				if(fieldData.status == 'INCOMING'){
+					statusImageUrlHtml = '<img style="vertical-align:middle;" src="' + '/public/images/ui/incomingcall.png' + '" height="16px" class="magicCirc" phone="' + 'phoneNumber' + '"></img>';
+				}
+				var htmlString = 
+					'<header style="background-color:a19988">' +
+						statusImageUrlHtml + 
+						'<left style="position: relative;left: 40;">' + fieldData.status + '</left>' + 		//'&nbsp;&nbsp;&nbsp;&nbsp;' + fieldData.status + 
+						'&nbsp;&nbsp;&nbsp;&nbsp;' + '<right style="position: relative;left: 100;">' + fieldData.noteCount + '</right>' +
+					'</header>' +
+
+					'<center><nav>' +
+						'<img style="vertical-align:middle;" src="' + fieldData.imageUrl + '" height="50px" class="magicCirc" phone="' + 'phoneNumber' + '"></img>' + 
+					'</nav></center>' +
+
+					'<center><section>' +
+						'<p>' + fieldData.name + '</p>' +
+						'<h5>' + fieldData.phoneNumber + '</h5>' +
+						'<h5>' + fieldData.callDayTime + '</h5>' +
+
+					'</section></center>' 
+
+					//- '<footer>' +
+					//- 	'Copyright © W3Schools.com' +
+					//- '</footer>'
+				;
+
+				return htmlString;
+			}
+
+
+
+
+			this.syncPhoneToStore = function(){
+				//deviceQuerySync
+			}
+
+			this.getPhoneLog = function(inJsonStruct, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/phonelog/getLast',
+						send:inJsonStruct,
+						onAjaxSuccess:function(inResponseText){
+							var theReturn = JSON.parse(inResponseText);
+							if(theReturn.result){
+								if(inPostFunction){
+									inPostFunction(theReturn.result);
+								}
+							}
+						}
+					}
+				);
+			}
+
+			this.getUniquePhoneNumbers = function(inJsonStruct, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/phonelog/getUPhoneNumbers',
+						send:inJsonStruct,
+						onAjaxSuccess:function(inResponseText){
+							var theReturn = JSON.parse(inResponseText);
+							if(theReturn.result){
+								if(inPostFunction){
+									inPostFunction(theReturn.result);
+								}
+							}
+						}
+					}
+				);
+			}
+
+			this.phoneLogGridDataAppendRow = function(inRowData){
+				$('#widgetPhoneLogGrid').datagrid('appendRow',inRowData);
+			}
+
+			this.phoneLogGridDataAppendRows = function(inArrayOfRowData){
+				for(theRowIndex in inArrayOfRowData){
+					$('#widgetPhoneLogGrid').datagrid('appendRow',inArrayOfRowData[theRowIndex]);
+				}
+			}
+
+			this.phoneLogGridClear = function(){
+				$('#widgetPhoneLogGrid').datagrid(
+					{
+						data: []
+					}
+				);
+			}
+
+			this.loadDataForPhoneLogGrid = function(inJsonStruct, inPostFunction){
+				_this.phoneLogGridClear();
+				_this.getPhoneLog(inJsonStruct, function(inData){
+					_this.phoneLogGridDataAppendRows(inData)
+				});
+			}
+
+			this.phoneLogGrid_getSelected = function(){
+				return $('#widgetPhoneLogGrid').datagrid('getSelected');
+			}
+
+			this.getContactsArray = function(inPostFunction){
+				$postAjax(
+					{
+						url:'database/getContacts',
+						send:
+							{
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							console.log('ajax callback------------------------');
+							console.dir(inResponseText);
+							if(inResponseText.hadError == false){
+								console.log('inResponseText.hadError == false');
+								if(inResponseText.rows){
+									//alert("getContactsArray" + JSON.stringify(inResponseText));
+									if(inPostFunction){inPostFunction(inResponseText.rows);}
+									return;
+								}
+							}
+							if(inPostFunction){inPostFunction({});}
+						}
+					}
+
+				);
+			}
+
+
+
+
+
+
+
+
+		}();
+
+
+		//TODO;
+		/*
+
+			Change query to also include count of notes per phonelog entry
+
+
+		*/
+
+
+		//autoLaunchFortesting!!!!
+		$(document).ready(function(){
+			Widget_phoneWindowScript.load();
+			Widget_phoneWindowScript.getPhoneLog(
+				{
+					queryOption:'today',
+					//phoneNumber:'1256502902',
+					//status:'MISSED'
+
+				},function(resultArray){
+					console.log('getPhoneLog-0-0-0-0-0-0-');
+					console.dir(resultArray);
+					//alert(JSON.stringify(resultArray));
+				}
+			);
+
+			//$('#test').html(Widget_phoneWindowScript.createCallLogEntryHtml());
+			//- Widget_phoneWindowScript.addArrayToPhoneCombo(
+			//- 	[.
+			//- 		{
+			//- 			"id":1,
+			//- 			"text":"text1"
+			//- 		},{
+			//- 			"id":2,
+			//- 			"text":"text2"
+			//- 		},{
+			//- 			"id":3,
+			//- 			"text":"text3",
+			//- 			"selected":true
+			//- 		},{
+			//- 			"id":4,
+			//- 			"text":"text4"
+			//- 		},{
+			//- 			"id":5,
+			//- 			"text":"text5"
+			//- 		}
+			//- 	]
+			//- );
+
+			//- Widget_phoneWindowScript.getUniquePhoneNumbers(
+			//- 	{
+			//- 		limit:'1000'
+
+			//- 	},function(result){
+			//- 		//alert(JSON.stringify(result));
+			//- 		var newArrayOfHash = [];
+			//- 		for(var index in result){
+			//- 			if(result[index].phoneNumber){
+			//- 				newArrayOfHash.push(
+			//- 					{
+			//- 						id:result[index].phoneNumber,
+			//- 						text:phoneDisplayFormat(result[index].phoneNumber),
+			//- 						name:result[index].name,
+			//- 						imageUrl:result[index].imageUrl
+			//- 					}
+			//- 				);
+			//- 			}
+			//- 		}
+			//- 		Widget_phoneWindowScript.addArrayToPhoneCombo(newArrayOfHash);
+			//- 	}
+			//- );
+
+		});
+
+
+		/*
+		*	@param0	jsonStruct 		the option : 
+		*							{
+		*								select:justAdded / top / false==no selection
+		*								place:start / end / second / false==end
+		*							}
+		*	@param1 jsonStruct 	the record to be inserted
+		*/
+		//this.appendToPhoneCombo = function(inOptionJsonStruct, inRecordJsonStruct){
+		//- Widget_phoneWindowScript.appendToPhoneCombo(
+		//- 	{
+		//- 		select:'top',
+		//- 		place:'second'
+		//- 	}, 
+		//- 	{
+
+		//- 		id:new Date().getTime(),
+		//- 		imageUrl:getDefaultMemberImageUrl(),
+		//- 		name:"test",
+		//- 		text: "T E S T  E N T R Y"
+
+		//- 	}
+		//- );
+
+		// var text = $('textarea#mytextarea').val();
+		//$('#myTextBox').val('new value');
+		//- var test = function(){
+		//- 	var cursorPosition = $('#ta_phoneLogNotes').prop("selectionStart");
+		//- 	console.log('cursorPosition:' + cursorPosition);
+		//- }
+	//script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/classie.js")
+	//script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/menu.js")

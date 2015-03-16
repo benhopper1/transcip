@@ -1,0 +1,145 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+body
+
+
+	//h1 contact export
+
+	div(data-role="navbar")
+		ul
+			li
+				a(href="#" id="contactExport_export" data-icon="arrow-r") Export To Phone
+			li
+				a(href="" id="contactExport_refresh" data-icon="refresh") Refresh List
+	div(data-role="main" class="ui-content")
+		#exportListDiv
+
+
+
+
+
+
+
+
+
+	script.
+		//========================================================
+		//(exportListDiv) CHECKBOXLINES --------------------------
+		//========================================================
+		$('#exportListDiv').CheckboxLines('create', 
+			{
+				onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
+					//alert('onChangeCallBack:' + isChecked);
+					console.dir(dataWrapper);
+				}
+			}
+		);
+
+		$('#exportListDiv').CheckboxLines('addItem',
+			{
+				caption:'noConnection!!!!',
+				isChecked:true
+			}
+		);
+
+		//========================================================
+		// EVENT ---------------------------------------
+		//========================================================
+		$('#contactExport_export').click(function(){
+			var unWrappedDataArray = $('#exportListDiv').CheckboxLines('getDataArrayFromWrapperArray', $('#exportListDiv').CheckboxLines('getCheckedData'));
+			ExportObject.export(unWrappedDataArray, function(inData){
+				ExportObject.refresh();
+			});
+		});
+
+		$('#tab_contactManager_export').click(function(){
+			ExportObject.refresh();
+		});
+
+
+		$('#contactExport_refresh').click(function(){
+			ExportObject.refresh();
+		});
+
+
+		//=============================================================================================
+		// EXPORT OBJECT
+		//=============================================================================================
+		var ExportObject = new function(){
+			var _this = this;
+
+
+			//------------------------------------------------------------------
+			// EXPORT ------
+			//------------------------------------------------------------------
+			this.export = function(checkedRowsArray, inPostFunction){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'contactRequest',
+								
+							},
+						data:
+							{
+								action:'addToContacts',
+								contactsArray:checkedRowsArray
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete transactionToDeviceToken call back entered');
+							if(inPostFunction){
+								inPostFunction(inDataLayer);
+							}
+						}
+					}
+				);
+			}
+
+			//------------------------------------------------------------------
+			// REFRESH ------
+			//------------------------------------------------------------------
+			this.refresh = function(){
+				$('#exportListDiv').CheckboxLines('clear');
+
+				$postAjax(
+					{
+						url:'/database/phonecache/getExportableData',
+						send:
+							{
+							},
+						onAjaxSuccess:function(inResult){
+							var rows = JSON.parse(inResult).result;
+							for(var rowsIndex in rows){
+								var caption = phoneDisplayFormat(rows[rowsIndex].phoneNumber)+ ' &nbsp;&nbsp;&nbsp;&nbsp;  ' + rows[rowsIndex].name + '&nbsp;&nbsp;&nbsp;&nbsp;   ' + rows[rowsIndex].type;
+								$('#exportListDiv').CheckboxLines('addItem',
+									{
+										lookupId:rows[rowsIndex].id,
+										caption:caption,
+										isChecked:false,
+										data:rows[rowsIndex]
+									}
+								);
+							}
+
+						}
+					}
+				);
+			}
+
+		}(); // end of obj
+
+		$(document).ready(function(){
+			eventObject.setOn('loginReady', function(inData){
+				//alert('EXPORT LOGIN----');
+			});
+		});
+
+
+
+
+
+
+

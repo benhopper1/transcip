@@ -1,0 +1,17 @@
+Successful Purchase--------------------------------------------------------------
+02-24 05:26:04.201: V/arfComm(9259): From in WebAppInterfaceBase{"action":"buyProduct","productId":"arfsync.test1","productType":"inapp"}
+02-24 05:26:04.201: V/arfComm(9259): makePurchase ENTERED{"isOwned":"false","productId":"arfsync.test1","productType":"inapp"}
+02-24 05:26:04.201: V/arfComm(9259): Launching purchase flow
+02-24 05:26:04.201: V/arfComm(9259): here we are
+02-24 05:27:53.725: V/arfComm(9259): onActivityResult(10001,-1,Intent { (has extras) }
+02-24 05:27:53.748: V/arfComm(9259): onPurchasePass CALLBACK
+02-24 05:27:53.748: V/arfComm(9259): onActivityResult handled by IABUtil.
+
+Canceled Purchase---------------------------------------------------------
+02-24 05:39:48.967: V/arfComm(9259): From in WebAppInterfaceBase{"action":"buyProduct","productId":"test0","productType":"inapp"}
+02-24 05:39:48.967: V/arfComm(9259): makePurchase ENTERED{"isOwned":"false","productId":"test0","productType":"inapp"}
+02-24 05:39:48.967: V/arfComm(9259): Launching purchase flow
+02-24 05:39:48.967: V/arfComm(9259): here we are
+02-24 05:39:58.240: V/arfComm(9259): onActivityResult(10001,0,Intent { (has extras) }
+02-24 05:39:58.240: V/arfComm(9259): onPurchasePass CALLBACK
+02-24 05:39:58.240: V/arfComm(9259): onActivityResult handled by IABUtil.

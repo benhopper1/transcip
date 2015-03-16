@@ -1,0 +1,69 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+//background-image: url('public/images/ui/background_crack.jpg')
+body(style="")
+
+	//li
+		//span Contact Transition
+		//ul
+
+	if isSubMenu
+		li
+			span teeeeee
+			ul
+				each item in menuData
+					li
+						a(id="#{item.id}" onclick="console.log('add contact clciky')" href="#") #{item.caption}
+						script.
+							$('##{item.id}').click(function(){
+								Android.onMenuClick(JSON.stringify(
+									{
+										id:'#{item.id}'
+									}
+								));
+							});
+						if item.forceBack
+							script.
+								$('##{item.id}').click(function(){
+									Android.forceBack();
+								});
+
+
+
+
+	else
+		each item in menuData
+			li
+				a(id="#{item.id}" onclick="console.log('add contact clciky')" href="#") #{item.caption}
+				script.
+					$('##{item.id}').click(function(){
+						Android.onMenuClick(JSON.stringify(
+							{
+								id:'#{item.id}'
+							}
+						));
+					});
+				if item.forceBack
+					script.
+						$('##{item.id}').click(function(){
+							Android.forceBack();
+						});
+
+
+
+	script.
+		$(document).ready(function() {
+			/*$("#my-menu").mmenu(
+				{
+					// options
+					//classes: "mm-light",
+					offCanvas:false,
+					classes: "mm-fullscreen mm-light",
+					onClick:
+						{
+							blockUi:false
+						}
+				}
+			);*/
+		});

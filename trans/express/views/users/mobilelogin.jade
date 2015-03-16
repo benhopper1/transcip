@@ -1,0 +1,127 @@
+doctype html
+html
+	head(lang="en")
+		title Mobile login
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+
+
+		link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+		script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+		script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+	//body(style="background-color: #000000; color: #ffffff;")
+	body
+		style.
+			img{
+				max-width: 100%;
+			}
+
+			.ui-page {
+				background: transparent;
+			}
+			.ui-content{
+				background: transparent;
+			}
+			body {
+				background: url(/public/images/ui/accountbkg.png);
+				background-repeat:repeat-y;
+				background-position:center center;
+				background-attachment:scroll;
+				background-size:100% 100%;
+			}
+
+		div(id="page_mobileLogin" data-role="page" data-theme="b" style="")
+			center
+				img(src="/public/images/ui/arfsync_logo.png")
+			div(id="contactsWindow" data-role="main" class="ui-content")
+				form(method="post" id="userForm")
+					div(class="ui-field-contain")
+						input(tabindex="0" type="text" id="widget_userForm_userName" 	name="userName" 	placeholder="User Name...")
+						input(tabindex="1" type="password" id="widget_userForm_password" 	name="password" 	placeholder="Password...")
+
+						//a(id="addEditContacts_clear" href="javascript:void(0)" onclick="Android.surfTo_SameDomain('/user/widget_userForm')" class="easyui-linkbutton") Create Account
+						input(id="bt_login" data-icon="action" type="button" value="Login")
+						br
+						br
+						br
+						input(id="a_createAccount" data-icon="action" type="button" value="Create Account")
+						//a(id="a_createAccount" href="user/widget_userForm" value="Create Account") fff
+
+
+
+
+
+
+	script.
+		$('#bt_login').click(function(){
+			login();
+		});
+		$('#a_createAccount').click(function(){
+			window.location = "/user/widget_userForm";
+		});
+		var login = function(){
+			Android.secureLogin(JSON.stringify(
+				{
+					userName:$('#widget_userForm_userName').val(),
+					password:$('#widget_userForm_password').val(),
+					deviceId:0,
+					agent:navigator.userAgent,
+					deviceNumber:'na',
+					deviceType:'androidApp',//move to serverside....based on useragent...
+					androidSuccessCallback:'loginSuccess',
+					androidFailCallback:'loginFail',
+				}
+			));
+		}
+
+		var loginSuccess = function(inData){
+			console.log('z2 loginSuccess' + inData);
+			//Android.reportOnCompleted(JSON.stringify(inData));
+			Android.reportOnCompleted(inData);
+		}
+
+		var loginFail = function(inData){
+			console.log('z3 loginFail' + inData);
+		}
+
+
+
+
+
+
+
+			/*$postAjax(
+				{
+					url:'/user/mobileLogin',
+					send:
+						{
+							userName:$('#widget_userForm_userName').val(),
+							password:$('#widget_userForm_password').val(),
+							deviceId:0,
+							agent:navigator.userAgent,
+							deviceNumber:'na',
+							deviceType:'androidApp'//move to serverside....based on useragent...
+						},
+					onAjaxSuccess:function(inResponseText){
+						inResponseText = JSON.parse(inResponseText);
+						if(inResponseText){
+							if(inResponseText.result){
+								inResponseText.result.password = $('#widget_userForm_password').val();
+								Android.reportOnCompleted(JSON.stringify(inResponseText));
+							}else{
+								//problem--
+								//inResponseText.hadError = true;
+								//Android.reportOnComplete(JSON.stringify(inResponseText));
+								window.location = "/user/widget_userForm";
+							}
+						}
+						
+					}
+				}
+			);
+		*/

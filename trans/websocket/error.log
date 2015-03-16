@@ -1,0 +1,29 @@
+{ debugObject: [32m'routeDomainErrors'[39m,
+  label: [32m'routeError'[39m,
+  when: [32m'2015-03-15 07:00:07'[39m,
+  data: 
+   { route: [32m'transactionToServer'[39m,
+     transportLayer: 
+      { userId: [32m''[39m,
+        deviceId: [32m''[39m,
+        securityToken: [32m'$ecurity4'[39m,
+        transactionId: [33m1426420807548[39m,
+        routingLayer: 
+         { type: [32m'transactionToServer'[39m,
+           command: [32m'waitForQr'[39m },
+        dataLayer: 
+         { userName: [32m'na'[39m,
+           password: [32m'na'[39m,
+           deviceNumber: [32m'devNumber$rr'[39m,
+           userAgent: [32m'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36'[39m,
+           deviceType: [32m'desktopBrowser'[39m } },
+     userId: [90mundefined[39m,
+     deviceTokenId: [90mundefined[39m,
+     error: 
+      { [ReferenceError: err is not defined]
+        domain: 
+         { domain: [1mnull[22m,
+           _events: { error: [36m[Function][39m },
+           _maxListeners: [33m10[39m,
+           members: [] },
+        domainThrown: [33mtrue[39m } } }

@@ -1,0 +1,744 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+	
+
+body(style="")
+
+	script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+	//script(type='text/javascript', src='/public/js/jquery/v2.1.3/jquery.min.js')
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+	script(type="text/javascript" src="/public/js/slider/js/jssor.slider.mini.js")
+	link(rel="stylesheet" href="/public/js/slider/css/slider.css")
+
+	//https://github.com/jackncoke/jquery-mmenu/blob/master/source/jquery.mmenu.js
+	//script(src="/public/js/mastermenu/src/js/jquery.mmenu.min.js" type="text/javascript")
+	
+	style.
+		.magicCirc{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.magicSquare{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.magicSquarePnt{
+			padding:4px;
+			cursor:pointer;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.imageAndText{
+			//left:10px;
+			//vertical-align: middle;
+			//margin-bottom: 0.75em;
+			//left: 5px ;
+			text-align: left;
+			padding-left: 20px !important;
+		}
+
+		img{
+			object-fit: cover;
+			overflow: hidden;
+		}
+
+
+	script(src="/public/js/mastermenu/src/js/jquery.mmenu.js" type="text/javascript")
+	link(href="/public/js/mastermenu/src/css/jquery.mmenu.css" type="text/css" rel="stylesheet")
+	link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.themes.css" type="text/css" rel="stylesheet")
+	link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.fullscreen.css" type="text/css" rel="stylesheet")
+	
+	//add header from mm
+	
+
+
+	link(href="/public/js/mastermenu/src/css/jquery.mmenu.hopper.css" type="text/css" rel="stylesheet")
+	script(src="/public/js/webmenu/webmenu.js" type="text/javascript")
+
+	script.
+
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+		
+
+
+	mixin build(inItem)
+		if inItem.subMenu
+				li
+					span(data-options="#{inItem.dataOptions} " onclick="masterMenu.reportOnClick('#{inItem.id}', '#{inItem.index}', '#{inItem.caption}')") #{inItem.caption}
+					ul(id="#{inItem.id}" data-options="#{inItem.dataOptions} " closeParentEvent="#{inItem.closeParentEvent}")
+						//add div
+						if inItem.insertDiv
+							div(id="#{inItem.insertDiv}" class="insert-div-cls")
+						//recurse here------
+						each item_2 in inItem.subMenu
+							+build(item_2)
+						//li(id="#{inItem.id}_appendDiv")
+					if inItem.forceBack
+						script.
+							$('##{inItem.id}').click(function(e){
+								console.log('XXXX:#{inItem.id}');
+								console.log('ID XXXX:' + $($(this).context.nextSibling).attr('id'));
+
+								console.dir(e);
+							//- $('##{inItem.id}').on('click',function(){
+							//- 	Android.forceBack();
+							});
+							var back = function(){
+								//console.log("back entered!!! A" + backHref)
+								//$('##{inItem.id}').off( "click", "**" );
+								//$('##{inItem.id}').trigger('click');
+								//console.dir(backThis);
+								//$(backThis).trigger('click');
+								//$('.mm-subclose').close();
+								//$('.mm-subclose').trigger('click');
+								//$( ".mm-subclose" ).removeClass( '.mm-subclose' );
+								//window.location.href = '#mm-0';//backHref;
+								//window.location = 'http://google.com';
+								//$('.mm-subclose').trigger('click');
+								//$('.mm-subclose').
+
+							}
+	
+	
+	
+			else
+				li
+					if(inItem.type == 'spacer')
+						div(height="#{inItem.height}")
+					else
+						a(id="#{inItem.id}"  data-options="#{inItem.dataOptions} " onclick="console.log('add contact clciky');masterMenu.reportOnClick('#{inItem.id}', '#{inItem.index}', '#{inItem.caption}');" href="#") #{inItem.caption}
+						//add div
+						if inItem.insertDiv
+							li
+								a(id="#{inItem.insertDiv}" class="insert-div-cls")
+				script.
+					$('##{inItem.id}').click(function(){
+						//turn back on
+						//- Android.onMenuClick(JSON.stringify(
+						//- 	{
+						//- 		id:'#{inItem.id}'
+						//- 	}
+						//- ));
+					});
+				if inItem.forceBack
+					script.
+						$('##{inItem.id}').click(function(){
+						//$('##{inItem.id}').on('click',function(){
+							//Android.forceBack();
+						});
+						var back = function(){
+							//console.log("back entered!!! B" + backHref)
+							//window.location.href = 'automenu#mm-0';//backHref;
+							//$('##{inItem.id}').trigger('click');
+							//$('.mm-subclose').close();
+							//$("#my-menu").trigger("close.mm");
+							//console.dir(backThis);
+							//$(backThis).trigger('click');
+							//$('.mm-subclose').trigger('click');
+							//$( ".mm-subclose" ).removeClass( '.mm-subclose' );
+							//$('a.mm-subclose').first().trigger('click');
+							
+							//working
+							//$('a.mm-subclose').last().trigger('click');
+
+							$('#subMenu_contacts_add').find('a.mm-subclose').trigger('click');
+
+							//window.location =  'http://192.168.0.16:35001/webmenu/automenu#mainMenu_contacts';///automenu#mm-0';//'http://google.com';//'automenu#mm-0'; //backHref;
+						}
+
+
+
+	//menu html here
+	//h2 gggg
+	div(id="screen2Div" style="")
+	a(id="open_main_menu" href="#my-menu")
+	nav(id="my-menu" style="width:100%;z-index: 10000;")
+		ul()
+			//img(src="xxx")
+			#sliderDiv
+
+			if isSubMenu
+				li
+					span(data-options="#{item.dataOptions} " onclick="console.log('add contact clciky'); masterMenu.reportOnClick('#{subMenuId}', '#{subMenuIndex}', '#{subMenuCaption}');") teeeeee
+					ul()
+						
+						each item in menuData
+							+build(item)
+							//li 
+								//a(id="#{item.id}") #{item.caption}
+
+
+
+			else
+				each item in menuData
+						+build(item)
+
+
+
+
+
+
+	script.
+		//backHref = 0;;
+		var backThis;
+		var WebMenu = function(){
+			var _this = this;
+			var contactsSlider;
+			
+			setTimeout(function(){
+				console.log('setTimeout EXECUTED-----------------------------------------------------------') ;
+				//console.dir(MasterMenu.panelBackStack);
+				//subMenu_contacts_add
+				//mainMenu_contacts
+		//		masterMenu.openPanel('mainMenu_contacts');
+				//masterMenu.goBack();
+				//$('span').trigger('click');
+				//ContactsSlider.deleteSlide(273);
+				//webMenu.loadSlider('sldDiv');
+
+
+
+				//- masterMenu.addHtml(
+				//- 	{
+				//- 		panelId:'mainMenu_sms',
+				//- 		newElementId:'newId',
+				//- 		html:masterMenu.getHtmlTemplate(
+				//- 			{
+				//- 				template:'imageAndText',
+				//- 				options:
+				//- 					{
+				//- 						imageSource:'/public/images/ui/chrome.png',
+				//- 						caption:'The Caption'
+				//- 					}
+				//- 			}
+				//- 		)
+				//- 	}
+				//- );
+				//_this.loadScreenTwo('<h1>Ben Hopper Was Here</h1>');
+				//_this.showScreenTwo();
+				//$( "#my-menu" ).hide( 1000 );
+				setTimeout(function(){
+					//$( "#my-menu" ).show( 1000 );
+					//_this.hideScreenTwo();
+				}, 3000);
+
+			}, 6000);
+
+			//--> used to get a span click and beyond..
+			//- $('a').click(function(e){
+			//- 	backThis = this; 
+			//- 	//$(this).addClass( "clickpoint" );
+			//- 	$('.mm-subclose').addClass( "clickpoint" );
+			//- 	var backHref = $('.mm-subclose').attr('href');
+			//- 	console.log('href:' + backHref);
+			//- 	//window.location.href = href;
+			//- 	$($(this).context.nextSibling).trigger('click');
+			//- });
+		//	$('.mm-subclose').click(function(e){_this.reportOnClick('closeSubMenu',-1,$(this)[0].innerText);console.dir($(this)[0].innerText);console.dir('a .mm-subclose:' );});;
+
+			//- var eventCallBackList = {};
+			//- this.setOnClick = function(inCallbackFunction){
+			//- 	var functionId = new Date().getTime()+'z';
+			//- 	eventCallBackList[functionId] = inCallbackFunction;
+			//- 	return functionId;
+			//- }
+
+			//- this.goBack = function(){
+
+			//- }
+
+			//- this.unsetOnClick = function(inFunctionId){
+			//- 	delete eventCallBackList[inFunctionId];
+			//- }
+
+			//- this.reportOnClick = function(inId, inIndex, inCaption){
+			//- 	for(var eventCallBackListIndex in eventCallBackList){
+			//- 		if(eventCallBackList[eventCallBackListIndex]){
+			//- 			var event = 'clickToOpen';
+			//- 			if(inIndex == -1){
+			//- 				event = 'clickToClose'
+			//- 			}
+			//- 			eventCallBackList[eventCallBackListIndex](event, inId, inIndex, inCaption);
+			//- 		}
+			//- 	}
+			//- }
+
+
+			this.loadScreenTwo = function(inHtmlString){
+				$('#screen2Div').html(inHtmlString);
+			}
+			this.showScreenTwo = function(){
+				$( "#my-menu" ).hide( 1000 );
+				$( "#my-screen2Div" ).show( 1000 );
+			}
+			this.hideScreenTwo = function(){
+				$( "#screen2Div" ).hide( 1000 );
+				$( "#my-menu" ).show( 1000 );
+			}
+
+			this.contactManagerOnChange = function(inJsonStruct){
+				var data = inJsonStruct;
+				//var data = JSON.parse(inJsonStruct);
+				var action = data.action;
+				var record = data.record;
+
+				if(action == 'delete'){
+					console.log('DELETE:' + record.id);
+					contactsSlider.removeSlide(record.id);
+					contactsSlider.redraw();
+					// - SMS ---------------
+					masterMenu.remove('contactsMenu_sms_' + record.id);
+				}
+
+				if(action == 'add'){
+					console.log('ADD:' + record.id);
+					contactsSlider.addImageSlide(record.id, record.imageUrl);
+					contactsSlider.redraw();
+					// - SMS ---------------
+					masterMenu.addHtml(
+						{
+							panelId:'mainMenu_sms',
+							newElementId:'contactsMenu_sms_' + record.id,
+							actionRequest:
+								{
+									request:'contactClick',
+									data:record.id
+								},
+							html:masterMenu.getHtmlTemplate(
+								{
+									template:'imageAndText',
+									options:
+										{
+											imageSource:record.imageUrl,
+											caption:record.name,
+										}
+								}
+							)
+						}
+					);
+				}
+
+				if(action == 'edit'){
+					console.log('EDIT:' + record.id);
+					contactsSlider.addImageSlide(record.id, record.imageUrl);
+					contactsSlider.redraw();
+					// - SMS ---------------
+					masterMenu.remove('contactsMenu_sms_' + record.id);
+					masterMenu.addHtml(
+						{
+							panelId:'mainMenu_sms',
+							newElementId:'contactsMenu_sms_' + record.id,
+							actionRequest:
+								{
+									request:'contactClick',
+									data:record.id
+								},
+							html:masterMenu.getHtmlTemplate(
+								{
+									template:'imageAndText',
+									options:
+										{
+											imageSource:record.imageUrl,
+											caption:record.name,
+										}
+								}
+							)
+						}
+					);
+				}
+			}
+
+
+			this.openClosePanel = function(inJsonStruct){
+				console.log('openCloseMenu');
+				console.dir(inJsonStruct);
+				if(inJsonStruct.command == 'open'){
+					masterMenu.openPanel(inJsonStruct.id);
+				}
+				if(inJsonStruct.command == 'close'){
+					masterMenu.goBack();
+					//masterMenu.openPanel(inJsonStruct.id);
+				}
+			}
+
+			this.getContacts = function(inPostFunction){
+				$postAjax(
+					{
+						url:'/database/getContacts',
+						send:
+							{
+								
+							},
+						onAjaxSuccess:function(inResponseText){
+							//alert(inResponseText);
+							console.log(inResponseText); //alert(inResponseText.rows);
+							inResponseText = JSON.parse(inResponseText);
+							if(inPostFunction){inPostFunction(inResponseText.rows);}
+						}
+					}
+				);
+			}
+
+			this.loadSlider = function(inSliderDivId){
+
+
+
+
+				contactsSlider = new ContactsSlider(
+					{
+						containerId:inSliderDivId,
+						width:600,
+						onSwipe:function(inIndex){
+							//alert('you' + inIndex);
+						},
+						onClick:function(inIndex, inLookupId){
+							//alert('inIndex, inLookupId' +inIndex +' , '+inLookupId);
+						},
+						imageClass:' magicSquarePnt'
+					}
+				);
+
+
+				contactsSlider.setSlideSize('300px', '150px');
+
+
+
+
+
+
+
+				console.log('--------loadSlider---------------------');
+				_this.getContacts( function(inRows){
+					var imageUrlArray = [];
+					for(var inRowsIndex in inRows){
+						if(inRows[inRowsIndex].imageUrl){
+							imageUrlArray.push(inRows[inRowsIndex].imageUrl);
+							contactsSlider.addImageSlide(inRows[inRowsIndex].id, inRows[inRowsIndex].imageUrl);
+						}
+
+						//for sms contacts injection...
+						masterMenu.addHtml(
+							{
+								panelId:'mainMenu_sms',
+								newElementId:'contactsMenu_sms_' + inRows[inRowsIndex].id,
+								actionRequest:
+									{
+										request:'contactClick',
+										data:inRows[inRowsIndex].id
+									},
+								html:masterMenu.getHtmlTemplate(
+									{
+										template:'imageAndText',
+										options:
+											{
+												imageSource:inRows[inRowsIndex].imageUrl,
+												caption:inRows[inRowsIndex].name,
+												//imageClass:'',
+												//imageStyle:''
+											}
+									}
+								)
+							}
+						);
+
+					}
+					contactsSlider.redraw();
+
+
+
+					//- masterMenu.slider(
+					//- 	{
+					//- 		sliderDivId:inSliderDivId,
+					//- 		sliderUrl:'/contacts/widget_contacts_slider',
+					//- 		imageUrlArray:imageUrlArray,
+					//- 		informationArray:inRows,
+					//- 		divHeight:'25px',
+					//- 		class:'magicCirc contactImage',
+					//- 		sliderSize:
+					//- 			{
+					//- 				width:200
+					//- 			}
+					//- 	}
+					//- );
+				});
+			}
+
+			//===============================================
+			// -- >  R E F R E S H ---->
+			//===============================================
+
+			this.refresh = function(){
+				//alert('REFRESH');
+				_this.loadSlider('sldDiv');
+				//$('.insert-div-cls')
+
+			}
+
+
+
+			//====================================================================
+			//-- > R E M O T E   W I N D O W   C O N T R O L
+			//====================================================================
+			this.closeRemoteWindow = function(inId){
+				console.log('REQUEST PANEL CLOSED:' + inId);
+				if(!(typeof Android === 'undefined')){
+					Android.onPanelOpenClose(JSON.stringify(
+						{
+							id:inId,
+							command:'close'
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}
+			}
+
+			this.openRemoteWindow = function(inId){
+				console.log('REQUEST PANEL OPENED:' + inId);
+				if(!(typeof Android === 'undefined')){
+					Android.onPanelOpenClose(JSON.stringify(
+						{
+							id:inId,
+							command:'open'
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}
+			}
+
+
+			//------startup 
+			_this.loadSlider('sldDiv');
+			//_this.loadSlider('sldDiv2');
+
+
+
+		}//end of webMenuObject
+
+
+
+		var webMenuObject;
+		var _menu;
+		$(document).ready(function() {
+
+
+
+			webMenu = new WebMenu();
+			//webMenu.load();
+			//- masterMenu.setOnClick(function(inEvent, inId, inIndex, inCaption){
+			//- 	console.log('masterMenu.setOnClick------------------------------------------');
+			//- 	console.dir(
+			//- 		{
+			//- 			inEvent:inEvent, inId:inId, inIndex:inIndex, inCaption:inCaption
+			//- 		}
+			//- 	);
+
+			//- 	var eventData = 
+			//- 		{
+			//- 			event:inEvent,
+			//- 			id:inId,
+			//- 			index:inIndex,
+			//- 			caption:inCaption,
+			//- 		}
+
+
+			//- 	if(!(typeof Android === 'undefined')){
+			//- 		Android.onMenuClick(JSON.stringify(eventData));
+			//- 	}else{
+			//- 		console.log('----------ANDROID------(not defined)----------------');
+			//- 		console.dir(eventData);
+			//- 	}
+
+
+
+			//- });
+
+			//webMenu.loadSlider('sldDiv');
+
+
+		});
+
+
+		//debugOnly-----
+		var isGet = #{isGet};
+		//--------------
+
+		var masterMenu = new MasterMenu(
+			{
+				elementId:'my-menu',
+				mode:
+					{
+						//type:isGet? 'master':'slave'
+						type:'slave'
+					},
+				options:
+					{
+						offCanvas:false,
+						classes: "mm-fullscreen mm-light",
+						onClick:
+							{
+								//blockUi:false,
+								preventDefault:false
+							}
+					},
+				config:{},
+				onPanelOpen:function(inId){
+					console.log('PANEL OPENED:' + inId);
+					if(!(typeof Android === 'undefined')){
+						Android.onPanelOpenClose(JSON.stringify(
+							{
+								id:inId,
+								command:'open'
+							}
+						));
+					}else{
+						console.log('----------ANDROID------(not defined)----------------');
+					}
+				},
+				onPanelClose:function(inId){
+					//- console.log('PANEL CLOSED:' + inId);
+					//- if(!(typeof Android === 'undefined')){
+					//- 	Android.onPanelOpenClose(JSON.stringify(
+					//- 		{
+					//- 			id:inId,
+					//- 			command:'close'
+					//- 		}
+					//- 	));
+					//- }else{
+					//- 	console.log('----------ANDROID------(not defined)----------------');
+					//- }
+				},
+				onSilentPanelOpen:function(inId){
+					//- console.log('REQUEST PANEL OPENED:' + inId);
+					//- if(!(typeof Android === 'undefined')){
+					//- 	Android.onPanelOpenClose(JSON.stringify(
+					//- 		{
+					//- 			id:inId,
+					//- 			command:'open'
+					//- 		}
+					//- 	));
+					//- }else{
+					//- 	console.log('----------ANDROID------(not defined)----------------');
+					//- }
+				},
+				onSilentPanelClose:function(inId){
+					//- console.log('REQUEST PANEL CLOSED:' + inId);
+					//- if(!(typeof Android === 'undefined')){
+					//- 	Android.onPanelOpenClose(JSON.stringify(
+					//- 		{
+					//- 			id:inId,
+					//- 			command:'close'
+					//- 		}
+					//- 	));
+					//- }else{
+					//- 	console.log('----------ANDROID------(not defined)----------------');
+					//- }
+				},
+
+
+
+				onSilentPanelForward:function(inJdata){
+					console.log('FROM onSilentPanelForwar');
+					if(inJdata.dataOptions.onForwardOpenWindow){
+						console.log('RTO:openRemoteWindow:' + inJdata.openingPanelId);
+						webMenu.openRemoteWindow(inJdata.openingPanelId);
+					}
+					if(inJdata.dataOptions.onForwardCloseCurrentWindow){
+						console.log('RTO:onForwardCloseCurrentWindow == true, closeRemoteWindow:' + inJdata.closingPanelId);
+						webMenu.closeRemoteWindow(inJdata.closingPanelId);
+					}
+					
+				},
+				onSilentPanelBackward:function(inJdata){
+					console.log('FROM reportOnSilentPanelBackward');
+					if(inJdata.dataOptions.onBackCloseWindow){
+						console.log('RTO:closeRemoteWindow:' + inJdata.closingPanelId);
+						webMenu.closeRemoteWindow(inJdata.closingPanelId);
+					}
+					if(inJdata.dataOptions.onBackMenuAdvance){
+						console.log('RTO:onBackMenuAdvance:' + inJdata.openingPanelId);
+						masterMenu.openPanel(inJdata.openingPanelId)
+					}
+				},
+				onActionRequestClick:function(inId, inAction, inData){
+					console.log('ON MENU CLICK:' + inId);
+					if(!(typeof Android === 'undefined')){
+						Android.onActionRequestClick(JSON.stringify(
+							{
+								id:inId,
+								action:inAction,
+								data:inData
+							}
+						));
+					}else{
+						console.log('----------ANDROID------(not defined)----------------');
+					}
+				},
+
+
+				onMenuClick:function(inId, inIndex, inCaption){
+					console.log('ON MENU CLICK:' + inId);
+					if(!(typeof Android === 'undefined')){
+						Android.onMenuClick(JSON.stringify(
+							{
+								id:inId,
+								index:inIndex,
+								caption:inCaption
+							}
+						));
+					}else{
+						console.log('----------ANDROID------(not defined)----------------');
+					}
+				},
+
+				onContactClick:function(inId, inIndex, inCaption){
+					console.log('ON onContactClick:' + inId);
+					if(!(typeof Android === 'undefined')){
+						Android.onContactClick(JSON.stringify(
+							{
+								id:inId,
+								index:inIndex,
+								caption:inCaption
+							}
+						));
+					}else{
+						console.log('----------ANDROID------(not defined)----------------');
+					}
+				},
+
+
+			}
+		);

@@ -1,0 +1,746 @@
+head 
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+
+	//script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+	//script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+	//script(type='text/javascript', src='/js/qrcode/qrcode.js')
+	//script(type='text/javascript', src='/js/commmanager/commmanager.js')
+	//script(type='text/javascript', src='/js/clientutil/clientutil.js')
+	//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	//script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+	//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+	//script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+	//script(type='text/javascript', src='/public/js/async/async.js')	
+	//link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/normalize.css")
+	//link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/component.css")
+	//script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/modernizr.custom.25376.js")
+	link(rel="stylesheet" type="text/css" href="/public/css/main.css")
+	//style.
+	//	.magicCirc{
+	//		padding:4px;
+	//		display:inline-block;
+	//		font:12px/14px Arial, Helvetica, sans-serif;
+	//		color:#666;
+	//		border:1px solid #999;
+	//		background-color:#eee;
+	//		-moz-border-radius:10px;
+	//		-webkit-border-radius: 150px;
+	//		-moz-box-shadow:#999 2px 0px 3px;
+	//		-webkit-box-shadow:#999 2px 0px 3px;
+	//		margin-bottom:4px;
+	//	}
+	//script.
+	//	var getUserId =function(){return '#{userId}';}
+	//	var getDeviceId = function(){return '#{deviceId}';}
+	//	var getURL = function(){return '#{URL}';}
+	//	var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+	//	var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+
+
+
+	//================================================================================================
+	// HTML
+	//================================================================================================
+	center
+		div(id="handset_panel" data-options="panel:'center',split:true" style="width:40%;overflow: hidden;" class="")
+			//- #handset_topArea(style="position:absolute")
+			//- img(src="/public/images/ui/off_hook.png" alt="Smashing Magazine" style="width:100%;")
+			//- img(src="/public/images/ui/on_hold.png" alt="Smashing Magazine" style="width:300px;")
+			//- aside(id="featured" class="body")
+			//- 	article
+			//- 		img(src="/public/images/ui/on_hold.png" alt="Smashing Magazine" style="width:300px;")
+			//- 		figure
+			//- 			img(src="#{defaultMemberImageUrl}" alt="Smashing Magazine" style="width:60px;")
+			//- 		hgroup
+			//- 			h2 
+			//- 				#name
+			//- 			h3 
+			//- 				a(href="#") 
+			//- 					#number
+			//- 			p my paragraph here
+
+			div(id="tab_handset_manualEntry" class="easyui-tabs" data-options="" style="overflow: hidden;")
+				div(title="<span id='tab_import' class='tt-inner'>Manual Call Entry</span>" style="padding:5px")
+					#callEntryArea
+						input(id="tb_handset_phoneNumber" class="easyui-textbox" type="text" style="width:300px")
+						input(id="tb_handset_extention" class="easyui-textbox" type="text" style="width:150px")
+						input(id="s_handset_pauseValue" class="easyui-numberspinner" style="width:80px;" data-options="")
+
+
+				div(title="<span id='tab_import' class='tt-inner'>Call Selected</span>" style="padding:5px")
+					#selectedCallEntryArea(style="overflow: hidden;height:100%")
+						aside(id="featured" style="background-color:feeebd;" class="body")
+							article
+								figure
+									img(id="img_handset_selectedCallImage" class="magicCirc" src="#{defaultMemberImageUrl}" alt="Smashing Magazine" style="width:60px;")
+								hgroup
+									h2 
+										#name
+									h3 
+										a(href="#") 
+											#number
+									p my paragraph here
+
+				div(title="<span id='tab_import' class='tt-inner'>Call By Contacts</span>" style="padding:5px")
+					//#handset_contact_area
+					table(id="callContacts_grid" class="easyui-datagrid" title="" style="width:700px;height:250px" data-options="fit:true,singleSelect:true,collapsible:true")
+						
+
+			center
+				div(id="s_handset_speakerVolume" class="easyui-slider" value="12"  style="width:200px" data-options="")
+			#handset_buttonRow(style="height:25;margin: 00px 0px 0px 0px;")
+				center
+					button(id="bt_handset_img_dialPad" class="easyui-linkbutton" )
+						img(id="img_handset_img_dialPad" class="magicCirc" src="/public/images/ui/mic_on.png" alt="Smashing Magazine" style="height:100%;")
+					button(id="bt_handset_speaker" class="easyui-linkbutton" )
+						img(id="img_handset_speaker" class="magicCirc" src="/public/images/ui/mic_on.png" alt="Smashing Magazine" style="height:100%;")
+					button(id="bt_handset_mic" class="easyui-linkbutton" )
+						img(id="img_handset_mic" class="magicCirc" src="/public/images/ui/mic_on.png" alt="Smashing Magazine" style="height:100%;")
+					button(id="bt_handset_hold" class="easyui-linkbutton" )
+						img(id="img_handset_hold" class="magicCirc" src="/public/images/ui/mic_on.png" alt="Smashing Magazine" style="height:100%;")
+					//input(id="s_handset_speakerVolume" class="easyui-numberspinner" style="width:60px;" data-options="")
+
+				
+
+					//- button(id="bt_handset_extra" onclick="console.log('clicked!!22')")
+					//- 	img(id="img_handset_extra" class="magicCirc" src="/public/images/ui/mic_on.png" alt="Smashing Magazine" style="height:100%;")
+
+			#bottom(style="" class="bottom")
+				//img(src="/public/images/ui/on_hold.png" alt="Smashing Magazine" style="width:300px;")
+				br(style="clear: both;")
+				center
+					#handset_keypad
+					button(id="bt_handset_dialNow" class="easyui-linkbutton" style="width:80%;" onclick="console.log('clicked!!22')") Dial Now
+
+
+			
+
+
+
+
+
+
+
+
+	script.
+		var Handset = new function(){
+			var _this = this;
+			var numberToDial;
+			var lastNumberDialed;
+			this.load = function(){
+				$('#handset_panel').panel({
+					fit:true
+					//width:'434px',
+					//height:'461px',
+				});
+				$('#tab_handset_manualEntry').tabs(
+					{
+						selected:0,
+						//tabWidth:100,
+						//tabHeight:20,
+						border:false,
+						width:'100%',
+						height:'200px',
+						style:{borderWidth:0},
+						onSelect:function(title){
+							console.log(title + ' is selected');
+						}
+					}
+				);
+
+				$('#callContacts_grid').datagrid({
+						fitColumns:true,
+						fit:true,
+						columns:
+							[
+								[
+									{
+										field:'imagePath',
+										title:'imagePath',
+										width:'18%',
+										formatter: function(value,row,index){
+											console.log('output tester:');
+											console.dir(value);
+											console.dir(row);
+											console.dir(index);
+											return "<img class='magicCirc' style='height:33px;' src = '" + row.imagePath + "'></img>"; //value + "9";
+										}
+
+									},
+
+									{
+										field:'contactName',
+										title:'contactName',
+										width:'33%',
+										formatter: function(value, row, index){
+											return row.contactName + ' ' + row.type;
+										}
+									},
+
+									{
+										field:'contactNumber',
+										title:'contactNumber',
+										width:'49%',
+										align:'left',
+										formatter: function(value, row, index){
+											return phoneDisplayFormat(row.contactNumber);
+										}
+									}
+								]
+							],
+						onSelect:function(index,row){
+							//$('#smsSelectedImage').attr("src",row.imagePath);
+							//$('#smsSelectedNameAndNumber').html("&nbsp;&nbsp;" + row.contactName + "&nbsp;&nbsp;&nbsp;" + row.contactNumber);
+						}
+				});
+
+				$('#bt_handset_img_dialPad').linkbutton({
+				});
+
+				$('#bt_handset_speaker').linkbutton({
+				});
+
+				$('#bt_handset_mic').linkbutton({
+				});
+
+				$('#bt_handset_hold').linkbutton({
+				});
+
+				$('#bt_handset_dialNow').linkbutton({
+					onClick:function(){
+						//_this.getPhoneNumberToDial();
+						_this.dialNumber(_this.getPhoneNumberToDial());
+					}
+				});
+
+
+				$('#tb_handset_phoneNumber').textbox({
+					prompt:'Phone Number',
+					iconCls:'icon-man',
+					iconAlign:'left'
+				})
+				$('#tb_handset_extention').textbox({
+					prompt:'extension',
+					iconCls:'icon-man',
+					iconAlign:'left'
+				})
+				$('#s_handset_pauseValue').numberspinner({
+					min: 0,
+					max: 20,
+					increment:1,
+					editable: false,
+					prompt:'Pause'
+				});
+
+				//- $('#s_handset_speakerVolume').numberspinner({
+				//- 	min: 0,
+				//- 	max: 100,
+				//- 	increment:5,
+				//- 	editable: false,
+				//- 	prompt:'Speaker Volume',
+				//- 	onChange:function(newValue, oldValue){
+				//- 		_this.setSpeakerVolume(newValue);
+				//- 	}
+				//- });
+
+				$('#s_handset_speakerVolume').slider({
+					mode:'h',
+					min: 0,
+					max: 100,
+					increment:10,
+					editable: false,
+					prompt:'Speaker Volume',
+					onSlideEnd:function(newValue, oldValue){
+						_this.setSpeakerVolume(parseInt(newValue / 5));
+					}
+				});
+				
+				$.get( "/widget_keypad", function(data){
+					$("#handset_keypad").html(data);
+				});
+
+
+
+
+
+
+
+				///-----EVENTS --------------------------------------
+				eventObject.setOn('contactSliderSelected', function(inData){
+					console.dir(inData);
+					//alert("eventObject");
+					console.log('name(frm phone):' + inData.name);
+					_this.gridDataSelectByName(inData.name, inData.type);
+					
+				});
+
+				$('#bt_handset_img_dialPad').click(function(){
+					commManager.transactionToDeviceToken(
+						{
+							routing:
+								{
+									command:'setHandsetOption'
+								},
+							data:
+								{
+									option:'dialPad',
+									value:'true'
+								}
+
+						}
+					);
+				});
+				$('#bt_handset_speaker').click(function(){
+					console.log('bt_handset_speaker CLICKED');
+					commManager.transactionToDeviceToken(
+						{
+							routing:
+								{
+									command:'setHandsetOption'
+								},
+							data:
+								{
+									option:'speaker',
+									value:'true'
+								}
+
+						}
+					);
+				});
+				$('#bt_handset_mic').click(function(){
+					console.log('bt_handset_mic CLICKED');
+					commManager.transactionToDeviceToken(
+						{
+							routing:
+								{
+									command:'setHandsetOption'
+								},
+							data:
+								{
+									option:'mic',
+									value:'true'
+								}
+
+						}
+					);
+				});
+				$('#bt_handset_hold').click(function(){
+					commManager.transactionToDeviceToken(
+						{
+							routing:
+								{
+									command:'setHandsetOption'
+								},
+							data:
+								{
+									option:'hold',
+									value:'true'
+								}
+
+						}
+					);
+				});
+
+				//update call selected...
+				eventObject.setOn('widgetPhoneLogGrid_onSelect', function(row){
+					//alert(JSON.stringify(row));
+					_this.setData(
+						{
+							name:row.name,
+							number:row.phoneNumber,
+							imageUrl:row.imageUrl
+						}
+					);
+				});
+
+				
+
+				//---------filters -----------------------
+				if(!(typeof commManager === 'undefined')){
+					var filterObj = new commManager.FilterObject();
+					filterObj.add('widget_handset', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+						console.log('hkjsdhfkjsdhfkjsdhfksdjfhksjdhfksjdhfksdjh');
+						if(inTransportLayer_json.dataLayer.action == 'speakerOn'){
+							console.log('-----callback---- speakerOn');
+							console.dir(inTransportLayer_json);
+							if(inTransportLayer_json.dataLayer.value == 'true'){
+								_this.setSpeaker(true);
+							}else{
+								_this.setSpeaker(false);
+							}
+						}
+
+						if(inTransportLayer_json.dataLayer.action == 'micOn'){
+							console.log('-----callback---- micOn');
+							console.dir(inTransportLayer_json);
+							if(inTransportLayer_json.dataLayer.value == 'true'){
+								_this.setMic(true);
+							}else{
+								_this.setMic(false);
+							}
+						}
+
+						if(inTransportLayer_json.dataLayer.action == 'na'){
+							//console.log('-----callback---- speakerOn');
+							//console.dir(inTransportLayer_json);
+						}
+
+						if(inTransportLayer_json.dataLayer.action == 'na'){
+							//console.log('-----callback---- speakerOn');
+							//console.dir(inTransportLayer_json);
+						}
+					});
+				}
+
+
+
+
+			}
+
+			this.gridDataSelectByName = function(inName, inType){
+				var storedDataArray = $('#widgetContactsCollectionDataGrid').datagrid('getData').rows;
+				console.log('storedDataArray');
+				console.dir(storedDataArray);
+				//var selectedId = $('#widgetPhonePhoneCombo').combobox('getValue');
+				var locatedIndex = false;
+				for(index in storedDataArray){
+					if(storedDataArray[index].contactName == inName && storedDataArray[index].type == inType){
+						//return comboArray[index];
+						locatedIndex = index;
+						break;
+					}
+				}
+				//alert(locatedIndex);
+				_this.gridSelectRow(locatedIndex);
+			}
+			this.gridSelectRow = function(inIndex){
+				$('#widgetContactsCollectionDataGrid').datagrid('selectRow', inIndex);
+			}
+
+
+			this.getCallBySelectedContactPhoneNumber = function(){
+				if($('#callContacts_grid').datagrid('getSelected')){
+					return $('#callContacts_grid').datagrid('getSelected').contactNumber;
+				}
+				return false;
+			}
+
+			this.getSelectedTabIndex = function(){
+				var tab = $('#tab_handset_manualEntry').tabs('getSelected');
+				var index = $('#tab_handset_manualEntry').tabs('getTabIndex', tab);
+				return index;
+			}
+
+			this.getPhoneNumberToDial = function(){
+				var currentTabIndex = _this.getSelectedTabIndex();
+
+				if(currentTabIndex == 0 && $('#tb_handset_phoneNumber').val()){
+					var pauses = "";
+					if($('#s_handset_pauseValue').val()){
+						pauses = Array(parseInt($('#s_handset_pauseValue').val()) + 1).join(",");
+					}
+					var phoneNumberToDial = $('#tb_handset_phoneNumber').val() + ' ' + pauses + $('#tb_handset_extention').val();
+					
+					alert("ManualCall:" + phoneNumberToDial);
+					return phoneNumberToDial;
+				}
+
+				else if(currentTabIndex == 1 && $('#number').text() != ''){
+					alert("CallSelected:" + $('#number').text());
+					return $('#number').text();
+				}
+
+				else if(currentTabIndex == 2 && _this.getCallBySelectedContactPhoneNumber()){
+					alert("CallByContacts:" + _this.getCallBySelectedContactPhoneNumber());
+					return _this.getCallBySelectedContactPhoneNumber();
+				}
+
+				else{
+					alert("else!!")
+					return false;
+				}
+			}
+
+			this.setData = function(inJsonStruct){
+				var options = 
+					{
+						name:'',
+						number:'',
+						state:'',
+						imageUrl:'#{defaultMemberImageUrl}'
+					}
+				options = $.extend(options, inJsonStruct);
+				$('#name').text(options.name);
+				$('#number').text(options.number);
+				$('#img_handset_selectedCallImage').attr('src', options.imageUrl);
+
+			}
+
+			var bottonRowImagePaths = 
+				{
+					dialPad:
+						{
+							on:'/public/images/ui/dialpad_on.png',
+							off:'/public/images/ui/dialpad_off.png'
+						},
+					speaker:
+						{
+							on:'/public/images/ui/speaker_on.png',
+							off:'/public/images/ui/speaker_off.png'
+						},
+					mic:
+						{
+							on:'/public/images/ui/mic_on.png',
+							off:'/public/images/ui/mic_off.png'
+						},
+					hold:
+						{
+							on:'/public/images/ui/hold_on.png',
+							off:'/public/images/ui/hold_off.png'
+						},
+					nothing:
+						{
+							on:'/public/images/ui/',
+							off:'/public/images/ui/'
+						},
+				}
+
+			var mic = false;
+			this.setMic = function(inBool){
+				mic = inBool;
+				if(mic){
+					$('#img_handset_mic').attr('src',bottonRowImagePaths.mic.on);
+				}else{
+					$('#img_handset_mic').attr('src',bottonRowImagePaths.mic.off);
+				}
+			}
+
+			var dialPad = false;
+			this.setDialPad = function(inBool){
+				dialPad = inBool;
+				if(dialPad){
+					$('#img_handset_img_dialPad').attr('src',bottonRowImagePaths.dialPad.on);
+				}else{
+					$('#img_handset_img_dialPad').attr('src',bottonRowImagePaths.dialPad.off);
+				}
+			}
+
+			var speaker = false;
+			this.setSpeaker = function(inBool){
+				console.log('setSpeaker->' + inBool);
+				speaker = inBool;
+				if(speaker){
+					$('#img_handset_speaker').attr('src',bottonRowImagePaths.speaker.on);
+				}else{
+					$('#img_handset_speaker').attr('src',bottonRowImagePaths.speaker.off);
+				}
+			}
+
+			var hold = false;
+			this.setHold = function(inBool){
+				hold = inBool;
+				if(hold){
+					$('#img_handset_hold').attr('src',bottonRowImagePaths.hold.on);
+				}else{
+					$('#img_handset_hold').attr('src',bottonRowImagePaths.hold.off);
+				}
+			}
+
+			this.getStats = function(inPostFunction){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'getHandsetStats'
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete getHandsetStats transactionToDeviceToken call back entered');
+							console.dir(inDataLayer);
+							if(inPostFunction){
+								inPostFunction(inDataLayer);
+							}
+						}
+					}
+				);
+			}
+
+			this.getSelectedRowIndexFromGrid = function(){
+				if(!($('#callContacts_grid').datagrid('getSelected'))){return -1;}
+				return $('#callContacts_grid').datagrid('getRowIndex',$('#callContacts_grid').datagrid('getSelected'));
+			}
+
+			this.clearGrid = function(){
+				$('#callContacts_grid').datagrid(
+					{
+						data: []
+					}
+				);
+			}
+
+			this.getSelectedRowIndexFromGrid = function(){
+				if(!($('#callContacts_grid').datagrid('getSelected'))){return -1;}
+				return $('#callContacts_grid').datagrid('getRowIndex',$('#callContacts_grid').datagrid('getSelected'));
+			}
+
+			this.updateGridDataForRowIndex = function(inIndex, inRowData){
+				$('#callContacts_grid').datagrid('updateRow',{
+					index: inIndex,
+					row: inRowData
+				});
+			}
+
+			this.gridDataAppendRow = function(inRowData){
+				$('#callContacts_grid').datagrid('appendRow',inRowData);
+			}
+
+			this.gridDeleteRow = function(inIndex){
+				$('#callContacts_grid').datagrid('deleteRow', inIndex);
+			}
+
+			this.gridSelectRow = function(inIndex){
+				$('#callContacts_grid').datagrid('selectRow', inIndex);
+			}
+
+			this.gridSelectLastRow = function(){
+				$('#callContacts_grid').datagrid('selectRow', $('#callContacts_grid').datagrid('getRows').length -1);
+			}
+
+			this.gridSelectFirstRow = function(){
+				$('#callContacts_grid').datagrid('selectRow', 0);
+			}
+
+			this.setSpeakerVolume = function(inVolume, inPostFunction){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'setSpeakerPhoneVolume'
+							},
+						data:
+							{
+								volume:inVolume
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete transactionToDeviceToken call back entered');
+							if(inPostFunction){inPostFunction(inDataLayer);}
+						}
+					}
+				);
+			}
+
+			this.getVolume = function(){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'getSpeakerPhoneVolume'
+							},
+						data:
+							{
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete transactionToDeviceToken call back entered');
+							if(inPostFunction){inPostFunction(inDataLayer);}
+						}
+					}
+				);
+			}
+
+
+			this.loadAllContactsFromService = function(inPostFunction){
+				$postAjax(
+					{
+						url:'database/getContacts',
+						send:
+							{
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							console.log('ajax callback------------------------');
+							console.dir(inResponseText);
+							if(inResponseText.hadError == false){
+								console.log('inResponseText.hadError == false');
+								if(inResponseText.rows){
+									console.dir('rows yes');
+									for(rowIndex in inResponseText.rows){
+										console.log('row:' + rowIndex);
+										$('#callContacts_grid').datagrid('appendRow',
+											{
+												id 				:inResponseText.rows[rowIndex].id,
+												imagePath		:inResponseText.rows[rowIndex].imageUrl,
+												contactName 	:inResponseText.rows[rowIndex].name,
+												contactNumber 	:inResponseText.rows[rowIndex].phoneNumber,
+												emailAddress 	:inResponseText.rows[rowIndex].emailAddress,
+												companyName 	:inResponseText.rows[rowIndex].companyName,
+												department 		:inResponseText.rows[rowIndex].department,
+												title 			:inResponseText.rows[rowIndex].title,
+												type  			:inResponseText.rows[rowIndex].type,
+
+											}
+										);
+									}
+								}
+							}
+							if(inPostFunction){inPostFunction(inResponseText.hadError);}
+						}
+					}
+
+				);
+			}
+
+			this.dialNumber = function(inNumber, inPostFunction){
+				lastNumberDialed = inNumber;
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'dialPhone'
+							},
+						data:
+							{
+								phoneNumber:inNumber
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete transactionToDeviceToken call back entered');
+							if(inPostFunction){inPostFunction(inDataLayer);}
+						}
+					}
+				);
+			}
+
+
+
+
+
+
+
+
+		}();
+
+
+		$( document ).ready(function(){
+			Handset.load();
+			Handset.setData();
+
+			Handset.setMic(false);
+			Handset.setDialPad(false);
+			Handset.setSpeaker(false);
+			Handset.setHold(false);
+			Handset.getStats();
+
+			Handset.loadAllContactsFromService();
+
+			//- contactsObject.refresh(function(contactErr, contactData){
+			//- 	alert('CONTACT' + JSON.stringify(contactData));
+			//- });
+
+		});

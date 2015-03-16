@@ -1,0 +1,5 @@
+webView.getSetting().setDomStorageEnable(true);
+
+clearSslPreferences()
+
+setCertificate(SslCertificate certificate)

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group-row.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <!--[if IE ]>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <![endif]-->
+    <title>MySQL ::   MySQL 5.1 Reference Manual :: 3.6.4 The Rows Holding the Group-wise Maximum of a Certain Column</title>
+
+    
+    <link rel="stylesheet" media="screen,projection" href="http://dev.mysql.com/common/css/mysql.css?v=20140618">
+    <link rel="stylesheet" media="print" href="http://dev.mysql.com/common/css/print.css?v=20111230">
+
+            <link rel="stylesheet" href="http://dev.mysql.com/doc/docs.css">
+        
+    
+    
+    
+    <link rel="contents" href="http://dev.mysql.com/doc/refman/5.1/en/index.html" title="MySQL Manual"><link rel="start" href="http://dev.mysql.com/doc/refman/5.1/en/index.html" title="MySQL Manual"><link rel="prev" href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group.html" title="3.6.3 Maximum of Column per Group"><link rel="next" href="http://dev.mysql.com/doc/refman/5.1/en/example-user-variables.html?ff=nopfpls" title="3.6.5 Using User-Defined Variables"><link rel="up" href="http://dev.mysql.com/doc/refman/5.1/en/examples.html" title="3.6 Examples of Common Queries">        <link rel="shortcut icon" href="http://dev.mysql.com/common/themes/sakila/favicon.ico">
+
+    
+        
+    
+    
+</head>
+
+<body class="doc">
+
+<div id="container">
+
+<!--UdmComment-->
+<a class="skipToContent" href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group-row.html#mainContent">Skip navigation links</a>
+
+    <div id="header">
+
+    <div class="left">
+
+    <div id="logo">
+                                            <a href="http://dev.mysql.com/" title="MySQL">
+                            <img src="./mysql_building_Join_with_one_row_per_many_files/logo-mysql-110x57.png" alt="MySQL" width="110" height="57"></a>
+            </div>
+            <div id="tagline">The world's most popular open source database</div>
+
+    </div>
+
+    <div class="right">
+                <div id="login">
+            <p>
+                <a class="contact_us" href="http://www.mysql.com/about/contact/">Contact MySQL</a> |
+        
+                             <a href="https://dev.mysql.com/auth/login/?dest=http%3a%2f%2fdev.mysql.com%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Login</a> | <a href="https://dev.mysql.com/auth/register/">Register</a>
+                        </p>
+        </div>
+
+        <div id="search_box"> <!-- Start Search -->
+        		<form id="searchform" name="searchform" method="get" action="http://search.oracle.com/search/search">
+			<input type="text" id="q" name="q" value="Search" class="swap_value" onfocus="this.value=&#39;&#39;;">
+			<input type="hidden" id="search_dest" name="group" value="MySQL">
+			<input type="image" src="./mysql_building_Join_with_one_row_per_many_files/search_g.png" id="go" alt="Search" title="Search">
+		    </form>        </div> <!-- End Search -->
+
+    </div>
+
+    </div> 
+
+    <!-- MySQL Navigation -->
+    <div id="nav_container">
+    
+    <div id="flags">
+        <ul>
+            <li style="position: relative; top: -5px;">
+                <!-- Icons from http://icondock.com/free/vector-social-media-icons //-->
+                <a href="http://www.facebook.com/mysql"><img class="facebook-icon" src="./mysql_building_Join_with_one_row_per_many_files/sp.gif" alt="fb" title="Join us on Facebook" width="20" height="20"></a>&nbsp;
+                <a href="https://plus.google.com/+mysql"><img class="googleplus-icon" src="./mysql_building_Join_with_one_row_per_many_files/sp.gif" alt="g+" title="Join Google+ to follow MySQL" width="20" height="20"></a>&nbsp;
+                <a href="https://twitter.com/#!/mysql"><img class="twitter-icon" src="./mysql_building_Join_with_one_row_per_many_files/sp.gif" alt="tw" title="Follow us on Twitter" width="20" height="20"></a>&nbsp;
+                <a href="http://www.youtube.com/mysqlchannel"><img class="youtube-icon" src="./mysql_building_Join_with_one_row_per_many_files/sp.gif" alt="yt" title="Visit our YouTube channel" width="20" height="20"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </li>
+                            
+                        </ul>
+    </div>
+
+        <div id="nav-tabs">
+    <ul>
+        <li class="off-left-end"></li>
+        <li><a href="http://www.mysql.com/">MySQL.com</a></li>
+        <li class="off-mid"></li>
+        <li><a href="http://www.mysql.com/downloads/">Downloads</a></li>
+        <li class="on-left"></li>
+        <li class="current"><a href="http://dev.mysql.com/doc/">Documentation</a></li>
+        <li class="on-right"></li>
+        <li><a href="http://dev.mysql.com/">Developer Zone</a></li>
+        <li class="off-right-end"></li>
+    </ul>
+    </div>
+
+        
+        <div id="mysql_menu">
+            <ul>
+	<li class="current"><a class="current " href="http://dev.mysql.com/doc/">MySQL Server</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-enterprise.html">MySQL Enterprise</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-gui.html">Workbench</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-utils-fabric.html">Utilities/Fabric</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-cluster.html">Cluster</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-connectors.html">Connectors</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-topic.html">Topic Guides</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-expert.html">Expert Guides</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-other.html">Other Docs</a>
+	
+		
+		
+	</li>
+	
+	<li class="link"><a href="http://dev.mysql.com/doc/index-archive.html">Archives</a>
+	
+		
+		
+	</li>
+	
+	<li class="link last"><a href="http://dev.mysql.com/doc/index-about.html">About</a>
+	
+		
+		
+	</li>
+	
+</ul>
+        </div>
+
+                        <div id="og_sakila">&nbsp;</div>
+                    <div id="og_title">&nbsp;</div>
+        
+    </div>
+    <!-- End Navigation Container -->
+
+<!--/UdmComment-->
+
+<div class="page_container">
+    <div class="page_sidebar">
+	<!--UdmCommentTest-->
+
+	<div id="menu_title"></div>
+
+	<div id="menu">
+		<ul>
+			<li class="current"><a class="current subitems" href="http://dev.mysql.com/doc/index.html">Documentation Library</a>
+
+			<ul class="subitems1">
+				 <li><a href="http://dev.mysql.com/doc/refman/5.1/en/index.html"><b>Table of Contents</b></a>
+
+
+				 <ul class="subitems2">
+				 
+				 					 		<li>
+					 	<a href="http://dev.mysql.com/doc/refman/5.7/en/example-maximum-column-group-row.html">MySQL 5.7 Manual</a>  					
+				 	</li>
+
+				 
+				 					 		<li>
+					 	<a href="http://dev.mysql.com/doc/refman/5.6/en/example-maximum-column-group-row.html">MySQL 5.6 Manual</a>  					
+				 	</li>
+
+				 
+				 					 		<li>
+					 	<a href="http://dev.mysql.com/doc/refman/5.5/en/example-maximum-column-group-row.html">MySQL 5.5 Manual</a>  					
+				 	</li>
+
+				 
+				 					 		<li class="current">MySQL 5.1 Manual
+				 	
+				 	</li>
+
+				 
+				 					 		<li>
+					 	<a href="http://dev.mysql.com/doc/refman/5.0/en/example-maximum-column-group-row.html">MySQL 5.0 Manual</a>  					
+				 	</li>
+
+				 
+				 					 		<li>
+					 	<a href="http://dev.mysql.com/doc/refman/4.1/en/example-maximum-column-group-row.html">MySQL 3.23/4.0/4.1 Manual</a>  					
+				 	</li>
+
+				 
+				 </ul>
+
+
+
+				 </li>
+
+
+			</ul>
+
+
+			</li>
+		</ul>
+
+	 <div class="searchmanual">
+			<form action="http://search.oracle.com/search/search" method="get" id="docsearch">
+		<strong><label for="searchq">Search manual:</label></strong>
+		<br>
+		<input id="searchq" type="text" name="q" value="" size="14">
+		<input id="searchsubmit" type="submit" value="Go">
+		<input id="searchgroup" type="hidden" name="group" value="MySQL">
+	</form>	 </div>
+
+
+	</div>
+
+	
+</div>  
+<!-- Main content -->
+
+<div id="page" class="sidebar">
+
+    
+
+
+
+
+	<!--UdmComment-->
+
+<div id="docheader"><a href="http://dev.mysql.com/doc/refman/5.1/en/index.html"> MySQL 5.1 Reference Manual</a> :: <a href="http://dev.mysql.com/doc/refman/5.1/en/tutorial.html">3 Tutorial</a> :: <a href="http://dev.mysql.com/doc/refman/5.1/en/examples.html">3.6 Examples of Common Queries</a> :: 3.6.4 The Rows Holding the Group-wise Maximum of a Certain Column</div>
+
+	 
+	
+
+	
+<script language="javascript">
+
+<!--
+function toggle(what){
+ if(document.getElementById(what).style.display == "none"){
+   document.getElementById(what).style.display = "block";
+ }else{
+   document.getElementById(what).style.display = "none";
+ }
+}
+//-->
+
+</script>
+<noscript></noscript>
+
+<div style="float: right; width: 250px; margin: 0px 0px 8px 8px; background: white">
+	<div style="text-align: right; font-size: 90%; margin-bottom: 4px">
+		<div style="text-align: left;"><a style="text-decoration: none" href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group.html" title="Previous Section">« 3.6.3 Maximum of Column per Group</a></div>
+		<hr size="1" noshade="noshade" align="center" width="40" style="margin: 0px auto 2px auto">		<a style="text-decoration: none" href="http://dev.mysql.com/doc/refman/5.1/en/example-user-variables.html" title="Next Section">3.6.5 Using User-Defined Variables  »</a>	</div>
+	<div style="padding: 4px 0px 0px 4px; border: 2px dotted #ccc; border-right: none;">
+		<b>Section Navigation</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>[<a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group-row.html#" onclick="toggle(&#39;sectionnav&#39;);" onkeypress="if (event.keyCode == 13) { toggle(&#39;sectionnav&#39;); }">Toggle</a>]</small>
+			<ul id="sectionnav">
+				<li class="p"><a href="http://dev.mysql.com/doc/refman/5.1/en/examples.html">3.6 Examples of Common Queries</a></li><li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column.html">3.6.1 The Maximum Value for a Column</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-row.html">3.6.2 The Row Holding the Maximum of a Certain Column</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group.html">3.6.3 Maximum of Column per Group</a></li>
+<li class="self">3.6.4 The Rows Holding the Group-wise Maximum of a Certain Column</li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-user-variables.html">3.6.5 Using User-Defined Variables</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-foreign-keys.html">3.6.6 Using Foreign Keys</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/searching-on-two-keys.html">3.6.7 Searching on Two Keys</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/calculating-days.html">3.6.8 Calculating Visits Per Day</a></li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/en/example-auto-increment.html">3.6.9 Using AUTO_INCREMENT</a></li>
+</ul>
+
+					
+	</div>
+
+</div>
+<!--/UdmComment-->
+
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="example-maximum-column-group-row"></a>3.6.4&nbsp;The Rows Holding the Group-wise Maximum of a Certain Column</h3>
+
+</div>
+
+</div>
+
+</div>
+<p>
+        <span class="emphasis"><em>Task: For each article, find the dealer or dealers
+        with the most expensive price.</em></span>
+      </p><p>
+        This problem can be solved with a subquery like this one:
+      </p><pre class="programlisting">SELECT article, dealer, price
+FROM   shop s1
+WHERE  price=(SELECT MAX(s2.price)
+              FROM shop s2
+              WHERE s1.article = s2.article);
+
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|    0001 | B      |  3.99 |
+|    0002 | A      | 10.99 |
+|    0003 | C      |  1.69 |
+|    0004 | D      | 19.95 |
++---------+--------+-------+
+</pre><p>
+        The preceding example uses a correlated subquery, which can be
+        inefficient (see <a class="xref" href="http://dev.mysql.com/doc/refman/5.1/en/correlated-subqueries.html" title="13.2.9.7 Correlated Subqueries">Section&nbsp;13.2.9.7, “Correlated Subqueries”</a>). Other
+        possibilities for solving the problem are to use an uncorrelated
+        subquery in the <code class="literal">FROM</code> clause or a
+        <code class="literal">LEFT JOIN</code>.
+      </p><p>
+        Uncorrelated subquery:
+      </p><pre class="programlisting">SELECT s1.article, dealer, s1.price
+FROM shop s1
+JOIN (
+  SELECT article, MAX(price) AS price
+  FROM shop
+  GROUP BY article) AS s2
+  ON s1.article = s2.article AND s1.price = s2.price;
+</pre><p>
+        <code class="literal">LEFT JOIN</code>:
+      </p><pre class="programlisting">SELECT s1.article, s1.dealer, s1.price
+FROM shop s1
+LEFT JOIN shop s2 ON s1.article = s2.article AND s1.price &lt; s2.price
+WHERE s2.article IS NULL;
+</pre><p>
+        The <code class="literal">LEFT JOIN</code> works on the basis that when
+        <code class="literal">s1.price</code> is at its maximum value, there is no
+        <code class="literal">s2.price</code> with a greater value and the
+        <code class="literal">s2</code> rows values will be
+        <code class="literal">NULL</code>. See <a class="xref" href="http://dev.mysql.com/doc/refman/5.1/en/join.html" title="13.2.8.2 JOIN Syntax">Section&nbsp;13.2.8.2, “JOIN Syntax”</a>.
+</p>
+</div>
+<!--UdmComment--><div id="docnav"><a rel="prev" href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group.html" title="3.6.3 Maximum of Column per Group">Previous</a> / <a rel="next" href="http://dev.mysql.com/doc/refman/5.1/en/example-user-variables.html" title="3.6.5 Using User-Defined Variables">Next</a> / <a rel="up" href="http://dev.mysql.com/doc/refman/5.1/en/examples.html" title="3.6 Examples of Common Queries">Up</a> / <a rel="contents" href="http://dev.mysql.com/doc/refman/5.1/en/index.html">Table of Contents</a></div><!--/UdmComment--><br class="clear"><!--UdmComment--><div id="comments"><h1>User Comments</h1><table id="c10405" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Kasey Speakman on October 3 2009 10:49pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10405&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10405&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">The examples here by MySQL are not that helpful if you are working with temporary tables and need to add conditions to the query... like prices only from this year, for instance.<br><br>The first example falls down with temporary tables because you can't select from the same temp table twice in the same query (get "can't reopen table" error). It also doesn't give you just distinct articles, if that's what you were after. It will show the same article twice in the case where you have 2 articles from different dealers for the same price.<br><br>The second example is both difficult to understand and cumbersome to manage if you have extra query conditions (i.e. don't want to select the whole table). With large tables, you will end up needing to repeat query conditions in inner and outer queries (or at least in the LEFT JOIN ON part) for query speed.<br><br>I found another method for group-wise max that is a bit more straightforward and less duplicating of conditions:<br><br>SELECT * <br>FROM (SELECT * <br>            FROM shop <br>            [WHERE conditions] <br>            ORDER BY price DESC) AS s <br>GROUP BY article<br><br>The inner query orders all records by highest price. The outer query uses a group by, which simply grabs the first distinct article that it finds. In this case the first one it finds will be the highest one since we ordered them that way.<br><br>This query is probably not as efficient as others, but it's straightforward, and it's easier on query developers when they need to use temp tables or needed to query on less than an entire table. It's only slightly less efficient than the queries given by MySQL on this page, in my tests.<br></p><table id="c10431" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Robin Palotai on October 17 2009 11:28am</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10431&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10431&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">Speakman: Your solution sounds good, but is it stable?<br>The manual tells that non-grouped fields have an indeterminate value if not all values of rows are the same.<br><br>Right now the value at the first encountered row may be used, but may it happen in the future releases that other random row will be selected? It would be nice to hear an insider's opinion.<br></p><table id="c10487" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by O T on November 19 2009 3:40pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10487&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10487&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">I suggest the following syntax which orders by column1 as usual but returns the corresponding column2 when given:<br><br>max( column1 [, column2 ] )<br></p><table id="c10517" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Rick James on December 7 2009 4:14pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10517&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10517&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">Speakman's solution ("group by trick", as I call it) is stable and far more efficient than the methods given in the article.<br><br>This is Order(N*logN); the article is Order(N*N).  That is, as the number of rows grows, the article's methods slow down quadratically -- a million rows would require a trillion operations.<br></p><table id="c10718" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Alexandru Trandafir Catalin on April 21 2010 7:58am</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10718&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10718&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">I think of an easy way to get the row with the greatest value for one field, I don't know if it is efficient but it's sure very easy:<br><br>SELECT * FROM PRODUCTS ORDER BY PRICE DESC LIMIT 0,1<br><br>And that's all, it will give you the product with the biggest price.<br></p><table id="c10823" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Charlie Chambers on July 13 2010 8:10pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10823&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=10823&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">Alexandru Trandafir Catalin: <br>The query you provide is finding the greatest price for any article, i.e. a single value.<br>The problem that the page is targeted toward is finding the greatest price for each article, i.e. one value per article in the table.<br><br></p><table id="c11650" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Francisco Tirado on December 30 2010 7:29pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=11650&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=11650&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">O T: Although that would be awesome, it did not work for me and I couldn't find it in the manual.<br></p><table id="c12176" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Deon Kuhn on February 9 2012 12:29pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12176&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12176&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">In my particular case I was only working with one record, and the correlated sub query solution proved 50% faster than the 'group by' trick. I am getting the most recent record to be altered by user 6 by way of a main table and changes log.<br><br>SELECT iA.tid<br>FROM main_table iA<br>JOIN log_table iC ON iA.tid  =  iC.tid AND iC.userid = 6 <br>WHERE iC.status = 1 AND iC.id = ( SELECT MAX( id ) `scmax` FROM log_table WHERE iA.transactionID = trxid )<br>LIMIT 1 <br><br>was faster than<br><br>SELECT iA.tid<br>FROM main_table iA<br>JOIN ( SELECT id, tid, userID FROM ( SELECT id, tid, userID FROM log_table WHERE userID = 6 ORDER BY id DESC ) iiA GROUP BY tid ) iC ON iA.tid = iC.tid AND iC.status = 1<br><br></p><table id="c12492" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Daniel Bermudez on November 7 2012 5:25am</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12492&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12492&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">I am using this as a tutorial and tried doing it by myself before seeing the "answer" and I came up with this:<br><br>SELECT * FROM shop <br>WHERE price IN (SELECT MAX(price)<br>		FROM shop GROUP BY article);<br><br>I think is very straightforward and easy to understand but I might be missing something.<br><br>Why nobody recommended this?<br></p><table id="c12501" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Thibault Delor on November 15 2012 11:22pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12501&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12501&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">@Daniel Bermudez : <br>You can find your query there : <a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-row.html">http://dev.mysql.com/doc/refman/5.1/en/example-maximum-row.html</a><br><br>"Why nobody recommended this?" :<br>1) it doesn't do what we want there<br>2) it is slow<br></p><table id="c12550" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by Predrag Bradaric on January 25 2013 12:48pm</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12550&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12550&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">I agree with Robin Palotai. Example given by Kasey Speakman is "unreliable" in the long run.<br>As stated in MySQL reference manual (https://dev.mysql.com/doc/refman/5.0/en/group-by-extensions.html) values chosen by GROUP BY extension are indeterminate - it is not "guaranteed" that first row (top-&gt;down) with distinct value will be chosen in the final result.<br>Granted, tests have shown that (at the moment) MySQL server will choose first row (top-&gt;down) that it encounters but that can break in any future update.<br></p><table id="c12849" class="commentdetails" summary="" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td>Posted by John Pratt on March 5 2014 12:17am</td><td align="right">[<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12849&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html&action=delete">Delete</a>] [<a href="http://dev.mysql.com/doc/mysql/comment.php?id=12849&return=%2Fdoc%2Frefman%2F5.1%2Fen%2Fexample-maximum-column-group-row.html">Edit</a>]</td></tr></tbody></table><p class="commenttext">Perhaps a future version of MySQL will no longer be "indeterminate". It would be easier to write this query if the Select would reliably always select the top row.  <a href="http://bugs.mysql.com/71942">http://bugs.mysql.com/71942</a><br></p><p></p><form method="POST" action="http://dev.mysql.com/doc/mysql/comment.php">
+          <input type="hidden" name="sect" value="example-maximum-column-group-row">
+          <input type="hidden" name="return" value="/doc/refman/5.1/en/example-maximum-column-group-row.html">
+          <input type="submit" value="Add your own comment">
+          </form><p></p></div><!--UdmComment--><div id="docnav"><a href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group-row.html#">Top</a> / <a rel="prev" href="http://dev.mysql.com/doc/refman/5.1/en/example-maximum-column-group.html" title="3.6.3 Maximum of Column per Group">Previous</a> / <a rel="next" href="http://dev.mysql.com/doc/refman/5.1/en/example-user-variables.html" title="3.6.5 Using User-Defined Variables">Next</a> / <a rel="up" href="http://dev.mysql.com/doc/refman/5.1/en/examples.html" title="3.6 Examples of Common Queries">Up</a> / <a rel="contents" href="http://dev.mysql.com/doc/refman/5.1/en/index.html">Table of Contents</a></div><!--/UdmComment--></div></div>
+
+
+
+
+
+</div> <!--End Container -->
+
+
+
+
+  
+ 
+<div id="footer">
+    <div class="five-col">
+        <div class="links">
+            <ul>
+                <li class="top"><a href="http://dev.mysql.com/">Developer Zone</a></li>
+                <li><a href="http://dev.mysql.com/articles/">Developer Articles</a></li>
+                <li><a href="http://forums.mysql.com/">Forums</a></li>
+                <li><a href="http://bugs.mysql.com/">Bugs</a></li>
+                <li><a href="http://dev.mysql.com/worklog/">Worklog</a></li>
+                                <li><a href="http://planet.mysql.com/">Planet MySQL</a></li>
+                            </ul>
+        </div>
+    
+        <div class="links">
+            <ul>
+                <li class="top"><a href="http://dev.mysql.com/downloads/">Downloads</a></li>
+                <li><a href="http://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+                <li><a href="http://dev.mysql.com/downloads/cluster/">MySQL Cluster</a></li>
+                <li><a href="http://dev.mysql.com/downloads/fabric/">MySQL Fabric</a></li>
+                <li><a href="http://dev.mysql.com/downloads/utilities/">MySQL Utilities</a></li>
+                <li><a href="http://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+            </ul>
+        </div>
+
+
+        <div class="links">
+            <ul>
+                <li class="top"><a href="http://dev.mysql.com/doc/">Documentation</a></li>
+                <li><a href="http://dev.mysql.com/doc/">MySQL Reference Manuals</a></li>
+                <li><a href="http://dev.mysql.com/doc/index-gui.html">MySQL Workbench</a></li>
+                <li><a href="http://dev.mysql.com/doc/index-expert.html">Expert Guides</a></li>
+                <li><a href="http://dev.mysql.com/doc/index-topic.html">Topic Guides</a></li>
+                <li><a href="http://dev.mysql.com/doc/index-cluster.html">MySQL Cluster</a></li>
+            </ul>
+        </div>
+
+
+        <div class="links">
+            <ul>
+                <li class="top"><a href="http://www.mysql.com/about/">About MySQL</a></li>
+                <li><a href="http://www.mysql.com/about/contact/">Contact Us</a></li>
+                                 <li><a href="http://www.mysql.com/buy-mysql/">How to Buy</a></li>
+                <li><a href="http://www.mysql.com/partners/">Partners</a></li>
+                <li><a href="http://www.mysql.com/about/jobs/">Job Opportunities</a></li>
+                <li><a href="http://www.mysql.com/sitemap.html">Site Map</a></li>
+            </ul>
+        </div>
+    
+        <div class="links">
+            <ul>
+                <li class="top"><a href="http://www.mysql.com/about/legal/">Legal</a></li>
+                <li><a href="http://www.mysql.com/about/legal/">Legal Policies</a></li>
+                <li><a href="http://www.oracle.com/us/legal/privacy/index.htm">Your Privacy Rights</a></li>
+                <li><a href="http://www.oracle.com/us/legal/terms/index.html">Terms of Use</a></li>
+                <li><a href="http://www.oracle.com/us/legal/third-party-trademarks/index.html">Trademark Policy</a></li>
+                <li><a href="http://www.oracle.com/technetwork/community/oca-486395.html">Contributor Agreement</a></li>
+            </ul>
+        </div>
+    
+                <div id="search" class="en">
+                <form id="footer_search" action="http://search.oracle.com/search/search" method="get">
+            <input type="text" id="f_q" name="q" value="" class="swap_value">
+	    <input type="hidden" name="group" value="MySQL">
+	    <input type="image" src="./mysql_building_Join_with_one_row_per_many_files/footer_search_g.png" id="f_go" alt="Search" title="Search">
+        </form>        </div>
+            
+    </div>
+</div><!-- End Footer -->
+
+<div id="copyright-oracle"><a href="http://www.oracle.com/"><img src="./mysql_building_Join_with_one_row_per_many_files/logo-oracle-red-91x22.gif" alt="Oracle" width="91" height="22"></a>&nbsp;&nbsp;<span>© 2014, Oracle Corporation and/or its affiliates</span></div>
+
+
+<script src="./mysql_building_Join_with_one_row_per_many_files/s_code_remote.js"></script><script type="text/javascript" src="./mysql_building_Join_with_one_row_per_many_files/metrics_group1.js"></script>
+
+
+</body></html>

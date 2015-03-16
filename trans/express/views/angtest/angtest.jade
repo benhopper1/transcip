@@ -1,0 +1,303 @@
+doctype html
+html
+	head(lang="en")
+		title Account
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+
+
+		link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+		script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+		script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+
+
+
+
+		script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+		script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+		//arfsync.jqm   CSS ---------
+		link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
+		script(type='text/javascript', src='/js/crypto/crypto.js')
+
+
+		//GOOGLE ------------------
+		meta(name="google-signin-clientid" content="500532364716-btp22rfg0rjfejere7cq7prgnhfe8puh.apps.googleusercontent.com")
+		meta(name="google-signin-scope" content="https://www.googleapis.com/auth/plus.login")
+		meta(name="google-signin-requestvisibleactions" content="https://schema.org/AddAction")
+		meta(name="google-signin-cookiepolicy" content="single_host_origin")
+		meta(name="google-signin-callback" content="signinCallback")
+		script(src="https://apis.google.com/js/client:platform.js?onload=render" async defer)
+
+
+
+				//script(src="https://apis.google.com/js/client:platform.js" async defer)
+
+		body(style="")
+			script.
+				function render(){
+					// Additional params
+					var additionalParams = 
+						{
+							'theme' : 'dark'
+						};
+					gapi.signin.render('myButton', additionalParams);
+				}
+			
+
+
+			#testDiv
+			#smsPopupIncoming(data-dialog="false" style="position:relative;" class="")
+			//   /upload
+			form(action="/upload/contact/image", method="post", enctype="multipart/form-data")
+				input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+			div(id="page_userForm" data-role="page" data-dialog="false" data-theme="b" style="" class=".center-me")
+
+
+				div(id="contactsWindow" data-role="main"  class="ui-content" style="")
+
+					form(method="post" id="userForm")
+						div(class="ui-field-contain")
+							//input(tabindex="1" type="text" id="widget_userForm_firstName" 	name="fname" 		placeholder="First Name...")
+							//input(tabindex="2" type="text" id="widget_userForm_lastName" 	name="lName" 		placeholder="Last Name...")
+
+							//GOOGLE ------------------
+							div(id="gSignInWrapper")
+								button(id="myButton" class="classesToStyleWith") Sign in with Google
+
+
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+
+							input(data-icon="action" id="addEditUser_save" 	type="button" value="Save")
+							input(data-icon="back" id="addEditUser_clear" 	type="button" value="Cancel")
+
+			div(id="page_userForm2" data-role="page" data-dialog="true" data-theme="b" style="" class=".center-me")
+			#xxxxx
+				//input(data-icon="action" id="bt_login_postMail" 	type="button" value="Login" style="")
+
+			script.
+				function signinCallback(authResult) {
+					if (authResult['status']['signed_in']){
+						// Update the app to reflect a signed in user
+						// Hide the sign-in button now that the user is authorized, for example:
+						document.getElementById('myButton').setAttribute('style', 'display: none');
+					}else{
+						// Update the app to reflect a signed out user
+						// Possible error values:
+						//   "user_signed_out" - User is signed-out
+						//   "access_denied" - User denied access to your app
+						//   "immediate_failed" - Could not automatically log in the user
+						console.log('Sign-in state: ' + authResult['error']);
+						$('#myButton').show();
+						/*$.get( "https://accounts.google.com/ServiceLogin?hl=en&service=local", function(data){
+							$("#xxxxx").html(data);
+						});*/
+						
+					}
+				}
+
+
+
+				//@@--> JQUERY . CENTER @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				jQuery.fn.center = function () {
+					this.css("position","absolute");
+					this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+					$(window).scrollTop()) + "px");
+					this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+					$(window).scrollLeft()) + "px");
+					return this;
+				}
+				var renderData = !{JSON.stringify(body)}
+
+				console.log('renderData');
+				console.dir(renderData);
+
+
+
+				var Widget_userFormScript;
+				$(document).ready(function(){
+
+
+					Widget_userFormScript = new function(){
+						var _this = this;
+
+						this.load = function(){
+
+							//==============================================
+							// EVENT SETUP
+							//==============================================
+							$('#addEditUser_save').click(function(){
+
+								
+								//$.debug('object.keys', Object.keys(ttt));
+								//$.debug('myVer', $.getKeys(ttt));
+
+								$postAjax(
+									{
+										url:'/products/updateProducts',
+										send:testPack,
+										onAjaxSuccess:function(inResult){
+											console.log('updateProductCallBackDone:');
+											console.dir(inResult);
+										}
+
+									}
+								);
+
+
+
+
+							});
+
+
+							$('#addEditUser_clear').click(function(){
+								doIncomingSms(
+									{
+										name:'ddddd name 1',
+										phoneNumber:'12563538951',
+										message:'my new message',
+										imageUrl:'/public/images/contacts/c97ce050-b399-11e4-a92e-138f9d3e8597.jpg',
+									}
+								);
+							});
+
+
+						}//end of load
+
+
+
+						_this.load();
+
+					}();
+
+				});
+
+
+				var doIncomingSms = function(inJstruct){
+					if( typeof IncomingSmsObject === "undefined" ){
+						$postAjax(
+							{
+								url:'/jqm/message',
+								send:
+									{
+										messageId:'incoming_sms',
+									},
+								onAjaxSuccess:function(inResult){
+									$('#smsPopupIncoming').html(inResult);
+									IncomingSmsObject.load();
+									IncomingSmsObject.show(
+										{
+											speed:500,
+											duration:10000,
+											name:inJstruct.name,
+											phoneNumber:inJstruct.phoneNumber,
+											message:inJstruct.message,
+											imageUrl:inJstruct.imageUrl,
+											messageMaxCharLength:20,
+											onTimeout:function(){
+												IncomingSmsObject.hide(
+													{
+														speed:'slow',
+														onFinished:function(){
+														}
+													}
+												);
+
+											}
+										}
+									);
+								}
+							}
+						);
+
+						return;
+					}else{
+						IncomingSmsObject.show(
+							{
+								speed:500,
+								duration:10000,
+								name:inJstruct.name,
+								phoneNumber:inJstruct.phoneNumber,
+								message:inJstruct.message,
+								imageUrl:inJstruct.imageUrl,
+								messageMaxCharLength:20,
+								onTimeout:function(){
+									IncomingSmsObject.hide(
+										{
+											speed:'slow',
+											onFinished:function(){
+											}
+										}
+									);
+
+								}
+							}
+						);
+					}
+				}
+
+				var testPack = 
+					{ action: 'updateProducts',
+						  appKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmlQ4VyCyXEioNfX1SixCcHrez8RsNy/9yA41AdBh7+/aMIycv5UYD1wz75vvzTiA0SlzG/oJ22dNlq/8rliA+bxGL5Ztp3oSB+AVNTuRQ6IYU8Eb3W0WvCUywAt4RsJzfRT1SS9E662+SZxTLM49+SfRCPLWDRbOMNf0j1XnNi+vRGS00BQZa98CyTX4gQ7uNouRjJuQryb6fawqvrKVFhO70rXnwPdk4iBCX8wRk2O9fcOjgveU5lOHUH5H5LEyAayBQk+AXVZud1OIgdcJp3lJc8XvOzXUqNi12w1wjSrjJdzNCGVlTRsOpE+8/M2x12QBWZP8EboLkQgRIafHNQIDAQAB',
+						  dataArray: 
+						   [ { title: 'title for arfsync.test1 (TestApp)',
+							   currencyCode: 'USD',
+							   price: '$1.01',
+							   description: 'description for arfsync.test1',
+							   isOwned: 'false',
+							   microPrice: '1010000',
+							   productId: 'arfsync.test1',
+							   productType: 'inapp' },
+							 { title: 'title for test0 (TestApp)',
+							   currencyCode: 'USD',
+							   price: '$0.99',
+							   description: 'description for test0',
+							   isOwned: 'false',
+							   microPrice: '990000',
+							   productId: 'test0',
+							   productType: 'inapp' },
+							 { title: 'title for arfsync.testapp.test_subscribe_product_500 (TestApp)',
+							   currencyCode: 'USD',
+							   price: '$0.99',
+							   description: 'description for arfsync.testapp.test_subscribe_product_500',
+							   isOwned: 'false',
+							   microPrice: '990000',
+							   productId: 'arfsync.testapp.test_subscribe_product_500',
+							   productType: 'subs' },
+							 { title: 'title for arfsync.testapp.testproduct_000  (TestApp)',
+							   currencyCode: 'USD',
+							   price: '$0.99',
+							   description: 'description for arfsync.testapp.testproduct_000',
+							   isOwned: 'false',
+							   microPrice: '990000',
+							   productId: 'arfsync.testapp.testproduct_000',
+							   productType: 'inapp' },
+							 { title: 'title for arfsync.testapp.testproduct_001 (TestApp)',
+							   currencyCode: 'USD',
+							   price: '$1.02',
+							   description: 'description for arfsync.testapp.testproduct_001',
+							   isOwned: 'false',
+							   microPrice: '1020000',
+							   productId: 'arfsync.testapp.testproduct_001',
+							   productType: 'inapp' } ],
+						  userId: 1 }
+
+
+

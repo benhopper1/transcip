@@ -1,0 +1,182 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+body
+
+
+	div(id="import_navBar" data-role="navbar")
+		ul
+			li
+				a(href="#" id="contactImport_import" data-icon="arrow-l") Import From Phone
+			li
+				a(href="" id="contactImport_refresh" data-icon="refresh") Refresh List
+	//div(data-role="main" class="ui-content")
+	//div(id="dynamicTable_content_sms_div" class="sms-bottom-height" data-position-to="window" style="margin:10px 15px 0px; height:200px;width:100%; overflow-y:auto;")
+	div(id="importListDivContainer" style="margin:10px 15px 0px; height:200px;width:60%; overflow-y:auto;")
+		#importListDiv
+
+
+
+
+
+
+
+
+
+	script.
+		//========================================================
+		//(exportListDiv) CHECKBOXLINES --------------------------
+		//========================================================
+		$('#importListDiv').CheckboxLines('create', 
+			{
+				onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
+					console.dir(dataWrapper);
+				}
+			}
+		);
+
+		$('#importListDiv').CheckboxLines('addItem',
+			{
+				caption:'noCaption88',
+				isChecked:true
+			}
+		);
+		//=========================================================
+		// BUTTON EVENTS
+		//=========================================================
+		$('#contactImport_import').click(function(){
+			ImportObject.import();
+
+		});
+		$('#contactImport_refresh').click(function(){
+			ImportObject.refresh();
+		});
+		$('#tab_contactManager_import').click(function(){
+			ImportObject.refresh();
+		});
+
+
+		var ImportObject = new function(){
+			var _this = this;
+
+
+			this.import = function(inPostFunction){
+				var checkedRowsArray = $('#importListDiv').CheckboxLines('getDataArrayFromWrapperArray', $('#importListDiv').CheckboxLines('getCheckedData'));
+				console.log('checkedRowsArray');
+				console.dir(checkedRowsArray);
+				async.eachSeries(checkedRowsArray, function(aCheckedRow, next){
+					//moves the image file from cache to active
+					$postAjax(
+						{
+							url:'/database/phonecache/moveCachedContact',
+							send:
+								{
+									refId:aCheckedRow.id,
+									filePathToCopy:aCheckedRow.imageUrl,
+								},
+							onAjaxSuccess:function(inResponseText){
+								// moving / cloning contact information....
+								var moveResult = inResponseText = JSON.parse(inResponseText).result;
+								//fix phoneNumber bug here---
+								//BUG:()
+								aCheckedRow.phoneNumber = cleanPhoneNumber(aCheckedRow.phoneNumber);
+								aCheckedRow.imageUrl = moveResult.newFilePath;
+								contactDataObject.insert(aCheckedRow, function(inData){
+									next();
+								});
+							}
+						}
+					);
+				},function(err){
+					//=====================================
+					// ASYNC DONE
+					//=====================================
+					_this.refresh();
+
+					if(inPostFunction){
+						inPostFunction(err);
+					}
+				});
+
+
+			}//-- end import
+
+			this.refresh = function(){
+				$('#importListDiv').CheckboxLines('clear');
+
+				$postAjax(
+					{
+						url:'/database/phonecache/getImportableData',
+						send:
+							{
+							},
+						onAjaxSuccess:function(inResult){
+							var rows = JSON.parse(inResult).result;
+
+							for(var rowsIndex in rows){
+								rows[rowsIndex].imageUrl = (rows[rowsIndex].imageUrl)? rows[rowsIndex].imageUrl : getDefaultMemberImageUrl();
+								//var caption = phoneDisplayFormat(rows[rowsIndex].phoneNumber)+ ' &nbsp;&nbsp;&nbsp;&nbsp;  ' + rows[rowsIndex].name + '&nbsp;&nbsp;&nbsp;&nbsp;   ' + rows[rowsIndex].type;
+								var html = 
+										'<div style="height:30px">' + 
+											'<div style="position: absolute; left:400px" ><img style="float:right; height:30px; width:30px;  object-fit: cover;" src="' + rows[rowsIndex].imageUrl + '" class="magicSquare" height="30px"/></div>'			+ ' ' +
+											'<div class="centerText" style="height:30px; left:20px;"> &nbsp;&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(rows[rowsIndex].phoneNumber)+ ' &nbsp;&nbsp;&nbsp;&nbsp;  ' + rows[rowsIndex].name + '</div>' + 
+											'<div class="centerText" style="height:30px; left:330px;"> ' + rows[rowsIndex].type + ' </div>' +
+										'</div>'
+										//- '<p>' + rows[rowsIndex].name + '</p>'													+ ' ' +
+										//- '<p>' + phoneDisplayFormat(rows[rowsIndex].phoneNumber) + '</p>'													+ ' ' +
+										//- '<p>' + rows[rowsIndex].type + '</p>'		
+									//'</a>'
+								;
+								var caption = html;
+								//var caption = '<img style="height:60px;" src="' + rows[rowsIndex].imageUrl + '"></img>' + phoneDisplayFormat(rows[rowsIndex].phoneNumber)+ ' &nbsp;&nbsp;&nbsp;&nbsp;  ' + rows[rowsIndex].name + '&nbsp;&nbsp;&nbsp;&nbsp;   ' + rows[rowsIndex].type;
+								$('#importListDiv').CheckboxLines('addItem',
+									{
+										lookupId:rows[rowsIndex].id,
+										caption:caption,
+										isChecked:false,
+										data:rows[rowsIndex]
+									}
+								);
+							}
+
+							//set size of
+
+							console.log('mainHeader:' + $('.mainHeader').height());
+							console.log('tabs header:' + $('#tabs .ui-navbar').height());
+							console.log('importNavBar:' + $('#import_navBar').height());
+							console.log('window:' + $(window).height());
+
+							console.log('userFormContactsList' + $('#userFormContactsList').width());
+
+
+							console.log('IMPORT WIDTH:' + $('#import_navBar').width());
+							//$('#importListDivContainer').width($('#import_navBar').width() - 100);
+
+							_this.setImportAreaSize();
+						}
+					}
+				);
+			}
+
+			this.setImportAreaSize = function(){
+				$('#importListDivContainer').height(
+					(
+						$(window).height() - 
+							(
+								$('.mainHeader').height()
+								+	$('#tabs .ui-navbar').height()
+								+	$('#import_navBar').height()
+							)
+					) * .85
+				);
+
+				$('#importListDivContainer').width(
+					$('#import_navBar').width() * .95
+				);
+			}
+
+
+
+		}//end object
+

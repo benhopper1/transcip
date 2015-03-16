@@ -1,0 +1,221 @@
+
+
+//=====================================================================
+// TEST MSG
+//=====================================================================
+if data.messageId == 'test'
+	#bill
+		h1 test messgae-----
+
+//=====================================================================
+// sms_nolog MSG
+//=====================================================================
+if data.messageId == 'sms_nolog'
+
+	div(class="" data-position-to="window" class="ui-overlay-shadow" style="")
+		center(style="height:80%;overflow-y: auto")
+			h6 No Messages in log for #{data.name}
+			img(src="#{data.imageUrl}" class="magicSquare" style="height:150px; width:150px;  object-fit: cover;")
+
+//=====================================================================
+// main_welcome MSG
+//=====================================================================
+if data.messageId == 'main_welcome'
+
+	div(class="" data-position-to="window" class="" style="")
+		center(style="height:80%;overflow-y: none")
+			h1(style="text-shadow: 2px 2px #cecbca;") Welcome to ArfSync
+			img(id="msgMemberImg_001" src="#{data.imageUrl}" class="" style="height:150px; width:150px;  object-fit: cover;")
+			h3(style="text-shadow: 2px 2px #cecbca;") #{data.name}
+
+	script.
+		//$('#msgMemberImg_001').show(5000);
+
+//=====================================================================
+// main_welcome MSG
+//=====================================================================
+if data.messageId == 'loading_please_wait'
+
+	div(class="" data-position-to="window" class="" style="")
+		center(style="height:80%;overflow-y: none")
+			h1(style="text-shadow: 2px 2px #cecbca;") Loading Please Wait
+			img(id="msgMemberImg_001" src="#{data.imageUrl}" class="" style="height:150px; width:150px;  object-fit: cover;")
+			h3(style="text-shadow: 2px 2px #cecbca;") #{data.name}
+
+	script.
+		//$('#msgMemberImg_001').show(5000);
+
+//=====================================================================
+// lost_connect MSG
+//=====================================================================
+if data.messageId == 'lost_connect'
+	center(id="lost_connect_div" style="z-index: 100000000;")
+		div(class="" data-position-to="window" class="ui-overlay-shadow" style="background: url('/public/images/ui/whitecloudsimage.jpg');background-repeat:repeat-y;	background-position:center center; background-attachment:scroll;")
+			center(style="height:80%;overflow-y: none")
+				h1(style="text-shadow: 2px 2px #cecbca;") Lost Connection
+				h3(style="text-shadow: 2px 2px #cecbca;") Wiping Personal Data From Browser
+
+				h6(style="text-shadow: 2px 2px #cecbca;") Reseting Browser
+				h4(id="countDownTimerIndex" style="text-shadow: 2px 2px #cecbca;") 
+				//img(id="msgMemberImg_001" src="#{data.imageUrl}" class="" style="height:150px;")
+				//h3(style="text-shadow: 2px 2px #cecbca;") #{data.name}
+
+	script.
+		//$('#msgMemberImg_001').show(5000);
+		var time_index = 30;
+		$('#lost_connect_div').center();
+		//var stop = false;
+		var doCountDown = function(){
+			setTimeout(function(){
+				 var t = time_index--;
+				 $('#countDownTimerIndex').html(t + '');
+				 if(t == 0){
+				 	//location.reload();
+				 	window.location.href=getHomePageURL();
+				 	$('#lost_connect_div').hide(10000);
+				 	//stop = true;
+				 }
+				 //if(!(stop)){
+			 	if(doCountDown){
+			 		doCountDown();
+		 		}
+			 	//}
+			}, 1000);
+		}
+
+		doCountDown();
+
+//=====================================================================
+// reconnect MSG
+//=====================================================================
+if data.messageId == 'reconnect'
+	//center(id="reconnectDiv" style="z-index: 100000001;")
+	//div(id="reconnectDiv" class="" data-position-to="window" class="ui-overlay-shadow" style="background: url('/public/images/ui/whitecloudsimage.jpg');")
+	center(id="reconnectDiv" style="height:80%;overflow-y: none")
+		h1(style="text-shadow: 2px 2px #cecbca;color: red;") Device Has Reconnected
+		//h3(style="text-shadow: 2px 2px #cecbca;") 
+
+	script.
+		$('#lost_connect_div').remove();
+		if(!(typeof doCountDown === 'undefined')){
+			doCountDown = false;
+		}
+		setTimeout(function(){
+			$('#reconnectDiv').remove();
+		}, 7000);
+
+
+//=====================================================================
+// main_welcome MSG
+//=====================================================================
+if data.messageId == 'incoming_sms'
+	center
+		#smsCenter(style="border:1;")
+	//#incomingSmsScreenMessageDiv(data-role="popup" data-theme="a" class="" style="width:100%; height: 70%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+	#incomingSmsScreenMessageDiv(data-theme="a" style="width:100%; background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+		div(id="smsIncomingContainer" style="height:100%")
+			//div(id="smsIncomingContainer"  class="ui-corner-all ui-shadow ui-overlay-shadow" data-role="" data-position-to="window" style="font:12px/14px Arial, Helvetica, sans-serif; display:none;width:50%; background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center;" )
+			div(class="ui-bar ui-bar-a  " style="border:0;width:500px; height:25px; background-color: transparent !important;" )
+				h1() Receiving Sms Message
+					button(id="smsIncomingContainer_bt_close" data-mini="true" style="padding:0px; margin:0px" class="ui-corner-all ui-shadow ui-btn-a ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right" )
+			div(class="ui-grid-b")
+					//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+					div(class="ui-block-a" syle="overflow:hidden;")
+						img(id="smsIncomingContainer_image" class="magicSquarePnt" style="height:90px; width:90px;  object-fit: cover;" src="/public/images/contacts/6aad1b70-aa76-11e4-81ad-b576a76b8e21.jpg")
+					div(class="ui-block-b" syle="overflow:hidden;")
+						h3
+							b(id="smsIncomingContainer_name") 
+						p(id="smsIncomingContainer_number") 
+						p(id="smsIncomingContainer_message") 
+
+
+
+
+
+
+
+
+	script.
+		//$('#smsIncomingContainer').trigger('create');
+		var IncomingSmsObject = new function(){
+			var _this = this;
+			var theDiv;
+
+			$('#smsCenter').center();
+			this.load = function(){
+				$('#smsIncomingContainer').trigger('create').trigger('refresh');
+				//$('#smsIncomingContainer').enhanceWithin().popup();
+				theDiv = $('#smsIncomingContainer');
+				$('#smsIncomingContainer_bt_close').click(function(){
+					_this.hide({speed:'slow'});
+					console.log('clicked close');
+				});
+
+				//$('#smsIncomingContainer_bt_close').trigger('click');
+			}
+
+			this.show = function(inJstruct){
+				var options = 
+					{
+						speed:10000,
+						onTimeout:false,
+						onFinished:false,
+						duration:2000,
+						messageMaxCharLength:15,
+
+						name:'NO NAME',
+						phoneNumber:'000 000 0000',
+						message:'NO MESSAGE',
+						imageUrl:false,
+					}
+				options = $.extend(options, inJstruct);
+
+				$('#smsIncomingContainer_name').text(options.name);
+				$('#smsIncomingContainer_number').text(phoneDisplayFormat(options.phoneNumber));
+				var shortMessage = (options.message.length < options.messageMaxCharLength)? options.message : options.message.substring(0, options.messageMaxCharLength) + '...';
+				$('#smsIncomingContainer_message').text(shortMessage);
+				$('#smsIncomingContainer_image').attr('src', options.imageUrl);
+
+				//$('#incomingSmsScreenMessageDiv').popup().popup( "open" );
+				$('#incomingSmsScreenMessageDiv' ).enhanceWithin().popup();
+				$('#incomingSmsScreenMessageDiv').popup().popup( "open", {positionTo: '#smsCenter'});
+
+				$(theDiv).slideDown(options.speed, 'linear', function(){
+
+
+
+					if(options.onTimeout){
+						setTimeout(function(){
+							options.onTimeout();
+						}, options.duration);
+					}
+
+					if(options.finished){
+						options.finished();
+					}
+				});
+			}
+			this.hide = function(inJstruct){
+				var options = 
+					{
+						speed:10000,
+						onFinished:false,
+					}
+				options = $.extend(options, inJstruct);
+				$(theDiv).slideUp(options.speed, 'linear', function(){
+					console.log('showing');
+					if(options.finished){
+						options.finished();
+					}
+				});
+			}
+
+		}();
+
+
+
+
+//=====================================================================
+// main_welcome MSG
+//=====================================================================
+if data.messageId == 'outgoing_sms'

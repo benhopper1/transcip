@@ -1,0 +1,303 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+//background-image: url('public/images/ui/beach_background.jpg')      background-color: #00ff00;
+//body(style="background-image: url('/public/images/ui/cracked_bkg.png')")
+body
+	script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+	
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+	script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	link(rel='stylesheet', href='/public/js/easyui/themes/ui-sunny/easyui.css')
+	link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+	
+
+	//link(rel="stylesheet" href="/public/js/skeleton/css/normalize.css")
+	link(rel="stylesheet" href="/public/js/skeleton/css/skeleton.css")
+	
+	//script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	//script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+	//script(type='text/javascript', src='public/js/async/async.js')
+
+	//script(type='text/javascript', src='/public/js/reportview/reportview.js')
+
+	//link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/normalize.css")
+	link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/demo.css")
+	link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/component.css")
+	//script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/modernizr.custom.25376.js")
+	
+	
+
+
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+	style.
+		.mm-menu
+			{
+				background: rgba( 0, 0, 0, 0.6 );
+				box-shadow: none !important;
+				text-align: center;
+				color: #fff;
+			}
+		.logo{
+				border: 1px solid #fff;
+				line-height: 40px;
+				display: inline-block;
+				width: 40px;
+				height: 80px;
+				margin: 0x 0 0 0;
+		}
+		.imgAndData{
+			font-size: 13px;
+			font-style: normal;
+			font-weight: normal;
+			padding-left: 5px;
+			LINE-HEIGHT:15px;
+			background-color: #eee;
+
+		}
+
+		.magicCirc{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.magicSquare{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.magicCircPnt{
+			padding:4px;
+			display:inline-block;
+			cursor:pointer;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.center{
+			margin-left: auto;
+			margin-right: auto;
+			width: 70%;
+			background-color: #b0e0e6;
+		}
+
+
+		@-webkit-keyframes spaceboots {
+			0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+			10% { -webkit-transform: translate(-1px, -2px) rotate(-40deg); }
+			20% { -webkit-transform: translate(-3px, 0px) rotate(40deg); }
+			30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+			40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+			50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+			60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+			70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+			80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+			90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+			100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+		}
+		.shake {
+			-webkit-animation-name: spaceboots;
+			-webkit-animation-duration: 0.8s;
+			-webkit-transform-origin:50% 50%;
+			-webkit-animation-iteration-count: 15;//infinite;
+			-webkit-animation-timing-function: linear;
+		}
+		.magicShadow{
+			-moz-box-shadow:10px 10px 5px #000000;
+			-webkit-box-shadow:10px 10px 5px #000000;
+			box-shadow:10px 10px 5px #000000;
+		}
+
+		.magicPointer{
+			cursor:pointer;
+		}
+
+		.textWrap {
+			align:left;
+			margin-right:20px;
+		}
+		.textWidthA{
+			width:300px;
+		}
+		img{
+			max-width: 100%;
+		}
+		.lAlign{
+			text-align: left;
+		}
+		.rAlign{
+			text-align: right;
+		}
+		.cAlign{
+			text-align: center;
+		}
+		.max{
+			max-width: 100%;
+		}
+
+
+		.users {
+			table-layout: fixed;
+			width: 100%;
+			white-space: nowrap;
+		}
+		.users td {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		/* Column widths are based on these cells */
+			.row-ID {
+			width: 10%;
+		}
+			.row-name {
+			width: 40%;
+		}
+			.row-job {
+			width: 30%;
+		}
+			.row-email {
+			width: 20%;
+		}
+
+		//==================================================================
+		// H T M L
+		//==================================================================
+
+
+	//div(class="container")
+			//div(class="wrapper")
+
+	//div(id="perspective" class="perspective effect-airbnb")
+	div(class="container")
+		div(class="wrapper")
+			header(class="codrops-header")
+				img(src="/public/images/ui/arfsync_logo.png")
+				h1(class="lAlign") Why would I create a complete communication stack and protocols?
+				p(class="lAlign")
+					|	I noticed a problem concerning communication between phone devices and web applications(browser). I could find nothing
+					|	that would enable real time communication between phones and browsers. So I set out to create a communication stack or libraries that would be reusable for these purposes. I gave it a pretty nice interface for javascript and java. I created a node js server that would route my protocol between devices and with lots of other features including security.
+					|	I will soon be extending the communication stack to include c/c++ library for IOS and Android native. I think I will use QT for this. It's a pretty nice cross platform framework.
+					|	I needed this stack to be able to deliver a new era for the mobile app industry. This stack gives me the ability to create new solutions and to remove a huge gap between devices.
+				h1(class="lAlign") Will I have to login again?
+
+				//div(style="width:200px; max-width: 80%;")
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/login_shot2.png") 
+				p(class="lAlign")
+					| I created a few ways to log into the server. We can use the common user name and password, but why would I want the user to have to log in twice and then again per each device. I'm guessing in most cases the phone is personal and should be able to store credentials without many concerns. Then the browser is just the opposite. It might be shared between co-workers, hotel residents or other shopping consumers etc.. We might never know the software installed and running along side the browser. It could be key logging or anything. While writing the communication I decided to give the browser a login that uses scannable codes. This way the browser or the computer the browser is running on will never have your user name and password entered into its keyboard cache or into its memory. I do this by using a random GUID that gets shared between the browser and the server. When the phone scans this code off the browser screen it then ask the server to login that particular browser session via my communication. The phone then provides its credentials for that particular GUID. The login then happens. It gets a little more complicated handling the session stuff. I will not share that part of the login for security reasons.
+
+
+				h1(class="lAlign") How are we able to communicate?
+				p(class="lAlign")
+					|	After many failed attempts using polling, php sockets, apache hacks, I discovered nodejs. Nodejs was able to provide a nice place to house a websocket server. From that I had to build a full protocol for transferring data and several different transfer styles. I kept the protocol simple. It has three layers. Transport layer, routing layer and data layer. There are three styles of transferring data. Filter,  transaction and transaction series. The filter style is best used for realtime transfer. It is a one way transmit or send and forget. The transaction is like a query or expects a return from the receiving end to complete. This is great for asynchronous callbacks. The callbacks get the data requested then they can execute based on that data. Then there is the more complicated style, transaction series. It is very similar to the transaction except it uses an iterator. This is the same as buffer sized transmits. I had found some limitations to json parsers and needed a way to break the size up into parsable fragments. 
+					br
+					br
+					|	Then each device has a GUID and the server uses a hashlookup for the connection. The server also relates devices to the user account. I call this relation family devices. When a device logs in or out a broadcast is made to each of the family devices. They receive detailed information about this change. The devices store the other devices GUID's and basically send data using one of the communication styles. Press a button or take an action on the phone, then the browser is notified or asked to take a specific action and vise versa.
+
+
+				
+				h1(class="lAlign") Can I send sms and receive on my browser?
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/smsonly.png") 
+				p(class="lAlign;")
+					|	Absolutely, with Arfsync you can create and receive sms in comfort. I love being able to type rather than pecking a two inch screen.
+					
+				br(style="clear: both;")
+				br(style="clear: both;")
+				br(style="clear: both;")
+
+				h1(class="lAlign") Sms pop-up!!
+				img(align="right" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/incomingsms.png") 
+				p(class="lAlign")
+					|  You even get a pop-up screen when new messages arrive. When you send or receive a quick list is built on the right hand side for easy switching of contacts. The last contact you sent or received will be on the top. This allows you to have a more organized multi-conversation with your network of contacts. You also have a history list of messages to view per contact.
+
+
+				br(style="clear: both;")
+				br(style="clear: both;")
+				br(style="clear: both;")
+
+				br(style="clear: both;")
+				h1(class="lAlign") Will I be able to use my existing contacts?
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/import.png") 
+				p(class="lAlign")
+					|	This is a question I love to answer. YES you can!!! Arfsync has an import and export feature. You are able to create, edit and delete contacts. These contacts are stored in a database and are not directly affected by a device. It would be possible to login with one of your phones, then import its contacts, then login with a different phone and export to that device. For a future accessory I may create a cross contact for all devices to share. 
+			
+				br(style="clear: both;")
+				br(style="clear: both;")
+				br(style="clear: both;")
+
+				br(style="clear: both;")
+				h1(class="lAlign") It would be nice to store notes related to phone calls.
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/ordernotes.png") 
+				p(class="lAlign")
+					|	Yes that is nice. You get a history view of your call log. You can set criterion to filter to a specific set of  log entries. You can specify a particular contact, view past fifteen calls, only view todays calls from any contact or specific contact etc.. you get control over your data, changing it into usable information. Once you select a call you can add, edit, delete notes based on this call log entry. You are also able to select the current call in progress and write notes as you talk. This can be simple or I've also added a template module for advanced notes. Lets say your a purchasing agent and need to track inventory numbers and purchase order numbers etc.. The template can be set up to handle the more advanced notes. The template can give you option list and general key and value sets. I will publish the more popular templates as they are built and you can have the option of adding them to your instance of arfSync. 
+			
+				br(style="clear: both;")
+				br(style="clear: both;")
+				br(style="clear: both;")
+
+				br(style="clear: both;")
+				h1(class="lAlign") Will I be able to make calls from the browser?
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/handsetfocus.png") 
+				p(class="lAlign")
+					|	Yes, but you still have to use the handset's phone mic or speaker phone. I visualize the user wearing a headset, maybe blue tooth. I did add the ability to turn the speaker phone on and off from the browser and included a volume slider. To place calls, you can select an entry from the call log, from your contacts or manually key in the number, extension and pause time if needed. Then you just click the dial now button and your calling somebody. 
+			
+				br(style="clear: both;")
+				br(style="clear: both;")
+				br(style="clear: both;")
+
+				br(style="clear: both;")
+				h1(class="lAlign") So what is my phone doing while I'm using the browser?
+				img(align="left" class="textWrap magicSquare magicShadow" style="width:400px; max-width: 100%;" src="/public/images/information/contact_managerandphn.png") 
+				p(class="lAlign")
+					|	The phone is staying in sync with the browser and displaying a sliding menu with options you can touch or swipe through. Like when you navigate to the Contact Manager on the browser your phone list all the options that you can choose. So if you got tired of using the mouse or just wanted to use both you could.  Also while in the Contact Manager the phone displays an image slider at the top that you are able to swipe through to pick the contact of focus.
+			
+
+
+
+
+
+
+			br
+			br
+			br
+			br
+			bt
+			center
+				h5 	I'm currently still adding to this page, I update per section of text. 01/13/2015 last updated..

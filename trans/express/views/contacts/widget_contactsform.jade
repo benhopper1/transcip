@@ -1,0 +1,455 @@
+
+
+form(action="/upload", method="post", enctype="multipart/form-data")
+	input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+//div(id="addContactPanel"  class="easyui-panel" title="Add Contact" style="width:400px")
+div(id="addContactForm" class="easyui-window" title="Window Layout" data-options="iconCls:'icon-save'" style="width:80%;height:80%;padding:5px;")
+	div(id="addContactArea"  style="padding:10px 10px 20px 10px")
+		form(id="addContactForm" method="post")
+			table(cellpadding="5")
+				tr
+					td Name:
+					td
+						input(id="widget_contactsForm_name" class="easyui-textbox" type="text" name="name" data-options="required:true")
+				tr
+					td Type:
+					td
+						select(id="widget_contactsForm_type" class="easyui-combobox" name="dept" style="width:200px;")
+							option() [HOME]
+							option() [MOBILE]
+							option() [WORK]
+							option() [OTHER]
+
+				tr
+					td Phone:
+					td
+						input(id="widget_contactsForm_phone" class="easyui-textbox" type="text" name="name" data-options="required:true")
+
+				tr
+					td Email:
+					td
+						input(id="widget_contactsForm_email" class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'")
+
+				tr
+					td Company:
+					td
+						input(id="widget_contactsForm_company" class="easyui-textbox" type="text" name="name" data-options="required:true")
+
+				tr
+					td Department:
+					td
+						input(id="widget_contactsForm_department" class="easyui-textbox" type="text" name="name" data-options="required:true")
+
+				tr
+					td Title:
+					td
+						input(id="widget_contactsForm_title" class="easyui-textbox" type="text" name="name" data-options="required:true")
+
+				tr
+					td Image:
+					td
+						a(id="tt_0" title="Click to select a local image."  class="easyui-tooltip")
+							center
+								img(id="widget_contactsForm_image" class="magicCircPnt contactAddImage" src="public/images/contacts/default.jpg" style="height:100px;" onclick="Widget_contactsFormScript.chooseFile();")
+
+
+	div(id="addContactBottomArea"  style="text-align:center;padding:5px")
+		a(id="addEditContacts_save" href="javascript:void(0)" class="easyui-linkbutton" onclick="") Save
+		a(id="addEditContacts_clear" href="javascript:void(0)" class="easyui-linkbutton" onclick="") Clear
+		a(id="addEditContacts_close" href="javascript:void(0)" class="easyui-linkbutton" onclick="") Close
+
+
+
+
+
+script(id='Widget_contactsFormScriptDiv').
+
+	var Widget_contactsFormScript = new function(){
+		var _this = this;
+		var dataGridId;
+		var state;
+		var edit_contact_id;
+		var edit_contact_refNumber;
+
+		$('#upload').change(function(){
+			//new image to dispay.
+			_this.uploadImage();
+		});
+
+		this.addToStore = function(){
+			if(state == 'edit'){
+				$postAjax(
+					{
+						url:'database/editContact',
+						send:
+							{
+								id:edit_contact_id,
+								department:$('#widget_contactsForm_department').val(),
+								companyName:$('#widget_contactsForm_company').val(),
+								emailAddress:$('#widget_contactsForm_email').val(),
+								imageUrl:$('#widget_contactsForm_image').attr('src'),
+								name:$('#widget_contactsForm_name').val(),
+								phoneNumber:cleanPhoneNumber($('#widget_contactsForm_phone').val()),
+								refNumber:edit_contact_refNumber,
+								title:$('#widget_contactsForm_title').val(),
+								type:_this.typeComboGetSelected()
+							},
+						onAjaxSuccess:function(inResponseText){
+							//alert(inResponseText);
+							widgetContactsCollectionScript.updateGridDataForRowIndex(widgetContactsCollectionScript.getSelectedRowIndexFromGrid(),
+								{
+									id 				:edit_contact_id,
+									imagePath		:$('#widget_contactsForm_image').attr('src'),
+									contactName 	:$('#widget_contactsForm_name').val(),
+									contactNumber 	:cleanPhoneNumber($('#widget_contactsForm_phone').val()),
+									emailAddress 	:$('#widget_contactsForm_email').val(),
+									companyName 	:$('#widget_contactsForm_company').val(),
+									department 		:$('#widget_contactsForm_department').val(),
+									title 			:$('#widget_contactsForm_title').val(),
+									refNumber 		:edit_contact_refNumber,
+								    type 			:_this.typeComboGetSelected()
+
+								}
+							);
+							//reselect to cause event to propergate new info---
+							widgetContactsCollectionScript.gridSelectRow(widgetContactsCollectionScript.getSelectedRowIndexFromGrid());
+							eventObject.reportOn('refreshOnRemote', '');
+							_this.close();
+						}
+					}
+				);
+
+			}
+
+			if(state == 'add'){
+
+				$postAjax(
+					{
+						url:'database/addContact',
+						send:
+							{
+								companyName:$('#widget_contactsForm_name').val(),
+								department:$('#widget_contactsForm_department').val(),
+								companyName:$('#widget_contactsForm_company').val(),
+								emailAddress:$('#widget_contactsForm_email').val(),
+								imageUrl:$('#widget_contactsForm_image').attr('src'),
+								name:$('#widget_contactsForm_name').val(),
+								phoneNumber:cleanPhoneNumber($('#widget_contactsForm_phone').val()),
+								refNumber:'',
+								title:$('#widget_contactsForm_title').val(),
+								type:_this.typeComboGetSelected()
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							
+							widgetContactsCollectionScript.gridDataAppendRow(
+								{
+									id 				:inResponseText.result.insertId,
+									imagePath		:$('#widget_contactsForm_image').attr('src'),
+									contactName 	:$('#widget_contactsForm_name').val(),
+									contactNumber 	:cleanPhoneNumber($('#widget_contactsForm_phone').val()),
+									emailAddress 	:$('#widget_contactsForm_email').val(),
+									companyName 	:$('#widget_contactsForm_company').val(),
+									department 		:$('#widget_contactsForm_department').val(),
+									title 			:$('#widget_contactsForm_title').val(),
+									refNumber 		:edit_contact_refNumber,
+									type 			:_this.typeComboGetSelected()
+								}
+							);
+
+							//select last,,,
+							widgetContactsCollectionScript.gridSelectLastRow();
+							eventObject.reportOn('refreshOnRemote', '');
+							_this.close();
+						}
+					}
+				);
+			}
+
+
+
+		}
+
+
+
+
+		this.chooseFile = function(){
+			$('#upload').trigger('click');
+		}
+
+		this.uploadImage = function(){
+			$ajaxFilePost(
+				{
+					fileInputElement:'upload',
+
+					options:
+						{
+							command:'imageStore',
+							theme:'normalUserImage'
+						},
+
+					onComplete:function(inResponse){
+						if(inResponse.domainFilePath){
+							$('#widget_contactsForm_image').attr('src', inResponse.domainFilePath);
+						}
+					}
+				}
+			);
+		}
+
+		this.setDataGridId = function(inDataGridId){
+			dataGridId = inDataGridId;
+		}
+
+		this.setFormTitle = function(inTitle){
+			$('#addContactForm').window('setTitle', inTitle);
+		}
+
+		this.load = function(){
+			$('#addContactForm').window({
+				title:'  XXX XXX',
+				closed:true,
+				width:'400px',
+				height:'500px',
+				modal:true,
+				minimizable:false,
+				maximizable:false,
+				onBeforeClose: function(){
+				},
+				onOpen:function(){
+						console.log('onOpen:' + (state == 'add')? 'subMenu_contacts_add' : 'subMenu_contacts_edit');
+							//_this.menuChangeToContacts(); // got focus call
+						eventObject.reportOn('onOpenCloseToRemote',
+							{
+								open:true,
+								id:(state == 'add')? 'subMenu_contacts_add' : 'subMenu_contacts_edit',
+							}
+						);
+				},
+				onClose:function(){
+					_this.destroy();
+					eventObject.reportOn('onOpenCloseToRemote',
+						{
+							open:false,
+							id:(state == 'add')? 'subMenu_contacts_add' : 'subMenu_contacts_edit',
+						}
+					);
+					//_this.destroy();
+				},
+				//- onBeforeOpen: function(){
+				//- 	commManager.transactionToDeviceToken(
+				//- 		{
+				//- 			routing:
+				//- 				{
+				//- 					command:'webMenu',
+				//- 					action:'openClosePanel'
+				//- 				},
+				//- 			data:
+				//- 				{
+				//- 					//id:(state == 'add')? 'subMenu_contacts_add' : 'subMenu_contacts_edit',
+				//- 					id:'subMenu_contacts_add',
+				//- 					command:'open'
+				//- 				},
+
+				//- 			onComplete:function(inDataLayer, inTransportLayer){
+				//- 				console.log('onComplete transactionToDeviceToken call back entered');
+				//- 			}
+				//- 		}
+				//- 	);
+				//- },
+				//destroy
+				//- onClose:function(){
+				//- 	_this.destroy();
+				//- }
+			});
+
+			$('#widget_contactsForm_type').combobox({
+				//url:'combobox_data.json',
+				valueField:'id',
+				textField:'text'
+			});
+
+			$('#addEditContacts_save').linkbutton(
+				{
+					text:'Save',
+					//iconCls:'icon-send',
+					//iconAlign:'left',
+					width:80
+				}
+			);
+
+			$('#addEditContacts_clear').linkbutton(
+				{
+					text:'Clear',
+					//iconCls:'icon-send',
+					//iconAlign:'left',
+					width:80
+				}
+			);
+			$('#addEditContacts_close').linkbutton(
+				{
+					text:'Close',
+					//iconCls:'icon-send',
+					//iconAlign:'left',
+					width:80
+				}
+			);
+		}
+
+		this.typeComboGetSelected = function(){
+			var comboArray = $('#widget_contactsForm_type').combobox('getData');
+			var selectedId = $('#widget_contactsForm_type').combobox('getValue');
+			for(index in comboArray){
+				if(comboArray[index].id == selectedId){
+					return comboArray[index].text;
+				}
+			}
+			return false;
+		}
+
+		this.close = function(){
+			$('#addContactForm').window('close');
+		}
+
+		this.clearForm = function(){
+			$('#widget_contactsForm_name').val('');
+			$('#widget_contactsForm_department').val('');
+			$('#widget_contactsForm_company').val('');
+			$('#widget_contactsForm_email').val('');
+			$('#widget_contactsForm_image').attr('src','');
+			$('#widget_contactsForm_phone').val('');
+			$('#widget_contactsForm_title').val('');
+			edit_contact_id = false;
+			edit_contact_refNumber = false;
+		}
+
+		this.open = function(inData){
+			_this.clearForm();
+			if(inData){
+				if(inData.edit){
+					state = 'edit';
+					_this.setFormTitle('Edit Selected Contact');
+					$('#addContactForm').window('open');
+					if(dataGridId){
+						console.log('2rowIndex:' + widgetContactsCollectionScript.getSelectedRowIndexFromGrid());
+						edit_contact_id = $('#' + dataGridId).datagrid('getSelected').id;
+						$('#widget_contactsForm_image')		.attr('src',$('#' + dataGridId).datagrid('getSelected').imagePath);
+						$('#widget_contactsForm_name')		.val($('#' + dataGridId).datagrid('getSelected').contactName);
+						$('#widget_contactsForm_phone')		.val($('#' + dataGridId).datagrid('getSelected').contactNumber);
+						$('#widget_contactsForm_email')		.val($('#' + dataGridId).datagrid('getSelected').emailAddress);
+						$('#widget_contactsForm_company')	.val($('#' + dataGridId).datagrid('getSelected').companyName);
+						$('#widget_contactsForm_department').val($('#' + dataGridId).datagrid('getSelected').department);
+						$('#widget_contactsForm_title')		.val($('#' + dataGridId).datagrid('getSelected').title);
+						$('#widget_contactsForm_type').combobox('selectByText', $('#' + dataGridId).datagrid('getSelected').type);
+						//edit_contact_refNumber = $('#' + dataGridId).datagrid('getSelected').refNumber;
+					}
+				}else{
+					if(inData.add){
+						console.log('add...loading contact ');
+						state = 'add';
+						_this.setFormTitle('Add New Contact');
+						$('#addContactForm').window('open');
+						if(!(_this.getImageSrc())){
+							_this.setImageSrc(getDefaultMemberImageUrl());
+						}
+					}
+				}
+			}
+			
+
+
+			//events----------
+			//===========================================================================
+			// -- >  E V E N T S  < ----------------------------------------------------- 
+			//===========================================================================
+
+			$('#addEditContacts_save').click(function(){
+				_this.addToStore();
+			});
+			$('#addEditContacts_clear').click(function(){
+				_this.clearForm();
+			});
+			$('#addEditContacts_close').click(function(){
+				$('#addContactForm').window('close');
+			});
+
+			// remoteMenu mesh
+			eventObject.setOn('subMenu_contacts_add_save', function(inData){
+				_this.addToStore();
+			});
+			eventObject.setOn('subMenu_contacts_add_clear', function(inData){
+				_this.clearForm();
+			});
+			eventObject.setOn('subMenu_contacts_add_close', function(inData){
+				//$('#addContactForm').window('close');
+				_this.close();
+			});
+
+			//- $('#addEditUser_close').linkbutton(
+						//- 	{
+						//- 		text:'Close',
+						//- 		//iconCls:'icon-send',
+						//- 		//iconAlign:'left',
+						//- 		width:80
+						//- 		//- onClick:function(){
+						//- 		//- 	alert("close");
+						//- 		//- }
+						//- 	}
+						//- );
+		}
+
+		this.getImageSrc = function(){
+			return $('#widget_contactsForm_image').attr('src');
+		}
+
+		this.setImageSrc = function(inSrc){
+			$('#widget_contactsForm_image').attr('src',inSrc);
+		}
+
+		this.destroy = function(){
+			delete window.Widget_contactsFormScript;
+			$('#Widget_contactsFormScriptDiv').unbind();
+			$('#Widget_contactsFormScriptDiv').remove();
+
+			$('#addContactForm').unbind();
+			$('#addContactForm').remove();
+			delete window.addContactForm;
+
+		}
+
+	}();
+
+	//######################################################
+	//--- > D O C U M E N T   R E A D Y <-------------------
+	//######################################################
+	$( document ).ready(function(){
+
+		Widget_contactsFormScript.load();
+		$('#tt_0').tooltip(
+			{
+				position: 'right'
+			}
+		);
+
+
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

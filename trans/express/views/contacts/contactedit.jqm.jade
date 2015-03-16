@@ -1,0 +1,370 @@
+head
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+body
+	form(action="/upload", method="post", enctype="multipart/form-data" style="display: none;")
+		input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+
+
+
+	#contactModeSelect
+	center
+		div(id="contactsWindow" data-role="main"  class="ui-overlay-shadow ui-shadow" style="padding-top: 25px;width:95%; ")
+			form(method="post" id="userForm" data-mini="true" style="")
+				div(class="ui-field-contain" style="" )
+					input(type="hidden"  id="contactEdit_id" name="id")
+					div(class="ui-grid-a" style="")
+						div(class="ui-block-a" style="width:25%")
+							center(style="height:150px;")
+								//h6 (click to change)
+								img(id="contactEdit_image" name="uImg" class="magicSquarePnt contactAddImage" src="#{defaultMemberImageUrl}" style="height:100px;" )
+								h5 Click Image To Change 
+
+						div(class="ui-block-b" style="width:75%;")
+							#contactEdit_type
+							input(tabindex="1" type="text" 	id="contactEdit_name" 	data-mini="true" name="name" placeholder="Full Name..." style="background-color: transparent !important;")
+							input(tabindex="3" type="email" id="contactEdit_emailAddress" 	data-mini="true" name="emailAddress" placeholder="Email Address...")
+
+
+
+					div(class="ui-grid-a" style="")
+						div(class="ui-block-a" style="width:70%")
+							input(tabindex="2" type="tel" 	id="contactEdit_phoneNumber" 	data-mini="true" name="phoneNumber" placeholder="Phone Number...")
+						div(class="ui-block-b" style="width:30%")
+							input(tabindex="8" type="text" 	id="contactEdit_ext" 			data-mini="true" name="ext" 		placeholder="Extension...")
+
+					input(tabindex="4" type="text"  id="contactEdit_companyName" 	data-mini="true" name="companyName" placeholder="Company Name...")
+					input(tabindex="5" type="text" 	id="contactEdit_department" 	data-mini="true" name="department" 	placeholder="Department...")
+					input(tabindex="6" type="text" 	id="contactEdit_title" 			data-mini="true" name="title" 		placeholder="title...")
+					input(tabindex="7" type="text" 	id="contactEdit_ref" 			data-mini="true" name="ref" 		placeholder="Reference Number...")
+
+					div(class="ui-grid-b" style="")
+						div(class="ui-block-a" style="width:33%")
+							input(data-icon="action" id="bt_contactEdit_save" 	data-mini="true" type="button" value="Save")
+						div(class="ui-block-b" style="width:33%")
+							input(data-icon="back" id="bt_contactEdit_clear" 	data-mini="true" type="button" value="Clear")
+						div(class="ui-block-c" style="width:33%")
+							input(data-icon="delete" id="bt_contactEdit_delete" 	data-mini="true" type="button" value="Delete Contact")
+
+
+
+
+
+script.
+	$( "#pg_page_2").on( "pageshow", function( event, ui ){
+		console.log('PAGE SHOW--------------------------ContactManager');
+		$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+	});
+	//=========================================================
+	// JQM EXTENSION HorizontalRadioGroup
+	//=========================================================
+	$('#contactEdit_type').HorizontalRadioGroup('create',
+		{
+			id:'radioGrp_0',
+			class:'',
+			dataTheme:'a',
+			dataType:'horizontal',
+			legend:'',
+			radioArray:
+				[
+					{
+						caption:'MOBILE',
+						value:'on',
+						checked:true
+					},
+					{
+						caption:'HOME',
+						value:'other',
+						checked:false
+					},
+					{
+						caption:'WORK',
+						value:'other',
+						checked:false
+					},
+					{
+						caption:'OTHER',
+						value:'off',
+						checked:false
+					},
+
+				],
+			onSelect:function(inCaption){
+			}
+		}
+	);
+
+	$('#contactEdit_type').HorizontalRadioGroup('load');
+
+	//===============================
+	// CHANGE IMAGE
+	//===============================
+
+	$('#upload').trigger('click');
+	$('#contactEdit_image').click(function(){
+		$('#upload').trigger('click');
+	});
+	$('#upload').change(function(){
+		$ajaxFilePostVariableRoute(
+			{
+				uploadRoute:'/upload/contact/image',
+				fileInputElement:'upload',
+
+				options:
+					{
+						command:'imageStore',
+						theme:'normalUserImage'
+					},
+
+				onComplete:function(inResponse){
+					if(inResponse.domainFilePath){
+						$('#contactEdit_image').attr('src', inResponse.domainFilePath);
+					}
+				}
+			}
+		);
+	});
+
+
+	
+
+	//- contactDataObject.getEventObject().setOn('onAfterInsert', function(inData){
+	//- 	console.dir(inData);
+	//- 	$('#contactsMenu').ContactListView('refresh');
+	//- });
+	//- contactDataObject.getEventObject().setOn('onAfterEdit', function(inData){
+	//- 	console.dir(inData);
+	//- 	$('#contactsMenu').ContactListView('refresh');
+	//- });
+	//- contactDataObject.getEventObject().setOn('onAfterDelete', function(inData){
+	//- 	console.dir(inData);
+	//- 	$('#contactsMenu').ContactListView('refresh');
+	//- });
+
+	//=====================================================================================================================
+	//FORM DATA BINDER -----------------------
+	//=====================================================================================================================
+	$('#contactsWindow').DataBinderObject('create',
+		{
+			loadProcess:function(inData){
+				var params = 
+					{
+						id:false,
+						type:false,
+						imageUrl:false,
+						name:false,
+						emailAddress:false,
+						phoneNumber:false,
+						ext:false,
+						companyName:false,
+						department:false,
+						title:false,
+						refNumber:false,
+					}
+				params = $.extend(params, inData);
+
+				$('#contactEdit_id').val(params.id);
+				$('#contactEdit_type').HorizontalRadioGroup('setSelected', params.type.replace('[', '').replace(']', ''));
+				$('#contactEdit_image').attr('src', params.imageUrl);
+				$('#contactEdit_name').val(params.name);
+				$('#contactEdit_emailAddress').val(params.emailAddress);
+				$('#contactEdit_phoneNumber').val(phoneDisplayFormat(params.phoneNumber));
+				$('#contactEdit_ext').val(params.ext);
+				$('#contactEdit_companyName').val(params.companyName);
+				$('#contactEdit_department').val(params.department);
+				$('#contactEdit_title').val(params.title);
+				$('#contactEdit_ref').val(params.refNumber);
+
+			},
+			toJsonProcess:function(){
+				var data = 
+					{
+						id:$('#contactEdit_id').val(),
+						type:'[' + $('#contactEdit_type').HorizontalRadioGroup('getSelected') + ']',
+						imageUrl:$('#contactEdit_image').attr('src'),
+						name:$('#contactEdit_name').val(),
+						emailAddress:$('#contactEdit_emailAddress').val(),
+						phoneNumber:cleanPhoneNumber($('#contactEdit_phoneNumber').val()),
+						ext:$('#contactEdit_ext').val(),
+						companyName:$('#contactEdit_companyName').val(),
+						department:$('#contactEdit_department').val(),
+						title:$('#contactEdit_title').val(),
+						refNumber:$('#contactEdit_ref').val(),
+					}
+				return data;
+			},
+			clearProcess:function(){
+				$('#contactEdit_id').val('');
+				$('#contactEdit_type').HorizontalRadioGroup('setSelected', 0);
+				$('#contactEdit_image').attr('src',getDefaultMemberImageUrl());
+				$('#contactEdit_name').val('');
+				$('#contactEdit_emailAddress').val('');
+				$('#contactEdit_phoneNumber').val('');
+				$('#contactEdit_ext').val(''),
+				$('#contactEdit_companyName').val('');
+				$('#contactEdit_department').val('');
+				$('#contactEdit_title').val('');
+				$('#contactEdit_ref').val('');
+				$('#contactEdit_type').HorizontalRadioGroup('setSelected', 0);
+
+				//$('#contactModeSelect').ComboBox('selectByIndex', 0);
+				return true;
+			},
+			saveProcess:function(inSerializedData, inSaveType, next, cancel){
+				//RULE ONLY ONE NAME FOR EACH TYPE----------------------------
+				var theId = $('#contactsMenu').ContactListView('getIdByNameAndType',
+					{
+						name:inSerializedData.name,
+						type:inSerializedData.type
+					}
+				);
+
+
+				if(theId){
+					//could be edit and must be same id being edited, not an insert
+					if(inSaveType == 'insert'){
+						//must cancel!!!!!
+						alert('Can not save! Only one name for each phone number type(MOBILE, HOME ...)  ' + inSerializedData.name +' ' + inSerializedData.type);
+						cancel(inSerializedData)
+						return false;
+					}
+					if(inSaveType == 'edit'){
+						if(theId != inSerializedData.id){
+							//must cancel!!!!!
+							alert('Can not save! Only one name for each phone number type(MOBILE, HOME ...)  ' + inSerializedData.name +' ' + inSerializedData.type);
+							cancel(inSerializedData)
+							return false;
+						}
+					}
+				}
+				//END RULE----------------------------------------------------
+				
+				if(inSaveType == 'edit'){
+					contactDataObject.edit(inSerializedData, function(inPostData){
+						next(inPostData);
+					});
+					return true;
+				}
+				if(inSaveType == 'insert'){
+					contactDataObject.insert(inSerializedData, function(inPostData){
+						next(inPostData);
+					});
+					return true;
+				}
+			},
+			onSave:function(inData){
+			},
+			whenDirtyTransition:function(inData, save, next){
+				console.dir(inData);
+				console.log(inData.name.length);
+				if(inData.name.length == 0){
+					next();
+					return false;
+				}
+				$.DynamicPopupYesNo(
+					{
+						message:'You have unsaved data. Would you like to save it before proceeding?',
+						subMessage:'My SubMessage',
+						yesCaption:'YES',
+						noCaption:'NO',
+						onYes:function(){
+							//saveing!!!
+							save();
+							next();
+						},
+						onNo:function(){
+							next();
+						},
+					}
+				);
+			}
+
+		}
+	);//end binder------------
+
+	//====================================================================
+	//ComboBox (contactModeSelect)------ edit / insert mode
+	//====================================================================
+	$('#contactModeSelect').ComboBox('create',
+		{
+			id:'selectSaveMode',
+			optionClass:'',
+			usePopup:true,
+			optionArray:
+				[
+					{
+						caption:'Edit Selected Value',
+						value:'edit'
+					},
+					{
+						caption:'Create New Contact',
+						value:'insert',
+					},
+
+				],
+			onChange:function(inIndex, inCaption, inValue, inJref){
+				console.dir(inIndex, inCaption, inValue, inJref);
+				var selected = inValue; // or this.value
+				//setting binder mode edit / add based on combobox
+				$('#contactsWindow').DataBinderObject('setMode', inValue);
+				if(inValue == 'insert'){
+					$('#contactsWindow').DataBinderObject('clear');
+				}
+				if(inValue == 'edit'){
+					var theData = $('#contactsMenu').ContactListView('getLastSelected');
+					if(theData){
+						$(theData.jRef).trigger('click');
+					}else{
+						$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+						var theLastAttemptData = $('#contactsMenu').ContactListView('getLastSelected');
+						if(theData){
+							$(theLastAttemptData.jRef).trigger('click');
+						}
+					}
+				}
+			},
+			onSelect:function(inIndex, inCaption, inValue, inJref){
+				$('#contactsWindow').DataBinderObject('setMode', inValue);
+			},
+		}
+	);
+
+
+
+
+	//=============================================================================
+	//BUTTON EVENTS----------------------------------------------------------------
+	//=============================================================================
+	$('#bt_contactEdit_save').click(function(){
+		$('#contactsWindow').DataBinderObject('save');
+	});
+	$('#bt_contactEdit_clear').click(function(){
+		console.log('bt_contactEdit_clear clcik....');
+		$('#option_contact_add').prop('selected', 'selected');
+		$('#contactModeSelect').ComboBox('selectByIndex', 0);
+	});
+
+	$('#bt_contactEdit_delete').click(function(){
+		var data = $('#contactsWindow').DataBinderObject('toJson');
+		if(data){
+			contactDataObject.delete(data, function(inData){
+				$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+			});
+			$('#contactsWindow').DataBinderObject('clear');
+
+		}
+
+	});
+
+	eventObject.setOn('contactMenu_itemClick', function(inData){
+		$('#contactsWindow').DataBinderObject('load', inData);
+		$('#contactModeSelect').ComboBox('changeCaption', {index:0,caption:'Editing ' + inData.name});
+		$('#contactModeSelect').ComboBox('selectByIndex', 0);
+	});
+
+	contactDataObject.getEventObject().setOn('onAfterDelete', function(){
+		console.log('hkjdkasjhksdjfhskdfhskdjfhksjdhfksjdhfkjsdhkfjshkdjfhksdjfhksjdhfksjdhfkj');
+		$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+	});

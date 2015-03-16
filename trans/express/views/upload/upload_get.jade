@@ -1,0 +1,37 @@
+   
+form(action="/upload", method="post", enctype="multipart/form-data")
+
+	input(type="file" name="uploadedFile" id="upload")
+	input(type="text" name="command" value="imageStore")
+	input(type="text" name="theme" value="normalUserImage")
+	input(type="submit" value="Submit")
+
+button(text="test" onclick="console.log('clicked'); doUpload();") test
+
+
+
+script(type='text/javascript', src='/js/' + 'ajaxcomm.js')
+
+
+
+
+script.
+	function doUpload(){
+		var ajaxPostObject = new AjaxPostObject();
+
+		ajaxPostObject.uploadFileAndData('upload', 
+			{
+			
+				'command':'imageStore',
+				'theme':'normalUserImage'
+
+			}, 
+			function(inResponse){
+				console.log("doUpload on finish!!!");
+				console.dir(inResponse);
+				console.log(JSON.parse(inResponse).fileName);
+			}
+		);
+
+
+	};

@@ -1,0 +1,9 @@
+git diff ref1:path/to/file1 ref2:path/to/file2
+
+
+remote  / local
+git diff git@github.com/benhopper1/trans.git/express/library/tcpservices/tcpclient.js HEAD:express/library/tcpservices/tcpclient.js
+
+
+
+git diff express/library/tcpservices/tcpclient.js

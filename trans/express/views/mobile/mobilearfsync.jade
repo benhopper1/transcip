@@ -1,0 +1,213 @@
+head 
+	meta(charset="UTF-8")
+	//meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+
+	script(type='text/javascript', src='/public/js/jquery/jquery-2.0.3.min.js')
+	
+
+	script(type='text/javascript', src='/public/js/commmanager/commmanager.js')
+	script(type='text/javascript', src='/public/js/clientutil/clientutil.js')
+
+
+	script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+	//script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+	link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+	link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+	link(rel="stylesheet" href="/public/js/skeleton/css/normalize.css")
+	//link(rel="stylesheet" href="/public/js/skeleton/css/skeleton.css")
+
+	//script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+	//script(type='text/javascript', src='/public/js/async/async.js')
+	//script(type="text/javascript" src="/public/js/sidepanel/js/jquery.slidepanel.js")
+	//link(rel="stylesheet" type="text/css" href="/public/js/sidepanel/css/jquery.slidepanel.css")
+
+
+	//sideR
+	//script(type="text/javascript" src="/public/js/sidebar/sidr/jquery.sidr.min.js")
+	//link(rel="stylesheet" type="text/css" href="/public/js/sidebar/sidr/stylesheets/jquery.sidr.light.css")
+	//sideMenu
+
+	//link(rel="stylesheet" type="text/css" href="/public/js/sidebar/sidemenu/css/side-menu.css")
+	//link(rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css")
+	//script(type="text/javascript" src="/public/js/sidebar/sidemenu/js/ui.js")
+
+	
+
+	//licens for the icons:(link back, maybe about) http://creativecommons.org/licenses/by-sa/3.0/
+	link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/normalize.css")
+	link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/demo.css")
+	link(rel="stylesheet" type="text/css" href="/public/js/perspective/PerspectivePageViewNavigation/css/component.css")
+	script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/modernizr.custom.25376.js")
+	
+	style.
+		img{
+			max-width: 100%;
+		}
+
+
+
+
+
+
+//background-color: #b8b6b4;
+//body(style="background-image: url('public/images/ui/beach_background4.jpg')")
+body(style="background-color: #000000;")
+	script.
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+
+
+
+
+
+
+
+
+	//==========================================================================
+	//------- H T M L ----------------------------------------------------------
+	//==========================================================================
+	
+	div(id="perspective" class="perspective effect-airbnb")
+		div(class="container" style="background-image: url('/public/images/ui/accountbkg.png'); background-size: 100%;")
+			div(class="wrapper" )
+				header(class="codrops-header")
+						img(src="/public/images/ui/arfsync_logo.png")
+						//img(style="width:100%;" src="/public/images/wings/main/mainheader.jpg")
+						#slider
+					div(class="main clearfix")
+						div(class="column")
+							button(id="showMenu") Show Menu
+				
+				//#slider2
+
+		nav(class="outer-nav left vertical")
+			a(href="#" class="icon-home") 									Home
+			//a(href="#" class="icon-news") 	Contact Us
+			a(href="#{androidAppRoute}" class="icon-image") 				Get Android App
+			a(href="/user/widget_userForm" class="icon-news")				Setup New Account
+			a(href="#" class="icon-image")									Account Page
+			a(href="#" class="icon-news") 									Non-Mobile View
+			a(href="#" class="icon-news") 									Contact Us
+			a(href="#" class="icon-upload") 								Links
+		
+
+			//- $('#downloaddiv').click(function(){
+			//- 	window.location.href = "/public/download/androidapp/v002/Qr_Proj_3.apk";
+			//- 	//alert('not implemented , no click here yet!! on TODO');
+			//- });
+
+
+
+	//#sidr-main
+
+
+	//- div(class="container")
+	//- 	div(class="row")
+	//- 		div(class="tree columns")
+				
+
+	//- 	div(class="row")
+	//- 		div(class="tree columns")
+
+
+	//- 	div(class="row")
+	//- 		center
+	//- 			div(class="twelve columns")
+	//- 				img(style="width:100%;" src="/public/images/wings/main/mainheader.jpg")
+
+	//- 	div(class="row")
+
+	//- 		center
+	//- 			#slider
+	//- 			#slider2
+
+
+
+
+
+
+
+	//==========================================================================
+	//------- javascript section -----------------------------------------------
+	//==========================================================================
+
+script.
+	//inside the {} will execute after page is loaded. this is
+	//needed so that all the html elements are loaded first...
+	$(document).ready(function(){
+		// calling testfunction here when page is loaded completely!!
+		//testFunction();
+
+		//- $.get( "/slider", function(data){
+		//- 	$('#slider').html(data);
+		//- });
+
+		//- setTimeout(function(){ 
+		//- 	$.get( "/slider", function(data){
+		//- 		$('#slider').html(data);
+		//- 	});
+		//- }, 1000);
+		setTimeout(function(){
+			//$('#showMenu').trigger('click');
+		}, 8000);
+
+		$postAjax(
+			{
+				url:'/contacts/mobile/widget_contacts_slider',
+				send:
+					{	
+						autoPlaySlides:true,
+						startPlay:true,
+						sliderSize:
+							{
+								width:300
+							},
+						sliderDivs:
+							[
+								'<div><a u=image href="#"><img src="/public/images/information/login_shot.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/smsonly.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/incomingsms.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/ordernotes.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/import.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/handsetfocus.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/information/contact_managerandphn.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/images/ui/arfsyncbkg_1.png"></img></a></div>',
+								//'<div><a u=image href="#"><img src="/public/images/ads/main_000.png"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/js/slider/img/landscape/06.jpg"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/js/slider/img/landscape/07.jpg"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/js/slider/img/landscape/08.jpg"></img></a></div>',
+								'<div><a u=image href="#"><img src="/public/js/slider/img/landscape/10.jpg"></img></a></div>'
+							]
+					},
+				onAjaxSuccess:function(inResponseText){
+					console.log("ajax back with slider html :)");
+					$('#slider').html(inResponseText);
+					setTimeout(function(){
+						ContactsSlider.startAutoSlide();
+					}, 3000);
+				}
+			}
+		);
+
+
+
+	});
+
+
+	//- var testFunction = function(){
+	//- 	console.log('testFunction executed.....');
+	//- }
+
+	//- var testFunction2 = function(){
+	//- 	console.log('testFunction2 executed.....');
+	//- }
+
+script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/classie.js")
+script(type="text/javascript" src="/public/js/perspective/PerspectivePageViewNavigation/js/menu.js")
+

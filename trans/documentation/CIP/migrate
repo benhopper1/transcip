@@ -1,0 +1,37 @@
+Controller ws: devicetokencontroller
+
+
+added git_project/trans/websocket/libs/cip/
+
+adding websocket/node_modules/communicationrouter/communicationrouter.js      cip lines
+
+added cip lines to git_project/trans/websocket/wsapp.js
+
+
+NOTE: must manully enter in to the VPS
+add cip section to git_project/trans/websocket/wsmain.conf
+
+
+
+
+
+
+
+
+diff output:
+
+ 		modified:   express/controllers/informationcontroller.js
+        modified:   express/public/images/.gitignore
+        modified:   express/views/angtest/angtest.jade
+        modified:   websocket/controllers/devicetokencontroller.js
+        modified:   websocket/node_modules/communicationrouter/communicationrouter.js
+        modified:   websocket/wsapp.js
+
+
+cip/
+        express/main.conf~
+        express/public/images/.gitignore~
+        express/public/images/users/
+        websocket/libs/cip/
+        websocket/wsmain.conf
+        websocket/wsmain.conf~

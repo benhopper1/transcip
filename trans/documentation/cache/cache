@@ -1,0 +1,91 @@
+REPORT-ON:
+
+onEdit
+	single record
+
+onDelete
+	single record
+
+onInsert
+	single record
+
+onChange
+	array of records
+
+onTempContactInsert
+		single record
+
+onTempContactDelete
+		single record
+
+
+EXAMPLES------------------------------------
+
+		ContactDataCache.subscribe(
+			{
+				onInsert:function(inRecord){
+
+				},
+
+				onEdit:function(inRecord){
+
+				},
+
+				onDelete:function(inRecord){
+
+				},
+
+				onTempContactInsert:function(inRecord){
+					alert('ContactDataCache.subscribe_onTempContactInsert');
+				},
+
+				onTempContactDelete:function(inRecord){
+					alert('ContactDataCache.subscribe_onTempContactDelete');
+				}
+			}
+		);
+
+OR individually set events......----
+
+
+ContactDataCache.getEventObject().setOn('onDelete', function(inRecord){
+	$('#contactsMenu_sms_popup').CheckboxLines('remove', inRecord.id);
+
+});
+
+
+
+ContactDataCache.getCache(
+	{
+		cacheOption:'getCachedDataArray',
+		forceRefresh:false,
+		onFinish:function(inRecords){
+			alert('getCachedDataArray:' + JSON.stringify(inRecords));
+			for(var inRecordsIndex in inRecords){
+				$('#contactsMenu_sms_popup').CheckboxLines('addItem',
+					{
+						lookupId:inRecords[inRecordsIndex].id,
+						data:inRecords[inRecordsIndex],
+						caption:'<img src="'  + inRecords[inRecordsIndex].imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecords[inRecordsIndex].name + '&nbsp;&nbsp;&nbsp;' + inRecords[inRecordsIndex].type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecords[inRecordsIndex].phoneNumber) + '</h4>',
+						isChecked:false,
+						formStyle:'border:0;width:400px;'
+					}
+				);
+			}
+		}
+	}
+);
+
+
+
+ContactDataCache.addtempContact(
+	{
+		//imageUrl:getDefaultMemberImageUrl(),
+		name:'Benji Modine',
+		type:'[MOBILE]',
+		phoneNumber:'256 111 4444',
+	}
+);
+
+
+ContactDataCache.deleteTempContact({phoneNumber:'256 111 4442'});

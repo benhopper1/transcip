@@ -1,0 +1,151 @@
+body(style="background-color: #ffffff;")
+	#keypadDiv
+center
+
+	br
+	table(id="phoneContactsTable" width="50%")
+		tr
+			td
+				h4 Name
+			td
+				h4 Number
+			td
+				h4 click to dial
+
+			//button(onclick="PhoneWidgetScript.openDialer('#{contact.contactNumber}');") openDialer
+			//button(onclick="PhoneWidgetScript.dialNumber('#{contact.contactNumber}');") dial
+			//button(onclick="PhoneWidgetScript.speakerOn();") speaker On
+			//button(onclick="PhoneWidgetScript.speakerOff();") speaker Off
+			//button(onclick="PhoneWidgetScript.phoneHangUp();") hangUp
+
+	#PhoneWidgetFooter
+		button(onclick="PhoneWidgetScript.speakerOn();") speaker On
+		button(onclick="PhoneWidgetScript.speakerOff();") speaker Off
+		button(onclick="PhoneWidgetScript.phoneHangUp();") hangUp
+		button(onclick="PhoneWidgetScript.phoneAnswerPhone();") answerPhone
+		button(onclick="PhoneWidgetScript.phoneMicOn();") mic On
+		button(onclick="PhoneWidgetScript.phoneMicOff();") mic Off
+
+
+	#smsDiv
+
+	#contactsDiv000
+
+
+script.
+	var PhoneWidgetScript = new function(){
+		var _this = this;
+		var lastNumberDialed = "";
+
+		this.dialNumber = function(inNumber){
+			lastNumberDialed = inNumber;
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							//command:'dialPhone',
+							command:'dialPhone'
+						},
+					data:
+						{
+							phoneNumber:inNumber
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}//end dialNumber
+		//openDialer
+		this.openDialer = function(inNumber){
+			lastNumberDialed = inNumber;
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							//command:'dialPhone',
+							command:'openPhone'
+						},
+					data:
+						{
+							phoneNumber:inNumber
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}//end openDialer
+
+		this.phoneAnswerPhone = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'phoneAnswerPhone'
+						},
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('phoneAnswerPhone transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+		this.speakerOn = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'phoneToSpeaker'
+						},
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('speakerOn transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+		this.speakerOff = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'phoneToSpeakerOff'
+						},
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('speakerOff transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+		this.phoneHangUp = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'phoneHangUp'
+						},
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('phoneHangUp transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+	}();
+
+
+	$.get( "/widget_keypad", function(data){
+			$("#keypadDiv").append(data);
+	});
+
+	$.get( "/widget_entityCollection", function(data){
+			$("#keypadDiv").append(data);
+	});
+
+	//- $.get( "/widget_contactscollection", function(data){
+	//- 		$("#contactsDiv000").append(data);
+	//- });

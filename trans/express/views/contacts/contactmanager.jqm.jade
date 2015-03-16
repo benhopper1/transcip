@@ -1,0 +1,171 @@
+
+//=================================================================================================================================================================================
+//-)--> PAGE 2---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//=================================================================================================================================================================================
+div(class="ui-grid-c" style="")
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	//CONTACT LIST VIEW
+	div(id="userFormContactsList" data-role="" class="ui-block-a" style="padding-top: 0px; padding-bottom: 0px; direction: rtl; text-align: left; width:25%")
+		//div(id="contactsWindow2" data-role="main"  class="ui-overlay-shadow ui-shadow" style="padding-top: 25px;width:95%; ")
+		//div( id="contactsMenu_col" data-role="collapsible" data-collapsed="false" class="ui-overlay-shadow ui-shadow")
+		//h3 Contact List
+		div(class="ui-content" id="contactsContent" data-position-to="window" style="width:90%;direction: ltr;")
+			h4(id="noContactDiv" style="text-shadow: 2px 2px #cecbca;color: grey;") No Contacts In Your Database
+			a(href="#contactPanel_0" data-ajax="false" style="")
+			ul(data-role="listview" id="contactsMenu" class=""   data-inset="true" style="width:100%; ")
+			//- div(class="" data-position-to="window" class="" style="direction: ltr;height:90%; width:90%")
+			//- 	a(href="#contactPanel_0" data-ajax="false" style="")
+			//- 	ul(data-role="listview" id="contactsMenu" class=""   data-inset="false" style="width:100%; overflow-x:none;overflow-y: scroll")
+
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	//all tabs here
+	div(class="ui-block-b ui-content" style="width:75%;")
+		//=======================================
+		//
+		//=======================================
+		div(data-role="tabs" id="tabs" style="padding: 0px 0px 0px 0px !important;")
+			div(data-role="navbar")
+				ul
+					li
+						a(id="tab_contactManager_edit" href="#tab_editContact" data-ajax="false") Create and Edit
+					li
+						a(id="tab_contactManager_import" href="#tab_import" data-ajax="false") Import
+					li
+						a(id="tab_contactManager_export" href="#tab_export" data-ajax="false") Export
+
+			//@@@@@@  TAB ---EDIT CONTACT----------------------------------------------
+			div(id="tab_editContact" class="" style="overflow: auto; ")
+
+			//@@@@@@  TAB ---IMPORT CONTACT--------------------------------------------
+			div(id="tab_import" class="" style="")
+
+			//@@@@@@  TAB ---EXPORT CONTACT--------------------------------------------
+			div(id="tab_export" class="")
+
+
+
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	div(class="ui-block-c" style="width:0%") 
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	div(class="ui-block-d" style="width:0%")
+
+
+
+
+script.
+	//======================================================================
+	//>--- GLOBAL DECLARE SECTION-------------------------------------------
+	//======================================================================
+	var contactManagerObject;
+	//======================================================================
+	//>--- CONTACT MANAGER PAGE EVENTS--------------------------------------
+	//======================================================================
+
+	$( "#pg_page_2").on( "pageshow", function( event, ui ){
+		console.log('PAGE SHOW--------------------------ContactManager');
+	});
+	$( "#pg_page_2").on( "pagecreate", function( event, ui ){
+		console.log('PAGE CREATE---------------------------ContactManager');
+		contactManagerObject = new ContactManagerObject();
+		contactManagerObject.load();
+	});
+
+	eventObject.setOn('subMenu_contacts_createAndEdit', function(inData){
+		//alert(JSON.stringify(inData));
+		$('#tab_contactManager_edit').trigger('click');
+	});
+	eventObject.setOn('subMenu_contacts_import', function(inData){
+		$('#tab_contactManager_import').trigger('click');
+	});
+	eventObject.setOn('subMenu_contacts_export', function(inData){
+		$('#tab_contactManager_export').trigger('click');
+	});
+
+
+	var ContactManagerObject = function(){
+		var _this = this;
+		//===========================================================
+		//>> BUTTON EVENTS
+		//===========================================================
+		$('#tab_contactManager_edit').click(function(){
+
+		});
+
+
+		this.load = function(){
+			console.log('DOCUMENT READY IN ARFSYNC.JQM.JADE');
+			//s
+			$('#contactsMenu').ContactListView('create', 
+				{
+					test:'hopperTestrVal55',
+					useCheckbox:false,
+					autoScrollOnSelect:true,
+					onClick:function(inContactId, inData, inElementId){
+						// CSS Last Selected------>
+						$( '.trans-bkg-a-hv' ).removeClass( 'lastSelected' )
+						$( '#' + inElementId + ' a').addClass( 'lastSelected' );
+
+						//DATA BINDER CALL ----->
+						//$('#contactsWindow').DataBinderObject('load', inData);
+						console.log('ContactListView onClick');
+						console.dir(inData);
+						eventObject.reportOn('contactMenu_itemClick', inData);
+					},
+					onLongClick:function(inContactId, inData, inElementId){
+						eventObject.reportOn('contactMenu_onLongClick', inData);
+					},
+					onAfterDataLoad:function(inData){
+						if(Object.keys(inData).length < 1){
+							$('#noContactDiv').show(5000);
+						}else{
+							$('#noContactDiv').hide(5000);
+						}
+					},
+					onAddTempContacts:function(inTempContactsArray){
+						console.log('onAddTempContacts inTempContactsArray:');
+						console.dir(inTempContactsArray);
+					},
+					onChange:function(inAction, inRecord){
+						console.log('ACTION:' + inAction);
+						console.log('RECORD:');
+						console.dir(inRecord);
+						eventObject.reportOn('contactManager_onChange', 
+							{
+								action:inAction,
+								record:inRecord,
+							}
+						);
+					}
+				}
+			);
+			$('#contactsMenu').ContactListView('loadData',
+				{
+					onFinish:function(){
+						$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+						ContactDataCache.getEventObject().setOn('onChange', function(inData){
+							console.log('contactsMenu.loadData.onFinish');
+							console.dir(inData);
+							$('#contactsMenu').ContactListView('refresh');
+						});
+					}
+				}
+			);
+			//$('#contactsWindow2').trigger('refresh');
+			$('[data-role="content]').trigger('create');
+
+			//=========================================================
+			// REMOTE MENU EVENTS-(inward)-----------------------------
+			//=========================================================
+			eventObject.setOn('contactSliderSelected', function(inData){
+				console.dir(inData);
+				console.log('name(frm phone):' + inData.name);
+
+				//$('#contactsMenu').ContactListView('setSelectedByNameAndType', inData);
+				$('#contactsMenu').ContactListView('setSelectedById',inData.lookupId);
+			});
+			setHeight();
+		}
+	}
+
+
+

@@ -1,0 +1,59 @@
+
+//- h1 ben
+//- input(data-iconpos="right" data-icon="arrow-r" id="bt_contactManagerMenu_edit_zzz" 	data-mini="false" type="button" value="Edit3")
+//- input(data-iconpos="right" data-icon="arrow-r" id="bt_contactManagerMenu_edit_zzz2" 	data-mini="false" type="button" value="Import33")
+//- input(data-iconpos="right" data-icon="arrow-r" id="bt_contactManagerMenu_edit_zzz23" 	data-mini="false" type="button" value="Export333")
+
+a(href="#contactPanel_0" data-ajax="false" style="")
+ul(data-role="listview" id="contactsMenu" class=""   data-inset="true" style="width:100%; ")
+
+
+
+
+
+
+
+
+
+script.
+
+	//======================================================================
+	//>--- EVENTS -----------------------------------------------------------
+	//======================================================================
+
+	$( "#pg_contactsMenu_edit").on( "pageshow", function( event, ui ){
+		$('#contactsMenu').ContactListView('create', 
+			{
+				test:'hopperTestrVal55',
+				useCheckbox:false,
+				autoScrollOnSelect:true,
+				onClick:function(inContactId, inData, inElementId){
+					// CSS Last Selected------>
+					$( '.trans-bkg-a-hv' ).removeClass( 'lastSelected' )
+					$( '#' + inElementId + ' a').addClass( 'lastSelected' );
+
+					//DATA BINDER CALL ----->
+					//$('#contactsWindow').DataBinderObject('load', inData);
+					console.log('ContactListView onClick');
+					console.dir(inData);
+					//eventObject.reportOn('contactMenu_itemClick', inData);
+				},
+				onLongClick:function(inContactId, inData, inElementId){
+					//eventObject.reportOn('contactMenu_onLongClick', inData);
+				}
+			}
+		);
+
+		//- $('#contactsMenu').ContactListView('loadData', function(){
+		//- 	$('#contactsMenu').ContactListView('setSelectedByIndex', 0);
+		//- });
+		//$('#contactsWindow2').trigger('refresh');
+		$('[data-role="content]').trigger('create');
+
+	});// end of create page----------------------------------------------------
+
+	$( "#pg_page_0").on( "pageshow", function( event, ui ){
+		$('[data-role="content]').trigger('create');
+	});
+
+	

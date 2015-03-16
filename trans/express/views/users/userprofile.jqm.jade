@@ -1,0 +1,162 @@
+head
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+body
+	form(action="/upload", method="post", enctype="multipart/form-data" style="display: none;")
+		input(id="user_upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+	
+	div(id="userOutterFormDiv" data-role="main"  class="ui-content" style="")
+		form(method="post" id="userProfileForm" data-mini="true" style="")
+			div(class="ui-field-contain" style="" )
+
+
+				div(class="ui-grid-a" style="")
+					div(class="ui-block-a" style="width:25%")
+						center(style="height:150px;")
+							//h6 (click to change)
+							h2(id="userProfile_userName")
+							img(id="userProfile_image" name="userImg" class="magicSquarePnt contactAddImage" src="/public/images/contacts/default.jpg" style="height:200px; width:200px;  object-fit: cover;" )
+							h5 Click Image To Change 
+
+					div(class="ui-block-b" style="width:45%;")
+						input(tabindex="1" type="text" 	id="userProfile_firstName" 	data-mini="true" name="name" placeholder="First Name..." style="" 		class="userProfileInput")
+						input(tabindex="2" type="text" 	id="userProfile_lastName" 	data-mini="true" name="name" placeholder="Last Name..." style="" 		class="userProfileInput")
+						input(tabindex="3" type="email" id="userProfile_emailAddress" 	data-mini="true" name="name" placeholder="Email Address..." style="" 		class="userProfileInput")
+						input(tabindex="4" type="text" 	id="userProfile_address" 	data-mini="true" name="name" placeholder="Address..." style="" 		class="userProfileInput")
+						input(tabindex="5" type="text" 	id="userProfile_city" 		data-mini="true" name="name" placeholder="City..." 	  style=""	    class="userProfileInput")
+						input(tabindex="6" type="text" 	id="userProfile_state" 		data-mini="true" name="name" placeholder="State..." 	  style=""	    class="userProfileInput")
+						input(tabindex="7" type="text" 	id="userProfile_zipcode" 		data-mini="true" name="name" placeholder="Zipcode..." 	  style=""	    class="userProfileInput")
+						input(tabindex="8" type="text" 	id="userProfile_country" 		data-mini="true" name="name" placeholder="Country..." 	  style=""	    class="userProfileInput")
+
+
+						br
+						br
+						br
+
+						input(data-icon="action" id="bt_userProfile_save" 	data-mini="true" type="button" value="Save")
+						input(data-icon="back" id="bt_userProfile_revert" 	data-mini="true" type="button" value="Revert To Last Saved")
+
+
+script.
+	//$('#bt_bar_userProfile_back3').click(function(){
+	//	$('#userProfile_contents').load("/jqm/userprofile ", function(){
+	//		console.log('loading userprofile');
+	//		$('#userProfile_contents').trigger('create');
+	//		$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_3', {transition:'turn', reverse:'true'});
+	//
+	//	});
+	//});
+	//===================================================
+	// BUTTON EVENTS
+	//===================================================
+	$('#bt_userProfile_save').click(function(){
+		UserProfileObject.updateDatabase(UserProfileObject.getUserData(), function(){
+			//update returned here
+		});
+	});
+	$('#bt_userProfile_revert').click(function(){
+		UserProfileObject.revertData();
+	});
+	//===============================
+	// CHANGE IMAGE
+	//===============================
+	//$('#upload').trigger('click');
+	$('#userProfile_image').click(function(){
+		$('#user_upload').trigger('click');
+	});
+	$('#user_upload').change(function(){
+		$ajaxFilePostVariableRoute(
+			{
+				uploadRoute:'/upload/user/image',
+				fileInputElement:'user_upload',
+
+				options:
+					{
+						command:'imageStore',
+						theme:'normalUserImage'
+					},
+
+				onComplete:function(inResponse){
+					if(inResponse.domainFilePath){
+						$('#userProfile_image').attr('src', inResponse.domainFilePath);
+					}
+				}
+			}
+		);
+	});
+
+
+	//===================================================
+	// UserProfileObject
+	//===================================================
+	var UserProfileObject = new function(){
+		var _this = this;
+		var originalDataHash = {};
+
+
+		$('#userProfile_firstName').val('#{data.fName}');
+		$('#userProfile_lastName').val('#{data.lName}');
+		$('#userProfile_emailAddress').val('#{data.emailAddress}');
+		$('#userProfile_address').val('#{data.address}');
+		$('#userProfile_city').val('#{data.city}');
+		$('#userProfile_state').val('#{data.state}');
+		$('#userProfile_zipcode').val('#{data.zipcode}');
+		$('#userProfile_country').val('#{data.country}');
+
+		$('#userProfile_userName').text('#{data.userName}');
+		$('#userProfile_image').attr('src', '#{data.screenImage}');
+
+
+		this.storeRevertData = function(){
+			//store original data, refresh here versus ajax....
+			$('.userProfileInput').each(function(index, element){
+				originalDataHash[$(this).attr('id')] = $(this).val();
+				console.log('-----------------------------------------');
+				console.log('key:' + $(this).attr('id'));
+				console.dir('value:' + $(this).val());
+			});
+			originalDataHash['userProfile_userName'] = $('#userProfile_userName').text();
+			originalDataHash['userProfile_image'] = $('#userProfile_image').attr('src');
+		}
+		_this.storeRevertData();
+
+
+		this.getUserData = function(){
+			var userData = 
+				{
+					fName:$('#userProfile_firstName').val(),
+					lName:$('#userProfile_lastName').val(),
+					emailAddress:$('#userProfile_emailAddress').val(),
+					address:$('#userProfile_address').val(),
+					city:$('#userProfile_city').val(),
+					state:$('#userProfile_state').val(),
+					zipcode:$('#userProfile_zipcode').val(),
+					country:$('#userProfile_country').val(),
+					screenImage:$('#userProfile_image').attr('src'),
+				}
+			return userData;
+		}
+
+		this.updateDatabase = function(inUserData, inPostFunction){
+			userDataObject.edit(inUserData, inPostFunction);
+		}
+
+		this.revertData = function(){
+			$('#userProfile_firstName').val(originalDataHash['userProfile_firstName']);
+			$('#userProfile_lastName').val(originalDataHash['userProfile_lastName']);
+			$('#userProfile_emailAddress').val(originalDataHash['userProfile_emailAddress']);
+			$('#userProfile_address').val(originalDataHash['userProfile_address']);
+			$('#userProfile_city').val(originalDataHash['userProfile_city']);
+			$('#userProfile_state').val(originalDataHash['userProfile_state']);
+			$('#userProfile_zipcode').val(originalDataHash['userProfile_zipcode']);
+			$('#userProfile_country').val(originalDataHash['userProfile_country']);
+
+			$('#userProfile_userName').text(originalDataHash['userProfile_userName']);
+			$('#userProfile_image').attr('src', originalDataHash['userProfile_image']);
+		}
+
+
+
+	}();

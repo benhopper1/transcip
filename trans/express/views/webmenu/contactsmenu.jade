@@ -1,0 +1,524 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+	script(src="/public/js/webmenu/webmenu.js" type="text/javascript")
+//background-image: url('public/images/ui/background_crack.jpg')
+body(style="")
+	//script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+
+	script.
+		//document.addEventListener("DOMContentLoaded", function(e) {
+		//		(function () {
+		//			var loadCSS = function(href) {
+		//				var cssLink = $("<link rel='stylesheet' type='text/css' href='"+href+"'>");
+		//				$("head").append(cssLink); 
+		//			};
+		//			function loadScript(url, callback) {
+		//				var script = document.createElement("script")
+		//				script.type = "text/javascript";
+		//				script.async = true;
+		//				if (script.readyState) { //IE
+		//					script.onreadystatechange = function () {
+		//						if (script.readyState == "loaded" || script.readyState == "complete") {
+		//							script.onreadystatechange = null;
+		//							callback();
+		//						}
+		//					};
+		//				} else { //Others
+		//					script.onload = function () {
+		//						callback();
+		//					};
+		//				}
+		//				script.src = url;
+		//				document.getElementsByTagName("head")[0].appendChild(script);
+		//			}
+		//			///js/jquery/jquery-2.0.3.min.js // http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
+		//			loadScript("/js/jquery/v2.1.3/jquery.min.js", function (){
+		//				 //jQuery loaded
+		//				 console.log('jquery loaded');
+		//				 loadScript("public/js/mastermenu/src/js/jquery.mmenu.min.js", function (){
+		//					console.log('mastermenu loaded');
+		//					console.log('css loading');
+		//					loadCSS('/public/js/mastermenu/src/css/jquery.mmenu.css');
+		//					loadCSS('/public/js/mastermenu/src/css/extensions/jquery.mmenu.themes.css');
+		//					loadCSS('/public/js/mastermenu/src/css/extensions/jquery.mmenu.fullscreen.css');
+		//
+		//					$("#my-menu").mmenu(
+		//						{
+		//							// options
+		//							//classes: "mm-light",
+		//							offCanvas:false,
+		//							classes: "mm-fullscreen mm-light",
+		//							onClick:
+		//								{
+		//									blockUi:false
+		//								}
+		//						}
+		//					);
+		//					var webMenu = new WebMenu()
+		//					webMenu.load();
+		//			 	});
+		//
+		//			});
+		//
+		//
+		//		})();
+		//});
+
+
+
+	script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+	script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+	masterMenu-----
+	script(src="/public/js/mastermenu/src/js/jquery.mmenu.min.js" type="text/javascript")
+	link(href="/public/js/mastermenu/src/css/jquery.mmenu.css" type="text/css" rel="stylesheet")
+	link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.themes.css" type="text/css" rel="stylesheet")
+	link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.fullscreen.css" type="text/css" rel="stylesheet")
+	
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+	style.
+		.mm-menu
+			{
+				background: rgba( 0, 0, 0, 0.6 );
+				box-shadow: none !important;
+				text-align: center;
+				color: #fff;
+			}
+		.logo{
+				border: 1px solid #fff;
+				line-height: 40px;
+				display: inline-block;
+				width: 40px;
+				height: 80px;
+				margin: 0x 0 0 0;
+		}
+		.imgAndData{
+			font-size: 13px;
+			font-style: normal;
+			font-weight: normal;
+			padding-left: 5px;
+			LINE-HEIGHT:15px;
+			background-color: #eee;
+
+		}
+
+		.magicCirc{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.magicCircPnt{
+			padding:4px;
+			display:inline-block;
+			cursor:pointer;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+
+		.center{
+			margin-left: auto;
+			margin-right: auto;
+			width: 70%;
+			background-color: #b0e0e6;
+		}
+
+
+		@-webkit-keyframes spaceboots {
+			0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+			10% { -webkit-transform: translate(-1px, -2px) rotate(-40deg); }
+			20% { -webkit-transform: translate(-3px, 0px) rotate(40deg); }
+			30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+			40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+			50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+			60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+			70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+			80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+			90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+			100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+		}
+		.shake {
+			-webkit-animation-name: spaceboots;
+			-webkit-animation-duration: 0.8s;
+			-webkit-transform-origin:50% 50%;
+			-webkit-animation-iteration-count: 15;//infinite;
+			-webkit-animation-timing-function: linear;
+		}
+		.magicShadow{
+			-moz-box-shadow:10px 10px 5px #000000;
+			-webkit-box-shadow:10px 10px 5px #000000;
+			box-shadow:10px 10px 5px #000000;
+		}
+
+		.magicPointer{
+			cursor:pointer;
+		}
+
+
+	//menu html here
+	a(id="open_main_menu" href="#my-menu")
+	nav(id="my-menu" style="width:100%;z-index: 10000;")
+		ul()
+			#sliderDiv
+
+			li
+				span Contact Transition
+				ul
+					li
+						a(id="bt_webMenu_contact_autoTransitionOn" onclick="console.log('add contact clciky')" href="#") Auto Transition On
+					li
+						a(id="bt_webMenu_contact_autoTransitionOff" onclick="console.log('add contact clciky')" href="#") Auto Transition Off
+					li
+						a(id="bt_webMenu_contact_autoSelectSwipeOn" onclick="console.log('add contact clciky')" href="#") Auto Select Swipe On
+					li
+						a(id="bt_webMenu_contact_autoSelectSwipeOff" onclick="console.log('add contact clciky')" href="#") Auto Select Swipe Off
+
+
+			li()
+				span(id="bt_webMenu_contact_add_save" onclick="console.log('add contact clciky')" href="#javascript:console.log('xxadd contact clciky')") Save Contact
+				//span(id="bt_webMenu_addContact" onclick="console.log('bt_webMenu_addContact Click')") Add Contact
+					//a(id="bt_webMenu_contact_add_save" onclick="console.log('add contact clciky')" href="#") Save Contact
+				script.
+					/*$('#bt_webMenu_contact_add_save').click( function(){
+						console.log("testing klkjlkjlkjlkjlkjl");
+					});*/
+				ul
+					li
+						a(id="bt_webMenu_contact_add_save" onclick="console.log('add contact clciky')" href="#") Save Contact
+					li
+						a(id="bt_webMenu_contact_add_clear" onclick="console.log('add contact clciky')" href="#") Clear Information
+					li
+						a(id="bt_webMenu_contact_add_close" onclick="console.log('add contact clciky')" href="#") Close Window
+
+
+				//a(id="bt_webMenu_addContact" onclick="console.log('add contact clciky')" href="#") Add Contact
+
+			//- li()
+			//- 	a(id="bt_webMenu_editContact" href="#") Edit Contact
+
+			li
+				span Edit Contact
+				ul(id="bt_webMenu_editContact")
+					li(id="bt_webMenu_editContact_addToDiv")
+
+			li()
+				a(id="bt_webMenu_deletContact" href="#") Delete Contact
+
+			li
+				span Contact Transition2
+				ul(id="dxdx_0")
+			//- ul(id="dxdx_0")
+			//- 	a(id="bt_webMenu_openContactSlider" href="#") Open Slider
+				
+			
+
+
+	script.
+		var WebMenu = function(){
+			var _this = this;
+
+
+
+
+			this.load = function(){
+
+
+
+				//------Event-----------
+				$('#bt_webMenu_addContact').click(function(){
+					Android.onMenuClick(JSON.stringify(
+						{
+							id:'bt_webMenu_addContact'
+						}
+					));
+				});
+				$('#bt_webMenu_editContact').click(function(){
+					//- Android.onMenuClick(JSON.stringify(
+					//- 	{
+					//- 		id:'bt_webMenu_editContact'
+					//- 	}
+					//- ));
+					//- console.log('test1');
+					//- WebMenuObject.loadMenu(
+					//- 	{
+					//- 		url:'/webMenu/genericMenu',
+					//- 		menuDataArray:
+					//- 			[
+					//- 				{
+					//- 					id:'addEditContacts_save',
+					//- 					caption:'Save',
+					//- 					forceBack:true
+					//- 				},
+					//- 				{
+					//- 					id:'addEditContacts_clear',
+					//- 					caption:'Clear'
+					//- 				},
+					//- 				{
+					//- 					id:'addEditContacts_close',
+					//- 					caption:'Close',
+					//- 					forceBack:true
+					//- 				}
+					//- 			],
+					//- 		updateElementId:'bt_webMenu_editContact_addToDiv'
+					//- 	}
+					//- );
+
+					console.log('test2');
+
+
+					//- $postAjax(
+					//- 	{
+					//- 		url:'/webMenu/genericMenu',
+					//- 		send:
+					//- 			{
+					//- 				menuData:
+					//- 					[
+					//- 						{
+					//- 							id:'addEditContacts_save',
+					//- 							caption:'Save',
+					//- 							forceBack:true
+					//- 						},
+					//- 						{
+					//- 							id:'addEditContacts_clear',
+					//- 							caption:'Clear'
+					//- 						},
+					//- 						{
+					//- 							id:'addEditContacts_close',
+					//- 							caption:'Close',
+					//- 							forceBack:true
+					//- 						}
+					//- 					]
+					//- 			},
+					//- 		onAjaxSuccess:function(inHtml){
+					//- 			$('#dxdx_0').replaceWith(inHtml);
+					//- 			//- inResponseText = JSON.parse(inResponseText);
+					//- 			//- console.log('back from db------------');
+					//- 			//- $.get( "/users/checkemail", function(data){
+					//- 			//- 	$("#contactsWindow").append(data);
+					//- 			//- });
+					//- 			//console.dir(inResponseText);
+					//- 			//$('body').html(inHtml);//{renders:users/checkemail.jade}
+					//- 		}
+					//- 	}
+					//- );
+					//Android.reportOnEvent('myEvent', {someKey:'someValue'});
+
+					//- Android.openGenericMenu('/webMenu/genericMenu', JSON.stringify(
+					//- 	[
+					//- 		{
+					//- 			id:'addEditContacts_save',
+					//- 			caption:'Save',
+					//- 			forceBack:true
+					//- 		},
+					//- 		{
+					//- 			id:'addEditContacts_clear',
+					//- 			caption:'Clear'
+					//- 		},
+					//- 		{
+					//- 			id:'addEditContacts_close',
+					//- 			caption:'Close',
+					//- 			forceBack:true
+					//- 		}
+					//- 	]
+					//- ));
+
+
+
+				});
+
+
+
+				$('#bt_webMenu_deletContact').click(function(){
+					Android.onMenuClick(JSON.stringify(
+						{
+							id:'bt_webMenu_deletContact'
+						}
+					));
+				});
+
+				$('#bt_webMenu_openContactSlider').click(function(){
+					Android.openGenericMenu('/webMenu/genericMenu', JSON.stringify(
+						[
+							{
+								id:'bt_webMenu_editContact',
+								caption:'Edit Now!!!'
+							},
+							{
+								id:'myId_1',
+								caption:'MyCaption_1'
+							}
+						]
+					));
+
+				});
+
+				$('.contactImage').click(function(){
+					//alert("contactImage");
+				});
+
+				$('#sliderDiv').click(function(){
+					//console.log(JSON.stringify($(this)));
+					//alert($(this).find( ".contactImage" ));
+					//$(this).find( ".contactImage" ).trigger('click');
+				});
+
+				$('#bt_webMenu_contact_autoTransitionOn').click(function(){
+					if(ContactsSlider){
+						ContactsSlider.startAutoSlide();
+					}
+				});
+
+				$('#bt_webMenu_contact_autoTransitionOff').click(function(){
+					if(ContactsSlider){
+						ContactsSlider.stopAutoSlide();
+					}
+				});
+				$('#bt_webMenu_contact_autoSelectSwipeOn').click(function(){
+					if(ContactsSlider){
+						ContactsSlider.startAutoSelectSwipe();
+					}
+				});
+				$('#bt_webMenu_contact_autoSelectSwipeOff').click(function(){
+					if(ContactsSlider){
+						ContactsSlider.stopAutoSelectSwipe();
+					}
+				});
+
+
+
+				//----init methods calls
+
+				_this.getContacts();
+
+
+			}
+
+			this.getContacts = function(inPostFunction){
+				$postAjax(
+					{
+						url:'/database/getContacts',
+						send:
+							{
+								
+							},
+						onAjaxSuccess:function(inResponseText){
+							//alert(inResponseText);
+							console.log(inResponseText); //alert(inResponseText);
+							inResponseText = JSON.parse(inResponseText);
+							if(inPostFunction){inPostFunction(JSON.parse(inResponseText));}
+							console.dir(inResponseText);
+							if(inResponseText){
+								if(inResponseText.rows){
+									var imageUrlArray = [];
+									var informationArray = [];
+									for(var index in inResponseText.rows){
+										if(inResponseText.rows[index].imageUrl){
+											console.log('imageUrl >:' + inResponseText.rows[index].imageUrl);
+											var stringHtml = '<div style="height:25px;" ><a u=image href="#"><img style="height:25px;" class="magicCirc contactImage" src="' + inResponseText.rows[index].imageUrl + '"></img></a></div>';
+											imageUrlArray.push(stringHtml);
+											informationArray.push(
+												{
+													contactId:inResponseText.rows[index].contactId,
+													name:inResponseText.rows[index].name,
+													phoneNumber:inResponseText.rows[index].phoneNumber,
+													imageUrl:inResponseText.rows[index].imageUrl,
+													type:inResponseText.rows[index].type
+												}
+											);
+										}
+									}
+
+									$postAjax(
+										{
+											url:'/contacts/widget_contacts_slider',
+											send:
+												{
+													sliderDivs:imageUrlArray,
+													information:informationArray,
+													sliderSize:
+														{
+															width:200
+														}
+												},
+											onAjaxSuccess:function(inResponseText){
+												$('#sliderDiv').html(inResponseText);
+											}
+										}
+									);
+
+
+								}
+							}
+						}
+					}
+				);
+			}
+
+			this.drawContactsSlider = function(inArrayOfImageUrl){
+
+			}
+
+		}
+
+
+		//var webMenuObject;
+
+		$(document).ready(function() {
+			$("#my-menu").mmenu(
+				{
+					// options
+					//classes: "mm-light",
+					offCanvas:false,
+					classes: "mm-fullscreen mm-light",
+					onClick:
+						{
+							//blockUi:false,
+							//preventDefault:false
+						}
+				},{
+					//panelNodetype:"span"
+				}
+			);
+
+			$('.mm-subopen mm-fullsubopen').click(function(){
+				console.log("testing klkjlkjlkjlkjlkjl");
+			});
+
+			webMenu = new WebMenu();
+
+			//webMenuObject = new WebMenuObject();
+
+
+			webMenu.load();
+
+			
+
+
+
+			//$("#my-menu").mmenu();
+		});

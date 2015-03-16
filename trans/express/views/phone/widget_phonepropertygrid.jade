@@ -1,0 +1,476 @@
+script.
+	//TODO--- remove once in main app
+	//var eventObject = new EventObject();
+	//console.log('========================================================================================================');
+	//console.log('TODO--- eventObject = new EventObject() in widget_phonepropertygrid.jade remove once in main app');
+	//console.log('========================================================================================================');
+
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+	- if(data.command == 'solo')
+		script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+		script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+		script(type='text/javascript', src='/js/qrcode/qrcode.js')
+
+		script(type='text/javascript', src='/js/commmanager/commmanager.js')
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+		script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+		script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+		script(type='text/javascript', src='/public/js/async/async.js')
+
+		script.
+			var getUserId =function(){return '#{userId}';}
+			var getDeviceId = function(){return '#{deviceId}';}
+			var getURL = function(){return '#{URL}';}
+			var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+			var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+	
+	div(id="Widget_phonePropertyGrid_layout_0" class="easyui-layout" data-options="" style="width:100%;height:100%;")
+
+		//div(border="1" data-options="region:'north',split:true" style="height:1px")
+			//table(id="phoneControlGrid" class="easyui-propertygrid" style="width:419px" data-options="")
+
+		div(data-options="region:'center',split:false" style="width:100%;height:400px;")
+			//#scroller(overflow: scroll;)
+			table(id="phoneControlGrid" class="easyui-propertygrid" style="width:419px" data-options="")
+			textarea(id="ta_phoneLogNotes" rows="6" cols="50")
+			table(id="templateGrid" class="easyui-propertygrid" style="width:419px" data-options="")
+
+			//150-
+		div(border="1" data-options="region:'south',split:true" style="width:419px;height:35px")
+			//table(id="phoneControlGrid" class="easyui-propertygrid" style="width:419px" data-options="")
+
+			//textarea(id="ta_phoneLogNotes" rows="6" cols="50")
+			button(id="bt_phonePropertyGrid_save" class="easyui-linkbutton") Save
+			//button(onclick="test();") TEST
+			//button(onclick="test2();") SAVE
+
+
+
+
+script.
+
+	var Widget_phonePropertyGridScript = new function(){
+		var _this = this;
+
+		this.load = function(){
+			$('#Widget_phonePropertyGrid_layout_0').layout(
+				{
+					fit:true
+				}
+			);
+			$('#phoneControlGrid').propertygrid({
+				//url:'/public/json/phonecontrolgrid_000.json',
+				//method:'get',
+				data:_this.getControlGridJson(),
+				showGroup:true,
+				showHeader:false,
+				scrollbarSize:0,
+				onLoadSuccess:function(){
+					$('#phoneControlGrid').propertygrid('collapseGroup',1);
+				}
+			});
+			$('#templateGrid').propertygrid({
+				showGroup:true,
+				showHeader:false,
+				scrollbarSize:0,
+				onLoadSuccess:function(data){
+					
+				}
+			});
+			$('#bt_phonePropertyGrid_save').linkbutton({
+				iconCls: 'icon-save',
+				onClick:function(){
+					_this.save(function(inresult){
+						alert('Record Saved!!!!!');
+					});
+				}
+			});
+
+			
+			//set to defult template on load------------------------------------------------------------------------
+			var theTemplateArray = _this.getTemplateData().templateArray;
+			for(theTemplateArrayIndex in theTemplateArray){
+				if(theTemplateArray[theTemplateArrayIndex].text == _this.controlGrid_getValueByName('Catagory')){
+					_this.buildCatagory(theTemplateArray[theTemplateArrayIndex]);
+				}
+			}
+			//-------------------------------------------------------------------------------------------------------
+
+
+
+		}
+
+
+		//=================================================================================================================
+		// ----- > E V E N T S < -----------(RUN ONCE)-------------------------------------------------------------------------------
+		//=================================================================================================================
+		eventObject.setOn('widgetPhoneLogGrid_onSelect', function(inRow){
+			//alert(JSON.stringify(inRow));
+			_this.controlGrid_updateValueByName('name', inRow.name);
+			_this.controlGrid_updateValueByName('Phone Number', (inRow.phoneNumber)? inRow.phoneNumber : '');
+			_this.controlGrid_updateValueByName('ext', (inRow.ext)? inRow.ext : '');
+			_this.controlGrid_updateValueByName('time', (inRow.callDayTime)? inRow.callDayTime : '');
+			_this.controlGrid_updateValueByName('status', (inRow.status)? inRow.status : '');
+			_this.controlGrid_updateValueByName('Phone Log GUID', (inRow.status)? inRow.guid : '');
+			_this.controlGrid_setPhoneGuid((inRow.status)? inRow.guid : '');
+
+		});
+
+
+
+
+		//=================================================================================================================
+		// ----- > M E T H O D S < ----------------------------------------------------------------------------------------
+		//=================================================================================================================
+		this.getNotes = function(){
+			return $('#ta_phoneLogNotes').val();
+		}
+
+		this.getTemplateData = function(){
+			return $getSyncJsonOut('/public/json/notetemplates_000.json');
+		}
+
+		this.getControlAndRealtionDataArray = function(){
+			return allData = $('#phoneControlGrid').propertygrid('getData').rows;
+		}
+
+		//TODO-- remove this----
+		// not work and not used
+		this.getSelectedCatagoryData = function(){
+			var allData = $('#phoneControlGrid').propertygrid('getData').rows;
+			console.dir(allData);
+			var theCatagoryValue;
+			for(var index in allData){
+				if(allData[index].name == 'Catagory'){
+					theCatagoryValue = allData[index].value;
+					if(theCatagoryValue){
+						console.log('test666666:' + theCatagoryValue);
+						var dataArray = _this.getTemplateData();
+						for(var dataArrayIndex in dataArray){
+							if(dataArray[dataArrayIndex].id == theCatagoryValue){
+								console.log('----------------------');
+								console.dir(dataArray[dataArrayIndex]);
+								return dataArray[dataArrayIndex];
+							}
+						}
+					}
+				}
+			}
+		}
+
+		this.templateGrid_clear = function(){
+			$('#templateGrid').propertygrid('loadData',[]);
+			//$('#templateGrid').propertygrid('loadData',[{"group":"Control Attributes","editor":"text"}]);
+			//$('#templateGrid').propertygrid('deleteRow',0);
+		}
+
+		this.getGroupIndexByName = function(inName){
+			console.log('getGroupIndexByName------------------');
+			var groupArray = [];
+			var theTemplateArray = _this.templateGrid_getData();
+			for(theTemplateArrayIndex in theTemplateArray){
+				if(theTemplateArray[theTemplateArrayIndex].group){
+					if(groupArray.indexOf(theTemplateArray[theTemplateArrayIndex].group.toLowerCase()) == -1){
+						groupArray.push(theTemplateArray[theTemplateArrayIndex].group.toLowerCase());
+					}
+					//groupHash[theTemplateArray[theTemplateArrayIndex].group] = theTemplateArray[theTemplateArrayIndex].group;
+				}
+			}
+			console.dir(groupArray);
+			return groupArray.indexOf(inName.toLowerCase());
+		}
+
+		this.templateGrid_appendAttributeArray = function(inArray){
+			$('#templateGrid').propertygrid('loadData',inArray);
+			console.log('loadData templateGrid_appendAttributeArray');
+			console.dir(inArray);
+			//.group  do postLoad duties-----
+			var template_postLoad_json = $getSyncJsonOut('/public/json/notetemplates_000.json').postLoad;
+			if(template_postLoad_json){
+				if(template_postLoad_json.groupExpansion){
+					console.log('template_postLoad_json.groupExpansion');
+					console.dir(template_postLoad_json.groupExpansion);
+					for(var groupExpansionIndex in template_postLoad_json.groupExpansion){
+						var expansionEach = template_postLoad_json.groupExpansion[groupExpansionIndex];
+						console.log('expansionEach');
+						console.dir(expansionEach);
+						var groupIndex = _this.getGroupIndexByName(expansionEach.group);
+						console.log('groupIndex:' + groupIndex);
+						if(groupIndex != -1){
+							if(expansionEach.expand){
+								$('#templateGrid').propertygrid('expandGroup', groupIndex);
+							}else{
+								console.dir('');
+								$('#templateGrid').propertygrid('collapseGroup', groupIndex);
+							}
+						}
+					}
+				}
+			}
+
+		}
+
+		this.templateGrid_appendAttribute = function(inAttribute){
+			console.log('templateGrid_appendAttribute');
+			console.dir(inAttribute);
+			$('#templateGrid').propertygrid('appendRow',inAttribute);
+		}
+
+		this.templateGrid_getData = function(){
+			return $('#templateGrid').propertygrid('getData').rows;
+		}
+
+		this.controlGrid_refresh = function(){
+			$('#phoneControlGrid').propertygrid('loadData', $('#phoneControlGrid').propertygrid('getData'));
+		}
+
+		this.buildCatagory = function(catagoryData){
+			//_this.templateGrid_clear();
+			var propertyArray = catagoryData.properties;
+			var newArray = [];
+			for(var propertyArrayIndex in propertyArray){
+				//_this.templateGrid_appendAttribute(propertyArray[propertyArrayIndex]);
+				newArray.push(propertyArray[propertyArrayIndex]);
+			}
+			_this.templateGrid_appendAttributeArray(newArray);
+			//$('#templateGrid').propertygrid('expandGroup');
+		}
+
+		this.controlGrid_getValueByName = function(inName){
+			var theArray = $('#phoneControlGrid').propertygrid('getData').rows;
+			for(var theArrayIndex in theArray){
+				if(theArray[theArrayIndex].name.toLowerCase() == inName.toLowerCase()){
+					return theArray[theArrayIndex].value;
+				}
+			}
+			return false;
+		}
+
+		this.controlGrid_updateValueByName = function(inName, inNewValue){
+			var theArray = $('#phoneControlGrid').propertygrid('getData').rows;
+			for(var theArrayIndex in theArray){
+				if(theArray[theArrayIndex].name){
+					if(theArray[theArrayIndex].name.toLowerCase() == inName.toLowerCase()){
+						theArray[theArrayIndex].value = inNewValue;
+						_this.controlGrid_refresh();
+						return false;
+					}
+				}
+			}
+		}
+
+		var controlGridPhoneGuid = '';
+		this.controlGrid_getPhoneGuid = function(){
+			return controlGridPhoneGuid;
+		}
+
+		this.controlGrid_setPhoneGuid = function(inGuid){
+			controlGridPhoneGuid = inGuid;
+		}
+
+		this.save = function(inPostFunction){
+			var headerAndCatagoryData = _this.getControlAndRealtionDataArray();
+			var relateTo = '';
+			var catagory = '';
+			var relationArray = [];
+			var rel_grp = []; var rel_id = []; var rel_name = []; var rel_value = [];
+			if(headerAndCatagoryData){
+				for(var headerAndCatagoryDataIndex in headerAndCatagoryData){
+					console.log('headerAndCatagoryData[headerAndCatagoryDataIndex].group:' + headerAndCatagoryData[headerAndCatagoryDataIndex].group);
+					console.log('headerAndCatagoryData[headerAndCatagoryDataIndex].name:' + headerAndCatagoryData[headerAndCatagoryDataIndex].name);
+					if(headerAndCatagoryData[headerAndCatagoryDataIndex].group && headerAndCatagoryData[headerAndCatagoryDataIndex].name){
+						if(headerAndCatagoryData[headerAndCatagoryDataIndex].group == 'Control Attributes' && headerAndCatagoryData[headerAndCatagoryDataIndex].name == 'Relate To'){
+							relateTo = (headerAndCatagoryData[headerAndCatagoryDataIndex].value) ? headerAndCatagoryData[headerAndCatagoryDataIndex].value : '';
+						}
+						if(headerAndCatagoryData[headerAndCatagoryDataIndex].group == 'Control Attributes' && headerAndCatagoryData[headerAndCatagoryDataIndex].name == 'Catagory'){
+							catagory = (headerAndCatagoryData[headerAndCatagoryDataIndex].value) ? headerAndCatagoryData[headerAndCatagoryDataIndex].value : '';
+						}
+						if(headerAndCatagoryData[headerAndCatagoryDataIndex].group == 'Relation Attributes'){
+							relationArray.push(headerAndCatagoryData[headerAndCatagoryDataIndex]);
+						}
+					}
+				}
+
+				if(relationArray){
+					for(var relationArrayIndex in relationArray){
+						rel_grp.push((relationArray[relationArrayIndex].group) ? relationArray[relationArrayIndex].group : '');
+						rel_id.push((relationArray[relationArrayIndex].id) ? relationArray[relationArrayIndex].id : '');
+						rel_name.push((relationArray[relationArrayIndex].name) ? relationArray[relationArrayIndex].name : '');
+						rel_value.push((relationArray[relationArrayIndex].value) ? relationArray[relationArrayIndex].value : '');
+					}
+				}
+			}
+
+			var jsonStruct = 
+				{
+					catagory:catagory,
+					json_templateData:(_this.templateGrid_getData() ? _this.templateGrid_getData() : {}),
+					note:(_this.getNotes()) ? _this.getNotes() : '',
+					phoneLog_guid:_this.controlGrid_getPhoneGuid(),
+
+					rel_grp_0:(rel_grp[0]) ? rel_grp[0] : '',
+					rel_grp_1:(rel_grp[1]) ? rel_grp[1] : '',
+					rel_grp_2:(rel_grp[2]) ? rel_grp[2] : '',
+					rel_grp_3:(rel_grp[3]) ? rel_grp[3] : '',
+					rel_grp_4:(rel_grp[4]) ? rel_grp[4] : '',
+					rel_grp_5:(rel_grp[5]) ? rel_grp[5] : '',
+
+					rel_id_0:(rel_id[0]) ? rel_id[0] : '',
+					rel_id_1:(rel_id[1]) ? rel_id[1] : '',
+					rel_id_2:(rel_id[2]) ? rel_id[2] : '',
+					rel_id_3:(rel_id[3]) ? rel_id[3] : '',
+					rel_id_4:(rel_id[4]) ? rel_id[4] : '',
+					rel_id_5:(rel_id[5]) ? rel_id[5] : '',
+					rel_name_0:(rel_name[0]) ? rel_name[0] : '',
+					rel_name_1:(rel_name[1]) ? rel_name[1] : '',
+					rel_name_2:(rel_name[2]) ? rel_name[2] : '',
+					rel_name_3:(rel_name[3]) ? rel_name[3] : '',
+					rel_name_4:(rel_name[4]) ? rel_name[4] : '',
+					rel_name_5:(rel_name[5]) ? rel_name[5] : '',
+					rel_value_0:(rel_value[0]) ? rel_value[0] : '',
+					rel_value_1:(rel_value[1]) ? rel_value[1] : '',
+					rel_value_2:(rel_value[2]) ? rel_value[2] : '',
+					rel_value_3:(rel_value[3]) ? rel_value[3] : '',
+					rel_value_4:(rel_value[4]) ? rel_value[4] : '',
+					rel_value_5:(rel_value[5]) ? rel_value[5] : '',
+					relateTo:relateTo
+				}
+
+			$postAjax(
+				{
+					url:'/database/phonelog/addNote',
+					send:jsonStruct,
+					onAjaxSuccess:function(inResponseText){
+						console.log('CALLBACK /database/phonelog/addNote:');
+						console.dir(inResponseText);
+						var theReturn = JSON.parse(inResponseText);
+						if(theReturn){
+							if(inPostFunction){
+								inPostFunction(theReturn);
+							}
+						}
+					}
+				}
+			);
+		}
+
+		this.getControlGridJson = function(){
+			var result_json = 
+			{"phoneGuid":_this.controlGrid_getPhoneGuid(),"total":7,"rows":[
+				{"name":"Relate To","value":"Selected Log Entry","group":"Control Attributes","editor":
+						{
+							"type":"combobox",
+							"options":
+								{
+									"valueField":"id",
+									"textField":"text",
+									"data":
+										[
+											{
+												"id":"Selected Log Entry",
+												"text":"Selected Log Entry"
+											},
+											{
+												"id":"Next Outgoing Call",
+												"text":"Next Outgoing Call"
+											},
+											{
+												"id":"Other",
+												"text":"Other"
+											}
+										]
+								}
+						}
+				},
+
+				{"name":"Catagory","value":"General","group":"Control Attributes","editor":
+						{
+							"type":"combobox",
+							"options":
+								{
+									"valueField":"id",
+									"textField":"text",
+									data:$getSyncJsonOut('/public/json/notetemplates_000.json').templateArray,
+									onSelect:function(record){
+										_this.buildCatagory(record);
+										console.log('xxxxx catagory selected');
+									}
+								}
+						}
+				},
+				{"name":"Name","showGroup": true, "value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text"
+						}
+				},
+				{"name":"Phone Number","value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text",
+							"options":
+								{
+									"valueField":"id",
+									"textField":"text"
+								}
+						}
+				},
+				{"name":"Ext","value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text"
+						}
+				},
+				{"name":"Time","value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text"
+						}
+				},
+				{"name":"Status","value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text"
+						}
+				},
+				{"name":"Phone Log GUID","value":"","group":"Relation Attributes","editor":
+						{
+							"type":"text"
+						}
+				}
+			]}
+
+			return result_json;
+		}
+
+	}();
+
+		//combobox
+
+
+
+
+	$(document).ready(function(){
+		Widget_phonePropertyGridScript.load();
+	});
+
+
+
+
+
+	var test = function(){
+		Widget_phonePropertyGridScript.templateGrid_getData();
+	}
+
+
+	var test2 = function(){
+		Widget_phonePropertyGridScript.save(function(inresult){
+			console.log('result of SAVE----------------');
+			console.dir(inresult);
+		});
+	}

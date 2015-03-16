@@ -1,0 +1,209 @@
+doctype html
+html
+	head 
+		meta(charset="UTF-8")
+		meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+	body(style="")
+		script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+
+		script(src="/public/js/sidemenu/jquery.sidr.min.js" type="text/javascript")
+		link(href="/public/js/sidemenu/stylesheets/jquery.sidr.dark.css" type="text/css" rel="stylesheet")
+
+
+		//script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+		//masterMenu-----
+		//script(src="/public/js/mastermenu/src/js/jquery.mmenu.min.js" type="text/javascript")	
+		//link(href="/public/js/mastermenu/src/css/jquery.mmenu.css" type="text/css" rel="stylesheet")
+		//link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.themes.css" type="text/css" rel="stylesheet")
+		//link(href="/public/js/mastermenu/src/css/extensions/jquery.mmenu.fullscreen.css" type="text/css" rel="stylesheet")
+		
+		script.
+			/*var getUserId =function(){return '#{userId}';}
+			var getDeviceId = function(){return '#{deviceId}';}
+			var getURL = function(){return '#{URL}';}
+			var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+			var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+			*/
+		style.
+			#mobile-header {
+				display: none;
+			}
+			@media only screen and (max-width: 767px){
+				#mobile-header {
+					display: block;
+				}
+			}
+			//- .mm-menu
+			//- 	{
+			//- 		background: rgba( 0, 0, 0, 0.6 );
+			//- 		box-shadow: none !important;
+			//- 		text-align: center;
+			//- 		color: #fff;
+			//- 	}
+			//- .logo{
+			//- 		border: 1px solid #fff;
+			//- 		line-height: 40px;
+			//- 		display: inline-block;
+			//- 		width: 40px;
+			//- 		height: 80px;
+			//- 		margin: 0x 0 0 0;
+			//- }
+			//- .imgAndData{
+			//- 	font-size: 13px;
+			//- 	font-style: normal;
+			//- 	font-weight: normal;
+			//- 	padding-left: 5px;
+			//- 	LINE-HEIGHT:15px;
+			//- 	background-color: #eee;
+
+			//- }
+
+			//- .magicCirc{
+			//- 	padding:4px;
+			//- 	display:inline-block;
+			//- 	font:12px/14px Arial, Helvetica, sans-serif;
+			//- 	color:#666;
+			//- 	border:1px solid #999;
+			//- 	background-color:#eee;
+			//- 	-moz-border-radius:10px;
+			//- 	-webkit-border-radius: 150px;
+			//- 	-moz-box-shadow:#999 2px 0px 3px;
+			//- 	-webkit-box-shadow:#999 2px 0px 3px;
+			//- 	margin-bottom:4px;
+			//- }
+
+			//- .magicCircPnt{
+			//- 	padding:4px;
+			//- 	display:inline-block;
+			//- 	cursor:pointer;
+			//- 	font:12px/14px Arial, Helvetica, sans-serif;
+			//- 	color:#666;
+			//- 	border:1px solid #999;
+			//- 	background-color:#eee;
+			//- 	-moz-border-radius:10px;
+			//- 	-webkit-border-radius: 150px;
+			//- 	-moz-box-shadow:#999 2px 0px 3px;
+			//- 	-webkit-box-shadow:#999 2px 0px 3px;
+			//- 	margin-bottom:4px;
+			//- }
+
+			//- .center{
+			//- 	margin-left: auto;
+			//- 	margin-right: auto;
+			//- 	width: 70%;
+			//- 	background-color: #b0e0e6;
+			//- }
+
+
+			//- @-webkit-keyframes spaceboots {
+			//- 	0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+			//- 	10% { -webkit-transform: translate(-1px, -2px) rotate(-40deg); }
+			//- 	20% { -webkit-transform: translate(-3px, 0px) rotate(40deg); }
+			//- 	30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+			//- 	40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+			//- 	50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+			//- 	60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+			//- 	70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+			//- 	80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+			//- 	90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+			//- 	100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+			//- }
+			//- .shake {
+			//- 	-webkit-animation-name: spaceboots;
+			//- 	-webkit-animation-duration: 0.8s;
+			//- 	-webkit-transform-origin:50% 50%;
+			//- 	-webkit-animation-iteration-count: 15;//infinite;
+			//- 	-webkit-animation-timing-function: linear;
+			//- }
+			//- .magicShadow{
+			//- 	-moz-box-shadow:10px 10px 5px #000000;
+			//- 	-webkit-box-shadow:10px 10px 5px #000000;
+			//- 	box-shadow:10px 10px 5px #000000;
+			//- }
+
+			//- .magicPointer{
+			//- 	cursor:pointer;
+			//- }
+
+
+		//menu html here
+		//div(id="mobile-header")
+
+		div(id="mobile-header")
+			a(id="simple-menu" href="#navigation") Menu
+		#navigation
+			
+			ul
+				li
+					a(href="#download") Download 
+				li
+					a(href="#getstarted") Get started 
+				li
+					a(href="#usage") Demos &amp; Usage 
+				li
+					a(href="#documentation") Documentation 
+				li
+					a(href="#themes") Themes 
+				li
+					a(href="#support") Support 
+		script.
+			var WebMenu = new function(){
+				var _this = this;
+
+
+
+
+				this.load = function(){
+
+
+
+					//------Event-----------
+					$('#bt_webMenu_contacts').click(function(){
+						Android.onMenuClick(JSON.stringify(
+							{
+								id:'bt_webMenu_contacts'
+							}
+						));
+					});
+					$('#bt_webMenu_sms').click(function(){
+						Android.onMenuClick(JSON.stringify(
+							{
+								id:'bt_webMenu_sms'
+							}
+						));
+					});
+					$('#bt_webMenu_phone').click(function(){
+						Android.onMenuClick(JSON.stringify(
+							{
+								id:'bt_webMenu_phone'
+							}
+						));
+					});
+
+					if(typeof $("#my-menu").mmenu == 'undefined'){
+						console.log('eroor in menu !!!!!');
+					}
+
+					$("#my-menu").mmenu(
+						{
+							// options
+							//classes: "mm-light",
+							offCanvas:false,
+							classes: "mm-fullscreen mm-light"
+						}
+					);
+				}
+
+			}();
+
+
+
+
+			$(document).ready(function() {
+				
+
+				//WebMenu.load();
+
+				$('#simple-menu').sidr();
+			});

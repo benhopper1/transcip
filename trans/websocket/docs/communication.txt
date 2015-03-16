@@ -1,0 +1,10 @@
+
+to create or be connected you must
+
+
+(before authenicated or soft-connected)
+client side browser:
+	can transmit any but can only receive:
+		commandForClient
+		transactionToClient && (syncMResponse || syncMlogin)
+

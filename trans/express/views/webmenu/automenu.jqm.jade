@@ -1,0 +1,450 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync
+
+	link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	script(src="http://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+
+	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+
+
+
+	script(src="/public/js/footable/js/footable.js")
+
+	script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+	script(type='text/javascript', src='/js/qrcode/qrcode.js')
+
+	script(type='text/javascript', src='/js/commmanager/commmanager.js')
+
+	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+	//arfsync.jqm   CSS ---------
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/automenu.jqm.css")
+
+
+	
+
+
+
+	script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+	script(type='text/javascript', src='/public/js/async/async.js')
+
+	
+
+
+
+body
+
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+	div(data-role="header" data-mini="true" data-position="fixed" data-theme="b" class="mainHeader")
+		a(href="#" id="btBar_main_back" data-icon="back" class="ui-btn-left backButtonClass") Back
+		h1 ArfSync
+		//- a(id="bt_test" href="" data-icon="delete" class="ui-btn-right") Cancel2
+		//- div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
+		//- 	ul
+		//- 		li
+		//- 			a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="back" class="header-main-button") Login Manager
+		//- 		li
+		//- 			a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="back" class="header-main-button") Contact Manager
+		//- 		li
+		//- 			a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="back" class="header-main-button") User Profile
+		//- 		li
+		//- 			a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="back" class="header-main-button") Sms Manager
+		//- 		li
+		//- 			a(href="#" data-theme="a" id="btBar_main_handSet" data-icon="back" class="header-main-button") Hand Set
+
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_page_0" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" )
+		//h1 hello
+
+		#sliderDiv_0
+		br
+		br
+		br
+		div(class="ui-field-contain" class="ui-btn-right" data-iconpos="right" style="" )
+			input(data-iconpos="right" data-icon="arrow-r" id="bt_mainMenu_contactManager" 	data-mini="false" type="button" value="Contact Manager")
+			input(data-iconpos="right" data-icon="arrow-r" id="bt_mainMenu_smsManager" 	data-mini="false" type="button" value="Sms Manager")
+			input(data-iconpos="right" data-icon="arrow-r" id="bt_mainMenu_handsetController" 	data-mini="false" type="button" value="Handset Controller")
+			input(data-iconpos="right" data-icon="arrow-r" id="bt_mainMenu_userProfile" 	data-mini="false" type="button" value="User Profile")
+		//input(data-icon="delete" id="bt_contactEdit_delete" 	data-mini="true" type="button" value="Handset Controller")
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	
+	div(id="pg_contactManager" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" )
+		#sliderDiv_1
+		input(data-iconpos="right" data-icon="arrow-r" id="bt_contactsManagerMenu_edit" 	data-mini="false" type="button" value="Edit")
+		input(data-iconpos="right" data-icon="arrow-r" id="bt_contactsManagerMenu_import" 	data-mini="false" type="button" value="Import")
+		input(data-iconpos="right" data-icon="arrow-r" id="bt_contactsManagerMenu_export" 	data-mini="false" type="button" value="Export")
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_contactsMenu_edit" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" )
+
+
+
+
+
+
+
+
+script.
+
+	//======================================================================
+	//>--- EVENTS -----------------------------------------------------------
+	//======================================================================
+
+	$( "#pg_page_0").on( "pagecreate", function( event, ui ){
+		//MasterMenu.startSlider('sliderDiv_0');
+		//>@@@---- HEADER SETUP ----0@@@@@@@@@@@@@@@@@@
+		$(".mainHeader").toolbar();
+	});
+
+	$( "#pg_page_0").on( "pageshow", function( event, ui ){
+		//$('#sliderDiv_0').clone().appendTo('#sliderDiv_1');
+		
+	});
+
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	$( "#pg_contactManager").on( "pagecreate", function( event, ui ){
+
+
+	});
+
+	$( "#pg_contactManager").on( "pageshow", function( event, ui ){
+		MasterMenu.startSlider('sliderDiv_1');
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$('#bt_mainMenu_contactManager').click(function(){
+		PageLoaderObject.loadPage('contactManager');
+	});
+
+	$('#bt_contactsManagerMenu_edit').click(function(){
+		PageLoaderObject.loadPage('contactsMenu_edit');
+	});
+
+	$('#btBar_main_back').click(function(){
+		history.back();
+		return false;
+	});
+
+	var MasterMenu = new function(){
+		var _this = this;
+
+
+
+
+		this.startSlider = function(inSliderDiv){
+				$postAjax(
+					{
+						url:'/database/getContacts',
+						send:
+							{
+								
+							},
+						onAjaxSuccess:function(inResponseText){
+							//alert(inResponseText);
+							console.log(inResponseText); //alert(inResponseText.rows);
+							inResponseText = JSON.parse(inResponseText).rows;
+
+							var imageUrlArray = [];
+							for(var inResponseTextIndex in inResponseText){
+								console.log(inResponseText[inResponseTextIndex].imageUrl);
+								imageUrlArray.push(inResponseText[inResponseTextIndex].imageUrl);
+							}
+
+							_this.slider(
+								{
+									sliderDivId:inSliderDiv,
+									sliderUrl:'/contacts/jqm/widget_contacts_slider',
+									imageUrlArray:imageUrlArray,
+									informationArray:inResponseText,
+									divHeight:'25px',
+									class:'magicCirc contactImage',
+									sliderSize:
+										{
+											width:200
+										}
+								}
+							);
+						}
+					}
+				);
+		}
+
+		this.slider = function(inJsonStruct){
+			console.log('inJsonStruct');
+			console.dir(inJsonStruct);
+			var options = 
+				{
+					sliderDivId:'',
+					startPlay:false,
+					sliderUrl:'',
+					imageUrlArray:[],
+					informationArray:[],
+					divHeight:'25px',
+					class:'magicCirc contactImage',
+					sliderSize:
+						{
+							width:200
+						}
+				}
+			options = $.extend(options, inJsonStruct);
+			//console.log('a-a-a-a-a-a-a-a-a-a');
+			//console.dir(options.informationArray);
+			var imageUrlArrayOfHtml = [];
+			for(imageUrlIndex in options.imageUrlArray){
+				var theHtml = 
+					'<div id="sliderId_' + options.informationArray[imageUrlIndex].id + '" style="height:' + options.divHeight + ';" >' 																								+ '' +
+						'<a u=image href="#">' 																														+ '' +
+							'<img style="width:'+ options.divHeight + '; height:' + options.divHeight + '; object-fit: cover;" class="' + options.class + '" src="' + options.imageUrlArray[imageUrlIndex] + '">'	+ '' +
+						'</img>'																																	+ '' +
+						'</a>'																																		+ '' +
+					'</div>';
+				imageUrlArrayOfHtml.push(theHtml)
+			}
+			$postAjax(
+				{
+					url:options.sliderUrl,
+					send:
+						{
+							sliderDivs:imageUrlArrayOfHtml,
+							information:options.informationArray,
+							sliderSize:options.sliderSize
+						},
+					onAjaxSuccess:function(inResponseText){
+						$('#' + options.sliderDivId).html(inResponseText);
+					}
+				}
+			);
+		}
+
+
+
+
+
+
+
+
+
+
+	}
+
+
+	//=========================================================
+	// PageLoaderObject
+	//=========================================================
+	var PageLoaderObject = new function(){
+		var _this = this;
+		var loadedHash = {};
+
+		var processHash = 
+			{
+				load:
+					{
+						loginManager:function(){
+							$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'slide', reverse:'true'});
+							loadedHash['loginManager'] = true;
+						},
+						contactManager:function(){
+							//$('#pg_contactManager').load("/jqm/contactmanager ", function(){
+							loadedHash['contactManager'] = true;
+
+							$(':mobile-pagecontainer').pagecontainer('change', '#pg_contactManager', {reload:false, transition:'slide', reverse:'true'});
+							//});
+						},
+						userProfile:function(){
+							$('#userProfile_contents').load("/jqm/userprofile ", function(){
+								console.log('loading userprofile');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', { transition:'slide', reverse:'true'});
+								loadedHash['userProfile'] = true;
+							});
+						},
+						smsManager:function(){
+							$('#smsManager_contents').load("/jqm/smsManager ", function(){
+								console.log('loading userprofile');
+								$('#smsManager_contents').trigger('create');
+
+								//load popup----
+								$('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
+									console.log('popup thingy loaded!');
+								});
+
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {transition:'slide', reverse:'true'});
+
+							});
+
+							loadedHash['smsManager'] = true;
+						},
+
+						contactsMenu_edit:function(){
+							$('#pg_contactsMenu_edit').load("/webMenu/jqm/contactsmenu_edit", function(){
+								console.log('loading userprofile');
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_contactsMenu_edit', { transition:'slide', reverse:'true'});
+								loadedHash['userProfile'] = true;
+							});
+						},
+
+
+
+
+					},
+				show:{
+						loginManager:function(){
+							$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'slide', reverse:'true'});
+						},
+						contactManager:function(){
+							$(':mobile-pagecontainer').pagecontainer('change', '#pg_contactManager', {transition:'slide', reverse:'true'});
+						},
+						userProfile:function(){
+							$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', {transition:'slide', reverse:'true'});
+						},
+						smsManager:function(){
+							console.dir('changeing to page smsManager');
+							$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false,transition:'slide', reverse:'true'});
+							$('#smsManager_contents').trigger('create');
+						},
+						contactsMenu_edit:function(){
+							$(':mobile-pagecontainer').pagecontainer('change', '#pg_contactsMenu_edit', { transition:'slide', reverse:'true'});
+						},
+					},
+
+				
+			}
+
+		var eventHash =
+			{
+				onLoad:
+					{
+						smsManager:function(){
+
+						}
+					},
+				onShow:
+					{
+						smsManager:function(){
+							
+						}
+					}
+			}
+
+
+
+		this.loadPage = function(pageName){
+			if(_this.isLoaded(pageName)){
+				processHash.show[pageName]();
+			}else{
+				processHash.load[pageName]();
+			}
+		}
+
+		this.isLoaded = function(pageName){
+			return loadedHash[pageName];
+		}
+	}();
+
+
+
+	//=====================================================================================================================
+	//DATA OBJECT
+	//=====================================================================================================================
+	
+	var contactDataObject = new DatabaseObject(
+		{
+			editProcess:function(inData, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/editContact',
+						send:inData,
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							inPostFunction(inResponseText);
+						}
+					}
+				);
+			},
+			selectProcess:function(inData, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/getContacts',
+						send:
+							{
+
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText).rows;
+							inPostFunction(inResponseText);
+						}
+					}
+				);
+			},
+			insertProcess:function(inData, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/addContact',
+						send:inData,
+							//{
+							//},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							inPostFunction(inResponseText);
+						}
+					}
+				);
+			},
+			deleteProcess:function(inData, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/deleteContact',
+						send:
+							{
+								id:inData.id
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							inPostFunction(inResponseText);
+						}
+					}
+				);
+			},
+		}
+	);

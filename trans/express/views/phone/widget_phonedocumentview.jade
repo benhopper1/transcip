@@ -1,0 +1,364 @@
+
+
+//script.
+	//TODO--- remove once in main app
+	/*var eventObject = new EventObject();
+	console.log('========================================================================================================');
+	console.log('TODO--- eventObject = new EventObject() in widget_phonepropertygrid.jade remove once in main app');
+	//console.log('========================================================================================================');
+
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+
+body(style="background-image: url('/public/images/ui/background_crack.jpg')")
+	- if(data.command == 'solo')
+		script(type='text/javascript', src='/js/jquery/jquery-2.0.3.min.js')
+		script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
+		script(type='text/javascript', src='/js/qrcode/qrcode.js')
+
+		script(type='text/javascript', src='/js/commmanager/commmanager.js')
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+
+		script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+		script(type='text/javascript', src='/public/js/easyui/hopper/easyui.extention.js')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+		link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+		script(type='text/javascript', src='/public/js/hashofarray/hashofarrayobject.js')
+		script(type='text/javascript', src='/public/js/async/async.js')
+
+		script.
+			var getUserId =function(){return '#{userId}';}
+			var getDeviceId = function(){return '#{deviceId}';}
+			var getURL = function(){return '#{URL}';}
+			var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+			var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+	table(id="phoneDocumentGrid" class="easyui-datagrid" title="" style="" data-options="singleSelect:true,collapsible:true")
+	#tb_phoneDocumentGrid(style="padding:2px 5px;")
+		select(id="cb_phoneDocumentView_relation" class="easyui-combobox" style="width:170px")
+		select(id="cb_phoneDocumentView_catagory" class="easyui-combobox" style="width:170px")
+		br
+		select(id="cb_phoneDocumentView_date" class="easyui-combobox" style="width:70px")
+	#doc_document
+
+		//button(id="bt_phonePropertyGrid_save" class="easyui-linkbutton") Save
+		//button(onclick="test();") TEST
+		//button(onclick="test2();") SAVE
+
+
+
+
+script.
+
+	var Widget_phoneDocumnetViewScript = new function(){
+		var _this = this;
+
+
+		this.load = function(){
+			//- $('#widget_phoneDocumentView_layout_0').layout(
+			//- 	{
+			//- 		fit:true,
+			//- 		width:'80%',
+			//- 		height:'80%'
+			//- 	}
+			//- );
+			//- $('#widgetPhoneDocumnet_tabs_1').tabs(
+			//- 	{
+			//- 		fit:true,
+			//- 		tabWidth:100,
+			//- 		tabHeight:20,
+			//- 		width:'400px',
+			//- 		height:'250px',
+			//- 		onSelect:function(title){
+			//- 			console.log(title + ' is selected');
+			//- 		}
+			//- 	}
+			//- );
+			$('#cb_phoneDocumentView_relation').combobox({
+				valueField:'id',
+				textField:'text',
+				onSelect:function(record){
+					console.log('record');
+					console.dir(record);
+					console.log('optioNS');
+					//console.dir($('#cb_phoneDocumentView_relation').combobox('optons'));
+					if(record.text == 'Other'){
+						$('#cb_phoneDocumentView_date').combobox('enable');
+						//$('#cb_phoneDocumentView_catagory').combobox('enable');
+					}else{
+						$('#cb_phoneDocumentView_date').combobox('disable');
+						//$('#cb_phoneDocumentView_catagory').combobox('disable');
+						console.log('MORNING!!!  selected get selected------------MORNING!!!');
+						console.dir(Widget_phoneWindowScript.phoneLogGrid_getSelected());
+
+					}
+				},
+				data:
+					[
+						{
+							id: 'Call Log',
+							text: 'Call Log'
+						},
+						{
+							id: 'Other',
+							text: 'Other'
+						}
+					]
+			});
+
+			$('#cb_phoneDocumentView_date').combobox({
+				valueField:'id',
+				textField:'text',
+				onSelect:function(record){
+					console.log('record');
+					console.dir(record);
+				}
+			});
+
+			$('#cb_phoneDocumentView_catagory').combobox({
+				valueField:'id',
+				textField:'text',
+				onSelect:function(record){
+					console.log('record');
+					console.dir(record);
+				}
+			});
+
+			$('#phoneDocumentGrid').datagrid({
+					toolbar:'#tb_phoneDocumentGrid',
+					height:'150px',
+					fitColumns:true,
+					onSelect:function(index,row){
+						console.log('phoneDocumentGrid row:');
+						console.dir(row);
+						eventObject.reportOn('phoneDocumentGrid_onSelect', row);//row
+						//--------GENERATE REPORT HERE ----------------
+
+
+						$postAjax(
+							{
+								url:'/phone/widget_documentReport',
+								send:row,
+								onAjaxSuccess:function(inResponseText){
+									console.dir(inResponseText);
+									$('#doc_document').html(inResponseText);
+									//var theReturn = JSON.parse(inResponseText);
+									//- if(theReturn.result){
+									//- 	console.log('phoneDocumentGrid click return ');
+									//- 	console.dir(theReturn.result);
+									//- 	if(inPostFunction){
+									//- 		inPostFunction(theReturn.result);
+									//- 	}
+									//- }
+								}
+							}
+						);
+
+
+					},
+					columns:
+						[
+							[
+								{
+									field:'callDate',
+									title:'When',
+									width:'32%',
+									formatter: function(value,row,index){
+										return mysqlEpochToLocalDateTime(row.convertedNoteDateTime);
+									}
+
+								},
+								{
+									field:'catagory',
+									title:'Catagory',
+									width:'25%'
+								},
+								{
+									field:'note',
+									title:'Short Note',
+									width:'25%'
+								}
+							]
+						]
+				});
+
+			//=================================================================================================================
+			// ----- > I N I T < ----------------------------------------------------------------------------------------------
+			//=================================================================================================================
+			console.log('xxxxz0009');
+			var arr = [1, 2, 1, 3, 1, 4, 5,5,3];
+			console.dir( array_unique(arr)  );
+			//console.dir(_.uniq([1, 2, 1, 3, 1, 4]));
+			
+			
+			$('#cb_phoneDocumentView_relation').combobox('selectFirst');
+			//$('#cb_phoneDocumentView_catagory').combobox('selectHeader');
+
+			//- console.log("$('#cb_phoneDocumentView_relation').combobox('getByText', 'myText')");
+			//- console.dir(  $('#cb_phoneDocumentView_relation').combobox('getDataByText', 'Java')   );
+
+
+		}
+			//=================================================================================================================
+			// ----- > E V E N T S < ------------------------------------------------------------------------------------------
+			//=================================================================================================================
+
+			eventObject.setOn('widgetPhoneLogGrid_onSelect', function(inRow){
+				//TODO-- check if view not tab is open before all this!!
+				var realion_selectedData = $('#cb_phoneDocumentView_relation').combobox('getSelected');
+				if(realion_selectedData){
+					if(realion_selectedData.text){
+						if(realion_selectedData.text == 'Call Log'){
+							_this.phoneDocumentGrid_loadData(
+								{
+									relation:'%',
+									catagory:'%',
+									phoneLogGuid:(inRow.guid) ? inRow.guid : '%'
+								},function(inResult){
+									if(inResult){
+										var catagoryArray = [];
+										for(var inResultIndex in inResult){
+											if(inResult[inResultIndex].catagory){
+												catagoryArray.push(inResult[inResultIndex].catagory);
+											}
+										}
+										var uArray = array_unique(catagoryArray);
+										var formatedArray = [];
+										for(var uArrayIndex in uArray){
+											formatedArray.push(
+												{
+													id:uArray[uArrayIndex],
+													text:uArray[uArrayIndex]
+												}
+											);
+										}
+										$('#cb_phoneDocumentView_catagory').combobox('loadDataH',[]);
+										$('#cb_phoneDocumentView_catagory').combobox('addArray', formatedArray);
+										$('#cb_phoneDocumentView_catagory').combobox('setHeader',
+											{
+												id:'all',
+												text:'--- > - ALL - < ---'
+											}
+										);
+										$('#cb_phoneDocumentView_catagory').combobox('selectHeader');
+									}
+								}
+							);
+						}
+					}
+				}
+				
+			});
+
+			//=================================================================================================================
+			// ----- > M E T H O D S < ----------------------------------------------------------------------------------------
+			//=================================================================================================================
+			//- this.cb_relation_selectFirst = function(){
+			//- 	$('#cb_phoneDocumentView_relation').combobox('select',$('#cb_phoneDocumentView_relation').combobox('getData')[0].id);
+			//- }
+
+			this.phoneDocumentGrid_loadData = function(inParams, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/phoneNotes/phonesDocumentsAndNotesGet',
+						send:inParams,
+						onAjaxSuccess:function(inResponseText){
+							console.log('phoneDocumentGrid_loadData CALLBACK!!!');
+							console.dir(inResponseText);
+							var theReturn = JSON.parse(inResponseText);
+							if(theReturn){
+								//----fill grid here--
+								$('#phoneDocumentGrid').datagrid('loadData',theReturn);
+								if(inPostFunction){inPostFunction(theReturn);}
+							}
+						}
+					}
+				);
+			}
+
+			this.cb_phoneDocumentView_date_refresh = function(inRelation, inCatagory, inPostFunction){
+				$postAjax(
+					{
+						url:'/database/phoneNotes/getUDates',
+						send:
+							{
+								relateTo:inRelation,
+								catagory:inCatagory
+							},
+						onAjaxSuccess:function(inResponseText){
+							console.log('cb_phoneDocumentView_date_refresh CALLBACK!!!');
+							console.dir(inResponseText);
+							var theReturn = JSON.parse(inResponseText);
+							if(theReturn){
+								var formatedArray = [];
+								for(var theReturnIndex in theReturn){
+									var id = (theReturn[theReturnIndex].guid)? theReturn[theReturnIndex].guid : false;
+									var text = (theReturn[theReturnIndex].entryTimeStamp_stamp)? new Date(theReturn[theReturnIndex].entryTimeStamp_stamp).toLocaleString() : false;
+									if(id && text){
+										formatedArray.push(
+											{
+												id:id,
+												text:text
+											}
+										);
+									}
+								}
+
+								if(formatedArray.length > 0){
+									$('#cb_phoneDocumentView_date').combobox('clear');
+									$('#cb_phoneDocumentView_date').combobox('addArray', formatedArray);
+									
+								}
+
+								if(inPostFunction){
+									inPostFunction(theReturn);
+								}
+							}
+						}
+					}
+				);
+			}
+
+
+	}();
+
+	$(document).ready(function(){
+		eventObject.setOn('phoneDocumentGrid_onSelect', function(inData){
+			console.log('EVENT BUS phoneDocumentGrid_onSelect');
+			//alert(JSON.stringify(inData.json_data));
+			console.dir(JSON.parse(JSON.stringify(inData.json_data)));
+		});
+		Widget_phoneDocumnetViewScript.load();
+		Widget_phoneDocumnetViewScript.cb_phoneDocumentView_date_refresh('other');//relation,catagory
+
+
+		Widget_phoneDocumnetViewScript.phoneDocumentGrid_loadData(
+			{
+				relation:'%',
+				catagory:'%',
+				phoneLogGuid:'%'
+			},function(inResult){
+				console.log('phoneDocumentGrid_loadData CALLBACK!!!');
+				console.dir(inResult);
+			}
+		);
+
+		console.log('test of hooper key');
+		console.dir($('#cb_phoneDocumentView_catagory').combobox('options'));
+		$('#cb_phoneDocumentView_catagory').combobox('options').hopper = 'xxx4';
+		console.dir($('#cb_phoneDocumentView_catagory').combobox('options'));
+		console.log('test of hooper key2');
+		console.dir($('#cb_phoneDocumentView_date').combobox('options'));
+
+	});
+
+	//- var test = function(){
+	//- 	console.log('getSelected--------------:');
+	//- 	console.dir($('#cb_phoneDocumentView_date').combobox('getSelected'));
+
+	//- }

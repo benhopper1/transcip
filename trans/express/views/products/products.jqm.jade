@@ -1,0 +1,459 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() arfSync Products
+
+	//link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+
+	
+	script(src="/public/js/slider/js/jssor.slider.mini.js")
+	link(rel="stylesheet" href="/public/js/slider/css/slider.css")
+
+
+	//script(type="text/javascript" src="https://192.168.0.16:8000/public/js/slider/js/jssor.slider.mini.js")
+	//link(rel="stylesheet" href="https://192.168.0.16:8000/public/js/slider/css/slider.css")
+
+	//script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+	//script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+	//script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+
+	//script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+	//script(src="/public/js/footable/js/footable.js")
+
+
+	//script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
+	//script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+	//script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	//script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+	//script(type='text/javascript', src='/public/js/async/async.js')
+
+	//PLAYER GOOGLE
+	//script(src="https://www.youtube.com/iframe_api")
+
+
+body(style="background-color: #000000;")
+
+	style.
+		//- .ui-widget-overlay {
+		//- 	//opacity: 0.5;
+		//- 	//filter: Alpha(Opacity=50);
+		//- 	background-color: black;
+		//- }
+
+
+
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+	div(data-role="header" data-mini="true"  data-theme="b" class="mainHeader")
+		center
+			#inSliderDivId(style="background-color: #000000 !important; height:150px;")
+
+	div(data-role="footer" data-mini="true" style="width:90%;left:1%;" class="footer ui-bar ui-state-persist" data-theme="b" data-position="fixed" data-fullscreen="true")
+		a(href="#" id="bt_pageLeft" data-role="button" data-mini="true" data-icon="arrow-l") Previous
+		//a(href="#" data-role="button" data-icon="plus") Add Me On Twitter
+		a(href="#" id="bt_pageRight" data-role="button" data-mini="true" data-iconpos="right" class="ui-btn-right" data-icon="arrow-r") Next
+		div(style="width:50px;")
+
+	//a(href="#androidMessage" data-theme="a" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="pop") Open dialog
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_page_alpha" data-tap-toggle="true" data-role="page"  data-fullscreen="true" data-theme="b"  class=".center-me is-pg" style="background-color: #000000 !important;") 
+		//#inSliderDivId
+
+		//- input(data-icon="action" id="test0" 	type="button" value="Save")
+		//- input(data-icon="action" id="test1" 	type="button" value="BUY arfsync.test1")
+		//- input(data-icon="action" id="test2" 	type="button" value="BUY test0")
+		//- input(data-icon="action" id="test3" 	type="button" value="BUY arfsync.testapp.test_subscribe_product_500")
+		//- input(data-icon="action" id="test4" 	type="button" value="android.test.purchased")
+		//- input(data-icon="action" id="test5" 	type="button" value="android.test.canceled")
+
+	- var i = 0;
+	each product in showCaseProducts
+		div(id="pg_page__#{i}" data-role="page"  data-fullscreen="true" data-theme="b"  class=".center-me pg-content is-pg" style="overflow-y:scroll; background-color: #000000 !important;")
+			div(style="")
+				center
+					h3 #{product.productTitle}
+					img(src="#{product.imageUrl}" style="height:90px;")
+					p(style="line-height: 100%;") #{product.productDescription}
+					center
+						p(style="line-height: 70%;") #{product.cost}
+				div(class="ui-grid-b" style="")
+					div(class="ui-block-a" style="width:10%")
+					div(class="ui-block-b" style="width:80%")
+						button(data-icon="action" id="bt_buy_#{i}" 	onClick="ProductsObject.buy(#{i})" data-mini="true" data-theme="a" type="button") BUY #{product.productTitle}
+
+						div(class="ui-grid-b" style="")
+							div(class="ui-block-a" style="width:40%")
+								button(data-icon="action" id="bt_video_#{i}" onClick="ProductsObject.openVideoPage(#{i})" data-mini="true" data-theme="a" type="button") Video
+							div(class="ui-block-b" style="width:20%")
+							div(class="ui-block-b" style="width:40%")
+								button(data-icon="action" class="" id="bt_info#{i}" 	onClick="ProductsObject.info(#{i})" data-mini="true" data-theme="a" type="button") Info
+					div(class="ui-block-c" style="width:10%")
+					br
+					br
+		- i++;
+	//=================================================================================================================================================================================
+	//-)--> Video PAGE 1---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_video_0" data-role="page"  data-fullscreen="true" data-theme="b"  class="is-pg pg-content" )
+		//iframe(id="player" type="text/html" height="100%" src="http://www.youtube.com/embed/zhqP0JmzxUs?enablejsapi=1&origin=http://example.com" frameborder="0")
+		#player
+
+	//=================================================================================================================================================================================
+	//-)--> DIALOG PAGE ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="androidMessage" data-role="page" data-dialog="true" style="" class="ui-shadow ui-corner-all")
+		div(data-role="header" data-theme="b")
+			h1(id="androidMessage_title") Dialog
+		div(role="main" data-theme="a" style="background-color: #ffffff !important;" class="ui-content")
+			#androidMsgContent
+
+
+
+	script.
+		var contactsSlider;
+
+		$(".mainHeader").toolbar();
+		$(".footer").toolbar();
+		//$('[data-role=header],[data-role=footer]').fixedtoolbar({ tapToggle:true });
+		//$(".mainHeader").toolbar().setTouchToggleEnabled(false);
+		//$(':mobile-pagecontainer').fixedToolbars.setTouchToggleEnabled(false);
+
+		if( $('.ui-widget-overlay').length == 0 ){
+			$('body').append('<div class="ui-widget-overlay"></div>');
+		} 
+
+		var page;
+		$('.is-pg').on( "pageshow", function( event, ui ){
+			page = "#" + $( this ).attr( "id" );
+			$(this).css('background', '#000000');
+			console.log('PAGE SHOW--------------------------' + page);
+		});
+
+		var player;
+		var onPlayerReady = function(event){
+			event.target.playVideo();
+		}
+
+		var done = false;
+		var onPlayerStateChange = function(event){
+			if(event.data == YT.PlayerState.PLAYING && !done){
+				//setTimeout(stopVideo, 6000);
+				//done = true;
+			}
+		}
+
+		function stopVideo(){
+			player.stopVideo();
+		}
+
+
+		var MessageObject = new function(){
+			var _this = this;
+
+			$( "#androidMessage" ).dialog(
+				{
+					//closeBtn: "none"
+				}
+			);
+
+			this.androidShow = function(inJsonString){
+				_this.show(JSON.parse(inJsonString));
+			}
+
+			this.show = function(inOptions){
+				var options = 
+					{
+						title:false,
+						message:false,
+						html:false,
+
+					}
+				options = $.extend(options, inOptions);
+
+				if(options.title){
+					$('#androidMessage_title').html(options.title);
+				}
+
+				if(options.html){
+					$('#androidMsgContent').html(options.html);
+				}else{
+					if(options.message){
+						$('#androidMsgContent').html(options.message);
+					}
+				}
+				$(':mobile-pagecontainer').pagecontainer('change', '#androidMessage', {transition:'pop'});
+			}
+
+			this.hide = function(){
+				$( "#androidMessage" ).dialog( "close" );
+			}
+
+
+		}(); //endOf MessageObject
+
+
+
+
+		var ProductsObject = new function(){
+			var _this = this;
+			var productsData = !{JSON.stringify(showCaseProducts)}
+			var currentPageIndex = 0;
+			console.log('productsData');
+			console.dir(productsData);
+
+			//=======================================================
+			// BUTTON ENABLING
+			//=======================================================
+			(function(){
+				for(var productsDataIndex in productsData){
+					if(productsData[productsDataIndex].isBuyEnabled == 'true'){
+						$('#bt_buy_' + productsDataIndex).removeClass('ui-disabled');
+					}else{
+						$('#bt_buy_' + productsDataIndex).addClass('ui-disabled');
+					}
+
+					if(productsData[productsDataIndex].youtube == '' || !(productsData[productsDataIndex].youtube)){
+						$('#bt_video_' + productsDataIndex).addClass('ui-disabled');
+					}else{
+						$('#bt_video_' + productsDataIndex).removeClass('ui-disabled');
+					}
+				}
+			}());
+
+			var currentVideoId;
+
+			this.resetHeader = function(inPostFunction){
+				$('.mainHeader').show(2500, function(){
+					if(inPostFunction){inPostFunction();}
+				});
+			}
+
+			this.removeHeader = function(inPostFunction){
+				$('.mainHeader').hide(2500, function(){
+					if(inPostFunction){inPostFunction();}
+				});
+			}
+
+			this.getYoutubeId = function(inVideoIndex){
+				return productsData[inVideoIndex].youtube;
+			}
+
+
+			this.openVideoPage = function(inVideoIndex){
+				_this.removeHeader(function(){
+					_this.playYoutubeVideo(_this.getYoutubeId(inVideoIndex));
+					console.log('video click for index:' + inVideoIndex);
+					currentVideoId = inVideoIndex;
+					$('#pg_video_0').on( "pagehide", function( event, ui ){
+						console.log('pg_video_0 transsss');
+						_this.resetHeader();
+					});
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_video_0', {transition:'slide', reverse:'true'});
+				});
+			}
+
+			this.playYoutubeVideo = function(inKey){
+				$('#player').html('<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' + inKey + '" frameborder="0" allowfullscreen></iframe>');
+			}
+
+			this.info = function(inIndex){
+
+			}
+
+			this.buy = function(inIndex){
+				Android.onActionRequest(JSON.stringify(
+					{
+						action:'buyProduct',
+						productId:productsData[inIndex].productId,
+						productType:productsData[inIndex].productType,
+					}
+				));
+			}
+
+
+			this.changePageRight = function(){
+				//+
+				if(currentPageIndex < (productsData.length) - 2){
+					currentPageIndex++;
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page__' + currentPageIndex, {transition:'slide'});
+					//_this.setPageSize('#pg_page__' + currentPageIndex);
+
+				}
+			}
+
+			this.changePageLeft = function(){
+				if(currentPageIndex > 0){
+					currentPageIndex--;
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page__' + currentPageIndex, {transition:'slide', reverse:'true'});
+					//_this.setPageSize('#pg_page__' + currentPageIndex);
+				}
+			}
+
+			this.changePage = function(inPageIndex){
+				console.log('go-pg' + inPageIndex);
+				$(':mobile-pagecontainer').pagecontainer('change', '#pg_page__' + inPageIndex, {transition:'slide', reverse:'true'});
+				//_this.setPageSize();
+				$('#pg_page__' + currentPageIndex).refresh();
+			}
+
+			this.setPageSize = function(inPage, inOption){
+				console.log('setPageSize ENTERED' + inOption);
+				if(inOption == 'noHeader'){
+					$(inPage).height(
+						(
+							$(window).height() - 
+								(
+									$('.footer').height()
+								)
+						)
+					);
+				}
+
+				if(!(inOption)){
+					$(inPage).height(
+						(
+							$(window).height() - 
+								(
+									$('.mainHeader').height()
+									+	$('.footer').height()
+								)
+						)
+					);
+				}
+			}
+
+		}();
+
+		$(document).ready(function(){
+			console.log('Document Ready');
+			console.log('loading script');
+			ProductsObject.setPageSize();
+
+
+			contactsSlider = new ContactsSlider(
+				{
+					containerId:'inSliderDivId',
+					width:300,
+					onSwipe:function(inIndex){
+
+					},
+					onClick:function(inIndex, inLookupId){
+						//alert('inIndex, inLookupId' +inIndex +' , '+inLookupId);
+					},
+					imageClass:' magicSquarePnt'
+				}
+			);
+
+
+			contactsSlider.setSlideSize('600px', '300px');
+
+			contactsSlider.addImageSlide(1, '/public/images/ui/product_sld_fr_0.png');
+			contactsSlider.addImageSlide(2, '/public/images/ui/product_sld_fr_1.png');
+			contactsSlider.addImageSlide(3, '/public/images/ui/product_sld_fr_2.png');
+			//contactsSlider.redraw();
+			console.log('Document Ready funct done');
+			contactsSlider.redraw();
+			contactsSlider.startAutoSlide();
+
+			//- MessageObject.show(
+			//- 	{
+			//- 		title:'Ben Hopper',
+			//- 		message:'What about love, do you need it!!',
+			//- 		//html:false,
+			//- 	}
+			//- );
+
+			//- MessageObject.hide();
+
+
+		});
+
+
+		$('#test0').click(function(){
+		});
+
+		$('#test1').click(function(){
+			Android.onActionRequest(JSON.stringify(
+				{
+					action:'buyProduct',
+					productId:'arfsync.test1',
+					productType:'inapp',
+				}
+			));
+		});
+
+		$('#test2').click(function(){
+			Android.onActionRequest(JSON.stringify(
+				{
+					action:'buyProduct',
+					productId:'test0',
+					productType:'inapp',
+				}
+			));
+		});
+
+		$('#test3').click(function(){
+			Android.onActionRequest(JSON.stringify(
+				{
+					action:'buyProduct',
+					productId:'arfsync.testapp.test_subscribe_product_500',
+					productType:'subs',
+				}
+			));
+		});
+
+		$('#test4').click(function(){
+			Android.onActionRequest(JSON.stringify(
+				{
+					action:'buyProduct',
+					productId:'android.test.purchased',
+					productType:'inapp',
+				}
+			));
+		});
+
+		$('#test5').click(function(){
+			Android.onActionRequest(JSON.stringify(
+				{
+					action:'buyProduct',
+					productId:'android.test.canceled',
+					productType:'inapp',
+				}
+			));
+		});
+
+		$('#bt_pageLeft').click(function(){
+			ProductsObject.changePageLeft();
+		});
+		$('#bt_pageRight').click(function(){
+			ProductsObject.changePageRight();
+		});
+
+		$( document ).on( "swipeleft", page, function() {
+			//$.mobile.changePage( next + ".html" );
+			console.log("swipeleft");
+			ProductsObject.changePageRight();
+			//ProductsObject.changePageLeft();
+		});
+		$( document ).on( "swiperight", page, function() {
+			//$.mobile.changePage( next + ".html" );
+			console.log("swiperight");
+			//ProductsObject.changePageRight();
+			ProductsObject.changePageLeft();
+		});
