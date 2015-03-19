@@ -34,16 +34,21 @@ module.exports.controller = function(app){
 	var unsecureRedirect = 
 		{
 			protocol:'http',
-			ip:'192.168.0.16',
-			port:30000
+			//ip:'192.168.0.16',
+			ip:configData.domain.address.replace('http://',''),
+			port:30000,
+			//port:configData.domain.port,
 		}
 	;
 
 	var secureRedirect = 
 		{
 			protocol:'https',
-			ip:'192.168.0.16',
-			port:30200
+			//ip:'192.168.0.16',
+			ip:configData.secureDomain.address.replace('https://',''),
+			port:30200,
+			//port:configData.secureDomain.port,
+
 		}
 	;
 
@@ -51,9 +56,10 @@ module.exports.controller = function(app){
 
 	app.get('*', function(req, res){
 		//req.url
-
-
-		var url_parts = url.parse(req.url,true, true);
+		getRedirection(req, res);
+		/*if(req.path == '/information/trans'){return;}
+		console.log('REDIECTING:' + req.path);
+		var url_parts = url.parse(req.url,false, false);
 		var route = url_parts.path;
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 		//var port = 
@@ -64,16 +70,23 @@ module.exports.controller = function(app){
 
 		var redirectUrl = false;
 		if(req.protocol == 'http'){
-			redirectUrl = unsecureRedirect.protocol + '://' + unsecureRedirect.ip + ':' + unsecureRedirect.port + url_parts.pathname;
+			var targetUrlParts = global.getBestRedirectionHttpUrl();
+			redirectUrl = targetUrlParts.protocol + '//' + targetUrlParts.ip + ':' + targetUrlParts.port + url_parts.pathname;
 		}
 		if(req.protocol == 'https'){
-			redirectUrl = secureRedirect.protocol + '://' + secureRedirect.ip + ':' + secureRedirect.port + url_parts.pathname;
+			var targetUrlParts = global.getBestRedirectionHttpsUrl();
+			redirectUrl = targetUrlParts.protocol + '//' + targetUrlParts.ip + ':' + targetUrlParts.port + url_parts.pathname;
 		}
 
 		if(redirectUrl){
-			console.log('RedirectingURL:' + redirectUrl);
-			res.redirect(redirectUrl); //'https://192.168.0.16:8000/jqm/arfsync'
-		}
+			global.reportNotify('CLIENT GET REDIRECTION', 
+				{
+					source:req.path,
+					target:redirectUrl,
+				}, 0
+			);
+			res.redirect(redirectUrl);
+		}*/
 	});
 
 
@@ -84,19 +97,18 @@ module.exports.controller = function(app){
 		var route = url_parts.path;
 		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-		//console.log('url_parts');
-		//console.dir(url_parts);
 
 		var data = req.body;
-		/*var data = 
-			{
-				no:'ssssssss'
-			}*/
+		var targetUrlParts = global.getBestRedirectionHttpUrl();
+
+
 
 		var req = http.request(
 			{
-				host: unsecureRedirect.ip,
-				port: unsecureRedirect.port,
+				//host: unsecureRedirect.ip,
+				//port: unsecureRedirect.port,
+				host: targetUrlParts.ip,
+				port: targetUrlParts.port,
 				path: route,
 				method: 'POST',
 				headers: 
@@ -118,7 +130,7 @@ module.exports.controller = function(app){
 			}
 		);
 
-		//sending to server for response
+
 		req.write(JSON.stringify(data));
 		req.end();
 
@@ -127,6 +139,39 @@ module.exports.controller = function(app){
 
 
 
+
+	var getRedirection = function(req, res, inJstruct){
+
+		//if(req.path == '/information/trans'){return;}
+		console.log('REDIECTING:' + req.path);
+		var url_parts = url.parse(req.url,false, false);
+		var route = url_parts.path;
+		var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+		console.log('url_parts');
+		console.dir(url_parts);
+		console.log('ip @ route' + ip + route);
+
+		var redirectUrl = false;
+		if(req.protocol == 'http'){
+			var targetUrlParts = global.getBestRedirectionHttpUrl();
+			redirectUrl = targetUrlParts.protocol + '//' + targetUrlParts.ip + ':' + targetUrlParts.port + url_parts.pathname;
+		}
+		if(req.protocol == 'https'){
+			var targetUrlParts = global.getBestRedirectionHttpsUrl();
+			redirectUrl = targetUrlParts.protocol + '//' + targetUrlParts.ip + ':' + targetUrlParts.port + url_parts.pathname;
+		}
+
+		if(redirectUrl){
+			global.reportNotify('CLIENT GET REDIRECTION', 
+				{
+					source:req.path,
+					target:redirectUrl,
+				}, 0
+			);
+			res.redirect(redirectUrl);
+		}
+	}
 
 
 

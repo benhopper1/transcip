@@ -86,7 +86,10 @@ body
 		var getUserId =function(){return '#{userId}';}
 		var getDeviceId = function(){return '#{deviceId}';}
 		var getURL = function(){return '#{URL}';}
-		var getHomePageURL = function(){return '#{URL}/jqm/arfsync';}
+		var getHomePageURL = function(){
+			//return '#{URL}/jqm/arfsync';
+			return '#{reloadUrl}';
+		}
 		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
 		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
 		if (screen.width <= 800) {
@@ -734,15 +737,17 @@ body
 							});
 
 
-
-
-
-
 						});
 
-
-
 					},
+
+					//WEBSOCKET CLOSED
+					onClose:function(){
+						console.log('onClose a22-3');
+						//eventObject.reportOn('websocketClose', false);
+						
+					},
+
 					//#############################################################################################################
 					//--------When one of your family devices dis/connect ---------------------------------------------------------
 					//#############################################################################################################

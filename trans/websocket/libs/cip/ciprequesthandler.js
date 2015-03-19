@@ -67,6 +67,10 @@ var CipRequestHandler = function(inCipClient){
 			delete functionHash[inId];
 		}
 	}
+
+	this.killServer = function(){
+		process.exit();
+	}
 }
 
 module.exports = CipRequestHandler;

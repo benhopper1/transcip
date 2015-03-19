@@ -414,10 +414,43 @@ var tcpServer = new TcpServer(
 //========================================================================
 process.stdin.resume();//so the program will not close instantly
 function exitHandler(options, err){
+	global.reportNotify('PROCESS ON EXIT STARTED', 
+		{
+			options:options,
+			error:err
+		}, 0
+	);
 	if(options.cleanup){
 		global.reportNotify('WSAPP', 'EXITING APP', 0);
 		console.log('clean');
+		//close mysql connections
+
+		// close all websockets..............
+		wss.clients.forEach(function each(client){
+			console.log('CLOSING CLIENT:' + client.deviceTokenId);
+			for(var key in client.cleanupFunctionHash){
+				console.log('CLEANUP executing:' + key);
+				client.cleanupFunctionHash[key]();
+			}
+			client.close();
+		});
+
+
+
 		Connection.terminateAll();
+
+		global.cipClient.sendCommand(
+			{
+				command:'serverKilled',
+				type:'toCipInformation',
+				data:false,
+				isWsPassThrough:false,
+			}
+		);
+
+		global.cipClient.destroy();
+		//close cip connection......
+
 	}
 	if(err){
 		console.log(err.stack);

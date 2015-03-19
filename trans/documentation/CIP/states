@@ -1,0 +1,27 @@
+states:
+
+---------------------------------------
+running
+	activily serving  and can be redirected to
+
+---------------------------------------
+lockedRunning
+	up and read, will not be selected for redirect
+
+
+---------------------------------------
+closingRunning
+	graceful shutdown, 
+	close when all users exited,
+	will not be selected for redirect
+---------------------------------------
+booting
+---------------------------------------
+creating
+	file system is being written
+
+---------------------------------------
+unloaded
+	can be booted from this state
+	will not be selected for redirect
+	LIKE: just waiting for instruction

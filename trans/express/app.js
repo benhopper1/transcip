@@ -10,6 +10,10 @@ var moment = require(basePath + '/node_modules/moment');
 var CipClient = require(basePath + '/library/cip/client.js');
 var CipRequestHandler = require(basePath + '/library/cip/ciprequesthandler.js');
 
+var DebugObject = require(basePath + '/library/debug/debugobject.js');
+var MaintenanceObject = require(basePath + '/library/maintenance/maintenanceobject.js');
+var util = require('util');
+
 global.CIP_ENABLED = false;
 console.dir(process.argv);
 if(process.argv[9]){
@@ -21,6 +25,53 @@ if(process.argv[9]){
 global.DEBUG_MODE = true;
 global.SERVER_START_TIME = moment().format("YYYY-MM-DD HH:mm:ss");
 global.SERVER_TYPE = 'express';
+
+global.cipServerData = {};
+
+
+
+
+
+//==========================================================
+// REPORT ERROR --------------------------------------------
+//==========================================================
+var genErrorLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/generror.log'
+	}
+);
+global.reportError = function(inCaption, inData, inClass){
+	console.log('===============  REPORT ERROR  =====================================');
+	console.log('CAPTION:' + inCaption + '        CLASS:' + inClass);
+	console.log('--------------------------------------------------------------------');
+	console.log(util.inspect(inData, false, 7, true));
+	console.log('====================================================================');
+	genErrorLog.reportError(inCaption, inData);
+}
+//==========================================================
+// REPORT NOTIFICATION -------------------------------------
+//==========================================================
+var genNotifyLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/gennotify.log'
+	}
+);
+global.reportNotify = function(inCaption, inData, inClass){
+	//console.log(util.inspect({"FFFFFFFFFFF":'sss',ddd:888}, false, 2, true));
+	console.log(util.inspect('===============  REPORT NOTIFY  =====================================', false, 2, true));
+	console.log(util.inspect('CAPTION:' + inCaption + '        CLASS:' + inClass, false, 1, true));
+	console.log('---------------------------------------------------------------------');
+	console.log(util.inspect(inData, false, 7, true));
+	console.log(util.inspect('=====================================================================', false, 2, true));
+	genNotifyLog.reportError(inCaption, inData);
+}
+
+global.reportNotify('EXPRESS SERVER', 'SERVER IS STARTING', 0);
+
+
+
 
 console.log('process.argv-------------------');
 console.dir(process.argv);
@@ -270,6 +321,7 @@ if(global.CIP_ENABLED){
 	);
 
 	cipRequestHandler = new CipRequestHandler(cipClient);
+	global.cipClient = cipClient;
 }
 
 
@@ -277,3 +329,34 @@ if(global.CIP_ENABLED){
 //communicationRouter.setCipClient(cipClient);
 
 // END OF CIP
+
+//========================================================================
+// CLEAN UP AND EXIT FACILITY
+//========================================================================
+process.stdin.resume();//so the program will not close instantly
+function exitHandler(options, err){
+	if(options.cleanup){
+		global.reportNotify('WSAPP', 'EXITING APP', 0);
+		console.log('clean');
+		//close mysql connections
+		Connection.terminateAll();
+		global.cipClient.destroy();
+		//close cip connection......
+
+	}
+	if(err){
+		console.log(err.stack);
+	}
+	if(options.exit){
+		process.exit();
+	}
+}
+
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{cleanup:true}));
+
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));

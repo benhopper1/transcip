@@ -103,6 +103,32 @@ var CipClient = function(inJstruct){
 		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	}
 
+	this.sendCommand = function(inSndCmdOptions){
+		global.reportNotify('sendCommand', inSndCmdOptions, 0);
+		var sndCmdOptions = 
+			{
+				command:false,
+				type:'toCipInformation',
+				data:false,
+				isWsPassThrough:false,
+			}
+		sndCmdOptions = extend(true, sndCmdOptions, inSndCmdOptions);
+
+		var cipTransportLayer = new TransportLayer();
+		cipTransportLayer.cipLayer =
+			{
+				type:sndCmdOptions.type,
+				isWsPassThrough:sndCmdOptions.isWsPassThrough,
+				command:sndCmdOptions.command,
+				data:sndCmdOptions.data,
+				serverName:global.SEVER_NAME,
+				serverType:global.SERVER_TYPE,
+
+			}
+		_this.send(cipTransportLayer);
+
+	}
+
 	this.destroy = function(){
 		client.destroy();
 	}

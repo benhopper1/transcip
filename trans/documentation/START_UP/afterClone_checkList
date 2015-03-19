@@ -1,0 +1,29 @@
+/transcip/cip/cip.conf
+/transcip/cip/node_modules/cert.perm
+/transcip/cip/node_modules/key.perm
+
+
+/transcip/trans/express/main.conf
+/transcip/trans/express/node_modules/cert.perm
+/transcip/trans/express/node_modules/key.perm
+
+/transcip/trans/websocket/main.conf
+/transcip/trans/websocket/node_modules/cert.perm
+/transcip/trans/websocket/node_modules/key.perm
+
+
+
+COPY ALL *.sh,  some have passwords in files CAUTION---
+/transcip/*.sh
+
+edit files and distribute as needed manually...
+
+
+
+
+
+
+NEED TO UPDATE ALL IMAGE FILES IN /PUBLIC      user and contacts to match database....
+
+
+

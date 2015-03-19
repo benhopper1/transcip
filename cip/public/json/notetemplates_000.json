@@ -1,0 +1,99 @@
+{
+	"whatEver":"whateverValue",
+	"postLoad":
+		{
+			"groupExpansion":
+				[
+					{
+						"group":"Properties",
+						"expand":true
+					},
+					{
+						"group":"Attributes3",
+						"expand":false
+					}
+				]
+		},
+
+	"templateArray":
+		[
+			{
+				"id":"general",
+				"text":"General",
+				"properties":
+					[
+						{
+							"id":"PO",
+							"name":"PO",
+							"value":"",
+							"group":"Purchasing",
+							"editor":"text"
+						},
+						{
+							"id":"checkNumber",
+							"name":"Check Number",
+							"value":"",
+							"group":"Purchasing",
+							"editor":"text"
+						},
+						{
+							"id":"importance",
+							"name":"Shipping Type",
+							"value":"UPS Express Critical",
+							"group":"Shipping Information",
+							"editor":
+								{"type":"combobox","options":
+										{"valueField":"id", "textField":"text", "data":
+											[
+												{"id":"0", "text":"UPS Express Critical"},
+												{"id":"1", "text":"UPS Next Day Air Early A.M."},
+												{"id":"2", "text":"UPS Next Day Air"},
+												{"id":"3", "text":"UPS Next Day Air Saver"},
+												{"id":"4", "text":"UPS 2nd Day Air A.M."},
+												{"id":"5", "text":"UPS 2nd Day Air"},
+												{"id":"6", "text":"UPS 3 Day Select"},
+												{"id":"7", "text":"UPS Ground"}
+											]
+										}
+								}
+						},
+						{
+							"id":"trackingNumber",
+							"name":"Tracking Number",
+							"value":"",
+							"group":"Shipping Information",
+							"editor":"text"
+						}
+					]
+			},
+			{
+				"id":"other",
+				"text":"Other",
+				"properties":
+					[
+						{
+							"id":"other-subject",
+							"name":"other-Subject",
+							"value":"",
+							"group":"Properties",
+							"editor":"text"
+						},
+						{
+							"id":"other-importance",
+							"name":"other - Importance 0 : 10",
+							"value":"",
+							"group":"Properties",
+							"editor":"text"
+						},
+						{
+							"id":"other-importance",
+							"name":"test44",
+							"value":"",
+							"group":"Properties",
+							"editor":"text"
+						}
+					]
+			}
+		]
+
+}

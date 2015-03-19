@@ -1,0 +1,34 @@
+/home/username/.kde/share/apps/konsole
+
+bookmarks.xml
+
+
+
+
+<folder>
+	<title>TransCip</title>
+	<desc/>
+
+	<bookmark href="cd%20~/git_project/transcip/cip & node cipapp.js">
+		<title>START CIP</title>
+		<info>
+			<metadata owner="http://freedesktop.org">
+				<bookmark:icon name="inode-directory"/>
+			</metadata>
+		</info>
+		<desc/>
+	</bookmark>
+
+	<bookmark href="cd%20~/git_project/resume/resume">
+		<title>cd resume</title>
+		<info>
+			<metadata owner="http://freedesktop.org">
+				<bookmark:icon name="inode-directory"/>
+			</metadata>
+		</info>
+		<desc/>
+	</bookmark>
+
+ </folder>
+
+ cd%20~/git_project/transcip/cip%20;%20node%20cipapp.js

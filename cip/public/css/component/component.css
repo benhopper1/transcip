@@ -1,0 +1,14 @@
+.magic{
+	padding:4px;
+	display:inline-block;
+	cursor:pointer;
+	font:12px/14px Arial, Helvetica, sans-serif;
+	color:#666;
+	border:1px solid #999;
+	background-color:#eee;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-box-shadow:#999 2px 0px 3px;
+	-webkit-box-shadow:#999 2px 0px 3px;
+	margin-bottom:4px;
+}

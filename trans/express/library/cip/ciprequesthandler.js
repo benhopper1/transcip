@@ -11,7 +11,17 @@ var CipRequestHandler = function(inCipClient){
 
 	this.handleRequest = function(inCipLayer_json, inTransportLayer_json){
 		if(inCipLayer_json && inCipLayer_json.command == 'sendServerName'){
+			// add cip server data
+			if(inCipLayer_json.cipServerData){
+				_this.storeCipServerData(inCipLayer_json.cipServerData);
+			}
+			//send back this server info
 			_this.sendServerName();
+			return;
+		}
+		if(inCipLayer_json && inCipLayer_json.command == 'storeCipServerData'){
+			_this.storeCipServerData();
+			return;
 		}
 	}
 
@@ -33,6 +43,11 @@ var CipRequestHandler = function(inCipClient){
 
 			}
 		cipClient.send(cipTransportLayer);
+	}
+
+	this.storeCipServerData = function(inData){
+		global.reportNotify('STORE CIP SERVER DATA', inData, 0);
+		global.cipServerData = inData;
 	}
 
 	this.serverForcefulShutDown = function(){

@@ -1,0 +1,24 @@
+http://www.codecoffee.com/tipsforlinux/articles/22.html
+
+
+du -h
+
+du -ah
+
+GRAND TOTAL
+du -c
+
+
+du -ch | grep total
+This would have only one line in its output that displays the total size of the current directory including all the subdirectories
+
+
+
+
+du -s
+This displays a summary of the directory size. It is the simplest way to know the total size of the current directory.
+
+
+-------------------
+excludes sub display of size
+$ du -S

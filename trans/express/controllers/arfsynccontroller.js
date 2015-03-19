@@ -3,7 +3,7 @@ var fs = require('fs');
 var configData = fs.readFileSync(path.dirname(require.main.filename) + '/main.conf', 'utf8');
 configData = JSON.parse(configData);
 var basePath = path.dirname(require.main.filename);
-
+var url = require('url');
 
 
 
@@ -37,11 +37,22 @@ module.exports.controller = function(app){
 				}
 			);
 		}else{
+			var url_parts = url.parse(req.url, false, false);
+
+			var reloadUrl;
+			if(req.protocol == 'http'){
+				reloadUrl = global.cipServerData.domain.address + ':' + global.cipServerData.domain.port + url_parts.pathname;
+			}
+			if(req.protocol == 'https'){
+				reloadUrl = global.cipServerData.secureDomain.address + ':' + global.cipServerData.secureDomain.port + url_parts.pathname;
+			}
+			global.reportNotify('/jqm/arfsync', reloadUrl, 0);
 			res.render('arfsync/arfsync.jqm.jade',
 				{
 					userId:req.cookies.userId,
 					deviceId:"815",//req.cookies.deviceId,
 					URL:configData.domain.address + ":" + configData.domain.port,
+					reloadUrl:reloadUrl,
 					androidAppRoute:configData.androidAppRoute,
 					webSocketClient:configData.webSocketClient,
 					defaultUserImageUrl:configData.defaultUserImageUrl,

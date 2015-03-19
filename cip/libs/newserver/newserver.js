@@ -34,12 +34,18 @@ var NewServer = function(inOptions){
 		global.reportNotify('newserver.createFileSystem', 'Entered');
 		console.log('createFileSystem ENTERED');
 		if(!(options.mainServerPathSource) || !(options.mainServerPathTarget)){
-			//console.log('Need a source and target for operation!!');
 			global.reportError('newserver.createFileSystem', 'Need a source and target for operation!!');
 			return;
 		}
 
 		var testArray = [];
+		global.reportNotify('STARTING newserver.createFileSystem', 
+			{
+				sourcePath:options.mainServerPathSource,
+				targetPath:options.mainServerPathTarget,
+				serverNumber:options.serverNumber,
+			}, 0
+		);
 		wrench.copyDirRecursive(options.mainServerPathSource, options.mainServerPathTarget, 
 			{
 				forceDelete: true,
@@ -56,7 +62,13 @@ var NewServer = function(inOptions){
 				}
 			}
 			,function(){
-				console.log('COPY COMPLETED');
+				global.reportNotify('COMPLETED newserver.createFileSystem', 
+					{
+						sourcePath:options.mainServerPathSource,
+						targetPath:options.mainServerPathTarget,
+						serverNumber:options.serverNumber,
+					}, 0
+				);
 				_this.createPublicLink();
 				_this.createAllBootScripts(
 					{
@@ -188,16 +200,41 @@ var NewServer = function(inOptions){
 			fs.renameSync(options.targetPublicPath, options.targetPublicPath + '_na');
 		}catch(e){
 			console.log('No Directory to rename, that is OK too:' + e);
+			global.reportError('newserver.createPublicLink error on rename old folder', 
+				{
+					sourcePath:options.targetPublicPath,
+					targetPath:options.targetPublicPath,
+					serverNumber:options.serverNumber,
+					error:err,
+				}, 0
+			);
 		}
 
 		try{
 			fs.symlinkSync(options.sourcePublicPath, options.targetPublicPath);
 		}catch(e){
 			console.log('ERROR creating public link for server instance ??? fs.symlinkSync:' + e);
+			global.reportError('newserver.createPublicLink error on rename sync', 
+				{
+					sourcePath:options.targetPublicPath,
+					targetPath:options.targetPublicPath,
+					serverNumber:options.serverNumber,
+					error:err,
+				}, 0
+			);
+			return;
 		}
+
+		global.reportNotify('newserver.createPublicLink DONE', 
+			{
+				sourcePath:options.targetPublicPath,
+				targetPath:options.targetPublicPath,
+				serverNumber:options.serverNumber,
+			}, 0
+		);
 	}
 
-	this.writePhpBootFile = function(inPhpOptions){
+	/*this.writePhpBootFile = function(inPhpOptions){
 		var _this = this;
 		var phpOptions = 
 			{
@@ -225,7 +262,7 @@ var NewServer = function(inOptions){
 			console.log('php saved!');
 			if(phpOptions.onSave){phpOptions.onSave();}
 		});
-	}
+	}*/
 
 	this.writeBashBootFile = function(inWbOptions){
 		var _this = this;
@@ -247,12 +284,25 @@ var NewServer = function(inOptions){
 
 		fs.writeFile(wbOptions.fileNameAndPath, finalString, function (err) {
 			if(err){
-				console.log('ERROR:');
-				console.dir(err);
+				global.reportError('newserver.writeBashBootFile error on save', 
+					{
+						fileName:wbOptions.fileNameAndPath,
+						serverNumber:options.serverNumber,
+						error:err,
+						finalString:finalString
+					}, 0
+				);
 				if(wbOptions.onError){wbOptions.onError(err);}
 				return;
 			}
 			console.log('bash saved!');
+			global.reportNotify('writeBashBootFile SAVED', 
+					{
+						serverNumber:options.serverNumber,
+						fileName:wbOptions.fileNameAndPath,
+						finalString:finalString,
+					}, 0
+				);
 			if(wbOptions.onSave){wbOptions.onSave();}
 		});
 	}
@@ -269,41 +319,55 @@ var NewServer = function(inOptions){
 			var execPath = util.format('cd %s/express/ && bash server_start_forever.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
 			console.log(execPath);
 			var expressServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
-				console.log('bootExpressServerA');
-				console.log('EXPRESS RUNNING!!!');
 				if(error){
-					console.log(error.stack);
-					console.log('expressServerProcess Error code: '+error.code);
-					console.log('expressServerProcess Signal received: '+error.signal);
+					global.reportError('newserver.bootExpressServer', 
+						{
+							serverNumber:options.serverNumber,
+							serverType:'express',
+							error:error,
+							stdout:stdout,
+							stderr:stderr,
+						}, 0
+					);
 				}
-				console.log('expressServerProcess Child Process STDOUT: '+stdout);
-				console.dir(stdout);
-				console.log('expressServerProcess Child Process STDERR: '+stderr);
-				console.dir(stderr);
-				console.log('bootExpressServerA.2');
+				global.reportNotify('LOADING newserver.bootExpressServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'express',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
 				if(inExpressPostFunction){inExpressPostFunction();}
 			})
-			console.log('bootExpressServerB');
 		}else{
 
 			var execPath = util.format('cd %s/express/ && bash server_start.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
 			console.log(execPath);
 			var expressServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
-				console.log('bootExpressServerA');
-				console.log('EXPRESS RUNNING!!!');
 				if(error){
-					console.log(error.stack);
-					console.log('expressServerProcess Error code: '+error.code);
-					console.log('expressServerProcess Signal received: '+error.signal);
+					global.reportError('newserver.bootExpressServer', 
+						{
+							serverNumber:options.serverNumber,
+							serverType:'express',
+							error:error,
+							stdout:stdout,
+							stderr:stderr,
+						}, 0
+					);
 				}
-				console.log('expressServerProcess Child Process STDOUT: '+stdout);
-				console.dir(stdout);
-				console.log('expressServerProcess Child Process STDERR: '+stderr);
-				console.dir(stderr);
-				console.log('bootExpressServerA.2');
+				global.reportNotify('LOADING newserver.bootExpressServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'express',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
 				if(inExpressPostFunction){inExpressPostFunction();}
 			})
-			console.log('bootExpressServerB');
 		}
 
 	}
@@ -316,47 +380,118 @@ var NewServer = function(inOptions){
 		if(options.foreverEnabled){
 			var execPath = util.format('cd %s/websocket/ && bash server_start_forever.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
 			var webSocketServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
-				console.log('bootWebsocketServerA');
-				console.log('WEBSOCKET RUNNING!!!');
 				if(error){
-					console.log(error.stack);
-					console.log('WEBSOCKET Error code: '+error.code);
-					console.log('WEBSOCKET Signal received: '+error.signal);
+					global.reportError('newserver.bootWebsocketServer', 
+						{
+							serverNumber:options.serverNumber,
+							serverType:'webSocket',
+							error:error,
+							stdout:stdout,
+							stderr:stderr,
+						}, 0
+					);
 				}
-				console.log('WEBSOCKET Child Process STDOUT: '+stdout);
-				console.dir(stdout);
-				console.log('WEBSOCKET Child Process STDERR: '+stderr);
-				console.dir(stderr);
-				console.log('bootWebsocketServerA.2');
+
+				global.reportNotify('LOADING newserver.bootWebsocketServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'webSocket',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
+
 				if(inPostFunction){inPostFunction();}
 			})
-			console.log('bootWebsocketServerB');
+
 		}else{
 			var execPath = util.format('cd %s/websocket/ && bash server_start.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
 			var webSocketServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
-				console.log('bootWebsocketServerA');
-				console.log('WEBSOCKET RUNNING!!!');
 				if(error){
-					console.log(error.stack);
-					console.log('WEBSOCKET Error code: '+error.code);
-					console.log('WEBSOCKET Signal received: '+error.signal);
+					global.reportError('newserver.bootWebsocketServer', 
+						{
+							serverNumber:options.serverNumber,
+							serverType:'webSocket',
+							error:error,
+							stdout:stdout,
+							stderr:stderr,
+						}, 0
+					);
 				}
-				console.log('WEBSOCKET Child Process STDOUT: '+stdout);
-				console.dir(stdout);
-				console.log('WEBSOCKET Child Process STDERR: '+stderr);
-				console.dir(stderr);
-				console.log('bootWebsocketServerA.2');
+				global.reportNotify('LOADING newserver.bootWebsocketServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'webSocket',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
 				if(inPostFunction){inPostFunction();}
 			})
-			console.log('bootWebsocketServerB');
 		}
 	}
 
 
-	this.killExpressServer = function(){}
+	this.killExpressServer = function(inPostFunction){
+		var execPath = util.format('cd %s/express/ && bash server_kill.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
+		var expressServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
+			if(error){
+				global.reportError('newserver.killExpressServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'express',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
+			}
+
+			global.reportNotify('KILLING newserver.killExpressServer', 
+				{
+					serverNumber:options.serverNumber,
+					serverType:'express',
+					error:error,
+					stdout:stdout,
+					stderr:stderr,
+				}, 0
+			);
+			if(inPostFunction){inPostFunction();}
+		})
+	}
+
+	this.killWebsocketServer = function(inPostFunction){
+		var execPath = util.format('cd %s/websocket/ && bash server_kill.sh  > /dev/null 2>&1 &', options.mainServerPathTarget);
+		var expressServerProcess = childProcess.exec(execPath, function (error, stdout, stderr){
+			if(error){
+				global.reportError('newserver.killExpressServer', 
+					{
+						serverNumber:options.serverNumber,
+						serverType:'websocket',
+						error:error,
+						stdout:stdout,
+						stderr:stderr,
+					}, 0
+				);
+			}
+
+			global.reportNotify('KILLING newserver.killWebsocketServer', 
+				{
+					serverNumber:options.serverNumber,
+					serverType:'websocket',
+					error:error,
+					stdout:stdout,
+					stderr:stderr,
+				}, 0
+			);
+			if(inPostFunction){inPostFunction();}
+		})
+	}
+
 
 	this.setPermissions = function(){
-		console.log('############### PERMISSIONS ##################################');
 		var staticPermissions = 
 			{
 				recursivePermissions:
@@ -378,7 +513,12 @@ var NewServer = function(inOptions){
 		if(theRecPerms){
 			for(var theRecPermsIndex in theRecPerms){
 				if(theRecPerms[theRecPermsIndex].path && theRecPerms[theRecPermsIndex].mode){
-					console.log('RECURSIVE PERMISSION FOLDER SET:' + theRecPerms[theRecPermsIndex].path + '  ' + theRecPerms[theRecPermsIndex].mode.toString());
+					global.reportNotify('PERMISSIONS', 
+						{
+							path:theRecPerms[theRecPermsIndex].path,
+							mode:theRecPerms[theRecPermsIndex].mode,
+						}, 0
+					);
 					wrench.chmodSyncRecursive(theRecPerms[theRecPermsIndex].path, theRecPerms[theRecPermsIndex].mode);
 				}
 			}
@@ -388,7 +528,12 @@ var NewServer = function(inOptions){
 		if(thePerms){
 			for(var thePermsIndex in thePerms){
 				if(thePerms[thePermsIndex].path && thePerms[thePermsIndex].mode){
-					console.log('PERMISSION SET:' + thePerms[thePermsIndex].path + '  ' + thePerms[thePermsIndex].mode);
+					global.reportNotify('PERMISSIONS', 
+						{
+							path:thePerms[thePermsIndex].path,
+							mode:thePerms[thePermsIndex].mode,
+						}, 0
+					);
 					fs.chmodSync(thePerms[thePermsIndex].path, thePerms[thePermsIndex].mode);
 				}
 			}

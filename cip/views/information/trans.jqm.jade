@@ -34,9 +34,52 @@ head
 
 body
 	h1 trans.jqm.jade
+	button(onclick="InfoObject.doAction('NA', 'createNextFileSystem', 'fileAction');") create next file system
+	button(onclick="InfoObject.doAction('NA', 'launchNexServer', 'fileAction');") launch next server
 
-	for key in activeServersHash
-		p #{key.serverName}
+	- index = -1;
+
+	//p #{serverReport.name}
+	table(data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable0")
+		thead
+			tr
+				th
+					p ACTION
+				th
+					p Server Name
+				th
+					p state
+				th
+					p requestScore
+				th
+					p processingScore
+
+
+		tbody
+			for serverReport in serversReport
+				tr
+					th
+						select(class="cb" id="#{++index}" name="day" onchange="InfoObject.doAction('#{serverReport.name}', this.value, 'serverAction');")
+							optgroup(label="General")
+								option(value="start") Start
+								option(value="restart") Restart
+							optgroup(label="Access")
+								option(value="lock") lock
+								option(value="unlock") unlock
+							optgroup(label="Major")
+								option(value="kill") KILL
+					th
+						p #{serverReport.name}
+					th
+						p #{serverReport.state}
+					th
+						p #{serverReport.requestScore}
+					th
+						p #{serverReport.processingScore}
+
+
+
+
 
 	h1 Connections:
 	table(data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable")
@@ -71,3 +114,50 @@ body
 					th
 						p #{connection.entryTime}
 
+
+script.
+	var InfoObject = new function(){
+		var _tis = this;
+		this.killServer = function(inServerName){
+			$postAjax(
+				{
+					url:'/admin/killserver',
+					send:
+						{
+							//serverName:'server_' + (inServerName.slice(-3)) - 400
+							serverName:'server_' + (parseInt(inServerName.slice(-3)) - 400)
+						},
+					onAjaxSuccess:function(inResponseText){
+						var inResponseText = JSON.parse(inResponseText).result;
+						console.log('kill done');
+						console.dir(inResponseText);
+					}
+				}
+			);
+		}
+
+		this.doAction = function(inServerBuildName, inAction, inType){
+			console.log('inServerBuildName:' + inServerBuildName);
+			console.log('inAction:' + inAction);
+			$postAjax(
+				{
+					url:'/admin/doServerAction',
+					send:
+						{
+							type:inType,
+							serverBuildName:inServerBuildName,
+							action:inAction,
+						},
+					onAjaxSuccess:function(inResponseText){
+						var inResponseText = JSON.parse(inResponseText).result;
+						console.log('kill done');
+						console.dir(inResponseText);
+					}
+				}
+			);
+		}
+	}();
+
+	$(document).ready(function(){
+		$('.cb').val('xx');
+	});

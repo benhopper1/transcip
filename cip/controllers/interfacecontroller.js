@@ -129,6 +129,7 @@ var Controller = function(router){
 			global.activeServersHash[serverName] = 
 				{
 					serverName:cipLayer_json.serverName,
+					serverBuildName:'server_' + (parseInt(cipLayer_json.serverName.slice(-3)) - 400),
 					serverNumber:cipLayer_json.serverNumber,
 					serverStartTime:cipLayer_json.serverStartTime,
 					serverType:cipLayer_json.serverType,
@@ -146,6 +147,12 @@ var Controller = function(router){
 						waitingId:cipLayer_json.data.waitingId,
 						transportData:cipLayer_json.data.transportData,
 					}
+				if(global.qrCountHashByServer[cipLayer_json.serverName]){
+					global.qrCountHashByServer[cipLayer_json.serverName]++;
+				}else{
+					global.qrCountHashByServer[cipLayer_json.serverName] = 1;
+				}
+				//global.qrCountHashByServer[cipLayer_json.serverName]++ ;
 			}
 		}
 
@@ -159,13 +166,14 @@ var Controller = function(router){
 			if(cipLayer_json.data && cipLayer_json.data.waitingId){
 				if(global.qrHash[cipLayer_json.data.waitingId]){
 					delete global.qrHash[cipLayer_json.data.waitingId];
+					global.qrCountHashByServer[cipLayer_json.serverName]-- ;
 				}
 			}
 
 			global.reportNotify('CIP removeWaitingQr AFTER', global.qrHash, 0);
 		}
 
-		//@@@@@@@@@@@@ REMOVE WAITING QR CODE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		//@@@@@@@@@@@@ FIND WAITING QR CODE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		if(cipLayer_json.command == 'findWaitingQr'){
 			global.reportNotify('CIP findWaitingQr', cipLayer_json, 0);
 
@@ -209,6 +217,16 @@ var Controller = function(router){
 				}
 			}*/
 
+		}
+
+		//@@@@@@@@@@@@ serverKilled @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		if(cipLayer_json.command == 'serverKilled'){
+			global.reportNotify('CIP received serverKilled', 
+				{
+					transportData:cipLayer_json,
+				}
+				, 0
+			);
 		}
 
 
@@ -258,6 +276,8 @@ var Controller = function(router){
 	//------ >  MESSAGE REQUEST SERVER NAME --------------------------------------
 	//============================================================================
 	var requestServerNameMessage = function(){
+		var configData = fs.readFileSync('cip.conf', 'utf8');
+		configData = JSON.parse(configData);
 		var message = 
 			{
 				cipLayer:
@@ -267,6 +287,8 @@ var Controller = function(router){
 						message:'this is a test message',
 						sourceServerName:false,
 						targetServerName:false,
+						cipServerData:configData,
+						//cipServerData:JSON.parse(getCipServerData()).cipLayer.cipServerData,
 						/*ws:
 							{
 								transportLayer:testTransport,
@@ -277,6 +299,35 @@ var Controller = function(router){
 
 		return JSON.stringify(message);
 	}
+
+/*	//============================================================================
+	//------ >  MESSAGE/DATA TO CLIENT STORE THIS CIP SERVER DATA ----------------
+	//============================================================================
+	var getCipServerData = function(){
+		var message = 
+			{
+				cipLayer:
+					{
+						isWsPassThrough:false,
+						command:'storeCipServerData',
+						cipServerData:
+							{
+								domain:
+									{
+										address:'domainAddress',
+										port:1111,
+									},
+								secureDomain:
+									{
+										address:'secureDomain address',
+										port:2222,
+									},
+							},
+					},
+			}
+
+		return JSON.stringify(message);
+	}*/
 
 
 
