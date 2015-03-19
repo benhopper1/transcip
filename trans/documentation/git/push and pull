@@ -1,1 +1,25 @@
-push and pull
+
+
+
+bash%20/home/ben/git_project/trans/scripts/git_push.sh
+
+git add --all
+git commit -am "$today"
+git push
+
+
+
+
+
+
+
+--------------------------------------
+
+git fetch
+git fetch origin
+git checkout master
+git pull ssh://git@github.com/benhopper1/transcip.git master
+
+if error use:
+	git reset --hard HEAD
+	git pull
