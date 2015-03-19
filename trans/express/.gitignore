@@ -4,4 +4,4 @@ main.conf
 /arfcommnode.sublime-workspace
 /arfcommnode.sublime-project
 /backup
-*.log
+/*.log
