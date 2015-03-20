@@ -22,3 +22,8 @@ This displays a summary of the directory size. It is the simplest way to know th
 -------------------
 excludes sub display of size
 $ du -S
+
+
+
+faster
+du -h

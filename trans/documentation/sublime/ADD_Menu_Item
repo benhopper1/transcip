@@ -1,0 +1,10 @@
+/home/ben/.config/sublime-text-3/Packages/User/
+
+open file:
+Main.sublime-menu
+
+
+
+add this line:
+
+ { "caption": "Report Error", "command": "run_macro_file", "args": {"file": "Packages/User/report_error.sublime-macro"}},

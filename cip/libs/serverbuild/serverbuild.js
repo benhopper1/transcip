@@ -498,6 +498,7 @@ ServerBuild.launchNexServer = function(inIp, inPostfunction){
 
 //
 ServerBuild.createNextFileSystem = function(inIp, inPostfunction){
+	ServerBuild.startVacantCalculation();
 	if(!(inIp)){inIp = global.ip;}
 	ServerBuild.getServerDirectories(basePath, function(directories, serverNumbers){
 		var serverNumberHash = {};

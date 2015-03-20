@@ -376,6 +376,8 @@ script.
 							limit:fieldData.limit,
 						},
 					onAjaxSuccess:function(inResponseText){
+						console.log('testPoint--1');
+						console.dir(inResponseText);
 						var smsArray = JSON.parse(inResponseText).result;
 						$('#dynamicTableDiv').DynamicTable('clear');
 						if(smsArray.length > 0){

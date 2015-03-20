@@ -1,0 +1,4 @@
+rm -r directory
+
+
+rm -rf server_1

@@ -66,6 +66,14 @@ Connection.getInstance = function(inInstanceName){
 	}
 }
 
+Connection.terminateAll = function(){
+	for(var theKey in Connection.instanceHash){
+		var theInstance = Connection.instanceHash[theKey].getConnection();
+		global.reportNotify('MYSQL CONNECTION', 'Terminating instance:' + Connection.instanceHash[theKey].getInstanceName(), 0);
+		theInstance.destroy();
+	}
+}
+
 module.exports = Connection;
 
 

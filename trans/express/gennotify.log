@@ -1,0 +1,129 @@
+{ debugObject: [32m'general'[39m,
+  label: [32m'EXPRESS SERVER'[39m,
+  when: [32m'2015-03-20 09:56:10'[39m,
+  data: [32m'SERVER IS STARTING'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'STORE CIP SERVER DATA'[39m,
+  when: [32m'2015-03-20 09:56:15'[39m,
+  data: 
+   { newUrl: [32m'http://google.com'[39m,
+     mysqlServerConnection: 
+      { user: [32m'ben'[39m,
+        password: [32m'250BenHop!@#'[39m,
+        host: [32m'192.168.0.16'[39m,
+        database: [32m'arfSync'[39m },
+     domain: 
+      { address: [32m'http://192.168.0.16'[39m,
+        port: [33m30801[39m },
+     secureDomain: 
+      { address: [32m'https://192.168.0.16'[39m,
+        port: [33m30800[39m },
+     cipInterface: { host: [32m'192.168.0.16'[39m, port: [33m30900[39m } } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 09:56:25'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 09:57:55'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'EXPRESS SERVER'[39m,
+  when: [32m'2015-03-20 10:19:09'[39m,
+  data: [32m'SERVER IS STARTING'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'STORE CIP SERVER DATA'[39m,
+  when: [32m'2015-03-20 10:19:12'[39m,
+  data: 
+   { newUrl: [32m'http://google.com'[39m,
+     mysqlServerConnection: 
+      { user: [32m'ben'[39m,
+        password: [32m'250BenHop!@#'[39m,
+        host: [32m'192.168.0.16'[39m,
+        database: [32m'arfSync'[39m },
+     domain: 
+      { address: [32m'http://192.168.0.16'[39m,
+        port: [33m30801[39m },
+     secureDomain: 
+      { address: [32m'https://192.168.0.16'[39m,
+        port: [33m30800[39m },
+     cipInterface: { host: [32m'192.168.0.16'[39m, port: [33m30900[39m } } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 10:20:00'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'EXPRESS SERVER'[39m,
+  when: [32m'2015-03-20 11:42:11'[39m,
+  data: [32m'SERVER IS STARTING'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'STORE CIP SERVER DATA'[39m,
+  when: [32m'2015-03-20 11:42:15'[39m,
+  data: 
+   { newUrl: [32m'http://google.com'[39m,
+     mysqlServerConnection: 
+      { user: [32m'ben'[39m,
+        password: [32m'250BenHop!@#'[39m,
+        host: [32m'192.168.0.16'[39m,
+        database: [32m'arfSync'[39m },
+     domain: 
+      { address: [32m'http://192.168.0.16'[39m,
+        port: [33m30801[39m },
+     secureDomain: 
+      { address: [32m'https://192.168.0.16'[39m,
+        port: [33m30800[39m },
+     cipInterface: { host: [32m'192.168.0.16'[39m, port: [33m30900[39m } } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'EXPRESS SERVER'[39m,
+  when: [32m'2015-03-20 11:45:30'[39m,
+  data: [32m'SERVER IS STARTING'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'STORE CIP SERVER DATA'[39m,
+  when: [32m'2015-03-20 11:45:33'[39m,
+  data: 
+   { newUrl: [32m'http://google.com'[39m,
+     mysqlServerConnection: 
+      { user: [32m'ben'[39m,
+        password: [32m'250BenHop!@#'[39m,
+        host: [32m'192.168.0.16'[39m,
+        database: [32m'arfSync'[39m },
+     domain: 
+      { address: [32m'http://192.168.0.16'[39m,
+        port: [33m30801[39m },
+     secureDomain: 
+      { address: [32m'https://192.168.0.16'[39m,
+        port: [33m30800[39m },
+     cipInterface: { host: [32m'192.168.0.16'[39m, port: [33m30900[39m } } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 11:45:47'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'EXPRESS SERVER'[39m,
+  when: [32m'2015-03-20 11:50:22'[39m,
+  data: [32m'SERVER IS STARTING'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'STORE CIP SERVER DATA'[39m,
+  when: [32m'2015-03-20 11:50:24'[39m,
+  data: 
+   { newUrl: [32m'http://google.com'[39m,
+     mysqlServerConnection: 
+      { user: [32m'ben'[39m,
+        password: [32m'250BenHop!@#'[39m,
+        host: [32m'192.168.0.16'[39m,
+        database: [32m'arfSync'[39m },
+     domain: 
+      { address: [32m'http://192.168.0.16'[39m,
+        port: [33m30801[39m },
+     secureDomain: 
+      { address: [32m'https://192.168.0.16'[39m,
+        port: [33m30800[39m },
+     cipInterface: { host: [32m'192.168.0.16'[39m, port: [33m30900[39m } } }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 11:50:44'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }
+{ debugObject: [32m'general'[39m,
+  label: [32m'/jqm/arfsync'[39m,
+  when: [32m'2015-03-20 11:52:34'[39m,
+  data: [32m'https://192.168.0.16:30800/jqm/arfsync'[39m }

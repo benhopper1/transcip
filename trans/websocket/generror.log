@@ -1,0 +1,10 @@
+{ debugObject: [32m'general'[39m,
+  label: [32m'CipClient.net.socket.client.onError'[39m,
+  when: [32m'2015-03-20 11:56:11'[39m,
+  data: 
+   { error: 
+      { [Error: connect ECONNREFUSED]
+        code: [32m'ECONNREFUSED'[39m,
+        errno: [32m'ECONNREFUSED'[39m,
+        syscall: [32m'connect'[39m },
+     possible: [32m'cip server not up and client trying to connect'[39m } }

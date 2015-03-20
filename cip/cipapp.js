@@ -42,12 +42,20 @@ global.serverBuildsHash = {};
 // REPORT ERROR --------------------------------------------
 //==========================================================
 global.reportError = function(inCaption, inData, inClass){
+	styleRedOpen = '\u001b[' + 31 + 'm';styleRedClose = '\u001b[' + 39 + 'm';styleWhiteBgOpen = '\u001b[' + 47 + 'm';styleWhiteBgClose = '\u001b[' + 49 + 'm';
+	console.log(styleWhiteBgOpen + styleRedOpen + '===============  REPORT ERROR  =====================================');
+	console.log(inCaption + '        CLASS:' + inClass);
+	console.log('--------------------------------------------------------------------');
+	console.log(util.inspect(inData, false, 7, true));
+	console.log(styleRedOpen + '====================================================================' + styleRedClose + styleWhiteBgClose);
+}
+/*global.reportError = function(inCaption, inData, inClass){
 	console.log('===============  REPORT ERROR  =====================================');
 	console.log(inCaption + '        CLASS:' + inClass);
 	console.log('--------------------------------------------------------------------');
 	console.log(util.inspect(inData, false, 7, true));
 	console.log('====================================================================');
-}
+}*/
 //==========================================================
 // REPORT NOTIFICATION --------------------------------------------
 //==========================================================
@@ -558,17 +566,17 @@ server.on('connection', function(sock){
 
 
 
-ServerBuild.launchServersByNumberArray(
+/*ServerBuild.launchServersByNumberArray(
 	{
 		severIp:'192.168.0.16',
-		serverNumberArray:[1],
+		serverNumberArray:[0],
 	}
-);
+);*/
 
 
 
-/*ServerBuild.createNextFileSystem('192.168.0.16', function(){
-});*/
+ServerBuild.createNextFileSystem('192.168.0.16', function(){
+});
 
 
 

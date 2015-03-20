@@ -30,7 +30,226 @@ var NewServer = function(inOptions){
 	var expressServerProcess;
 	var websocketProcess;
 
+	this.streamFilesCopy = function(inStreamFileCopyOptions){
+		var streamFileCopyOptions = 
+			[
+				/*
+				{
+					sourceFile:false,
+					targetFile:false,
+				},
+				*/
+			]
+		streamFileCopyOptions = extend(true, streamFileCopyOptions, inStreamFileCopyOptions);
+		global.reportNotify('streamFilesCopy',streamFileCopyOptions , 0);
+		for(streamFileCopyOptionsIndex in streamFileCopyOptions){
+			if(streamFileCopyOptions[streamFileCopyOptionsIndex].sourceFile && streamFileCopyOptions[streamFileCopyOptionsIndex].targetFile){
+				try{
+						fs.createReadStream(streamFileCopyOptions[streamFileCopyOptionsIndex].sourceFile).pipe(fs.createWriteStream(streamFileCopyOptions[streamFileCopyOptionsIndex].targetFile));
+				}catch(e){
+					if(e.errno && e.errno == 47){
+						global.reportNotify('Already EXIST newserver.streamFileCopy',{path:streamFileCopyOptions[streamFileCopyOptionsIndex].targetFile},0);
+					}else{
+						global.reportError('newserver.streamFileCopy error on streamFileCopy', 
+							{
+								error:e,
+							}, 0
+						);
+					}
+				}
+			}
+		}
+	}
+	this.createLinks = function(inCreatePublicLinkOptions){
+		var createPublicLinkOptions = [];
+		createPublicLinkOptions = extend(true, createPublicLinkOptions, inCreatePublicLinkOptions);
+		global.reportNotify('createLinks',createPublicLinkOptions , 0);
+		for(createPublicLinkOptionsIndex in createPublicLinkOptions){
+			if(createPublicLinkOptions[createPublicLinkOptionsIndex].sourcePublicPath == false || createPublicLinkOptions[createPublicLinkOptionsIndex].targetPublicPath == false){
+				return false;
+			}
+			try{
+				fs.symlinkSync(createPublicLinkOptions[createPublicLinkOptionsIndex].sourcePublicPath, createPublicLinkOptions[createPublicLinkOptionsIndex].targetPublicPath);
+			}catch(e){
+				if(e.errno && e.errno == 47){
+					global.reportNotify('Already EXIST newserver.createPublicLink',{path:createPublicLinkOptions[createPublicLinkOptionsIndex].targetPublicPath},0);
+				}else{
+					global.reportError('newserver.createPublicLink error on symlinkSync', 
+						{
+							error:e,
+						}, 0
+					);
+				}
+			}
+		}
+		global.reportNotify('newserver.createPublicLink DONE',{}, 0);
+	}
+
+	this.makeFoldersSync = function(inMakeFoldersSyncOptions){
+		var makeFoldersSyncOptions = 
+			[
+				//{target:'myNewPath'},
+			];
+		makeFoldersSyncOptions = extend(true, makeFoldersSyncOptions, inMakeFoldersSyncOptions);
+		global.reportNotify('makeFoldersSync',makeFoldersSyncOptions , 0);
+		for(var makeFoldersSyncOptionsIndex in makeFoldersSyncOptions){
+			if(makeFoldersSyncOptions[makeFoldersSyncOptionsIndex].target){
+				try{
+					fs.mkdirSync(makeFoldersSyncOptions[makeFoldersSyncOptionsIndex].target);
+				}catch(e){
+					if(e.code == 'EEXIST'){
+						global.reportNotify('Already EXIST newserver.makeFoldersSync',{path:makeFoldersSyncOptions[makeFoldersSyncOptionsIndex].target},0);
+					}else{
+						global.reportError('newserver.streamFileCopy error on streamFileCopy', 
+							{
+								error:e,
+								path:makeFoldersSyncOptions[makeFoldersSyncOptionsIndex].target,
+							}, 0
+						);
+					}
+				}
+			}
+		}
+	}
+
 	this.createFileSystem = function(inPostFunction){
+		global.reportNotify('newserver.createFileSystem', 'Entered');
+		if(!(options.mainServerPathSource) || !(options.mainServerPathTarget)){
+			global.reportError('newserver.createFileSystem', 'Need a source and target for operation!!');
+			return;
+		}
+		//============ EXPRESS   CREATE FOLDERS   ========================================
+		_this.makeFoldersSync(
+			[
+				{
+					target:util.format('%s',options.mainServerPathTarget),//'/home/ben/git_project/transcip/cip/server_1b',
+				},
+				{
+					target:util.format('%s/express',options.mainServerPathTarget),
+				},
+			]
+		);
+		//============ EXPRESS   CREATE FILE LINKS =======================================
+		this.createLinks(
+			[
+				{
+					sourcePublicPath:util.format('%s/express/models',options.mainServerPathSource), //'/home/ben/git_project/transcip/trans/express/models',
+					targetPublicPath:util.format('%s/express/models',options.mainServerPathTarget), //'/home/ben/git_project/transcip/cip/server_0/express/models',
+				},
+				{
+					sourcePublicPath:util.format('%s/express/controllers',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/controllers',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/express/library',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/library',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/express/node_modules',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/node_modules',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/express/views',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/views',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/express/public',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/public',options.mainServerPathTarget),
+				},
+				/*{
+					sourcePublicPath:util.format('%s/express/app.js',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/app.js',options.mainServerPathTarget),
+				},*/
+				{
+					sourcePublicPath:util.format('%s/express/purchase.log',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/purchase.log',options.mainServerPathTarget),
+				},
+
+			]
+		);
+		//============ EXPRESS   CREATE FILE COPIES ======================================
+		this.streamFilesCopy(
+			[
+				{
+					sourceFile:util.format('%s/express/main.conf',options.mainServerPathSource),	//'/home/ben/git_project/transcip/trans/express/main.conf',
+					targetFile:util.format('%s/express/main.conf',options.mainServerPathTarget),	//'/home/ben/git_project/transcip/cip/server_0/express/main.conf',
+				},
+				{
+					sourceFile:util.format('%s/express/app.js',options.mainServerPathSource),	//'/home/ben/git_project/transcip/trans/express/main.conf',
+					targetFile:util.format('%s/express/app.js',options.mainServerPathTarget),	//'/home/ben/git_project/transcip/cip/server_0/express/main.conf',
+				},
+			]
+		);
+
+
+		//============ WEBSOCKET   CREATE FOLDERS   ======================================
+		_this.makeFoldersSync(
+			[
+				{
+					target:util.format('%s/websocket',options.mainServerPathTarget),
+				},
+			]
+		);
+		//============ WEBSOCKET   CREATE FILE LINKS =====================================
+		this.createLinks(
+			[
+				{
+					sourcePublicPath:util.format('%s/websocket/models',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/models',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/websocket/controllers',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/controllers',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/websocket/libs',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/libs',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/websocket/node_modules',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/node_modules',options.mainServerPathTarget),
+				},
+				{
+					sourcePublicPath:util.format('%s/websocket/public',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/public',options.mainServerPathTarget),
+				},
+				/*{
+					sourcePublicPath:util.format('%s/websocket/wsapp.js',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/websocket/wsapp.js',options.mainServerPathTarget),
+				},*/
+			]
+		);
+		//============ WEBSOCKET   CREATE FILE COPIES ====================================
+		this.streamFilesCopy(
+			[
+				{
+					sourceFile:util.format('%s/websocket/wsmain.conf',options.mainServerPathSource),
+					targetFile:util.format('%s/websocket/wsmain.conf',options.mainServerPathTarget),
+				},
+				{
+					sourceFile:util.format('%s/websocket/wsapp.js',options.mainServerPathSource),
+					targetFile:util.format('%s/websocket/wsapp.js',options.mainServerPathTarget),
+				},
+			]
+		);
+
+		//============ EXPRESS/WEBSOCKET   CREATE BOOT SCRIPTS =============================
+		_this.createAllBootScripts(
+			{
+
+				expressServerPath	:options.mainServerPathTarget + '/express',
+				websocketServerPath	:options.mainServerPathTarget + '/websocket',
+				serverNumber		:options.serverNumber,
+
+			}, function(err){
+				if(inPostFunction){inPostFunction();}
+			}
+		);
+
+
+	}
+
+	this.createFileSystemOLD = function(inPostFunction){
 		global.reportNotify('newserver.createFileSystem', 'Entered');
 		console.log('createFileSystem ENTERED');
 		if(!(options.mainServerPathSource) || !(options.mainServerPathTarget)){
@@ -100,6 +319,8 @@ var NewServer = function(inOptions){
 
 		bootScriptOptions = extend(bootScriptOptions, inBootScriptOptions);
 		var serverUid = 'SERVER_' + bootScriptOptions.serverNumber;
+		global.reportNotify('createAllBootScripts',bootScriptOptions , 0);
+
 		//==========================================
 		// EXPRESS BASH BOOT FOREVER----------------
 		//==========================================
@@ -205,7 +426,7 @@ var NewServer = function(inOptions){
 					sourcePath:options.targetPublicPath,
 					targetPath:options.targetPublicPath,
 					serverNumber:options.serverNumber,
-					error:err,
+					error:e,
 				}, 0
 			);
 		}
@@ -219,7 +440,7 @@ var NewServer = function(inOptions){
 					sourcePath:options.targetPublicPath,
 					targetPath:options.targetPublicPath,
 					serverNumber:options.serverNumber,
-					error:err,
+					error:e,
 				}, 0
 			);
 			return;

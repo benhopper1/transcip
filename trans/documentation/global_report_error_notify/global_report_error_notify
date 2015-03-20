@@ -7,6 +7,20 @@ global.reportError('CIP', 'INTERFACE STARTING', 0);
 
 
 
+global.reportNotify('CAPTION', 
+	{
+		data:data,
+	}, 0
+);
+
+global.reportError('CAPTION',
+	{
+		error:err
+	}, 0
+);
+
+
+
 
 CLASS:
 0 - general

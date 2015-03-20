@@ -14,7 +14,7 @@ var CipMessenger = require(basePath + '/libs/cip/cipmessenger.js');
 var util = require('util');
 
 
-
+console.log('PATH:' + basePath);
 
 global.DEBUG_MODE = true;
 
