@@ -47,6 +47,12 @@ module.exports.controller = function(app){
 	app.post('/admin/doServerAction', function(req, res){
 		console.log('/admin/doServerAction');
 		console.dir(req.body);
+		global.reportNotify('/admin/doServerAction', 
+			{
+				body:req.body,
+			}, 0
+		);
+
 		if(req.body.serverBuildName && req.body.action){
 			if(req.body.type = 'serverAction'){
 				var theServer = global.ServerBuild.getAllServers()[req.body.serverBuildName];
@@ -74,6 +80,12 @@ module.exports.controller = function(app){
 					}
 					if(req.body.action == 'unlock'){
 						theServer.unlock();
+					}
+					if(req.body.action == 'recordRoutesOn'){
+						theServer.recordRoutes(true);
+					}
+					if(req.body.action == 'recordRoutesOff'){
+						theServer.recordRoutes(false);
 					}
 				}
 			}

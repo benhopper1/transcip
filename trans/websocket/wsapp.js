@@ -14,11 +14,68 @@ var CipMessenger = require(basePath + '/libs/cip/cipmessenger.js');
 var util = require('util');
 
 
-console.log('PATH:' + basePath);
+
 
 global.DEBUG_MODE = true;
-
 global.CIP_ENABLED = false;
+//==========================================================
+// SCORE GLOBALS -------------------------------------------
+//==========================================================
+global.REQUEST_SCORE_INTERVAL_SECOND = 0;
+global.PROCESSING_SCORE_INTERVAL_SECOND = 0;
+
+global.requestScore = 0;
+global.requestScoreOld = -1;
+global.REQUEST_SCORE_COMMON = 1;
+
+global.processingScore = 0;
+global.processingOld = -1;
+global.PROCESSING_SCORE_COMMON = 100;
+
+global.scoreMaintenanceCycle = new MaintenanceObject(
+	{
+		label:'SCORE THING',
+		when:
+			{
+				minute:MaintenanceObject.range(0,59),
+			},
+	}
+);
+global.scoreMaintenanceCycle.start();
+
+global.scoreMaintenanceCycle.add(function(inOptions, inData){
+	if(global.CIP_ENABLED){
+		global.cipClient.sendCommand(
+			{
+				command:'remoteServerScore',
+				data:
+					{
+						REQUEST_SCORE_INTERVAL_SECOND:global.REQUEST_SCORE_INTERVAL_SECOND,
+						PROCESSING_SCORE_INTERVAL_SECOND:global.PROCESSING_SCORE_INTERVAL_SECOND,
+
+						requestScore:global.requestScore,
+						requestScoreOld:global.requestScoreOld,
+						REQUEST_SCORE_COMMON:global.REQUEST_SCORE_COMMON,
+
+						processingScore:global.processingScore,
+						processingOld:global.processingOld,
+						PROCESSING_SCORE_COMMON:global.PROCESSING_SCORE_COMMON,
+					},
+			}
+		);
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
 
 //==========================================================
 // REPORT ERROR --------------------------------------------
@@ -251,7 +308,35 @@ if(global.CIP_ENABLED){
 }
 
 // END OF CIP
-
+if(global.CIP_ENABLED){
+	/*
+	global.cipClient.sendCommand(
+		{
+			command:'remoteError',
+			data:
+				{
+					testKey0:'HELLO BEN HOPPER 22',
+				},
+		}
+	);
+	*/
+	setTimeout(function(){
+		global.cipClient.testConnection(
+			{
+				data:'whatever here',
+				timeout:10,
+				onSuccess:function(inData){
+					console.log('SUCCESS global.cipClient.testConnection:');
+					console.dir(inData);
+				},
+				onFail:function(inData){
+					console.log('FAIL global.cipClient.testConnection:');
+					console.dir(inData);
+				},
+			}
+		);
+	},3000)
+}
 
 
 

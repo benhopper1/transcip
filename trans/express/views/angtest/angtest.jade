@@ -43,6 +43,10 @@ html
 
 		body(style="")
 			script.
+
+				//window.location.href = 'https://192.168.0.16:30800/angtest';
+
+
 				function render(){
 					// Additional params
 					var additionalParams = 
@@ -52,6 +56,16 @@ html
 					gapi.signin.render('myButton', additionalParams);
 				}
 			
+			h1
+				p ss
+				//- if(products.subscriptions['arfsync.v001.subscription.month'].active == true)
+				//	p got subscription
+				//	br
+				//	br
+				//	br
+				//	br
+				//	
+				//	p !{JSON.stringify(products)}
 
 
 			#testDiv
@@ -145,21 +159,21 @@ html
 							//==============================================
 							$('#addEditUser_save').click(function(){
 
-								
-								//$.debug('object.keys', Object.keys(ttt));
-								//$.debug('myVer', $.getKeys(ttt));
-
 								$postAjax(
 									{
-										url:'/products/updateProducts',
-										send:testPack,
+										url:'/products/getShowCaseProducts',
+										send:
+											{
+												
+											},
 										onAjaxSuccess:function(inResult){
-											console.log('updateProductCallBackDone:');
-											console.dir(inResult);
+											console.log('back!!!:');
+											console.log(inResult);
 										}
-
 									}
 								);
+
+
 
 
 
@@ -168,15 +182,21 @@ html
 
 
 							$('#addEditUser_clear').click(function(){
-								doIncomingSms(
+								$postAjax(
 									{
-										name:'ddddd name 1',
-										phoneNumber:'12563538951',
-										message:'my new message',
-										imageUrl:'/public/images/contacts/c97ce050-b399-11e4-a92e-138f9d3e8597.jpg',
+										url:'/products/updateProductsSession',
+										send:
+											{
+												
+											},
+										onAjaxSuccess:function(inResult){
+											console.log('back!!!:');
+											console.log(inResult);
+										}
 									}
 								);
 							});
+
 
 
 						}//end of load

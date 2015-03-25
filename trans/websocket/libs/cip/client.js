@@ -6,6 +6,8 @@ var extend = require(basePath + '/node_modules/node.extend');
 var TransportLayer = require(basePath + '/libs/transportlayer.js');
 var net = require('net');
 var domain = require('domain');
+var moment = require(basePath + '/node_modules/moment');
+var uuid = require(basePath + '/node_modules/node-uuid');
 
 
 
@@ -13,6 +15,8 @@ var CipClient = function(inJstruct){
 	console.log('CipClient ENETERED');
 	var _this = this;
 	this.domain = domain.create();
+	this.isConnected = false;
+	var transactionHash = {};
 
 	var options = 
 		{
@@ -50,14 +54,18 @@ var CipClient = function(inJstruct){
 
 
 		client.on('data', function(inTransportLayer_str){
-			console.log('DATA: ' + inTransportLayer_str);
-
 			var transportLayer = new TransportLayer();
 			transportLayer.fromClientBuild(inTransportLayer_str);
 			var transportLayer_json = transportLayer.toJson();
 
-			if(options.onData){
-				options.onData(transportLayer_json);
+			var cipLayer_json = _this.getCipLayer(transportLayer_json);
+
+			if(cipLayer_json.type == 'transResp'){
+				_this.onTransactionResponse(cipLayer_json, transportLayer_json);
+			}else{
+				if(options.onData){
+					options.onData(transportLayer_json);
+				}
 			}
 
 			//EVENTS THAT MATTER-------------------
@@ -126,7 +134,90 @@ var CipClient = function(inJstruct){
 
 			}
 		_this.send(cipTransportLayer);
+	}
 
+	this.sendTransaction = function(inSendTransactionOptions, inTransactionPostFunction){
+		var sendTransactionOptions = 
+			{
+				command:false,
+				type:'toCipTransaction',
+				data:false,
+				isWsPassThrough:false,
+			}
+		sendTransactionOptions = extend(true, sendTransactionOptions, inSendTransactionOptions);
+		var newTransactionId = uuid.v1();
+		transactionHash[newTransactionId] = 
+			{
+				entryMoment:moment(),
+				postFunction:inTransactionPostFunction
+			}
+		//TODO:schedule clean up for fails here
+		var cipTransportLayer = new TransportLayer();
+		cipTransportLayer.cipLayer =
+			{
+				type:sendTransactionOptions.type,
+				isWsPassThrough:sendTransactionOptions.isWsPassThrough,
+				command:sendTransactionOptions.command,
+				data:sendTransactionOptions.data,
+				serverName:global.SEVER_NAME,
+				serverType:global.SERVER_TYPE,
+				transactionId:newTransactionId,
+
+			}
+		_this.send(cipTransportLayer);
+	}
+
+	this.onTransactionResponse = function(inCipLayer, inTransportLayer){
+		if(inCipLayer.transactionId){
+			var theFunc = transactionHash[inCipLayer.transactionId].postFunction;
+			if(theFunc){
+				theFunc(inCipLayer.data);
+			}
+			delete transactionHash[inCipLayer.transactionId];
+		}
+	}
+
+	this.testConnection = function(inTestConnectionOptions){
+		var testConnectionOptions = 
+			{
+				data:false,
+				timeout:3000, // if false no timed fail happens
+				onSuccess:false,
+				onFail:false,
+			}
+		testConnectionOptions = extend(true, testConnectionOptions, inTestConnectionOptions);
+		var alreadyFailed = false;
+
+		var theTimer;
+		if(testConnectionOptions.timeout){
+			var startMoment = moment();
+			theTimer = setTimeout(function(){
+				alreadyFailed = true;
+				if(testConnectionOptions.onFail){
+					testConnectionOptions.onFail(
+						{
+							error:'timedOut',
+							timeoutInterval:testConnectionOptions.timeout,
+							start:startMoment.format("YYYY-MM-DD HH:mm:ss"),
+							end:moment().format("YYYY-MM-DD HH:mm:ss"),
+						}
+					);
+				}
+			},testConnectionOptions.timeout);
+		}
+
+		_this.sendTransaction(
+			{
+				command:'testConnection',
+				data:testConnectionOptions.data,
+			}, 
+			function(inData){
+				if(theTimer){clearTimeout(theTimer);}
+				if(!(alreadyFailed)){
+					if(testConnectionOptions.onSuccess){testConnectionOptions.onSuccess(inData);}
+				}
+			}
+		);
 	}
 
 	this.destroy = function(){

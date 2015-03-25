@@ -10,6 +10,12 @@ var CipRequestHandler = function(inCipClient){
 	var cipClient = inCipClient;
 
 	this.handleRequest = function(inCipLayer_json, inTransportLayer_json){
+		global.reportNotify('handleRequest xx', 
+			{
+				inCipLayer_json:inCipLayer_json,
+			}, 0
+		);
+
 		if(inCipLayer_json && inCipLayer_json.command == 'sendServerName'){
 			// add cip server data
 			if(inCipLayer_json.cipServerData){
@@ -19,10 +25,37 @@ var CipRequestHandler = function(inCipClient){
 			_this.sendServerName();
 			return;
 		}
+		//TODO: think this shld be removed per cip
 		if(inCipLayer_json && inCipLayer_json.command == 'storeCipServerData'){
 			_this.storeCipServerData();
 			return;
 		}
+
+		if(inCipLayer_json && inCipLayer_json.command == 'recordRoutesChange'){
+			if(inCipLayer_json.enabled){
+				global.RECORD_ROUTES = true;
+			}else{
+				global.RECORD_ROUTES = false;
+			}
+			global.reportNotify('recordRoutesChange', 
+				{
+					value:global.RECORD_ROUTES,
+				}, 0
+			);
+			return;
+		}
+
+		if(inCipLayer_json && inCipLayer_json.command == 'storeUserRequestChange'){
+			if(inCipLayer_json.enabled){
+				global.DATABASE_STORE_USER_REQUEST_DATA = true;
+			}else{
+				global.DATABASE_STORE_USER_REQUEST_DATA = false;
+			}
+			return;
+		}
+
+
+		//global.DATABASE_STORE_USER_REQUEST_DATA
 	}
 
 

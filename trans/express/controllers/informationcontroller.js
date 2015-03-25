@@ -54,7 +54,7 @@ module.exports.controller = function(app) {
 						phoneCacheRoute:configData.phoneCacheRoute,
 
 						//app products---------------------------------------
-						inAppProductIds:
+						/*inAppProductIds:
 							[
 								{
 									productId:'arfsync.testapp.test_subscribe_product_500',
@@ -100,7 +100,7 @@ module.exports.controller = function(app) {
 								},
 
 							],
-
+*/
 					}
 			}
 		));

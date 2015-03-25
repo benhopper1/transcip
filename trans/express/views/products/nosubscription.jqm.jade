@@ -1,0 +1,9 @@
+h1(id="lll99")	NO SUBSCRIPTION
+
+
+script.
+	console.log('nosubscription PageLoaderObject.resetLoaderForPage()');
+	setTimeout(function(){
+		PageLoaderObject.resetLoaderForPage('#{resetPageName}');
+		$('#lll99').remove();
+	},3000)

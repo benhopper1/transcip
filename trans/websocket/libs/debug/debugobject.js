@@ -7,6 +7,7 @@ var Underscore = require(basePath + '/node_modules/underscore');
 var fs = require('fs');
 var moment = require(basePath + '/node_modules/moment');
 var util = require('util');
+var jsonFile = require(basePath + '/node_modules/jsonfile');
 
 //####################################################################################
 //DebugObject object
@@ -38,12 +39,22 @@ var DebugObject = function(inJstruct, inPostFunction){
 
 			}
 		try{
-			var data = util.inspect(wrapper, false, 10, true)
-			fs.appendFile(options.filePath, data + "\n", encoding='utf8', function (err) {
+			//var data = util.inspect(wrapper, false, 10, true)
+			jsonFile.appendFileSync(options.filePath, wrapper);
+			/*
+			fs.appendFile(options.filePath, wrapper + "\n", encoding='utf8', function (err) {
 				if(inPostFunction){inPostFunction(err);}
 			});
+			*/
 		}catch(e){
-			console.log('ERROR in WRITE LOG FILE');
+			console.log('[debugobject.js].reportError.jsonFile.appendFileSync:');
+			console.dir(
+				{
+					error:e,
+					options:options,
+					data:wrapper,
+				}
+			);
 			if(inPostFunction){inPostFunction(err);}
 		}
 	}

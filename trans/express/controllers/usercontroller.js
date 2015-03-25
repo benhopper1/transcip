@@ -261,6 +261,8 @@ module.exports.controller = function(app) {
 		));
 	});
 
+//REPLACE 3/24/2015 with product checking routing
+/*
 	app.get('/jqm/userprofile', function(req, res){
 		if(userModel.verifySession(req,res)){
 			userModel.getUserById({userId:req.session.userData.userId}, function(err, result){
@@ -285,6 +287,63 @@ module.exports.controller = function(app) {
 			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
 		}
 	});
+
+*/
+	//3/24/15 REPLACMENT
+	app.get('/jqm/userprofile', function(req, res){
+		if(userModel.verifySession(req,res)){
+			req.body['userId'] = req.session.userData.userId;
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/jqm/userprofile A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
+
+				if(!(global.PRODUCT_BLOCK_ENABLED) || global.isProductsAuthForRoute('/jqm/userprofile', inOwnedProductIdArray)){
+					global.reportNotify('/jqm/userprofile A1', 
+						{
+							if_:true,
+						}, 0
+					);
+					userModel.getUserById({userId:req.session.userData.userId}, function(err, result){
+						res.render('users/userprofile.jqm.jade',
+							{
+								userId:req.session.userData.userId,
+								deviceId:"815",
+								URL:configData.domain.address + ":" + configData.domain.port,
+								androidAppRoute:configData.androidAppRoute,
+								webSocketClient:configData.webSocketClient,
+								defaultUserImageUrl:configData.defaultUserImageUrl,
+								defaultMemberImageUrl:configData.defaultMemberImageUrl,
+								data:result[0],
+							}
+						);
+					});
+				}else{
+					//you do not own the proper products
+					res.render('products/nosubscription.jqm.jade',
+						{
+							resetPageName:'userProfile',
+						}
+					);
+				}
+			});//end getUserOwnedProducts
+
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
+		}
+	});
+
+
+
+
+
+
 
 	app.post('/database/updateUser', function(req, res){
 		if(userModel.verifySession(req,res)){

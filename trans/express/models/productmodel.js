@@ -1,7 +1,7 @@
 var path = require('path');
 var basePath = path.dirname(require.main.filename);
 var fs = require('fs');
-var Connection = require(__dirname + '/connection.js');
+var Connection = require(basePath + '/models/connection.js');
 //var nodemailer = require(basePath + '/node_modules/nodemailer');
 var uuid = require(basePath + '/node_modules/node-uuid');
 var extend = require(basePath + '/node_modules/node.extend');
@@ -14,19 +14,82 @@ var querystring = require('querystring')
 
 var Underscore = require(basePath + '/node_modules/underscore');
 
-connection = Connection.getInstance('arf').getConnection();
 
 
+console.log('DIRECTORY:' + basePath);
 
 
 //model----------------
 var Model = function(){
+	connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
 	var configData = fs.readFileSync('main.conf', 'utf8');
 	configData = JSON.parse(configData);
 
 	var createTimeStamp = function(){
 		return moment().format("YYYY-MM-DD HH:mm:ss"); 
+	}
+
+	this.getRoutesProducts = function(inPostFunction){
+		var sqlString = 
+			"SELECT *"  		+ " " +
+			"FROM tb_routes_products"	+ " "
+		;
+		console.log('sql:' + sqlString);
+		connection.query(sqlString, function(err, result){
+			console.log('error' + err);
+			if(inPostFunction){inPostFunction(err, result);}
+		});
+	}
+
+	this.updateProductsSession = function(req, res, inJstruct, inPostFunction){
+		global.reportNotify('THeCaption', 
+			{
+				name:'nnnnn',
+			}, 0
+		);
+
+		var productData = 
+			{
+				
+			/*	subscriptions:
+					{
+							'arfsync.v001.subscription.month':
+								{
+									active:true
+								},
+					},*/
+				products:
+					[
+						{
+							id:'arfsync.v001.contactmanager',
+							active:false
+						},
+						{
+							id:'arfsync.v001.smsmanager',
+							active:true
+						},
+						{
+							id:'arfsync.v001.userprofile',
+							active:true
+						},
+						{
+							id:'arfsync.v001.subscription.month',
+							active:true
+						},
+
+					]
+			}
+		productData = extend(true, productData, inJstruct);
+		console.log('createSession:');
+		console.dir(productData);
+		req.session.products = productData;
+
+		console.log('Actual req.session');
+		console.dir(req.session);
+
+		if(inPostFunction){inPostFunction(productData);}
+
 	}
 
 	this.getProducts = function(inParams, inPostFunction){
@@ -298,6 +361,79 @@ var Model = function(){
 		});
 	}
 
+	this.getOwnedProductsForUser = function(inParams, inPostFunction){
+		var fieldData = 
+			{
+				packageName:'%',
+				itemType:'%',
+				userId:false,
+
+			}
+		fieldData = extend(fieldData, inParams);
+
+		if(!(fieldData.userId)){
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+			}
+		}
+
+		var sqlString = 
+			"SELECT t1.itemType, t2.productId, t1.purchaseTime, t1.purchaseState, t3.isBuyEnabled, t3.daysValidPeriod, t1.packageName"																+ " " +
+			"FROM tb_purchases AS t1 LEFT OUTER JOIN tb_products AS t2 ON t1.productId = t2.productId LEFT JOIN tb_showCaseProduct AS t3 ON t1.productId = t3.productId AND t1.userId = t2.userId" 	+ " " +
+				"WHERE (t2.isOwned = 'true' OR t2.isOverRideOwned = 'true')"					+ " " +
+					"AND"																		+ " " +
+						"t1.packageName LIKE " 	+ connection.escape(fieldData.packageName)		+ " " +
+					"AND"																		+ " " +
+						"t1.itemType LIKE " 	+ connection.escape(fieldData.itemType)			+ " " +
+					"AND"																		+ " " +
+						"t1.userId = "			+ connection.escape(parseInt(fieldData.userId))
+		;
+		global.reportNotify('SQL productModel.getOwnedProductsForUser()', sqlString, 0);
+
+		connection.query(sqlString, function(err, result){
+			if(err){global.reportError('productModel.getOwnedProductsForUser() connection.query', err, 0);}
+			if(inPostFunction){inPostFunction(err, result);}
+		});
+	}
+
+	this.getOwnedProductsInformationForUser = function(inParams, inPostFunction){
+		var fieldData = 
+			{
+				packageName:'%',
+				itemType:'%',
+				userId:false,
+
+			}
+		fieldData = extend(fieldData, inParams);
+
+		if(!(fieldData.userId)){
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+			}
+		}
+
+		var sqlString = 
+			"SELECT t1.userId, t1.itemType, t1.orderId, t2.productId, t2.isOwned, t2.isOverRideOwned, t1.purchaseTime," 																			+ " " +
+			"t1.purchaseState,t2.productType, t2.title, t2.description, t2.price, t3.imageUrl, t3.youtube, t3.isBuyEnabled, t3.daysValidPeriod, t1.packageName"										+ " " +
+			"FROM tb_purchases AS t1 LEFT OUTER JOIN tb_products AS t2 ON t1.productId = t2.productId LEFT JOIN tb_showCaseProduct AS t3 ON t1.productId = t3.productId AND t1.userId = t2.userId" 	+ " " +
+				"WHERE (t2.isOwned = 'true' OR t2.isOverRideOwned = 'true')"					+ " " +
+					"AND"																		+ " " +
+						"t1.packageName LIKE " 	+ connection.escape(fieldData.packageName)		+ " " +
+					"AND"																		+ " " +
+						"t1.itemType LIKE " 	+ connection.escape(fieldData.itemType)			+ " " +
+					"AND"																		+ " " +
+						"t1.userId = "			+ connection.escape(parseInt(fieldData.userId))
+		;
+		global.reportNotify('SQL productModel.getOwnedProductsInformationForUser()', sqlString, 0);
+
+		connection.query(sqlString, function(err, result){
+			if(err){global.reportError('productModel.getOwnedProductsInformationForUser() connection.query', err, 0);}
+			if(inPostFunction){inPostFunction(err, result);}
+		});
+	}
+
 	this.getPurchasesForUser = function(inParams, inPostFunction){
 		console.log('getShowCaseProducts:');
 		console.dir(inParams);
@@ -332,6 +468,7 @@ var Model = function(){
 		var fieldData = 
 			{
 				itemType:'',
+				productId:'',
 				orderId:'',
 				packageName:'',
 				purchaseTime:'',
@@ -358,9 +495,10 @@ var Model = function(){
 		_this.purchaseLogAdd('insert', fieldData, function(){});
 
 		var sqlString = 
-			"INSERT INTO tb_purchases ( itemType, orderId, packageName, purchaseTime, purchaseState, developerPayLoad, token, originalJson, signature, userGuid, userId) VALUES " + 
+			"INSERT INTO tb_purchases ( itemType, productId, orderId, packageName, purchaseTime, purchaseState, developerPayLoad, token, originalJson, signature, userGuid, userId) VALUES " + 
 				"(" 																				+
 					connection.escape(fieldData.itemType) 											+ "," +
+					connection.escape(fieldData.productId)											+ "," +
 					connection.escape(fieldData.orderId)											+ "," +
 					connection.escape(fieldData.packageName) 										+ "," +
 					connection.escape(fieldData.purchaseTime) 										+ "," +
@@ -389,6 +527,7 @@ var Model = function(){
 		var fieldData = 
 			{
 				itemType:false,
+				productId:false,
 				orderId:false,
 				packageName:false,
 				purchaseTime:false,
@@ -418,6 +557,7 @@ var Model = function(){
 		var sqlString = 
 			"UPDATE tb_purchases SET " 		+ 
 					"itemType = " 				+ connection.escape(fieldData.itemType) 										+ "," +
+					"productId = " 				+ connection.escape(fieldData.productId)										+ "," +
 					"orderId = " 				+ connection.escape(fieldData.orderId)											+ "," +
 					"packageName = " 		+ connection.escape(fieldData.packageName) 											+ "," +
 					"purchaseTime = " 		+ connection.escape(fieldData.purchaseTime) 										+ "," +
@@ -426,7 +566,7 @@ var Model = function(){
 					"token = " 	+ connection.escape(fieldData.token)															+ "," +
 					"originalJson = " 	+ connection.escape(fieldData.originalJson)												+ "," +
 					"signature = " 	+ connection.escape(fieldData.signature)													+ "," +
-					"lastUpdateTime = "			+ connection.escape(createTimeStamp())									+ "," +
+					"lastUpdateTime = "			+ connection.escape(createTimeStamp())											+ "," +
 					"userGuid = " 				+ connection.escape(fieldData.userGuid)											+ " " +
 					"WHERE"																										+ " " +
 						"userId = " 			+ connection.escape(parseInt(fieldData.userId))									+ " " +

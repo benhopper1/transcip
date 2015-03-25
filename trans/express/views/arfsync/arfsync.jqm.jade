@@ -386,6 +386,8 @@ body
 							},
 							contactManager:function(){
 								$('#pg_page_2').load("/jqm/contactmanager ", function(){
+									loadedHash['contactManager'] = true;
+
 									//  setup events----------------------------
 									$('#tab_export').load("/jqm/contactexport ", function(){
 										console.log('loaded');
@@ -403,8 +405,9 @@ body
 
 									});
 
-									loadedHash['contactManager'] = true;
+
 									$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_2', {reload:false, transition:'turn', reverse:'true'});
+									$('#pg_page_2').trigger('create');
 								});
 							},
 							userProfile:function(){
@@ -412,6 +415,7 @@ body
 									console.log('loading userprofile');
 									$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', { transition:'turn', reverse:'true'});
 									loadedHash['userProfile'] = true;
+									$('#userProfile_contents').trigger('create');
 								});
 							},
 							smsManager:function(){
@@ -486,7 +490,11 @@ body
 						}
 				}
 
-
+			this.resetLoaderForPage = function(inPageName){
+				if(loadedHash[inPageName]){
+					delete loadedHash[inPageName];
+				}
+			}
 
 			this.loadPage = function(pageName){
 				if(_this.isLoaded(pageName)){

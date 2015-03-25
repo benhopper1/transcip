@@ -1,4 +1,4 @@
-console.log('loading-->----------------------->--  T r a n s a c t i o n   C o n t r o l l e r  --<-----------------------');
+console.log('loading-->----------------------->--  Interface Controller  --<-----------------------');
 
 
 var fs = require('fs');
@@ -135,6 +135,16 @@ var Controller = function(router){
 					serverType:cipLayer_json.serverType,
 					configData:cipLayer_json.configData,
 				}
+			// set the cip client serv build name for future communication !!!!!!!!!!!!!!!!!!!!!
+			inConnection.serverBuildName = 'server_' + (parseInt(cipLayer_json.serverName.slice(-3)) - 400);
+			var theServerBuildInstance = ServerBuild.getServerByServerBuildName(inConnection.serverBuildName);
+			if(theServerBuildInstance){
+				theServerBuildInstance.setCipClientConnection(inConnection, cipLayer_json.serverType);
+			}else{
+				console.log('Not yet, no server build yet');
+			}
+
+			//setCipClientConnection
 		}
 		//@@@@@@@@@@@@ NEW WAITING QR CODE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		if(cipLayer_json.command == 'addWaitingQr'){
@@ -227,6 +237,40 @@ var Controller = function(router){
 				}
 				, 0
 			);
+		}
+
+		//@@@@@@@@@@@@ REMOTE ERROR @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		if(cipLayer_json.command == 'remoteError'){
+			global.reportNotify('REMOTE ERROR', 
+				{
+					transportData:cipLayer_json,
+				}
+				, 0
+			);
+		}
+
+		//@@@@@@@@@@@@ serverKilled @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		if(cipLayer_json.command == 'remoteServerScore'){
+			/*global.reportNotify('REMOTE SERVER SCORE', 
+				{
+					transportData:cipLayer_json,
+				}
+				, 0
+			);*/
+			var theServerBuildInstance = ServerBuild.getServerByServerName(cipLayer_json.serverName);
+			if(theServerBuildInstance){
+				var thePassingData = cipLayer_json.data;
+				thePassingData.serverType = cipLayer_json.serverType;
+				theServerBuildInstance.addNewScoreEntry(thePassingData);
+			}else{
+				/*global.reportError('REMOTE SERVER SCORE cip.interfacecontroller.js',
+					{
+							error:'na',
+							caption:'looking up server failed, should have instance here',
+							cipLayer:cipLayer_json,
+					}, 0
+				);*/
+			}
 		}
 
 

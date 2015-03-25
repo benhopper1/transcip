@@ -21,7 +21,7 @@ var url = require('url');
 
 
 global.prepairingPorts = {};
-global.SERVER_IP = 
+//global.SERVER_IP = 
 global.deviceTokenId_Hash = {};
 global.userId_hashOfArray = new HashArrayObject();
 //cip interface tcp connection store-----
@@ -49,13 +49,8 @@ global.reportError = function(inCaption, inData, inClass){
 	console.log(util.inspect(inData, false, 7, true));
 	console.log(styleRedOpen + '====================================================================' + styleRedClose + styleWhiteBgClose);
 }
-/*global.reportError = function(inCaption, inData, inClass){
-	console.log('===============  REPORT ERROR  =====================================');
-	console.log(inCaption + '        CLASS:' + inClass);
-	console.log('--------------------------------------------------------------------');
-	console.log(util.inspect(inData, false, 7, true));
-	console.log('====================================================================');
-}*/
+
+
 //==========================================================
 // REPORT NOTIFICATION --------------------------------------------
 //==========================================================
@@ -81,122 +76,13 @@ global.getConnectionCount = function(inServerName){
 	return finalCount;
 }
 
-/*
 
-
-// BEST VACANT SERVER, @returns an activeServer
-global.getBestVacantServerData = function(){
-		var resultServer = false;
-		var theHash = global.activeServersHash;
-		var leastValue = 1000000;// can never have 1mil on single instance, this is safe start
-		for(theKey in theHash){
-			if(theHash[theKey].serverType == 'webSocket'){
-				var currentCount = global.getConnectionCount(theKey);
-				if(currentCount < leastValue){
-					leastValue = currentCount;
-					// get BROTHER(express) SERVER
-					resultServer = theHash[theKey.replace('ws', 'ex')];
-					//resultServer = theHash[theKey];
-				}
-			}
-		}
-
-		if(!(resultServer)){
-			global.reportError('CIP APP getBestVacantServerData()', 
-				{
-					error:'resultServer NO VALUE',
-					resultServer:resultServer,
-					theHash:theHash,
-				}, 0
-			);
-		}
-
-		return resultServer;
-}
-
-// REDIRECTION INFORMATION
-global.getBestRedirectionHttpUrl = function(){
-	var bestActiveServer = global.getBestVacantServerData();
-	if(!(bestActiveServer)){return false;}
-
-	var address = bestActiveServer.configData.domain.address;
-	var parsedUrl = url.parse(address, true, true);
-	var result = 
-		{
-			protocol:parsedUrl.protocol,
-			ip:parsedUrl.host,
-			port:bestActiveServer.configData.domain.port,
-		}
-
-	global.reportNotify('getBestRedirectionHttpUrl ACTIVE SERVER PICK', 
-		{
-			result:result,
-			bestActiveServer:bestActiveServer,
-		}
-		, 0
-	);
-
-
-
-	return result;
-}
-*/
 global.getBestRedirectionHttpUrl = function(){
 	return ServerBuild.getBestVacantServer(true);
 }
 
 global.getBestRedirectionHttpsUrl = function(){
 	return ServerBuild.getBestVacantServer();
-	/*var result =
-		{
-			protocol:'http:',
-			ip:'google.com',
-			port:80,
-		}
-	return result;*/
-
-
-
-
-	/*var bestActiveServer = global.getBestVacantServerData();
-	if(!(bestActiveServer)){
-		global.reportError('CIP APP getBestRedirectionHttpsUrl', 
-			{
-				error:'bestActiveServer NO VALUE',
-				bestActiveServer:bestActiveServer,
-			}, 0
-		);
-		return false;
-	}
-
-	console.log('bestActiveServer');
-	console.dir(bestActiveServer);
-
-	var result =
-		{
-			protocol:'http:',
-			ip:'google.com',
-			port:80,
-		}
-	if(bestActiveServer && bestActiveServer.configData){
-		var address = bestActiveServer.configData.secureDomain.address;
-		var parsedUrl = url.parse(address, true, true);
-		result = 
-			{
-				protocol:parsedUrl.protocol,
-				ip:parsedUrl.host,
-				port:bestActiveServer.configData.secureDomain.port,
-			}
-
-		global.reportNotify('getBestRedirectionHttpsUrl ACTIVE SERVER PICK', 
-			{
-				result:result,
-				bestActiveServer:bestActiveServer,
-			}, 0
-		);
-	}
-
-	return result;*/
 }
 
 
@@ -220,22 +106,27 @@ global.maintenance_0_20_40.add(function(inOptions, inData){
 	console.log('maintenance_0_20_40 DUMP');
 	var theHash = global.activeServersHash;
 	for(theKey in theHash){
-		//theHash[theKey]
 		console.log('[' + theKey + '] count:' + global.getConnectionCount(theKey));
 	}
-
+/*
 	console.log('serverHashOfArray.getHash()');
 	console.dir(serverHashOfArray.getHash());
 	console.log('-----------------------------------------');
-	//console.dir(global.activeServersHash);
+*/
+
+/*
 	console.log('global.activeServersHash');
-	console.log(util.inspect(global.activeServersHash, false, 7, true));
-	
+	console.log(util.inspect(global.activeServersHash, false, 1, true));
+*/	
+
+/*
 	console.log('global.serverBuildsHash');
 	console.dir(global.serverBuildsHash);
+*/
 
 	console.log('global.userId_hashOfArray');
 	console.dir(userId_hashOfArray.getHash() );
+
 
 	console.log('global.serverHashOfArray');
 	console.dir(global.serverHashOfArray.getHash());
@@ -454,28 +345,52 @@ server.listen(configData.cipInterface.port, configData.cipInterface.host);
 
 var interfaceConnectionsHash = {};
 server.on('connection', function(sock){
-	console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+	var newConnectionId;
+	var theConP;
+	try{
+		console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+		newConnectionId = sock.remoteAddress + sock.remotePort;
 
+		global.reportNotify('NEW CONNECTION ON CIP INTERFACE', 
+			{
+				host:sock.remoteAddress,
+				port:sock.remotePort,
+				connectionId:newConnectionId,
+			}, 0
+		);
 
-	var newConnectionId = sock.remoteAddress + sock.remotePort; //uuid.v1();
-	interfaceConnectionsHash[newConnectionId] = 
-		{
-			host:sock.remoteAddress,
-			port:sock.remotePort,
-			connectionId:newConnectionId,
-			socket:sock
-		};
+		interfaceConnectionsHash[newConnectionId] = 
+			{
+				host:sock.remoteAddress,
+				port:sock.remotePort,
+				connectionId:newConnectionId,
+				socket:sock,
+				send:function(inTransportLayer_json){
+					//console.log('WRITING:' + JSON.stringify(inTransportLayer_json));
+					sock.write(
+						JSON.stringify(inTransportLayer_json)
+					);
+				}
+			};
 
-	communicationRouter.reportOnConnect(
-		{
-			host:sock.remoteAddress,
-			port:sock.remotePort,
-			connectionId:newConnectionId,
-			socket:sock
-		}
-	);
-
-	var theConP = newConnectionId;
+		communicationRouter.reportOnConnect(
+			{
+				host:sock.remoteAddress,
+				port:sock.remotePort,
+				connectionId:newConnectionId,
+				socket:sock
+			}
+		);
+		theConP = newConnectionId;
+	}catch(e){
+		global.reportError('cipapp.sock.on connection', 
+			{
+				error:e,
+				param:data,
+			}, 0
+		);
+		return;
+	}
 
 
 	sock.on('data', function(inTransportLayer_str) {
@@ -489,7 +404,7 @@ server.on('connection', function(sock){
 			communicationRouter.reportOnRoute(interfaceConnectionsHash[connectId], transportLayer_json);
 
 		}catch(e){
-			global.reportError('cipapp.sock.on', 
+			global.reportError('cipapp.sock.on data', 
 				{
 					error:e,
 					transportStr:inTransportLayer_str
@@ -530,6 +445,7 @@ server.on('connection', function(sock){
 
 	sock.on('error', function(e) {
 		try{
+			console.log('CIPAPP SOCK ON ERROR ');
 			global.reportError('CIP SERVER INTERFACE', e, 0);
 		}catch(e){
 			global.reportError('cipapp.sock.close', 
@@ -569,14 +485,47 @@ server.on('connection', function(sock){
 /*ServerBuild.launchServersByNumberArray(
 	{
 		severIp:'192.168.0.16',
-		serverNumberArray:[0],
+		serverNumberArray:[1],
+	}
+);*/
+ServerBuild.getMaybeCreate(
+	{
+		serverNumber:1,
+		createFileSystem:true,
+	},
+	function(inServerInstance){
+		console.log('SERVER LOADED:' + inServerInstance.getServerBuildName());
+	}
+);
+/*ServerBuild.getMaybeCreate(
+	{
+		serverNumber:2,
+		createFileSystem:true,
+	},
+	function(inServerInstance){
+		console.log('SERVER LOADED:' + inServerInstance.getServerBuildName());
 	}
 );*/
 
+ServerBuild.createFileSystemOnly(
+	{
+		serverNumber:0,
+		deleteOld:true,
+	}, 
+	function(){
+		console.log('ServerBuild.createFileSystemOnly callback');
+	}
+);
 
 
-ServerBuild.createNextFileSystem('192.168.0.16', function(){
-});
+
+
+
+
+
+
+/*ServerBuild.createNextFileSystem(global.ip, function(){
+});*/
 
 
 

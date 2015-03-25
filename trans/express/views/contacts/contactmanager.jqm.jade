@@ -63,11 +63,15 @@ script.
 
 	$( "#pg_page_2").on( "pageshow", function( event, ui ){
 		console.log('PAGE SHOW--------------------------ContactManager');
+		if(!(contactManagerObject)){
+			contactManagerObject = new ContactManagerObject();
+			contactManagerObject.load();
+		}
 	});
 	$( "#pg_page_2").on( "pagecreate", function( event, ui ){
 		console.log('PAGE CREATE---------------------------ContactManager');
-		contactManagerObject = new ContactManagerObject();
-		contactManagerObject.load();
+		//- contactManagerObject = new ContactManagerObject();
+		//- contactManagerObject.load();
 	});
 
 	eventObject.setOn('subMenu_contacts_createAndEdit', function(inData){

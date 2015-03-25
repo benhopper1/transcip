@@ -12,9 +12,6 @@ var util = require('util');
 var NewServer = require(basePath + '/libs/newserver/newserver.js');
 var ServersInformation = require(basePath + '/libs/serversinformation/serversinformation.js');
 var wrench = require(basePath +  '/node_modules/wrench');
-//var SecretFile = require(basePath + '/libs/secretfile/secretfile.js');
-//var removeDirectory = require(basePath + '/node_modules/rimraf');
-//var childProcess = require('child_process');
 
 
 
@@ -29,6 +26,15 @@ var ServerBuild = function(inOptions){
 	var state = 'unloaded';
 	var oldState = false;
 	var newServer;
+
+	var processingScore_express = -1;
+	var requestScore_express = -1;
+
+	var processingScore_websocket = -1;
+	var requestScore_websocket = -1;
+
+	var cipClientConnections = {};// serverType:''express, cliientConnection=xxxxxx
+
 	var onStateChangeFunctionArray = [];
 	var options = 
 		{
@@ -98,12 +104,37 @@ var ServerBuild = function(inOptions){
 		}
 	}
 
+	//======= SCORE ================================================
+	this.addNewScoreEntry = function(inAddNewScoreEntryOptions){
+		console.log('addNewScoreEntry ENETERED');
+		console.dir(inAddNewScoreEntryOptions);
+		var addNewScoreEntryOptions = 
+			{
+				serverType:'express',
+				requestScore:false,
+				requestScoreOld:false,
+				processingScore:false,
+				processingScoreOld:false,
+			}
+		addNewScoreEntryOptions = extend(true, addNewScoreEntryOptions, inAddNewScoreEntryOptions);
+		if(addNewScoreEntryOptions.serverType == 'express'){
+			processingScore_express = addNewScoreEntryOptions.processingScore;
+			requestScore_express = addNewScoreEntryOptions.requestScore;
+		}else{
+			processingScore_websocket = addNewScoreEntryOptions.processingScore;
+			requestScore_websocket = addNewScoreEntryOptions.requestScore;
+		}
+	}
+
 	this.getRequestScore = function(){
-		return Math.floor(Math.random() * (1000 - 5)) + 5;
+		//return Math.floor(Math.random() * (1000 - 5)) + 5;
+		return requestScore_express + requestScore_websocket;
 	}
 
 	this.getProcessingScore = function(){
-		return Math.floor(Math.random() * (1000000 - 3000)) + 3000;
+		//return Math.floor(Math.random() * (1000000 - 3000)) + 3000;
+		return processingScore_express + processingScore_websocket;
+		//return requestScore_express + requestScore_websocket;
 	}
 
 	this.getServerBuildName = function(){
@@ -112,6 +143,78 @@ var ServerBuild = function(inOptions){
 	this.getServerName = function(){
 		return ServerBuild.ServerNumberToServerName(options.serverNumber);
 	}
+
+	this.setCipClientConnection = function(inConnection, inServerType){
+		console.log('SETTING setCipClientConnection 44:');
+		cipClientConnections[inServerType] = inConnection;
+	}
+
+	this.getCipClientConnections = function(){
+		return cipClientConnections;
+	}
+
+	this.getCipClientConnectionByType = function(inServerType){
+		return cipClientConnections[inServerType];
+	}
+
+	this.recordRoutes = function(inBool){
+		if(inBool){
+			_this.sendToCipClients(
+				{
+					command:'recordRoutesChange',
+					enabled:true,
+				},
+				// serverTypeFilter--(no filter uses all)------express/ webSocket
+				[
+					'express'
+				]
+			);
+		}else{
+			_this.sendToCipClients(
+				{
+					command:'recordRoutesChange',
+					enabled:false,
+				},
+				// serverTypeFilter--(no filter uses all)------express/ webSocket
+				[
+					'express'
+				]
+			);
+		}
+	}
+
+	this.sendToCipClients = function(inSendToCipClientOptions, inServerTypesFilter){
+		var sendToCipClientOptions = 
+			{
+				command:false,
+				data:false,
+			}
+		sendToCipClientOptions = extend(true, sendToCipClientOptions, inSendToCipClientOptions);
+
+		var message = 
+			{
+				cipLayer:sendToCipClientOptions,
+			}
+		message.cipLayer.isWsPassThrough = false;
+		var cipConnections = _this.getCipClientConnections();
+		if(!(cipConnections)){
+			global.reportError('serverBuild.sendToCipClient',
+				{
+						error:'no cip connection to send data to'
+				}, 0
+			);
+		}
+
+		for(var theKey in cipConnections){
+			if(inServerTypesFilter){
+				if(inServerTypesFilter.indexOf(theKey) == -1){continue;}
+			}
+
+			theCipConnection = cipConnections[theKey];
+			theCipConnection.send(message);
+		}
+	}
+
 
 	this.kill = function(){
 		console.log('KILLING ME');
@@ -328,6 +431,118 @@ var ServerBuild = function(inOptions){
 }
 
 // STATIC ............................................................................................
+
+//can create new folder by deleting old automatically when no instance exist!!!(getMaybeCreate)
+ServerBuild.getMaybeCreate = function(inGetMaybeCreateOptions, inPostFunction){
+	ServerBuild.startVacantCalculation();
+	var getMaybeCreateOptions = 
+		{
+			severIp:global.ip,
+			serverNumber:0,
+			createFileSystem:false,
+		}
+	getMaybeCreateOptions = extend(true, getMaybeCreateOptions, inGetMaybeCreateOptions);
+
+	var theBuildServerInstance = global.serverBuildsHash[ServerBuild.ServerNumberToServerName(getMaybeCreateOptions.serverNumber)];
+	if(theBuildServerInstance){
+		if(inPostFunction){inPostFunction(theBuildServerInstance);}
+		return;
+	}
+
+
+	var serverBuild;
+
+	if(getMaybeCreateOptions.createFileSystem){
+		ServerBuild.deleteFileSystem(getMaybeCreateOptions.serverNumber);
+		serverBuild = new ServerBuild(
+			{
+				serverNumber:getMaybeCreateOptions.serverNumber,
+				serverIp:getMaybeCreateOptions.severIp,
+			}
+		);
+
+		serverBuild.create(
+			{
+				copyEnabled:true,
+				setPermissions:true,
+				foreverEnabled:false,
+				launch:true,
+			},
+			function(){
+				if(inPostFunction){inPostFunction(serverBuild);}
+			}
+		);
+	}else{
+		serverBuild = new ServerBuild(
+			{
+				serverNumber:getMaybeCreateOptions.serverNumber,
+				serverIp:getMaybeCreateOptions.severIp,
+			}
+		);
+
+		serverBuild.create(
+			{
+				copyEnabled:false,
+				setPermissions:false,
+				foreverEnabled:false,
+				launch:true,
+			},
+			function(){
+				if(inPostFunction){inPostFunction(serverBuild);}
+			}
+		);
+	}
+
+
+	
+
+	/*ServerBuild.launchServersByNumberArray(
+		{
+			severIp:getMaybeCreateOptions.severIp,
+			serverNumberArray:[getMaybeCreateOptions.serverNumber],
+		}
+	);*/
+
+
+}
+
+ServerBuild.createFileSystemOnly = function(inCreateFileSystemOptions, inPostFunction){
+	var createFileSystemOptions = 
+		{
+			serverNumber:0,
+			deleteOld:true,
+			developmentForceRunningState:false,//need to implement for ws develop
+		}
+	createFileSystemOptions = extend(true, createFileSystemOptions, inCreateFileSystemOptions);
+	if(createFileSystemOptions.deleteOld){
+		ServerBuild.deleteFileSystem(createFileSystemOptions.serverNumber);
+	}
+	serverBuild = new ServerBuild(
+		{
+			serverNumber:createFileSystemOptions.serverNumber,
+			serverIp:global.ip,
+		}
+	);
+
+	serverBuild.create(
+		{
+			copyEnabled:true,
+			setPermissions:true,
+			foreverEnabled:false,
+			launch:false,
+		},
+		function(){
+			if(inPostFunction){inPostFunction(serverBuild);}
+		}
+	);
+}
+
+
+ServerBuild.deleteFileSystem = function(inServerNumber){
+	var directoryPath = basePath + '/' + ServerBuild.ServerNumberToServerBuildName(inServerNumber);
+	return wrench.rmdirSyncRecursive(directoryPath, true);
+}
+
 ServerBuild.serverBuildNameToServerName = function(inValue){
 	var serverNumber = ServerBuild.serverBuildNameToServerNumber(inValue);
 	var result = 
@@ -384,7 +599,7 @@ ServerBuild.launchServersByNumberArray = function(inOptions, inPostFunction){
 	ServerBuild.startVacantCalculation();
 	options = 
 		{
-			severIp:'127.0.0.1',
+			severIp:global.ip,
 			serverNumberArray:false,
 		}
 	options = extend(true, options, inOptions);
@@ -423,7 +638,7 @@ ServerBuild.launchAllServers = function(inOptions, inPostFunction){
 	ServerBuild.startVacantCalculation();
 	options = 
 		{
-			severIp:'127.0.0.1'
+			severIp:global.ip,
 		}
 	options = extend(true, options, inOptions);
 	var finalResultArray = [];
@@ -539,7 +754,7 @@ ServerBuild.init = function(inOptions, inPostFunction){
 	ServerBuild.startVacantCalculation();
 	options = 
 		{
-			severIp:'127.0.0.1'
+			severIp:global.ip,
 		}
 	options = extend(true, options, inOptions);
 	var finalResultArray = [];
@@ -580,6 +795,18 @@ ServerBuild.getAllServers = function(){
 	return global.serverBuildsHash;
 }
 
+ServerBuild.getServerByServerName = function(inServerName){
+	return global.serverBuildsHash[ServerBuild.ServerNameToServerBuildName(inServerName)];
+}
+
+ServerBuild.getServerByServerBuildName = function(inServerBuildName){
+	return global.serverBuildsHash[inServerBuildName];
+}
+
+ServerBuild.getServerByServerNumber = function(inServerNumber){
+	return global.serverBuildsHash[ServerBuild.ServerNumberToServerBuildName(inServerNumber)];
+}
+
 
 ServerBuild.getBestVacantServer = function(inUseUnsecure){
 	if(inUseUnsecure){
@@ -593,6 +820,7 @@ ServerBuild.getBestVacantServer = function(inUseUnsecure){
 ServerBuild.bestVacantServerInstance = false;
 ServerBuild.vacantCountRunning = false;
 ServerBuild.startVacantCalculation = function(){
+	var bestProcessingScore = -1;
 	if(ServerBuild.vacantCountRunning){return;}
 	ServerBuild.vacantCountRunning = true;
 	global.maintenance_0_20_40.add(function(inOptions, inData){
@@ -601,9 +829,12 @@ ServerBuild.startVacantCalculation = function(){
 		var leastServer = false;
 		if(runningServersArray.length > 0){
 			leastServer = runningServersArray[0];
+			bestProcessingScore = runningServersArray[0].getProcessingScore();
 			for(var theIndex in runningServersArray){
 				var theServer = runningServersArray[theIndex];
-				if(theServer.getProcessingScore() < leastServer.getProcessingScore()){
+				var theProcessingScore = theServer.getProcessingScore();
+				if(theProcessingScore < leastServer.getProcessingScore()){
+					bestProcessingScore = theProcessingScore;
 					leastServer = theServer;
 				}
 			}
@@ -618,6 +849,7 @@ ServerBuild.startVacantCalculation = function(){
 					serverName:ServerBuild.bestVacantServerInstance.getServerBuildName(),
 					secure:ServerBuild.getBestVacantServer(),
 					unSecure:ServerBuild.getBestVacantServer(true),
+					processingScore:bestProcessingScore,
 				},0
 			);
 

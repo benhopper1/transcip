@@ -14,19 +14,91 @@ var DebugObject = require(basePath + '/library/debug/debugobject.js');
 var MaintenanceObject = require(basePath + '/library/maintenance/maintenanceobject.js');
 var util = require('util');
 
-global.CIP_ENABLED = false;
-console.dir(process.argv);
+var HashOfArray = require(basePath + '/library/hashofarrayobject.js');
+var ProductModel = require(basePath + '/models/productmodel');
+
+
+global.CIP_ENABLED 						= false;
+global.DATABASE_STORE_USER_REQUEST_DATA = true;
+global.RECORD_ROUTES 					= false;
+global.PRODUCT_BLOCK_ENABLED 			= false;
+
+
+
 if(process.argv[9]){
 	if(process.argv[9] && parseInt(process.argv[9]) == 1){
 		console.log('Express is  Cip Enabled');
 		global.CIP_ENABLED = true;
 	}
 }
+
+
 global.DEBUG_MODE = true;
 global.SERVER_START_TIME = moment().format("YYYY-MM-DD HH:mm:ss");
 global.SERVER_TYPE = 'express';
 
 global.cipServerData = {};
+
+
+
+//==========================================================
+// SCORE GLOBALS -------------------------------------------
+//==========================================================
+global.REQUEST_SCORE_INTERVAL_SECOND = 0;
+global.PROCESSING_SCORE_INTERVAL_SECOND = 0;
+
+global.requestScore = 0;
+global.requestScoreOld = -1;
+global.REQUEST_SCORE_COMMON = 1;
+
+global.processingScore = 0;
+global.processingOld = -1;
+global.PROCESSING_SCORE_COMMON = 100;
+
+global.scoreMaintenanceCycle = new MaintenanceObject(
+	{
+		label:'SCORE THING',
+		when:
+			{
+				second:[56,16,36],//MaintenanceObject.range(0,59),
+			},
+	}
+);
+global.scoreMaintenanceCycle.start();
+
+global.scoreMaintenanceCycle.add(function(inOptions, inData){
+	if(global.CIP_ENABLED){
+		global.cipClient.sendCommand(
+			{
+				command:'remoteServerScore',
+				data:
+					{
+						REQUEST_SCORE_INTERVAL_SECOND:global.REQUEST_SCORE_INTERVAL_SECOND,
+						PROCESSING_SCORE_INTERVAL_SECOND:global.PROCESSING_SCORE_INTERVAL_SECOND,
+
+						requestScore:global.requestScore,
+						requestScoreOld:global.requestScoreOld,
+						REQUEST_SCORE_COMMON:global.REQUEST_SCORE_COMMON,
+
+						processingScore:global.processingScore,
+						processingOld:global.processingOld,
+						PROCESSING_SCORE_COMMON:global.PROCESSING_SCORE_COMMON,
+						routes:global.recordedRouteArray,
+					},
+			}
+		);
+	}
+	global.requestScoreOld = global.requestScore;
+	global.requestScore = 0;
+	//if(global.RECORD_ROUTES){
+	global.recordedRouteArray = [];
+	//}
+});
+
+//TODO:test only REMOVE
+global.recordedRouteArray = [];
+//TODO:extend used for test only REMOVE
+//var extend = require(basePath + '/node_modules/node.extend');
 
 
 
@@ -137,6 +209,80 @@ var connection = Connection.getMaybeCreate(
 	}
 );
 
+//==================================================================
+//--  PRODUCT GLOBALS  ---------------------------------------------
+//==================================================================
+global.productHashOfArray = new HashOfArray();
+var productModel = new ProductModel();
+productModel.getRoutesProducts(function(err, records){
+	if(err){
+		global.reportError('GLOBAL SECTION productModel.getRoutesProducts',
+			{
+					error:err,
+			}, 0
+		);
+	}else{
+		for(theKey in records){
+			global.productHashOfArray.add(records[theKey].route, records[theKey].productId);
+		}
+		global.reportNotify('GLOBAL SECTION productModel.getRoutesProducts', 
+			{
+				data:records,
+				hashOfArray:global.productHashOfArray.getHash(),
+			}, 0
+		);
+	}
+
+	//global.isProductsEnabledForRoute('/jqm/userprofile', ['sssss']);
+});
+
+global.isProductsAuthForRoute = function(inRoute, inUserActiveProductsArray){
+	console.log('isProductsEnabledForRoute ENETERED');
+	var theRouteProducts = global.productHashOfArray.getArrayFromHash(inRoute);
+	var resultBool = true;
+	if(!(theRouteProducts)){
+		//console.log('no theRouteProducts for :' + inRoute); 
+		global.reportError('UNKNOWN ROUTE',
+			{
+				route:inRoute,
+				error:'the route does not exist in global.productHashOfArray.getArrayFromHash',
+			}, 0
+		);
+		return false;
+	};
+	for(var theRouteProductsIndex in theRouteProducts){
+		if(inUserActiveProductsArray.indexOf(theRouteProducts[theRouteProductsIndex]) == -1){
+			console.log('PRODUCT, user MISSING:' + theRouteProducts[theRouteProductsIndex]);
+			resultBool = false;
+		}else{
+			console.log('PRODUCT, user POSSESSES:' + theRouteProducts[theRouteProductsIndex]);
+		}
+	}
+	return resultBool;
+}
+
+global.getUserOwnedProducts = function(inUserId, inPostFunction){
+	productModel.getOwnedProductsForUser(
+		{
+			//packageName:'%',
+			//itemType:'%',
+			userId:inUserId,
+		},function(err, result){
+			if(!(err)){
+				var theArray = [];
+				var theHash = {};
+				for(var resultIndex in result){
+					theArray.push(result[resultIndex].productId);
+					theHash[result[resultIndex].productId] = result[resultIndex];
+				}
+				if(inPostFunction){inPostFunction(theArray, theHash);}
+			}
+		}
+	);
+}
+
+//global.isProductsEnabledForRoute('/jqm/userprofile', ['sssss']);
+
 
 // some environment variables
 app.set('httpServerIp', addressToIp(configData.domain.address));
@@ -169,17 +315,6 @@ app.use(session({
 	activeDuration: 5 * 60 * 1000,
 }));
 
-/*app.use(expressSession(
-	{
-		cookie:
-			{
-				secure:true
-			},
-		secret:'server secret here', 
-		saveUninitialized: true, 
-		resave: true
-	}
-));*/
 
 app.use(router);
 
@@ -199,6 +334,7 @@ app.use(busboy());
 
 
 //---CUSTOM DATA FOR ROUTES AND JADE-------------------------
+//TODO: remove this crapt
 app.use(function (req, res, next){
 	req.custom = 
 		{
@@ -220,19 +356,36 @@ app.use(function (req, res, next){
 
 
 
+
+
+
 var RequestModel = require(__dirname + '/models/requestmodel.js');
 var requestModel = new RequestModel();
 
 var userData = {};
 app.all('*', function(req, res, next){
-	userData.requestUrl = req.url;
-	userData.agent = (req.headers['user-agent']) ? req.headers['user-agent'] : 'NO AGENT';
-	userData.referrer = req.headers['referrer'];
-	userData.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	console.log('userData:');
-	console.dir(userData);
+	//===============================================================
+	// -- ADD USER DATA TO DATABASE ---------------------------------
+	//===============================================================
+	if(global.DATABASE_STORE_USER_REQUEST_DATA){
+		userData.requestUrl = (req.url) ? req.url : 'NO URL';
+		userData.agent = (req.headers['user-agent']) ? req.headers['user-agent'] : 'NO AGENT';
+		userData.referrer = (req.headers['referrer']) ? req.headers['referrer'] : 'NO REFERRER';
+		userData.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		requestModel.logData(userData);
+	}
+	//===============================================================
+	// -- SCORE INCREMENT FOR REQUEST -------------------------------
+	//===============================================================
+	if(global.RECORD_ROUTES){
+		userData.caption = 'recordedRoute';
+		global.recordedRouteArray.push(userData);
+	}
+	
+	global.requestScore += global.REQUEST_SCORE_COMMON;
+	global.processingScore += global.PROCESSING_SCORE_COMMON;
 
-	requestModel.logData(userData);
+
 	next();
 });
 
@@ -322,6 +475,35 @@ if(global.CIP_ENABLED){
 
 	cipRequestHandler = new CipRequestHandler(cipClient);
 	global.cipClient = cipClient;
+}
+
+if(global.CIP_ENABLED){
+	/*global.cipClient.sendCommand(
+		{
+			command:'remoteError',
+			data:
+				{
+					testKey0:'HELLO BEN HOPPER 11',
+				},
+		}
+	);*/
+	setTimeout(function(){
+		global.cipClient.testConnection(
+			{
+				data:'whatever here',
+				timeout:10,
+				onSuccess:function(inData){
+					console.log('SUCCESS global.cipClient.testConnection:');
+					console.dir(inData);
+				},
+				onFail:function(inData){
+					console.log('FAIL global.cipClient.testConnection:');
+					console.dir(inData);
+				},
+			}
+		);
+	},3000)
+	
 }
 
 

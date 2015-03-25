@@ -1,0 +1,6 @@
+
+if(userAuth){
+	
+}else{
+	// not auth
+}

@@ -26,6 +26,8 @@ module.exports.controller = function(app){
 		res.render('contacts/widget_contactscollection.jade',req.body);
 	});
 
+// replacing 03/25/15 with app product stuff
+/*
 	app.get('/jqm/contactmanager', function(req, res){
 		if(userModel.verifySession(req,res)){
 			console.log("/jqm/contactmangaer");
@@ -43,6 +45,62 @@ module.exports.controller = function(app){
 						}
 				}
 			);
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
+			/*res.render('contacts/widget_contactscollection.jade',
+				{
+
+				}
+			);
+		}
+	});
+*/
+
+	app.get('/jqm/contactmanager', function(req, res){
+		if(userModel.verifySession(req,res)){
+
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/jqm/contactmanager A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
+
+				if(!(global.PRODUCT_BLOCK_ENABLED) || global.isProductsAuthForRoute('/jqm/contactmanager', inOwnedProductIdArray)){
+					global.reportNotify('/jqm/contactmanager A1', 
+						{
+							if_:true,
+						}, 0
+					);
+					console.log("/jqm/contactmangaer");
+					res.render('contacts/contactmanager.jqm.jade',
+						{
+							userId:req.session.userData.userId,
+							deviceId:"815",//req.cookies.deviceId,
+							URL:configData.domain.address + ":" + configData.domain.port,
+							androidAppRoute:configData.androidAppRoute,
+							webSocketClient:configData.webSocketClient,
+							defaultUserImageUrl:configData.defaultUserImageUrl,
+							defaultMemberImageUrl:configData.defaultMemberImageUrl,
+							data:
+								{
+								}
+						}
+					);
+				}else{
+					//you do not own the proper products
+					res.render('products/nosubscription.jqm.jade',
+						{
+							resetPageName:'contactManager',
+						}
+					);
+				}
+			});//end getUserOwnedProducts
+
 		}else{
 			//============================================================
 			//YOUR NOT LOGED IN ------------------------------------------

@@ -69,6 +69,8 @@ script.
 
 
 	$( "#page_smsManager").on( "pageshow", function( event, ui ){
+		setHeight();
+		$('#smsManager_contents').trigger('create');
 		SmsManagerObject.load();
 	});
 	$( "#page_smsManager").on( "pagecreate", function( event, ui ){

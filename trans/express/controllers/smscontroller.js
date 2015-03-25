@@ -7,8 +7,8 @@ configData = JSON.parse(configData);
 module.exports.controller = function(app){
 	var UserModel = require(basePath + '/models/usermodel');
 	var userModel = new UserModel();
-
-
+// REPLACE WITH PRODUCT THINGY 3/25/15
+/*
 	app.get('/jqm/smsManager', function(req, res){
 		if(userModel.verifySession(req,res)){
 			res.render('sms/smsmanager.jqm.jade',
@@ -25,6 +25,55 @@ module.exports.controller = function(app){
 						}
 				}
 			);
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/smsManager    YOUR NOT LOGED IN????");
+		}
+	});
+*/
+
+	app.get('/jqm/smsManager', function(req, res){
+		if(userModel.verifySession(req,res)){
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/jqm/smsManager A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
+
+				if(!(global.PRODUCT_BLOCK_ENABLED) || global.isProductsAuthForRoute('/jqm/smsManager', inOwnedProductIdArray)){
+					global.reportNotify('/jqm/smsManager A1', 
+						{
+							if_:true,
+						}, 0
+					);
+					res.render('sms/smsmanager.jqm.jade',
+						{
+							userId:req.session.userData.userId,
+							deviceId:"815",
+							URL:configData.domain.address + ":" + configData.domain.port,
+							androidAppRoute:configData.androidAppRoute,
+							webSocketClient:configData.webSocketClient,
+							defaultUserImageUrl:configData.defaultUserImageUrl,
+							defaultMemberImageUrl:configData.defaultMemberImageUrl,
+							data:
+								{
+								}
+						}
+					);
+				}else{
+					//you do not own the proper products
+					res.render('products/nosubscription.jqm.jade',
+						{
+							resetPageName:'smsManager',
+						}
+					);
+				}
+			});//end getUserOwnedProducts
+
 		}else{
 			//============================================================
 			//YOUR NOT LOGED IN ------------------------------------------
