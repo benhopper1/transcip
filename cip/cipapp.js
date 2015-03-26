@@ -19,6 +19,8 @@ global.ServerBuild = ServerBuild;
 var util = require('util');
 var url = require('url');
 
+global.DEBUG_ENABLED = true;
+
 
 global.prepairingPorts = {};
 //global.SERVER_IP = 
@@ -41,6 +43,12 @@ global.serverBuildsHash = {};
 //==========================================================
 // REPORT ERROR --------------------------------------------
 //==========================================================
+var genErrorLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/generror.log'
+	}
+);
 global.reportError = function(inCaption, inData, inClass){
 	styleRedOpen = '\u001b[' + 31 + 'm';styleRedClose = '\u001b[' + 39 + 'm';styleWhiteBgOpen = '\u001b[' + 47 + 'm';styleWhiteBgClose = '\u001b[' + 49 + 'm';
 	console.log(styleWhiteBgOpen + styleRedOpen + '===============  REPORT ERROR  =====================================');
@@ -48,18 +56,26 @@ global.reportError = function(inCaption, inData, inClass){
 	console.log('--------------------------------------------------------------------');
 	console.log(util.inspect(inData, false, 7, true));
 	console.log(styleRedOpen + '====================================================================' + styleRedClose + styleWhiteBgClose);
+	genErrorLog.reportError(inCaption, inData);
 }
 
 
 //==========================================================
-// REPORT NOTIFICATION --------------------------------------------
+// REPORT NOTIFICATION -------------------------------------
 //==========================================================
+var genNotifyLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/gennotify.log'
+	}
+);
 global.reportNotify = function(inCaption, inData, inClass){
 	console.log(util.inspect('===============  REPORT NOTIFY  =====================================', false, 2, true));
 	console.log(util.inspect(inCaption + '        CLASS:' + inClass, false, 1, true));
 	console.log('---------------------------------------------------------------------');
 	console.log(util.inspect(inData, false, 7, true));
 	console.log(util.inspect('=====================================================================', false, 2, true));
+	genNotifyLog.reportError(inCaption, inData);
 }
 
 // COUNT UP ALGORYTHIM FOR BALANCE
@@ -519,6 +535,26 @@ ServerBuild.createFileSystemOnly(
 
 
 
+if(global.DEBUG_ENABLED){
+	var memwatch = require(basePath + '/node_modules/memwatch');
+	var moment = require(basePath + '/node_modules/moment');
+	memwatch.on('leak', function(info) {
+		global.reportError('MEM-LEAK',
+			{
+					error:'mem-leak',
+					info:info,
+			}, 0
+		);
+	});
+
+	memwatch.on('stats', function(stats) {
+		global.reportNotify('MEM WATCH STATS', 
+			{
+				stats:stats,
+			}, 0
+		);
+	});
+}
 
 
 
