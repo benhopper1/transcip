@@ -20,6 +20,7 @@ var util = require('util');
 var url = require('url');
 
 global.DEBUG_ENABLED = true;
+global.MEM_WATCH_ENABLED = false;
 
 
 global.prepairingPorts = {};
@@ -535,7 +536,7 @@ ServerBuild.createFileSystemOnly(
 
 
 
-if(global.DEBUG_ENABLED){
+if(global.MEM_WATCH_ENABLED){
 	var memwatch = require(basePath + '/node_modules/memwatch');
 	var moment = require(basePath + '/node_modules/moment');
 	memwatch.on('leak', function(info) {
