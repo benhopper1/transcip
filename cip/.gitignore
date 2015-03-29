@@ -1,2 +1,5 @@
 *.conf
 /server_*
+/*.old
+/*.out
+/*.log
