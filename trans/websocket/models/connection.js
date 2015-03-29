@@ -28,6 +28,15 @@ var Connection = function(inData){
   		password : password,
  		database : database
 	});
+
+	mySqlConnection.on('error', function(err){
+		global.reportError('MYSQL, connection.js onError',
+			{
+					error:err
+			}, 0
+		);
+	});
+
 	mySqlConnection.connect(function(err){
 		if(err){
 			global.reportError('[models.connection.js] MySql.connect', err, 0);

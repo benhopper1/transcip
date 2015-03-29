@@ -93,9 +93,21 @@ module.exports.controller = function(app){
 					);
 				}else{
 					//you do not own the proper products
-					res.render('products/nosubscription.jqm.jade',
+					var uuid = require(basePath + '/node_modules/node-uuid');
+					global.getSpecificProductInformation(
 						{
-							resetPageName:'contactManager',
+							productIds:global.productHashOfArray.getArrayFromHash('/jqm/contactmanager'),
+						}, 
+
+						function(inRequiredProductsInfoHash){
+							res.render('products/nosubscription.jqm.jade',
+								{
+									resetPageName:'contactManager',
+									myProducts:inOwnedProductIdArray,
+									requiredProducts:inRequiredProductsInfoHash,
+									uuid:uuid.v1(),
+								}
+							);
 						}
 					);
 				}

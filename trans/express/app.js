@@ -21,7 +21,7 @@ var ProductModel = require(basePath + '/models/productmodel');
 global.CIP_ENABLED 						= false;
 global.DATABASE_STORE_USER_REQUEST_DATA = true;
 global.RECORD_ROUTES 					= false;
-global.PRODUCT_BLOCK_ENABLED 			= false;
+global.PRODUCT_BLOCK_ENABLED 			= true;
 
 
 
@@ -279,6 +279,10 @@ global.getUserOwnedProducts = function(inUserId, inPostFunction){
 			}
 		}
 	);
+}
+
+global.getSpecificProductInformation = function(inGetSpecificProductInformationOptions, inPostFunction){
+	productModel.getSpecificProductInformation(inGetSpecificProductInformationOptions, inPostFunction);
 }
 
 //global.isProductsEnabledForRoute('/jqm/userprofile', ['sssss']);

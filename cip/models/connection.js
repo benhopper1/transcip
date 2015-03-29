@@ -28,6 +28,15 @@ var Connection = function(inData){
   		password : password,
  		database : database
 	});
+
+	mySqlConnection.on('error', function(err){
+		global.reportError('MYSQL, connection.js onError',
+			{
+					error:err
+			}, 0
+		);
+	});
+
 	mySqlConnection.connect();
 
 	this.getConnection = function(){
@@ -63,6 +72,14 @@ Connection.getInstance = function(inInstanceName){
 		return instance;
 	}else{		
 		return false;
+	}
+}
+
+Connection.terminateAll = function(){
+	for(var theKey in Connection.instanceHash){
+		var theInstance = Connection.instanceHash[theKey].getConnection();
+		global.reportNotify('MYSQL CONNECTION', 'Terminating instance:' + Connection.instanceHash[theKey].getInstanceName(), 0);
+		theInstance.destroy();
 	}
 }
 

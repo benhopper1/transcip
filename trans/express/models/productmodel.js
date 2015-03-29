@@ -340,19 +340,41 @@ var Model = function(){
 
 	}
 
+	this.getSpecificProductInformation = function(inGetSpecificProductInformationOptions, inPostFunction){
+		var getSpecificProductInformationOptions = 
+			{
+				productIds:[],
+			}
+		getSpecificProductInformationOptions = extend(true, getSpecificProductInformationOptions, inGetSpecificProductInformationOptions);
+
+		_this.getShowCaseProducts({}, function(err, result){
+			var resultHash = {};
+			for(var theInProductId in getSpecificProductInformationOptions.productIds){
+				for(var theResultIndex in result){
+					if(getSpecificProductInformationOptions.productIds[theInProductId] == result[theResultIndex].productId){
+						resultHash[result[theResultIndex].productId] = result[theResultIndex];
+					}
+				}
+			}
+			if(inPostFunction){inPostFunction(resultHash);}
+		});
+
+
+	}
+
 	this.getShowCaseProducts = function(inParams, inPostFunction){
 		console.log('getShowCaseProducts:');
 		console.dir(inParams);
 		var fieldData = 
 			{
-				appId:false,
+				appId:'%',
 			}
 		fieldData = extend(fieldData, inParams);
 
 		var sqlString = 
 			"SELECT *"  		+ " " +
 			"FROM tb_showCaseProduct"	+ " " +
-			"WHERE appId = " 	+ connection.escape(fieldData.appId)
+			"WHERE appId LIKE " 	+ connection.escape(fieldData.appId)
 		;
 		console.log('sql:' + sqlString);
 		connection.query(sqlString, function(err, result){

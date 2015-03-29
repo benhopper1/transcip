@@ -1,0 +1,1103 @@
+##########################################################
+-- H a s h   O f  A r r a y   O b j e c t  -- Loading
+##########################################################
+Server Build Loading
+DebugObject CREATED
+DebugObject CREATED
+MaintenanceObject CREATED
+START:
+{ second: [ 0, 20, 40 ] }
+basePath:/home/ben/git_project/transcip/cip
+instance created:arf
+iplllll:192.168.0.16
+iplllll:192.168.0.16
+informationcontroller.js
+https server ip:port  30800/192.168.0.16
+path:/home/ben/git_project/transcip/cip/controllers
+------------------------------<--  A D D    R O U T I N G  -->------------------------------------------------------------------
+loading as controller for routing >:interfacecontroller.js
+path:/home/ben/git_project/transcip/cip/controllers/interfacecontroller.js
+loading-->----------------------->--  Interface Controller  --<-----------------------
+routesHashArray dump:
+test[0]:{"fieldValue":"test"}
+routesHashArray dump:
+test[0]:{"fieldValue":"test"}
+toCipInformation[0]:{"fieldValue":"toCipInformation"}
+------------------------------<--  A D D    R O U T I N G  -->------------------------------------------------------------------
+loading as controller for routing >:transactioncontroller.js
+path:/home/ben/git_project/transcip/cip/controllers/transactioncontroller.js
+loading-->----------------------->--  TRANSACTION CONTROLLER  --<-----------------------
+routesHashArray dump:
+test[0]:{"fieldValue":"test"}
+toCipInformation[0]:{"fieldValue":"toCipInformation"}
+toCipTransaction[0]:{"fieldValue":"toCipTransaction"}
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild constructor        CLASS:undefined'[39m
+---------------------------------------------------------------------
+[32m'Entered'[39m
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'INSTANCE MADE, SERVERS NOT RUNNING YET        CLASS:0'[39m
+---------------------------------------------------------------------
+{ expressServerName: [32m'Server_ex_30401'[39m,
+  websocketServerName: [32m'Server_ws_30401'[39m }
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'STATE CHANGE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ buildServerName: [32m'server_1'[39m,
+  caption: [32m'unloaded -> creating'[39m,
+  state: [32m'creating'[39m,
+  oldState: [32m'unloaded'[39m }
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild constructor        CLASS:undefined'[39m
+---------------------------------------------------------------------
+[32m'Entered'[39m
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'INSTANCE MADE, SERVERS NOT RUNNING YET        CLASS:0'[39m
+---------------------------------------------------------------------
+{ expressServerName: [32m'Server_ex_30400'[39m,
+  websocketServerName: [32m'Server_ws_30400'[39m }
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'STATE CHANGE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ buildServerName: [32m'server_0'[39m,
+  caption: [32m'unloaded -> creating'[39m,
+  state: [32m'creating'[39m,
+  oldState: [32m'unloaded'[39m }
+[32m'====================================================================='[39m
+Express server listening on ip:port 192.168.0.16:30801
+TEST REPORT
+{ activeList: [],
+  unActiveList: 
+   [ 'websocketBridgeServicePort',
+     'websocketServerPort',
+     'websocketDomainPort',
+     'expressBridgeServicePort',
+     'expressWebSocketClientPort',
+     'expressHttpsPort',
+     'expressHttpPort' ],
+  errorList: [],
+  websocketBridgeServicePort: 
+   { ip: '192.168.0.16',
+     port: 30600,
+     inUse: false,
+     error: null,
+     key: 'websocketBridgeServicePort' },
+  websocketServerPort: 
+   { ip: '192.168.0.16',
+     port: 30400,
+     inUse: false,
+     error: null,
+     key: 'websocketServerPort' },
+  websocketDomainPort: 
+   { ip: '192.168.0.16',
+     port: 30000,
+     inUse: false,
+     error: null,
+     key: 'websocketDomainPort' },
+  expressBridgeServicePort: 
+   { ip: '192.168.0.16',
+     port: 30600,
+     inUse: false,
+     error: null,
+     key: 'expressBridgeServicePort' },
+  expressWebSocketClientPort: 
+   { ip: '192.168.0.16',
+     port: 30400,
+     inUse: false,
+     error: null,
+     key: 'expressWebSocketClientPort' },
+  expressHttpsPort: 
+   { ip: '192.168.0.16',
+     port: 30200,
+     inUse: false,
+     error: null,
+     key: 'expressHttpsPort' },
+  expressHttpPort: 
+   { ip: '192.168.0.16',
+     port: 30000,
+     inUse: false,
+     error: null,
+     key: 'expressHttpPort' },
+  physicalStructurePresent: false }
+expressCmdDetail:http://192.168.0.16 30000 https://192.168.0.16 30200 192.168.0.16 30400 hkjhkjh 1
+websocketCmdDetail:192.168.0.16 30400 hkjhkjh 1
+WEBSOCKET CMD:cd /home/ben/git_project/transcip/cip/server_0/websocket &&  node wsapp.js 192.168.0.16 30400 hkjhkjh 1
+COPY FILES FOR NEW SERVER
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createFileSystem        CLASS:undefined'[39m
+---------------------------------------------------------------------
+[32m'Entered'[39m
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'makeFoldersSync        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { target: [32m'/home/ben/git_project/transcip/cip/server_0'[39m },
+  { target: [32m'/home/ben/git_project/transcip/cip/server_0/express'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createLinks        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/models'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/models'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/controllers'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/controllers'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/library'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/library'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/node_modules'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/node_modules'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/views'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/views'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/public'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/public'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/purchase.log'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/express/purchase.log'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createPublicLink DONE        CLASS:0'[39m
+---------------------------------------------------------------------
+{}
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'streamFilesCopy        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourceFile: [32m'/home/ben/git_project/transcip/trans/express/main.conf'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_0/express/main.conf'[39m },
+  { sourceFile: [32m'/home/ben/git_project/transcip/trans/express/app.js'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_0/express/app.js'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'makeFoldersSync        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { target: [32m'/home/ben/git_project/transcip/cip/server_0/websocket'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createLinks        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/models'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/models'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/controllers'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/controllers'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/libs'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/libs'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/node_modules'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/node_modules'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/public'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/public'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createPublicLink DONE        CLASS:0'[39m
+---------------------------------------------------------------------
+{}
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'streamFilesCopy        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourceFile: [32m'/home/ben/git_project/transcip/trans/websocket/wsmain.conf'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/wsmain.conf'[39m },
+  { sourceFile: [32m'/home/ben/git_project/transcip/trans/websocket/wsapp.js'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/wsapp.js'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createAllBootScripts        CLASS:0'[39m
+---------------------------------------------------------------------
+{ expressServerPath: [32m'/home/ben/git_project/transcip/cip/server_0/express'[39m,
+  websocketServerPath: [32m'/home/ben/git_project/transcip/cip/server_0/websocket'[39m,
+  serverNumber: [33m0[39m }
+[32m'====================================================================='[39m
+TEST REPORT
+{ activeList: [],
+  unActiveList: 
+   [ 'websocketBridgeServicePort',
+     'websocketServerPort',
+     'websocketDomainPort',
+     'expressBridgeServicePort',
+     'expressWebSocketClientPort',
+     'expressHttpsPort',
+     'expressHttpPort' ],
+  errorList: [],
+  websocketBridgeServicePort: 
+   { ip: '192.168.0.16',
+     port: 30601,
+     inUse: false,
+     error: null,
+     key: 'websocketBridgeServicePort' },
+  websocketServerPort: 
+   { ip: '192.168.0.16',
+     port: 30401,
+     inUse: false,
+     error: null,
+     key: 'websocketServerPort' },
+  websocketDomainPort: 
+   { ip: '192.168.0.16',
+     port: 30001,
+     inUse: false,
+     error: null,
+     key: 'websocketDomainPort' },
+  expressBridgeServicePort: 
+   { ip: '192.168.0.16',
+     port: 30601,
+     inUse: false,
+     error: null,
+     key: 'expressBridgeServicePort' },
+  expressWebSocketClientPort: 
+   { ip: '192.168.0.16',
+     port: 30401,
+     inUse: false,
+     error: null,
+     key: 'expressWebSocketClientPort' },
+  expressHttpsPort: 
+   { ip: '192.168.0.16',
+     port: 30201,
+     inUse: false,
+     error: null,
+     key: 'expressHttpsPort' },
+  expressHttpPort: 
+   { ip: '192.168.0.16',
+     port: 30001,
+     inUse: false,
+     error: null,
+     key: 'expressHttpPort' },
+  physicalStructurePresent: false }
+expressCmdDetail:http://192.168.0.16 30001 https://192.168.0.16 30201 192.168.0.16 30401 hkjhkjh 1
+websocketCmdDetail:192.168.0.16 30401 hkjhkjh 1
+WEBSOCKET CMD:cd /home/ben/git_project/transcip/cip/server_1/websocket &&  node wsapp.js 192.168.0.16 30401 hkjhkjh 1
+COPY FILES FOR NEW SERVER
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createFileSystem        CLASS:undefined'[39m
+---------------------------------------------------------------------
+[32m'Entered'[39m
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'makeFoldersSync        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { target: [32m'/home/ben/git_project/transcip/cip/server_1'[39m },
+  { target: [32m'/home/ben/git_project/transcip/cip/server_1/express'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createLinks        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/models'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/models'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/controllers'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/controllers'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/library'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/library'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/node_modules'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/node_modules'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/views'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/views'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/public'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/public'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/express/purchase.log'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/express/purchase.log'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createPublicLink DONE        CLASS:0'[39m
+---------------------------------------------------------------------
+{}
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'streamFilesCopy        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourceFile: [32m'/home/ben/git_project/transcip/trans/express/main.conf'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_1/express/main.conf'[39m },
+  { sourceFile: [32m'/home/ben/git_project/transcip/trans/express/app.js'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_1/express/app.js'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'makeFoldersSync        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { target: [32m'/home/ben/git_project/transcip/cip/server_1/websocket'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createLinks        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/models'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/models'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/controllers'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/controllers'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/libs'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/libs'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/node_modules'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/node_modules'[39m },
+  { sourcePublicPath: [32m'/home/ben/git_project/transcip/trans/websocket/public'[39m,
+    targetPublicPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/public'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'newserver.createPublicLink DONE        CLASS:0'[39m
+---------------------------------------------------------------------
+{}
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'streamFilesCopy        CLASS:0'[39m
+---------------------------------------------------------------------
+[ { sourceFile: [32m'/home/ben/git_project/transcip/trans/websocket/wsmain.conf'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/wsmain.conf'[39m },
+  { sourceFile: [32m'/home/ben/git_project/transcip/trans/websocket/wsapp.js'[39m,
+    targetFile: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/wsapp.js'[39m } ]
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'createAllBootScripts        CLASS:0'[39m
+---------------------------------------------------------------------
+{ expressServerPath: [32m'/home/ben/git_project/transcip/cip/server_1/express'[39m,
+  websocketServerPath: [32m'/home/ben/git_project/transcip/cip/server_1/websocket'[39m,
+  serverNumber: [33m1[39m }
+[32m'====================================================================='[39m
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m0[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_0/express/server_start_forever.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_0/express/\n/home/ben/git_project/transcip/cip/server_0/express/node_modules/forever/bin/forever --uid "SERVER_0" -w app.js http://192.168.0.16 30000 https://192.168.0.16 30200 192.168.0.16 30400 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_0/express/server_start.sh
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_1/express/server_start_forever.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_1/express/\n/home/ben/git_project/transcip/cip/server_1/express/node_modules/forever/bin/forever --uid "SERVER_1" -w app.js http://192.168.0.16 30001 https://192.168.0.16 30201 192.168.0.16 30401 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_1/express/server_start.sh
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m0[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_0/express/server_start.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_0/express/\nnode app.js http://192.168.0.16 30000 https://192.168.0.16 30200 192.168.0.16 30400 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_0/express/server_start.sh
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_1/express/server_start.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_1/express/\nnode app.js http://192.168.0.16 30001 https://192.168.0.16 30201 192.168.0.16 30401 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_1/express/server_start.sh
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m0[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/server_start_forever.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_0/websocket/\n/home/ben/git_project/transcip/cip/server_0/websocket/node_modules/forever/bin/forever --uid "SERVER_0" -w wsapp.js 192.168.0.16 30400 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/server_start_forever.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_1/websocket/\n/home/ben/git_project/transcip/cip/server_1/websocket/node_modules/forever/bin/forever --uid "SERVER_1" -w wsapp.js 192.168.0.16 30401 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m0[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_0/websocket/server_start.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_0/websocket/\nnode wsapp.js 192.168.0.16 30400 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_0/websocket/server_start.sh
+newServer.createFileSystem CALL BACK
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'STATE CHANGE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ buildServerName: [32m'server_0'[39m,
+  caption: [32m'creating -> unloaded'[39m,
+  state: [32m'unloaded'[39m,
+  oldState: [32m'creating'[39m }
+[32m'====================================================================='[39m
+ServerBuild.createFileSystemOnly callback
+bash saved!
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'writeBashBootFile SAVED        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  fileName: [32m'/home/ben/git_project/transcip/cip/server_1/websocket/server_start.sh'[39m,
+  finalString: [32m'#!/bin/bash\ncd /home/ben/git_project/transcip/cip/server_1/websocket/\nnode wsapp.js 192.168.0.16 30401 hkjhkjh 1 &\nthepid=$!\necho "kill $thepid" >server_kill.sh &\n'[39m }
+[32m'====================================================================='[39m
+onSave:/home/ben/git_project/transcip/cip/server_1/websocket/server_start.sh
+newServer.createFileSystem CALL BACK
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'STATE CHANGE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ buildServerName: [32m'server_1'[39m,
+  caption: [32m'creating -> booting'[39m,
+  state: [32m'booting'[39m,
+  oldState: [32m'creating'[39m }
+[32m'====================================================================='[39m
+bootExpressServer ENETERED
+cd /home/ben/git_project/transcip/cip/server_1/express/ && bash server_start.sh  > /dev/null 2>&1 &
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'LOADING newserver.bootExpressServer        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  serverType: [32m'express'[39m,
+  error: [1mnull[22m,
+  stdout: [32m''[39m,
+  stderr: [32m''[39m }
+[32m'====================================================================='[39m
+backfrom express BOOT
+bootWebsocketServer ENETERED
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'LOADING newserver.bootWebsocketServer        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverNumber: [33m1[39m,
+  serverType: [32m'webSocket'[39m,
+  error: [1mnull[22m,
+  stdout: [32m''[39m,
+  stderr: [32m''[39m }
+[32m'====================================================================='[39m
+backfrom WebsocketServer BOOT
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'PERMISSIONS        CLASS:0'[39m
+---------------------------------------------------------------------
+{ path: [32m'/home/ben/git_project/transcip/cip/server_1'[39m,
+  mode: [33m493[39m }
+[32m'====================================================================='[39m
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'STATE CHANGE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ buildServerName: [32m'server_1'[39m,
+  caption: [32m'booting -> running'[39m,
+  state: [32m'running'[39m,
+  oldState: [32m'booting'[39m }
+[32m'====================================================================='[39m
+SERVER LOADED:server_1
+CONNECTED: 192.168.0.16:41569
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'NEW CONNECTION ON CIP INTERFACE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ host: [32m'192.168.0.16'[39m,
+  port: [33m41569[39m,
+  connectionId: [32m'192.168.0.1641569'[39m }
+[32m'====================================================================='[39m
+------reportOnConnect-------
+CONNECT from roiter
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"requestedServerName","serverName":"Server_ws_30401","serverNumber":30401,"serverStartTime":"2015-03-26 09:42:05","serverType":"webSocket","configData":{"mysqlServerConnection":{"user":"ben","password":"250BenHop!@#","hostIp":"192.168.0.16","databaseName":"arfSync"},"webSocketServer":{"address":"192.168.0.16","port":30401,"connectString":"hkjhkjh"},"bridgeServices":{"host":"192.168.0.16","port":30601},"cip":{"host":"192.168.0.16","port":30900},"domain":{"address":"192.168.0.16","port":30199},"secureDomain":{},"webSocketClient":{}}}}<><><><192.168.0.16 41569
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'requestedServerName',
+  serverName: 'Server_ws_30401',
+  serverNumber: 30401,
+  serverStartTime: '2015-03-26 09:42:05',
+  serverType: 'webSocket',
+  configData: 
+   { mysqlServerConnection: 
+      { user: 'ben',
+        password: '250BenHop!@#',
+        hostIp: '192.168.0.16',
+        databaseName: 'arfSync' },
+     webSocketServer: 
+      { address: '192.168.0.16',
+        port: 30401,
+        connectString: 'hkjhkjh' },
+     bridgeServices: { host: '192.168.0.16', port: 30601 },
+     cip: { host: '192.168.0.16', port: 30900 },
+     domain: { address: '192.168.0.16', port: 30199 },
+     secureDomain: {},
+     webSocketClient: {} } }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"requestedServerName","serverName":"Server_ws_30401","serverNumber":30401,"serverStartTime":"2015-03-26 09:42:05","serverType":"webSocket","configData":{"mysqlServerConnection":{"user":"ben","password":"250BenHop!@#","hostIp":"192.168.0.16","databaseName":"arfSync"},"webSocketServer":{"address":"192.168.0.16","port":30401,"connectString":"hkjhkjh"},"bridgeServices":{"host":"192.168.0.16","port":30601},"cip":{"host":"192.168.0.16","port":30900},"domain":{"address":"192.168.0.16","port":30199},"secureDomain":{},"webSocketClient":{}}}}'
+requestedServerName in CIP catch:Server_ws_30401
+SETTING setCipClientConnection 44:
+CONNECTED: 192.168.0.16:41571
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'NEW CONNECTION ON CIP INTERFACE        CLASS:0'[39m
+---------------------------------------------------------------------
+{ host: [32m'192.168.0.16'[39m,
+  port: [33m41571[39m,
+  connectionId: [32m'192.168.0.1641571'[39m }
+[32m'====================================================================='[39m
+------reportOnConnect-------
+CONNECT from roiter
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"requestedServerName","serverName":"Server_ex_30401","serverNumber":30401,"serverStartTime":"2015-03-26 09:42:06","serverType":"express","configData":{"mysqlServerConnection":{"user":"ben","password":"250BenHop!@#","host":"192.168.0.16","database":"arfSync"},"mediaStorageModel":{"imageFolderPath":"/public/images","audioFolderPath":"/public/audio"},"imageModel":{"themes":{"normalUserImage":{"resizeX":"150^","resizeY":"100^","cropX":300,"cropY":200,"imageWriteOver":{"stroke":"#ffffff","font":"Helvetica.ttf","fontSize":15,"drawTextX":5,"drawTextY":20,"drawTextText":""}},"socialTreeTopicImage":{}}},"mail":{"accountSetup":{"transporter":{"service":"gmail","auth":{"user":"arfcomm@gmail.com","pass":"hist0l0gy"}},"greetingFile":"/sdsdsd/somefile.html"},"user":"arfsync@walnutcracker.net","password":"hist0l0gy","host":"vps.walnutcracker.net","ssl":false,"fromCaption":"ArfSync"},"domain":{"address":"http://192.168.0.16","port":30001},"secureDomain":{"address":"https://192.168.0.16","port":30201},"webSocketClient":{"address":"192.168.0.16","port":30401,"connectString":"hkjhkjh"},"bridgeService":{"address":"192.168.0.16","port":30601,"security":"hkjhkjh"},"appService":{"address":"192.168.0.16","port":30100},"contacts":{"defaultImageUrl":"/public/images/contacts/memberdefault.png"},"phoneCacheRoute":"/upload/phone/cache","phoneCacheStorageFolder":"/public/phonecache","defaultUserImageUrl":"/public/images/contacts/default.png","defaultMemberImageUrl":"/public/images/contacts/memberdefault.png","tempUploadRoute":"/uploadAsTemp","addUserRoute":"/user/database/addUser","userNameExistRoute":"/user/userNameExist","loginRoute":"/user/mobileLogin","contactImageUploadRoute":"/upload/contact/image","contactImageFolder":"/public/images/contacts","contactImageProcessFile":true,"userImageUploadRoute":"/upload/user/image","userImageFolder":"/public/images/users","userImageProcessFile":true,"androidAppRoute":"/public/download/androidapp/v002/Qr_Proj_3.apk","cip":{"host":"192.168.0.16","port":30900}}}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'requestedServerName',
+  serverName: 'Server_ex_30401',
+  serverNumber: 30401,
+  serverStartTime: '2015-03-26 09:42:06',
+  serverType: 'express',
+  configData: 
+   { mysqlServerConnection: 
+      { user: 'ben',
+        password: '250BenHop!@#',
+        host: '192.168.0.16',
+        database: 'arfSync' },
+     mediaStorageModel: 
+      { imageFolderPath: '/public/images',
+        audioFolderPath: '/public/audio' },
+     imageModel: { themes: [Object] },
+     mail: 
+      { accountSetup: [Object],
+        user: 'arfsync@walnutcracker.net',
+        password: 'hist0l0gy',
+        host: 'vps.walnutcracker.net',
+        ssl: false,
+        fromCaption: 'ArfSync' },
+     domain: { address: 'http://192.168.0.16', port: 30001 },
+     secureDomain: { address: 'https://192.168.0.16', port: 30201 },
+     webSocketClient: 
+      { address: '192.168.0.16',
+        port: 30401,
+        connectString: 'hkjhkjh' },
+     bridgeService: { address: '192.168.0.16', port: 30601, security: 'hkjhkjh' },
+     appService: { address: '192.168.0.16', port: 30100 },
+     contacts: { defaultImageUrl: '/public/images/contacts/memberdefault.png' },
+     phoneCacheRoute: '/upload/phone/cache',
+     phoneCacheStorageFolder: '/public/phonecache',
+     defaultUserImageUrl: '/public/images/contacts/default.png',
+     defaultMemberImageUrl: '/public/images/contacts/memberdefault.png',
+     tempUploadRoute: '/uploadAsTemp',
+     addUserRoute: '/user/database/addUser',
+     userNameExistRoute: '/user/userNameExist',
+     loginRoute: '/user/mobileLogin',
+     contactImageUploadRoute: '/upload/contact/image',
+     contactImageFolder: '/public/images/contacts',
+     contactImageProcessFile: true,
+     userImageUploadRoute: '/upload/user/image',
+     userImageFolder: '/public/images/users',
+     userImageProcessFile: true,
+     androidAppRoute: '/public/download/androidapp/v002/Qr_Proj_3.apk',
+     cip: { host: '192.168.0.16', port: 30900 } } }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"requestedServerName","serverName":"Server_ex_30401","serverNumber":30401,"serverStartTime":"2015-03-26 09:42:06","serverType":"express","configData":{"mysqlServerConnection":{"user":"ben","password":"250BenHop!@#","host":"192.168.0.16","database":"arfSync"},"mediaStorageModel":{"imageFolderPath":"/public/images","audioFolderPath":"/public/audio"},"imageModel":{"themes":{"normalUserImage":{"resizeX":"150^","resizeY":"100^","cropX":300,"cropY":200,"imageWriteOver":{"stroke":"#ffffff","font":"Helvetica.ttf","fontSize":15,"drawTextX":5,"drawTextY":20,"drawTextText":""}},"socialTreeTopicImage":{}}},"mail":{"accountSetup":{"transporter":{"service":"gmail","auth":{"user":"arfcomm@gmail.com","pass":"hist0l0gy"}},"greetingFile":"/sdsdsd/somefile.html"},"user":"arfsync@walnutcracker.net","password":"hist0l0gy","host":"vps.walnutcracker.net","ssl":false,"fromCaption":"ArfSync"},"domain":{"address":"http://192.168.0.16","port":30001},"secureDomain":{"address":"https://192.168.0.16","port":30201},"webSocketClient":{"address":"192.168.0.16","port":30401,"connectString":"hkjhkjh"},"bridgeService":{"address":"192.168.0.16","port":30601,"security":"hkjhkjh"},"appService":{"address":"192.168.0.16","port":30100},"contacts":{"defaultImageUrl":"/public/images/contacts/memberdefault.png"},"phoneCacheRoute":"/upload/phone/cache","phoneCacheStorageFolder":"/public/phonecache","defaultUserImageUrl":"/public/images/contacts/default.png","defaultMemberImageUrl":"/public/images/contacts/memberdefault.png","tempUploadRoute":"/uploadAsTemp","addUserRoute":"/user/database/addUser","userNameExistRoute":"/user/userNameExist","loginRoute":"/user/mobileLogin","contactImageUploadRoute":"/upload/contact/image","contactImageFolder":"/public/images/contacts","contactImageProcessFile":true,"userImageUploadRoute":"/upload/user/image","userImageFolder":"/public/images/users","userImageProcessFile":true,"androidAppRoute":"/public/download/androidapp/v002/Qr_Proj_3.apk","cip":{"host":"192.168.0.16","port":30900}}}}'
+requestedServerName in CIP catch:Server_ex_30401
+SETTING setCipClientConnection 44:
+DATA: {"cipLayer":{"type":"toCipTransaction","isWsPassThrough":false,"command":"testConnection","data":"whatever here","serverName":"Server_ws_30401","serverType":"webSocket","transactionId":"4825a710-d3c6-11e4-b291-9b00ac4fc7a7"}}<><><><192.168.0.16 41569
+{ type: 'toCipTransaction',
+  isWsPassThrough: false,
+  command: 'testConnection',
+  data: 'whatever here',
+  serverName: 'Server_ws_30401',
+  serverType: 'webSocket',
+  transactionId: '4825a710-d3c6-11e4-b291-9b00ac4fc7a7' }
+toCipTransaction
+{ cipLayer: 
+   { type: 'toCipTransaction',
+     isWsPassThrough: false,
+     command: 'testConnection',
+     data: 'whatever here',
+     serverName: 'Server_ws_30401',
+     serverType: 'webSocket',
+     transactionId: '4825a710-d3c6-11e4-b291-9b00ac4fc7a7' } }
+ testConnection cmd OK enetered
+testConnection in CIP catch:Server_ws_30401
+TEST5555
+{ cipLayer: 
+   { isWsPassThrough: false,
+     type: 'transResp',
+     command: false,
+     transactionId: '4825a710-d3c6-11e4-b291-9b00ac4fc7a7',
+     data: { testKet: 'testValue from transaction thingy 77' } } }
+DATA: {"cipLayer":{"type":"toCipTransaction","isWsPassThrough":false,"command":"testConnection","data":"whatever here","serverName":"Server_ex_30401","serverType":"express","transactionId":"494ebdc0-d3c6-11e4-b5a9-61bc818a88f5"}}<><><><192.168.0.16 41571
+{ type: 'toCipTransaction',
+  isWsPassThrough: false,
+  command: 'testConnection',
+  data: 'whatever here',
+  serverName: 'Server_ex_30401',
+  serverType: 'express',
+  transactionId: '494ebdc0-d3c6-11e4-b5a9-61bc818a88f5' }
+toCipTransaction
+{ cipLayer: 
+   { type: 'toCipTransaction',
+     isWsPassThrough: false,
+     command: 'testConnection',
+     data: 'whatever here',
+     serverName: 'Server_ex_30401',
+     serverType: 'express',
+     transactionId: '494ebdc0-d3c6-11e4-b5a9-61bc818a88f5' } }
+ testConnection cmd OK enetered
+testConnection in CIP catch:Server_ex_30401
+TEST5555
+{ cipLayer: 
+   { isWsPassThrough: false,
+     type: 'transResp',
+     command: false,
+     transactionId: '494ebdc0-d3c6-11e4-b5a9-61bc818a88f5',
+     data: { testKet: 'testValue from transaction thingy 77' } } }
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: -1,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: -1,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m-1[39m }
+[32m'====================================================================='[39m
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: 0,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: 0,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m-1[39m }
+[32m'====================================================================='[39m
+userData:
+{ requestUrl: '/information/trans',
+  agent: 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36',
+  referrer: undefined,
+  ip: '192.168.0.16' }
+[0mGET /information/trans [32m200 [0m2600.564 ms - 4573[0m
+null
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: 0,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: 0,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+[0mGET /public/js/footable/css/footable.core.css [32m200 [0m121.790 ms - 5459[0m
+[0mGET /public/css/arfsync.jqm/arfsync.jqm.css [32m200 [0m149.410 ms - 5866[0m
+[0mGET /public/js/jquery/hopper/jquery.hopper.extention.js [32m200 [0m157.952 ms - 33161[0m
+[0mGET /public/js/jquery/hopper/jquery.hopper.checkboxlines.js [32m200 [0m151.308 ms - 8304[0m
+[0mGET /public/js/jquery/hopper/jquery.hopper.database.js [32m200 [0m155.433 ms - 2726[0m
+[0mGET /public/js/jquery/hopper/jquery.hopper.contactlistview.js [32m200 [0m148.862 ms - 21398[0m
+[0mGET /public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js [32m200 [0m141.326 ms - 4641[0m
+[0mGET /public/js/footable/js/footable.js [32m200 [0m36.542 ms - 38879[0m
+[0mGET /js/clientutil/clientutil.js [32m200 [0m42.274 ms - 31417[0m
+[0mGET /public/js/eventorigin/eventorigin.js [32m200 [0m52.635 ms - 990[0m
+[0mGET /public/js/hashofarray/v002/hashofarrayobject.js [32m200 [0m59.385 ms - 10204[0m
+[0mGET /public/images/ui/whitecloudsimage.jpg [32m200 [0m53.677 ms - 116344[0m
+userData:
+{ requestUrl: '/favicon.ico',
+  agent: 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36',
+  referrer: undefined,
+  ip: '192.168.0.16' }
+REDIECTING:/favicon.ico
+url_parts
+{ protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: '/favicon.ico',
+  path: '/favicon.ico',
+  href: '/favicon.ico' }
+ip @ route192.168.0.16/favicon.ico
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'CLIENT GET REDIRECTION        CLASS:0'[39m
+---------------------------------------------------------------------
+{ source: [32m'/favicon.ico'[39m,
+  target: [32m'https://192.168.0.16:30201/favicon.ico'[39m }
+[32m'====================================================================='[39m
+[0mGET /favicon.ico [36m302 [0m34.904 ms - 72[0m
+null
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m-1[39m }
+[32m'====================================================================='[39m
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100},"serverName":"Server_ws_30401","serverType":"webSocket"}}<><><><192.168.0.16 41569
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: -1,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100 },
+  serverName: 'Server_ws_30401',
+  serverType: 'webSocket' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100},"serverName":"Server_ws_30401","serverType":"webSocket"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: -1,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  serverType: 'webSocket' }
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: 0,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: 0,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m0[39m }
+[32m'====================================================================='[39m
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: 0,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: 0,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m0[39m }
+[32m'====================================================================='[39m
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}<><><><192.168.0.16 41571
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: 0,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100,
+     routes: [] },
+  serverName: 'Server_ex_30401',
+  serverType: 'express' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":0,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100,"routes":[]},"serverName":"Server_ex_30401","serverType":"express"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: 0,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  routes: [],
+  serverType: 'express' }
+JOB RUNNING
+maintenance_0_20_40 DUMP
+[Server_ws_30401] count:0
+[Server_ex_30401] count:0
+global.userId_hashOfArray
+{}
+global.serverHashOfArray
+{}
+global.qrHash
+{}
+global.qrCountHashByServer
+{}
+--------- server_1------------------
+{ express: 'Server_ex_30401', websocket: 'Server_ws_30401' }
+running
+--------- server_0------------------
+{ express: 'Server_ex_30400', websocket: 'Server_ws_30400' }
+unloaded
+ServerBuild startVacantCalculation 555
+[32m'===============  REPORT NOTIFY  ====================================='[39m
+[32m'ServerBuild.bestVacantServerInstance        CLASS:0'[39m
+---------------------------------------------------------------------
+{ serverName: [32m'server_1'[39m,
+  secure: 
+   { protocol: [32m'https:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30201[39m },
+  unSecure: 
+   { protocol: [32m'http:'[39m,
+     ip: [32m'192.168.0.16'[39m,
+     port: [33m30001[39m },
+  processingScore: [33m0[39m }
+[32m'====================================================================='[39m
+DATA: {"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100},"serverName":"Server_ws_30401","serverType":"webSocket"}}<><><><192.168.0.16 41569
+{ type: 'toCipInformation',
+  isWsPassThrough: false,
+  command: 'remoteServerScore',
+  data: 
+   { REQUEST_SCORE_INTERVAL_SECOND: 0,
+     PROCESSING_SCORE_INTERVAL_SECOND: 0,
+     requestScore: 0,
+     requestScoreOld: -1,
+     REQUEST_SCORE_COMMON: 1,
+     processingScore: 0,
+     processingOld: -1,
+     PROCESSING_SCORE_COMMON: 100 },
+  serverName: 'Server_ws_30401',
+  serverType: 'webSocket' }
+toCipInformation from roiter
+'{"cipLayer":{"type":"toCipInformation","isWsPassThrough":false,"command":"remoteServerScore","data":{"REQUEST_SCORE_INTERVAL_SECOND":0,"PROCESSING_SCORE_INTERVAL_SECOND":0,"requestScore":0,"requestScoreOld":-1,"REQUEST_SCORE_COMMON":1,"processingScore":0,"processingOld":-1,"PROCESSING_SCORE_COMMON":100},"serverName":"Server_ws_30401","serverType":"webSocket"}}'
+addNewScoreEntry ENETERED
+{ REQUEST_SCORE_INTERVAL_SECOND: 0,
+  PROCESSING_SCORE_INTERVAL_SECOND: 0,
+  requestScore: 0,
+  requestScoreOld: -1,
+  REQUEST_SCORE_COMMON: 1,
+  processingScore: 0,
+  processingOld: -1,
+  PROCESSING_SCORE_COMMON: 100,
+  serverType: 'webSocket' }

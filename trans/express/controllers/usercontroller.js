@@ -323,9 +323,21 @@ module.exports.controller = function(app) {
 					});
 				}else{
 					//you do not own the proper products
-					res.render('products/nosubscription.jqm.jade',
+					var uuid = require(basePath + '/node_modules/node-uuid');
+					global.getSpecificProductInformation(
 						{
-							resetPageName:'userProfile',
+							productIds:global.productHashOfArray.getArrayFromHash('/jqm/userprofile'),
+						}, 
+
+						function(inRequiredProductsInfoHash){
+							res.render('products/nosubscription.jqm.jade',
+								{
+									resetPageName:'userProfile',
+									myProducts:inOwnedProductIdArray,
+									requiredProducts:inRequiredProductsInfoHash,
+									uuid:uuid.v1(),
+								}
+							);
 						}
 					);
 				}

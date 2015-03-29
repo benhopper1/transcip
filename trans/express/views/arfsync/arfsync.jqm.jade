@@ -2,7 +2,8 @@
 head 
 	meta(charset="UTF-8")
 	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
-	title() arfSync
+	title() ArfSync
+	link(rel="icon" type="image/png" href="/public/icons/favicon-32x32.png")
 	//background-image: url('public/images/ui/beach_background.jpg')      background-color: #00ff00;
 	//body(style="background-image: url('public/images/ui/beach_background4.jpg')")
 
@@ -413,7 +414,7 @@ body
 							userProfile:function(){
 								$('#userProfile_contents').load("/jqm/userprofile ", function(){
 									console.log('loading userprofile');
-									$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', { transition:'turn', reverse:'true'});
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', {reload:false, transition:'turn', reverse:'true'});
 									loadedHash['userProfile'] = true;
 									$('#userProfile_contents').trigger('create');
 								});
@@ -432,7 +433,7 @@ body
 										console.log('popup thingy loaded!');
 									});
 									loadedHash['smsManager'] = true;
-									$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {transition:'turn', reverse:'true'});
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false, transition:'turn', reverse:'true'});
 
 								});
 

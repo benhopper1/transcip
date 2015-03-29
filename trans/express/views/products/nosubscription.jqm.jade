@@ -1,9 +1,341 @@
-h1(id="lll99")	NO SUBSCRIPTION
+
+
+#embed
+	h1(id="lll99")	NO SUBSCRIPTION
+	//a(href="#popupVideo") click me
+	
+	center
+		h1 You are missing a product or subscription.
+
+		div(id="dynamicTableDiv_#{resetPageName}")
+		div(data-role="popup" id="popupVideo" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content" )
+			a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
+			iframe(id="ifrm_ns" src="" width="497" height="298" seamless allowfullscreen)
+
+		div(data-role="popup" id="popupMessage" data-overlay-theme="a" data-theme="a" class="ui-content" )
+			a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
+			div(id="popupMessageContent" )
+				//h1 testing
+				button OK
+
 
 
 script.
+	function scale( width, height, padding, border ) {
+		var scrWidth = $( window ).width() - 30,
+			scrHeight = $( window ).height() - 30,
+			ifrPadding = 2 * padding,
+			ifrBorder = 2 * border,
+			ifrWidth = width + ifrPadding + ifrBorder,
+			ifrHeight = height + ifrPadding + ifrBorder,
+			h, w;
+
+		if ( ifrWidth < scrWidth && ifrHeight < scrHeight ) {
+			w = ifrWidth;
+			h = ifrHeight;
+		} else if ( ( ifrWidth / scrWidth ) > ( ifrHeight / scrHeight ) ) {
+			w = scrWidth;
+			h = ( scrWidth / ifrWidth ) * ifrHeight;
+		} else {
+			h = scrHeight;
+			w = ( scrHeight / ifrHeight ) * ifrWidth;
+		}
+
+		return {
+			'width': w - ( ifrPadding + ifrBorder ),
+			'height': h - ( ifrPadding + ifrBorder )
+		};
+	};
+	
+	$( document ).on( "pageinit", function() {
+		$( "#popupVideo iframe" )
+			.attr( "width", 0 )
+			.attr( "height", 0 );
+			  
+		$( "#popupVideo" ).on({
+			popupbeforeposition: function() {
+				var size = scale( 497, 298, 15, 1 ),
+					w = size.width,
+					h = size.height;
+
+				$( "#popupVideo iframe" )
+					.attr( "width", w )
+					.attr( "height", h );
+			},
+			popupafterclose: function() {
+				$( "#popupVideo iframe" )
+					.attr( "width", 0 )
+					.attr( "height", 0 );    
+			}
+		});
+	});
+
+	//- $( document ).on( "pageinit", function() {
+	//- 	$( "#popupMessage popupMessageContent" )
+	//- 		.attr( "width", 0 )
+	//- 		.attr( "height", 0 );
+			  
+	//- 	$( "#popupMessage" ).on({
+	//- 		popupbeforeposition: function() {
+	//- 			var size = scale( 497, 298, 15, 1 ),
+	//- 				w = size.width,
+	//- 				h = size.height;
+
+	//- 			$( "#popupMessage popupMessageContent" )
+	//- 				.attr( "width", w )
+	//- 				.attr( "height", h );
+	//- 		},
+	//- 		popupafterclose: function() {
+	//- 			$( "#popupMessage popupMessageContent" )
+	//- 				.attr( "width", 0 )
+	//- 				.attr( "height", 0 );    
+	//- 		}
+	//- 	});
+	//- });
+
+
+
+
+
 	console.log('nosubscription PageLoaderObject.resetLoaderForPage()');
 	setTimeout(function(){
 		PageLoaderObject.resetLoaderForPage('#{resetPageName}');
 		$('#lll99').remove();
 	},3000)
+
+	//- setTimeout(function(){
+	//- 	console.log('REMOVE EMBER');
+	//- 	$('#embed').remove();
+	//- 	delete MyProductVsRequiredProductObject;
+	//- },10000)
+	var loadUrlToIframe = function(inUrl){
+		//popupVideo
+		$('#ifrm_ns').attr('src', inUrl);
+		//$('#popupVideo').trigger('click');
+		$("#popupVideo").popup( "open", {});
+	}
+
+	var loadUrlInNewWindow = function(inUrl){
+		//console.log('wwwwwwww:' + window.height);
+		var left = (screen.width/2)-(($(window).width() * .85)/2);
+		var top = (screen.height/2)-(($(window).height() * .85)/2);
+		window.open(inUrl, null, 'height=' + ($(window).height() * .85) + ',width=' + ($(window).width() * .85) + ',status=yes,toolbar=no,menubar=no,location=no, top=' + top + ', left=' + left);
+	}
+
+	var popupMessage = function(inPopupMessageOptions){
+		var popupMessageOptions = 
+			{
+				message:false,
+				timeout:false,
+				timeOutPostFunction:false,
+			}
+		popupMessageOptions = $.extend(true, popupMessageOptions, inPopupMessageOptions);
+		if(popupMessageOptions.timeout){
+			setTimeout(function(){
+				$('#popupMessage').popup('close');
+				if(popupMessageOptions.timeOutPostFunction){popupMessageOptions.timeOutPostFunction();}
+			}, popupMessageOptions.timeout);
+		}
+
+		$('#popupMessageContent').html(
+			'<p>' + popupMessageOptions.message + '</p>'
+		);
+
+		if(!($('#popupMessage').parent().hasClass('ui-popup-active'))){
+			$('#popupMessage').popup('open');
+		}
+	}
+
+	var uniLock = false;
+	var buyProduct = function(inProductId, inProductType){
+		if(!(uniLock)){
+			uniLock = true;
+			popupMessage(
+				{
+					message:'Sending to Google, Please use phone screen to finalize request.',
+				}
+			);
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'product',
+							action:'buyProduct',
+						},
+					data:
+						{
+							productId:inProductId,
+							productType:inProductType,
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						uniLock = false;
+						if(inDataLayer.isGoodPurchase == 'true'){
+							MyProductVsRequiredProductObject.addProduct(inDataLayer.freshProductId);
+							$('#img_owned_' + inDataLayer.freshProductId.replace(/\./g, '_')).attr('src', MyProductVsRequiredProductObject.getOwnedImage(true));
+							$('#bt_ns_buyProd_' + inDataLayer.freshProductId.replace(/\./g, '_')).removeClass('ui-active').addClass('ui-disabled');
+							popupMessage(
+								{
+									message:'Thank you for your purchase, THE FORCE IS WITH YOU!!',
+									timeout:5000,
+									timeOutPostFunction:function(){
+										if(MyProductVsRequiredProductObject.haveMetRequirement()){
+											PageLoaderObject.loadPage('loginManager');
+											PageLoaderObject.loadPage('#{resetPageName}');
+										}
+									},
+								}
+							);
+						}else{
+							$('#img_owned_' + inDataLayer.freshProductId.replace(/\./g, '_')).attr('src', MyProductVsRequiredProductObject.getOwnedImage(false));
+							popupMessage(
+								{
+									message:'Problem with purchase, BAD!!!!',
+									timeout:5000,
+								}
+							);
+						}
+
+					}
+				}
+			);
+		}
+	}
+
+
+	var MyProductVsRequiredProductObject = new function(){
+		var _this = this;
+		console.log('MyProductVsRequiredProductObject ENTERED');
+		var _this = this;
+		var myProductsArray 	= !{JSON.stringify(myProducts)}
+		var requiredProductsHash = !{JSON.stringify(requiredProducts)}
+
+		console.log('myProductsArray');
+		console.dir(myProductsArray);
+
+		console.log('requiredProductsHash');
+		console.dir(requiredProductsHash);
+		//$('#dynamicTableDiv').html('');
+
+		this.haveMetRequirement = function(){
+			for(var theKey in requiredProductsHash){
+				//requiredProductsHash[theKey]
+				if(myProductsArray.indexOf(theKey) == -1){
+					return false;
+				}
+			}
+			return true;
+		}
+
+		this.addProduct = function(inProduct){
+			if(myProductsArray.indexOf(inProduct) == -1){
+				myProductsArray.push(inProduct);
+			}
+		}
+
+		this.getOwnedImage = function(inOwned){
+			if(inOwned){
+				return "/public/images/ui/productowned.png";
+			}else{
+				return "/public/images/ui/productmissing2.gif";
+			}
+		}
+		$('#dynamicTableDiv_#{resetPageName}').DynamicTable('create',
+			{
+				fieldHeader:
+					[
+						{
+							caption:'',
+							attributes:
+								{
+									'data-toggle':true,
+									style:'width:35px;'
+								},
+							style:'',
+						},
+						{
+							caption:'',
+							attributes:
+								{
+									style:'width:128px;'
+								},
+							style:'width:100px;',
+						},
+						{
+							caption:'Product Information',
+							attributes:
+								{
+									style:'width:20%;'
+								},
+							style:'',
+						},
+						{
+							caption:'Action',
+							attributes:{},
+							style:'',
+						}
+					],
+				class:'footable toggle-arrow-circle  toggle-large ui-body-d ui-shadow table-stripe ui-responsive',
+				attributes:
+				{
+
+				},
+				onClick:function(inIndex, inData, inJref){
+				}
+			}
+		);
+
+		$('.footable').footable(
+			{
+				breakpoints: 
+					{
+						tiny: 100,
+						medium: 555,
+						big: 2048
+					}
+			}
+		);
+
+		for(var theKey in requiredProductsHash){
+			console.log(theKey);
+			var productOwned = !(myProductsArray.indexOf(theKey) == -1);
+			var theVideoButton_html = '<button id="bt_ns_' + theKey + '" class="ui-disabled"> Product Video </button>';
+			if(requiredProductsHash[theKey].youtube){
+				theVideoButton_html = 
+					'<button id="bt_ns_' + theKey + '" onclick="loadUrlToIframe(\'https://www.youtube.com/embed/' + requiredProductsHash[theKey].youtube +'\')"> Product Video </button>';
+				;
+			}
+			var theBuyProductButton_html = '<button id="bt_ns_buyProd_' + theKey.replace(/\./g, '_') + '" class="ui-disabled"> Buy Product </button>';
+			if(requiredProductsHash[theKey].isBuyEnabled && !(productOwned)){
+				theBuyProductButton_html = 
+					'<button id="bt_ns_buyProd_' + theKey.replace(/\./g, '_') + '" onclick="buyProduct(\'' + requiredProductsHash[theKey].productId + '\', \'' + requiredProductsHash[theKey].productType + '\')"> Buy Product </button>';
+				;
+			}
+			var theOwnedImage_html = '<img id="img_owned_' + theKey.replace(/\./g, '_') + '" style="height:32; width:128;" src="' + _this.getOwnedImage(productOwned) + '"/>';
+			//- if(!(productOwned)){
+			//- 	theOwnedImage_html = '<img id="img_owned_' + theKey + '" style="height:128; width:32;" src="/public/images/ui/productmissing.gif"/>'
+			//- }
+
+			$('#dynamicTableDiv_#{resetPageName}').DynamicTable('addRow', 
+					{
+						rowArray:
+							[
+								'',
+								theOwnedImage_html + '<br><img style="height:128; width:128;" border="0px" src="' + requiredProductsHash[theKey].imageUrl + '"/>',
+								'<center><h4>' + requiredProductsHash[theKey].productTitle + '</h4><br><p>' + requiredProductsHash[theKey].productDescription + '</p></center>',
+								theVideoButton_html + theBuyProductButton_html + '<button onclick="popupMessage({message:\'myMessage of living\'} );">popmessage</button>',
+							],
+						data:false,
+					}
+				);
+			
+			$('.footable').trigger('footable_redraw');
+		}
+
+
+
+
+
+	}();
+
+	
