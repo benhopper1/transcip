@@ -1,5 +1,5 @@
 
-
+#PRODUCT_MISSING
 #embed
 	h1(id="lll99")	NO SUBSCRIPTION
 	//a(href="#popupVideo") click me
@@ -202,6 +202,27 @@ script.
 		}
 	}
 
+	var goGoogle = function(){
+		commManager.transactionToDeviceToken(
+			{
+				routing:
+					{
+						command:'product',
+						action:'openGoogle',
+					},
+				data:
+					{
+						//productId:inProductId,
+						//productType:inProductType,
+					},
+
+				onComplete:function(inDataLayer, inTransportLayer){
+					alert('go google callback!!');
+				},
+			}
+		);
+	}
+
 
 	var MyProductVsRequiredProductObject = new function(){
 		var _this = this;
@@ -323,7 +344,7 @@ script.
 								'',
 								theOwnedImage_html + '<br><img style="height:128; width:128;" border="0px" src="' + requiredProductsHash[theKey].imageUrl + '"/>',
 								'<center><h4>' + requiredProductsHash[theKey].productTitle + '</h4><br><p>' + requiredProductsHash[theKey].productDescription + '</p></center>',
-								theVideoButton_html + theBuyProductButton_html + '<button onclick="popupMessage({message:\'myMessage of living\'} );">popmessage</button>',
+								theVideoButton_html + theBuyProductButton_html + '<button onclick="goGoogle({message:\'myMessage of living\'} );">goGoogle</button>',
 							],
 						data:false,
 					}

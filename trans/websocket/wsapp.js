@@ -18,6 +18,28 @@ var util = require('util');
 
 global.DEBUG_MODE = true;
 global.CIP_ENABLED = false;
+
+//==================================================================
+//--  GLOBAL PAUSE  ------------------------------------------------
+//==================================================================
+global.pause = false;
+global.setPause = function(){
+	global.pause = true;
+}
+
+global.resume = function(){
+	global.pause = false;
+	/*if(global.pauseArray){
+		for(var theIndex in global.pauseArray){
+			if(global.pauseArray[theIndex].execFunction){
+				global.pauseArray[theIndex].execFunction(global.pauseArray[theIndex].req, global.pauseArray[theIndex].res, global.pauseArray[theIndex].next);
+			}
+		}
+	}*/
+}
+
+
+
 //==========================================================
 // SCORE GLOBALS -------------------------------------------
 //==========================================================

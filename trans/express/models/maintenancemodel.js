@@ -10,13 +10,13 @@ var finish = require(basePath + '/node_modules/finish');
 var extend = require(basePath + '/node_modules/node.extend');
 
 
-var Connection = require(__dirname + '/connection.js');
+//var Connection = require(__dirname + '/connection.js');
 var nodemailer = require(basePath + '/node_modules/nodemailer');
 var uuid = require(basePath + '/node_modules/node-uuid');
 
 var PhonecacheContactModel = require(basePath + '/models/phonecachecontactmodel');
 
-connection = Connection.getInstance('arf').getConnection();
+//connection = Connection.getInstance('arf').getConnection();
 
 var Model = function(){
 	var _this = this;

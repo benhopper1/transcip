@@ -21,7 +21,7 @@ console.log('DIRECTORY:' + basePath);
 
 //model----------------
 var Model = function(){
-	connection = Connection.getInstance('arf').getConnection();
+	var connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
 	var configData = fs.readFileSync('main.conf', 'utf8');
 	configData = JSON.parse(configData);
@@ -31,6 +31,7 @@ var Model = function(){
 	}
 
 	this.getRoutesProducts = function(inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = 
 			"SELECT *"  		+ " " +
 			"FROM tb_routes_products"	+ " "
@@ -43,6 +44,7 @@ var Model = function(){
 	}
 
 	this.updateProductsSession = function(req, res, inJstruct, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		global.reportNotify('THeCaption', 
 			{
 				name:'nnnnn',
@@ -93,6 +95,7 @@ var Model = function(){
 	}
 
 	this.getProducts = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('getProducts:');
 		console.dir(inParams);
 		var fieldData = 
@@ -120,6 +123,7 @@ var Model = function(){
 	}
 
 	this.addProductArray = function(inUserId, theArray, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		finish.map(theArray, function(value, done){
 			value.userId = inUserId;
 			_this.addProduct(value, function(inErr, inResult){
@@ -138,6 +142,7 @@ var Model = function(){
 	}
 
 	this.addProduct = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addProduct entered');
 		var fieldData = 
@@ -197,6 +202,7 @@ var Model = function(){
 	}
 
 	this.updateProductArray = function(inUserId, theArray, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		finish.map(theArray, function(value, done){
 			value.userId = inUserId;
 			_this.updateProduct(value, function(inErr, inResult){
@@ -215,6 +221,7 @@ var Model = function(){
 	}
 
 	this.updateProduct = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addSms entered');
 		var fieldData = 
@@ -265,6 +272,7 @@ var Model = function(){
 	}
 
 	this.updateOrAddProductsAndPurchases = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('updateOrAddProductsAndPurchases:');
 		console.dir(inParams);
 		var fieldData = 
@@ -341,6 +349,7 @@ var Model = function(){
 	}
 
 	this.getSpecificProductInformation = function(inGetSpecificProductInformationOptions, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var getSpecificProductInformationOptions = 
 			{
 				productIds:[],
@@ -363,6 +372,7 @@ var Model = function(){
 	}
 
 	this.getShowCaseProducts = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('getShowCaseProducts:');
 		console.dir(inParams);
 		var fieldData = 
@@ -384,6 +394,7 @@ var Model = function(){
 	}
 
 	this.getOwnedProductsForUser = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				packageName:'%',
@@ -420,6 +431,7 @@ var Model = function(){
 	}
 
 	this.getOwnedProductsInformationForUser = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				packageName:'%',
@@ -457,6 +469,7 @@ var Model = function(){
 	}
 
 	this.getPurchasesForUser = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('getShowCaseProducts:');
 		console.dir(inParams);
 		var fieldData = 
@@ -485,6 +498,7 @@ var Model = function(){
 	}
 
 	this.addPurchase = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addProduct entered');
 		var fieldData = 
@@ -544,6 +558,7 @@ var Model = function(){
 
 
 	this.updatePurchase = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('updatePurchase entered');
 		var fieldData = 
@@ -603,6 +618,7 @@ var Model = function(){
 	}
 
 	this.addPurchaseArray = function(inUserId, theArray, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		finish.map(theArray, function(value, done){
 			value.userId = inUserId;
 			_this.addPurchase(value, function(inErr, inResult){
@@ -621,6 +637,7 @@ var Model = function(){
 	}
 
 	this.updatePurchaseArray = function(inUserId, theArray, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		finish.map(theArray, function(value, done){
 			value.userId = inUserId;
 			_this.updatePurchase(value, function(inErr, inResult){
@@ -639,6 +656,7 @@ var Model = function(){
 	}
 
 	this.processPurchases = function(inUserId, theArray, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('processPurchases');
 		console.dir(theArray);
 

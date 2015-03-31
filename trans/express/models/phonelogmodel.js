@@ -13,6 +13,7 @@ var Model = function(){
 	var _this = this;
 
 	this.getLast = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-----getLast-----------------------------------------------------');
 		console.dir(inParams);
 		var fieldData = 
@@ -128,6 +129,7 @@ var Model = function(){
 	}
 
 	this.getPhoneLogLastId = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-----getCallLogLastId ENETERED-----------------------------------------------------');
 		var fieldData = 
 			{
@@ -173,6 +175,7 @@ var Model = function(){
 	}
 
 	this.addManyPhoneLog = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('---------------addManyPhoneLog starting------------------------------------------');
 		//validate input
 		for(index in inParams.dataArray){
@@ -199,6 +202,7 @@ var Model = function(){
 
 
 	this.addPhoneLog = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addSms entered');
 		var fieldData = 
@@ -248,6 +252,7 @@ var Model = function(){
 
 
 	this.getUPhoneNumbers = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -302,6 +307,7 @@ var Model = function(){
 	}
 
 	this.phoneNotesAddNote = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				catagory:'',
@@ -396,6 +402,7 @@ var Model = function(){
 	}
 
 	this.phonesNotesGetUDates = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -429,6 +436,7 @@ var Model = function(){
 	}
 
 	this.phonesDocumentsAndNotesGet = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,

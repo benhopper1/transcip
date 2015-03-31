@@ -9,9 +9,10 @@ var Model = function(){
 
 //----static-------
 Model.verify = function(inData){
+	connection = Connection.getInstance('arf').getConnection();
 	console.log('-----------verify------------------');
 	console.dir(inData);
-	if(!(connection)){connection = Connection.getInstance('arf').getConnection();}
+	//if(!(connection)){connection = Connection.getInstance('arf').getConnection();}
 
 	if(!(connection)){
 		console.log('error on db connection in static SecurityModel.verify !!!!');

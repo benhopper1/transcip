@@ -27,7 +27,7 @@ module.exports.controller = function(app){
 					userId:req.cookies.userId,
 					deviceId:"815",//req.cookies.deviceId,
 					URL:configData.domain.address + ":" + configData.domain.port,
-					androidAppRoute:configData.androidAppRoute,
+					androidAppRoute:'http://play.google.com/store/apps/details?id=hopper.arfsync.v001',//configData.androidAppRoute,
 					webSocketClient:configData.webSocketClient,
 					defaultUserImageUrl:configData.defaultUserImageUrl,
 					defaultMemberImageUrl:configData.defaultMemberImageUrl,

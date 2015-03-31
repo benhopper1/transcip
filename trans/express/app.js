@@ -17,11 +17,47 @@ var util = require('util');
 var HashOfArray = require(basePath + '/library/hashofarrayobject.js');
 var ProductModel = require(basePath + '/models/productmodel');
 
+var extend = require(basePath + '/node_modules/node.extend');
+
 
 global.CIP_ENABLED 						= false;
 global.DATABASE_STORE_USER_REQUEST_DATA = true;
 global.RECORD_ROUTES 					= false;
 global.PRODUCT_BLOCK_ENABLED 			= true;
+
+
+//==================================================================
+//--  GLOABL PAUSE   -----------------------------------------------
+//==================================================================
+global.pauseArray = [];
+global.pause = false;
+global.addPause = function(inAddPauseOptions){
+	var addPauseOptions = 
+		{
+			req:false,
+			res:false,
+			next:false,
+			execFunction:false,
+		}
+	addPauseOptions = extend(true, addPauseOptions, inAddPauseOptions);
+	global.pauseArray.push(addPauseOptions);
+
+}
+
+global.setPause = function(){
+	global.pause = true;
+}
+
+global.resume = function(){
+	global.pause = false;
+	if(global.pauseArray){
+		for(var theIndex in global.pauseArray){
+			if(global.pauseArray[theIndex].execFunction){
+				global.pauseArray[theIndex].execFunction(global.pauseArray[theIndex].req, global.pauseArray[theIndex].res, global.pauseArray[theIndex].next);
+			}
+		}
+	}
+}
 
 
 
@@ -368,29 +404,47 @@ var requestModel = new RequestModel();
 
 var userData = {};
 app.all('*', function(req, res, next){
-	//===============================================================
-	// -- ADD USER DATA TO DATABASE ---------------------------------
-	//===============================================================
-	if(global.DATABASE_STORE_USER_REQUEST_DATA){
-		userData.requestUrl = (req.url) ? req.url : 'NO URL';
-		userData.agent = (req.headers['user-agent']) ? req.headers['user-agent'] : 'NO AGENT';
-		userData.referrer = (req.headers['referrer']) ? req.headers['referrer'] : 'NO REFERRER';
-		userData.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		requestModel.logData(userData);
-	}
-	//===============================================================
-	// -- SCORE INCREMENT FOR REQUEST -------------------------------
-	//===============================================================
-	if(global.RECORD_ROUTES){
-		userData.caption = 'recordedRoute';
-		global.recordedRouteArray.push(userData);
-	}
-	
-	global.requestScore += global.REQUEST_SCORE_COMMON;
-	global.processingScore += global.PROCESSING_SCORE_COMMON;
 
+	var theAllFunction = function(req, res, next){
+		//===============================================================
+		// -- ADD USER DATA TO DATABASE ---------------------------------
+		//===============================================================
+		if(global.DATABASE_STORE_USER_REQUEST_DATA){
+			userData.requestUrl = (req.url) ? req.url : 'NO URL';
+			userData.agent = (req.headers['user-agent']) ? req.headers['user-agent'] : 'NO AGENT';
+			userData.referrer = (req.headers['referrer']) ? req.headers['referrer'] : 'NO REFERRER';
+			userData.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+			requestModel.logData(userData);
+		}
+		//===============================================================
+		// -- SCORE INCREMENT FOR REQUEST -------------------------------
+		//===============================================================
+		if(global.RECORD_ROUTES){
+			userData.caption = 'recordedRoute';
+			global.recordedRouteArray.push(userData);
+		}
+		
+		global.requestScore += global.REQUEST_SCORE_COMMON;
+		global.processingScore += global.PROCESSING_SCORE_COMMON;
 
-	next();
+		next();
+	}
+
+	console.log('global.pause:' + global.pause);
+
+	if(global.pause){
+		global.addPause(
+			{
+				req:req,
+				res:res,
+				next:next,
+				execFunction:theAllFunction,
+			}
+		);
+		//theAllFunction(req, res, next);
+	}else{
+		theAllFunction(req, res, next);
+	}
 });
 
 

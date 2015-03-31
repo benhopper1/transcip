@@ -12,6 +12,7 @@ var mySql = require(basePath + '/node_modules/mysql');
 var Connection = function(inData){
 	console.log("instance created:"+inData.instanceName);
 	var instance = this;
+	var CONNECTION_LOST_RESTART_MS = 10000;
 	var instanceName = inData.instanceName;
 	var host = inData.host;
 	var user = inData.user;
@@ -29,15 +30,57 @@ var Connection = function(inData){
  		database : database
 	});
 
-	mySqlConnection.on('error', function(err){
+	//==================================================================
+	//--  CONNECTION STUFF----------------------------------------------
+	//==================================================================
+	var mySqlConnectionErrorFunc = function(err){
 		global.reportError('MYSQL, connection.js onError',
 			{
 					error:err
 			}, 0
 		);
-	});
 
-	mySqlConnection.connect();
+		if(err && err.code == 'PROTOCOL_CONNECTION_LOST'){
+			setTimeout(function(){
+				mySqlConnection = mySql.createConnection({
+						host     : host,
+						user     : user,
+						password : password,
+						database : database
+				});
+				mySqlConnection.on('error', mySqlConnectionErrorFunc);
+				mySqlConnection.connect(function(err){
+					if(err){
+						global.reportError('[models.connection.js] MySql.connect', err, 0);
+						//return;
+					}else{
+						global.reportNotify('[models.connection.js] MySql.connect', 
+							{
+								caption:'reconnecting due to PROTOCOL_CONNECTION_LOST'
+							}, 0);
+						//mySqlConnection.on('error', mySqlConnectionErrorFunc);
+					}
+				});
+			}, CONNECTION_LOST_RESTART_MS);
+		}
+	};
+
+	mySqlConnection.on('error', mySqlConnectionErrorFunc);
+
+	mySqlConnection.connect(function(err){
+		if(err){
+			global.reportError('[models.connection.js] MySql.connect', err, 0);
+			//return;
+		}else{
+			global.reportNotify('[models.connection.js] MySql.connect', 
+				{
+					caption:'reconnecting due to PROTOCOL_CONNECTION_LOST'
+				}, 0);
+			mySqlConnection.on('error', mySqlConnectionErrorFunc);
+		}
+	});
+	// END CONNECTION STUFF ===============================================
+
 
 	this.getConnection = function(){
 		if(mySqlConnection){

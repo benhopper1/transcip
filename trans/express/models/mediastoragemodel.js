@@ -159,6 +159,7 @@ var Model = function(){
 
 
 	this.dbStoreFile = function(inFileNamePath, inEncoding, inMimeType, inCompleteFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var domain = 'HTTP://127.0.0.1';
 		var internetPath = inFileNamePath.replace(path.dirname(require.main.filename), domain);		
 		var fileName = path.basename(inFileNamePath, path.extname(inFileNamePath));

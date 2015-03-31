@@ -17,6 +17,7 @@ connection = Connection.getInstance('arf').getConnection();
 
 //model----------------
 var Model = function(){
+	connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
 	var configData = fs.readFileSync('main.conf', 'utf8');
 	configData = JSON.parse(configData);
@@ -70,6 +71,7 @@ var Model = function(){
 	}*/
 
 	this.verifyUserPassword = function(inUserName, inPassword, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = "SELECT * from tb_user WHERE userName = "+ connection.escape(inUserName) + " AND password = " + connection.escape(inPassword) + " ";
 		connection.query(sqlString, function(err, rows, fields){
 			if(inPostFunction){inPostFunction(err, rows, fields);}
@@ -78,6 +80,7 @@ var Model = function(){
 
 	//safe Return of view, passwordless!!!
 	this.verifyAndGetUserData = function(inData){
+		connection = Connection.getInstance('arf').getConnection();
 		_this.verifyUserPassword(inData.userName, inData.password, function(inErr, inRows, inFields){
 			if(inRows.length > 0){
 				//---user && password == good
@@ -100,6 +103,7 @@ var Model = function(){
 	}
 
 	this.userNameExist = function(inUserName, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		if(!(inUserName)){
 			if(inPostFunction){
 				inPostFunction("Error no userName", 
@@ -129,6 +133,7 @@ var Model = function(){
 	}
 
 	this.useOrCreateDeviceId = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('useOrCreateDeviceId entered');
 		var fieldData = 
 			{
@@ -250,6 +255,7 @@ var Model = function(){
 
 
 	this.getUserDataById = function(inUserId, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('getUserDataById');
 		var sqlString = "SELECT * from vw_userData WHERE id=" + connection.escape(parseInt(inUserId));
 		console.log('sql:' + sqlString);
@@ -259,6 +265,7 @@ var Model = function(){
 	}
 
 	this.verifyDeviceId = function(inUserId, inDeviceId, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = "SELECT * from tb_userDeviceList WHERE userId = " + connection.escape(inUserId) + " AND id = " + connection.escape(inDeviceId);
 		connection.query(sqlString, function(err, rows, fields){
 			console.dir(rows);
@@ -267,6 +274,7 @@ var Model = function(){
 	}
 
 	this.createNewDeviceId = function(inUserId, inAgent, inDeviceNumber, inDeviceType, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = "INSERT INTO tb_userDeviceList (userId, userAgent, deviceNumber, deviceType) VALUES(" + connection.escape(inUserId) + ", " + connection.escape(inAgent) + "," + connection.escape(inDeviceNumber) + ", " + connection.escape(inDeviceType) + " )";
 		connection.query(sqlString, function(err, result){
 			if(inPostFunction){inPostFunction(err, result, result.insertId);}
@@ -278,7 +286,8 @@ var Model = function(){
 	}
 
 	this.dbAddUserAccountDataToUserTable = function(inParams, inPostFunction){
-			var fieldData = 
+		connection = Connection.getInstance('arf').getConnection();
+		var fieldData = 
 			{
 				firstName:"",
 				lastName:"",
@@ -335,6 +344,7 @@ var Model = function(){
 
 
 	this.dbStoreUserImage = function(inData){
+		connection = Connection.getInstance('arf').getConnection();
 		//verify file first----
 		if(fs.existsSync(path)){console.log('fileExist!!');}
 		var sqlString = "INSERT INTO tb_image (userId, file, stat) VALUES(" + connection.escape(inData.userId) + ", " + connection.escape(configData.mediaStorageModel.imageFolderPath + '/'+ path.basename(inData.userImagePath)) + "," + connection.escape('ScreenImage') + " )";
@@ -482,6 +492,7 @@ var Model = function(){
 	}
 
 	this.activateUserAccount = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				inCode:'', 
@@ -530,6 +541,7 @@ var Model = function(){
 	}
 
 	this.getUserById = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('deleteCacheEntry:');
 		console.dir(inParams);
 		var fieldData = 
@@ -557,6 +569,7 @@ var Model = function(){
 	}
 
 	this.updateUser = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				fName:'',
@@ -606,6 +619,7 @@ var Model = function(){
 	}
 
 	this.deleteAllForUser = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -627,6 +641,7 @@ var Model = function(){
 	}
 
 	this.userStartUp = function(inUserId, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('userStartUp ENTERED');
 		var jData = fs.readFileSync(basePath + '/public/json/userstartup.json', 'utf8');
 		jData = JSON.parse(jData);

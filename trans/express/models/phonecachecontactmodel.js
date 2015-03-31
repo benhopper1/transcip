@@ -15,9 +15,11 @@ var uuid = require(basePath + '/node_modules/node-uuid');
 connection = Connection.getInstance('arf').getConnection();
 
 var Model = function(){
+	connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
 
 	this.cacheContacts= function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -75,6 +77,7 @@ var Model = function(){
 	}
 
 	this.cacheContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				
@@ -139,6 +142,7 @@ var Model = function(){
 	}
 
 	this.getImportableData = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -181,6 +185,7 @@ var Model = function(){
 	}
 
 	this.getExportableData = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -214,6 +219,7 @@ var Model = function(){
 	}
 
 	this.moveCachedContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				userId:false,
@@ -277,6 +283,7 @@ var Model = function(){
 	}
 
 	this.checkCacheNeeds = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		//console.log('checkCacheNeeds enter--');
 		//console.dir(inParams);
 		var fieldData = 
@@ -398,6 +405,7 @@ var Model = function(){
 	}
 
 	this.deleteCacheEntry = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('deleteCacheEntry:');
 		console.dir(inParams);
 		var fieldData = 
@@ -442,6 +450,7 @@ var Model = function(){
 	}
 
 	this.getCacheFilePaths = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 
@@ -459,6 +468,7 @@ var Model = function(){
 	}
 
 	this.addPhysicalPathsToWorkerTableArray = function(inOptions, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var options = 
 			{
 				code:'',
@@ -486,6 +496,7 @@ var Model = function(){
 	}
 
 	this.addPhysicalPathsToWorkerTable = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				code:'',
@@ -515,6 +526,7 @@ var Model = function(){
 	}
 
 	this.getDeletablePhoneCacheFiles = function(inCode, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = 
 			"SELECT t1.code, t1.f0 AS domainPath, t1.f1 AS fullPath, t2.route  FROM tb_worker AS t1"+ " " +
 				"LEFT JOIN tb_fileCache AS t2 ON t1.f0 = t2.path"									+ " " +
@@ -530,6 +542,7 @@ var Model = function(){
 	}
 
 	this.deleteFromWorkerTable = function(inCode, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = 
 			"DELETE FROM tb_worker"+ " " +
 				"WHERE CODE = " + connection.escape(inCode)

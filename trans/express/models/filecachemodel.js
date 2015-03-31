@@ -11,8 +11,10 @@ var finish = require(basePath + '/node_modules/finish');
 
 var Model = function(){
 	var _this = this;
+	connection = Connection.getInstance('arf').getConnection();
 
 	this.add = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addSms entered');
 		var fieldData = 
@@ -57,6 +59,7 @@ var Model = function(){
 	}
 
 	this.getByHashCodes = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addSms entered');
 		var fieldData = 

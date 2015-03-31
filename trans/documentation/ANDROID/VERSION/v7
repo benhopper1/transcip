@@ -1,3 +1,8 @@
-lowered to min = 9
-using minSDK 9
+app billing stuff with actuall product 
 target 21
+
+had to clean project
+export unsigned
+turned off auto build
+
+refer to console for some errors

@@ -7,8 +7,10 @@ var TcpServer = function(inData){
 	var _this = this;
 	var theServer;
 	var clientHash = {};
+	var handle;
 
 	var server = net.createServer(function(c){
+		handle = c._handle.fd;
 		console.log('server connected');
 		clientHash[c._handle.fd] = 
 			{
@@ -18,26 +20,39 @@ var TcpServer = function(inData){
 			}
 
 		c.send = function(inData){
-			c.write(JSON.stringify(inData));
-			c.pipe(c);
+			try{
+				c.write(JSON.stringify(inData));
+				c.pipe(c);
+			}catch(e){
+				global.reportError('TcpServer.send()',
+					{
+							dataSending:inData,
+							error:e,
+					}, 0
+				);
+			}
 		}
 
 		c.on('end', function(){
-			delete clientHash[c._handle.fd];
-			if(inData.onDisconnect()){inData.onDisconnect(theServer, c);}
+			try{
+				delete clientHash[handle];
+				if(inData.onDisconnect()){inData.onDisconnect(theServer, c);}
+			}catch(e){
+				global.reportError('TcpServer.end()',{error:e,}, 0);
+			}
 		});
 		c.on('data', function(data){
-			console.log('server msg:' + data);
-			//_this.send(c, {data:"yesyMan" + c._handle.fd});
 			if(inData.onMessage){
 				var theData = "";
 				try{
 					theData = JSON.parse(data);
 				}catch(e){
+					global.reportError('TcpServer.on data()',{error:e,}, 0);
 					return;
 				}
-				inData.onMessage(theServer, c, theData);}
-				c.destroy();
+				inData.onMessage(theServer, c, theData);
+			}
+			c.destroy();
 		});
 		
 	});

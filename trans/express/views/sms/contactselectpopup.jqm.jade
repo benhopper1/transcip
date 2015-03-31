@@ -19,6 +19,7 @@ div(id="smsPopDiv_000" class="" data-position-to="window" style="width:400px; he
 
 
 script.
+
 	$('#contactsMenu_sms_popup').CheckboxLines('create', 
 		{
 			onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
@@ -32,8 +33,6 @@ script.
 	$('#bt_smsPopup_clear').click(function(){
 		var theDataArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
 		for(var theDataArrayIndex in theDataArray){
-			console.log('theDataArrayIndex');
-			console.dir(theDataArray[theDataArrayIndex]); //theDataArray[theDataArrayIndex]
 			$('#contactsMenu_sms_popup').CheckboxLines('setCheckbox',
 				{
 					lookupId:theDataArray[theDataArrayIndex].lookupId,
@@ -49,129 +48,9 @@ script.
 
 
 
-
-
-	//- contactDataObject.select({}, function(inRecords){
-	//- 	for(contactIndex in inRecords){
-	//- 		$('#contactsMenu_sms_popup').CheckboxLines('addItem',
-	//- 			{
-	//- 				lookupId:inRecords[contactIndex].id,
-	//- 				data:inRecords[contactIndex],
-	//- 				caption:'<img src="'  + inRecords[contactIndex].imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecords[contactIndex].name + '&nbsp;&nbsp;&nbsp;' + inRecords[contactIndex].type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecords[contactIndex].phoneNumber) + '</h4>',
-	//- 				isChecked:false,
-	//- 				formStyle:'border:0;width:400px;'
-	//- 			}
-	//- 		);
-	//- 	}
-	//- });
-
-
-	//- ContactDataCache.getEventObject().setOn('onChange', function(inData){
-	//- 	$.debug('popup sms.onchange', inData);
-	//- 	alert('popup sms check box, need to update' + inData.id);
-	//- });
-
-	console.log('POPUP onInsert EVENT');
-	//- ContactDataCache.getEventObject().setOn('onInsert', function(inRecord){
-	//- 	$('#contactsMenu_sms_popup').CheckboxLines('addItem',
-	//- 		{
-	//- 			lookupId:inRecord.id,
-	//- 			data:inRecord,
-	//- 			caption:'<img src="'  + inRecord.imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecord.name + '&nbsp;&nbsp;&nbsp;' + inRecord.type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecord.phoneNumber) + '</h4>',
-	//- 			isChecked:false,
-	//- 			formStyle:'border:0;width:400px;'
-	//- 		}
-	//- 	);
-	//- });
-
-	//- ContactDataCache.getEventObject().setOn('onDelete', function(inRecord){
-	//- 	$('#contactsMenu_sms_popup').CheckboxLines('remove', inRecord.id);
-
-	//- });
-
-	//- ContactDataCache.getEventObject().setOn('onEdit', function(inRecord){
-	//- 	$('#contactsMenu_sms_popup').CheckboxLines('editItem', 
-	//- 		{
-	//- 			caption:'<img src="'  + inRecord.imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecord.name + '&nbsp;&nbsp;&nbsp;' + inRecord.type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecord.phoneNumber) + '</h4>',
-	//- 			lookupId:inRecord.id,
-	//- 			data:inRecord,
-	//- 		}
-	//- 	);
-
-	//- });
-
-	//- ContactDataCache.subscribe(
-	//- 	{
-	//- 		onInsert:function(inRecord){
-	//- 			$('#contactsMenu_sms_popup').CheckboxLines('addItem',
-	//- 				{
-	//- 					lookupId:inRecord.id,
-	//- 					data:inRecord,
-	//- 					caption:'<img src="'  + inRecord.imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecord.name + '&nbsp;&nbsp;&nbsp;' + inRecord.type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecord.phoneNumber) + '</h4>',
-	//- 					isChecked:false,
-	//- 					formStyle:'border:0;width:400px;'
-	//- 				}
-	//- 			);
-	//- 		},
-
-	//- 		onEdit:function(inRecord){
-	//- 			$('#contactsMenu_sms_popup').CheckboxLines('editItem', 
-	//- 				{
-	//- 					caption:'<img src="'  + inRecord.imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecord.name + '&nbsp;&nbsp;&nbsp;' + inRecord.type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecord.phoneNumber) + '</h4>',
-	//- 					lookupId:inRecord.id,
-	//- 					data:inRecord,
-	//- 				}
-	//- 			);
-	//- 		},
-
-	//- 		onDelete:function(inRecord){
-	//- 			$('#contactsMenu_sms_popup').CheckboxLines('remove', inRecord.id);
-	//- 		},
-
-	//- 		onTempContactInsert:function(inRecord){
-	//- 			alert('ContactDataCache.subscribe_onTempContactInsert');
-	//- 		},
-
-	//- 		onTempContactDelete:function(inRecord){
-	//- 			alert('ContactDataCache.subscribe_onTempContactDelete');
-	//- 		}
-	//- 	}
-	//- );
-
-
-
-
-	//- ContactDataCache.getCache(
-	//- 	{
-	//- 		cacheOption:'getUnionCachedDataArray',
-	//- 		forceRefresh:false,
-	//- 		onFinish:function(inRecords){
-	//- 			for(var inRecordsIndex in inRecords){
-	//- 				$('#contactsMenu_sms_popup').CheckboxLines('addItem',
-	//- 					{
-	//- 						lookupId:inRecords[inRecordsIndex].id,
-	//- 						data:inRecords[inRecordsIndex],
-	//- 						caption:'<img src="'  + inRecords[inRecordsIndex].imageUrl + '" style="height:40px; width:40px;  object-fit: cover; float:left" class="magicSquare"/><h4>&nbsp;&nbsp;&nbsp;' + inRecords[inRecordsIndex].name + '&nbsp;&nbsp;&nbsp;' + inRecords[inRecordsIndex].type + '<br>&nbsp;&nbsp;&nbsp;' + phoneDisplayFormat(inRecords[inRecordsIndex].phoneNumber) + '</h4>',
-	//- 						isChecked:false,
-	//- 						formStyle:'border:0;width:400px;'
-	//- 					}
-	//- 				);
-	//- 			}
-	//- 		}
-	//- 	}
-	//- );
-
-
-
-
-
-
-
 	//set height inner section for popup
 	$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
 
 
 	$('#contactsMenu_sms_popup').trigger('create');
 
-	console.log('$$PageId:' + $.getCurrentPageId());
-	console.dir(PageLoaderObject.getLoadedPages());

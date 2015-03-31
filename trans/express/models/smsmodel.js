@@ -16,6 +16,7 @@ connection = Connection.getInstance('arf').getConnection();
 
 
 var Model = function(){
+	connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
 	this.addManySms = function(inParams, inPostFunction){
 		console.log('---------------addManySms starting------------------------------------------');
@@ -44,6 +45,7 @@ var Model = function(){
 
 
 	this.addSms = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-------------------------------------------');
 		console.log('addSms entered');
 		var fieldData = 
@@ -93,6 +95,7 @@ var Model = function(){
 	}
 
 	this.getSmsLastId = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-----getSmsLastId ENETERED-----------------------------------------------------');
 		var fieldData = 
 			{
@@ -138,6 +141,7 @@ var Model = function(){
 	}
 
 	this.getAllSmsByPhone = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('-----getAllSmsByPhone ENETERED-----------------------------------------------------');
 		var fieldData = 
 			{
@@ -189,6 +193,7 @@ var Model = function(){
 
 	//send array in and do process of elimination---
 	this.getMissingSmsByPhone = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var resultArray = [];
 		if(inParams.arrayOfSmsId){
 			_this.getAllSmsByPhone(inParams, function(err, rows, fields){

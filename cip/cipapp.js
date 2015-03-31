@@ -424,7 +424,7 @@ server.on('connection', function(sock){
 			global.reportError('cipapp.sock.on data', 
 				{
 					error:e,
-					transportStr:inTransportLayer_str
+					transportStr:inTransportLayer_str.toString(),
 				}, 0
 			);
 		}

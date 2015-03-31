@@ -150,9 +150,9 @@ body
 								a() Sms Manager
 									img(src="/public/images/ui/android_sms.png" )
 							//br
-							li(id="handsetControllerDiv" class="menu_li")
-								a() Handset Controller
-									img(src="/public/images/ui/androidPhoneImg.png" )
+							//- li(id="handsetControllerDiv" class="menu_li")
+							//- 	a() Handset Controller
+							//- 		img(src="/public/images/ui/androidPhoneImg.png" )
 							li(id="userProfileDiv" class="menu_li")
 								a() User Profile
 									img(id="img_loginManager_userImg" src="/public/images/ui/unconnecteduser.png" )
@@ -297,6 +297,10 @@ body
 
 
 	script.
+		/*$(window).on('beforeunload', function(){
+			return 'Are you sure you want to leave ArfSync?';
+		});*/
+
 		//======================================================================
 		//>--- GLOBAL DECLARE SECTION-------------------------------------------
 		//======================================================================
@@ -421,18 +425,21 @@ body
 							},
 							smsManager:function(){
 								console.log('checklll');
+								$('#smsManager_contents').html('');
 								$('#smsManager_contents').load("/jqm/smsManager ", function(response, status, xhr){
-									console.log('loading smsManager');
-									//console.log('response:' + response);
-									console.log('status:' + status);
-									console.log('xhr:' + xhr);
-									$('#smsManager_contents').trigger('create');
+									if(response.indexOf('PRODUCT_MISSING') != -1){
+										//alert('PRODUCT MISSING');
+									}else{
+										$('#smsManager_contents').trigger('create');
+										//load popup----
+										$('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
+											console.log('popup thingy loaded!');
+											//$('#contactPopup_sms').trigger('create');
+										});
 
-									//load popup----
-									$('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
-										console.log('popup thingy loaded!');
-									});
-									loadedHash['smsManager'] = true;
+										loadedHash['smsManager'] = true;
+									}
+
 									$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false, transition:'turn', reverse:'true'});
 
 								});
@@ -545,7 +552,12 @@ body
 					PageLoaderObject.loadPage('userProfile');
 				});
 				$('#downloaddiv').click(function(){
-					window.location.href = "/public/download/androidapp/v002/Qr_Proj_3.apk";
+					//window.location.href = "/public/download/androidapp/v002/Qr_Proj_3.apk";
+					//window.location.href = "http://play.google.com/store/apps/details?id=hopper.arfsync.v001";
+					var left = (screen.width/2)-(($(window).width() * .85)/2);
+					var top = (screen.height/2)-(($(window).height() * .85)/2);
+					window.open("http://play.google.com/store/apps/details?id=hopper.arfsync.v001", null, 'height=' + ($(window).height() * .85) + ',width=' + ($(window).width() * .85) + ',status=yes,toolbar=no,menubar=no,location=no, top=' + top + ', left=' + left);
+				
 				});
 			}
 		}

@@ -17,6 +17,7 @@ var Model = function(){
 
 
 	this.addContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				companyName:'',
@@ -61,6 +62,7 @@ var Model = function(){
 	}
 
 	this.editContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
 				id:-1,
@@ -108,6 +110,7 @@ var Model = function(){
 	}
 
 	this.deleteContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString = "DELETE FROM tb_storedContacts WHERE " +
 			"userId = " + connection.escape(parseInt(inParams.userId))	+ " " +
 			"AND"														+ " " + 
@@ -122,6 +125,7 @@ var Model = function(){
 
 
 	this.getContacts = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		if(!(inParams.userId)){if(inPostFunction){inPostFunction(true, false, false);} return;}
 		var sqlString = "SELECT id, companyName, department, emailAddress, imageUrl, name, phoneNumber, refNumber,type, userId, title FROM tb_storedContacts WHERE userId = " +
 			connection.escape(inParams.userId);
@@ -132,6 +136,7 @@ var Model = function(){
 	}
 
 	this.getContactById = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var sqlString =
 			"SELECT * from tb_storedContacts WHERE id = "
 				connection.escape(fieldData.companyName) 	+ "," + "";
@@ -152,18 +157,22 @@ var Model = function(){
 		}
 	*/
 	this.getContactsByName = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 
 	}
 
 	this.getContactsByEmailAddress = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 
 	}
 
 	this.getContactsByCompanyName = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 
 	}
 
 	this.getUserData = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		if(!(inParams.userId)){if(inPostFunction){inPostFunction(true, false, false);} return;}
 		var sqlString = "SELECT	* FROM vw_activeUser WHERE id = " +
 			connection.escape(inParams.userId);

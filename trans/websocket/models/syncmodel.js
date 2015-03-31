@@ -1,4 +1,4 @@
-console.log('security model loading....');
+console.log('sync model loading....');
 var path = require('path');
 var basePath = path.dirname(require.main.filename);
 var extend = require(basePath + '/node_modules/node.extend');
@@ -7,12 +7,14 @@ var connection = false;
 
 //instance:NO
 var Model = function(){
-	if(!(connection)){connection = Connection.getInstance('arf').getConnection();}
+	connection = Connection.getInstance('arf').getConnection();
+	//if(!(connection)){connection = Connection.getInstance('arf').getConnection();}
 
 	if(!(connection)){
 		console.log('error on db connection in static SecurityModel.verify !!!!');
 	}
 	this.addDeviceContactToDb = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		var insertableParams = 
 			{
 				accountType:'',
@@ -49,6 +51,7 @@ var Model = function(){
 	}
 
 	this.deleteAllDeviceContactsFromDb = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
 		console.log('deleteing !!!!!!!!!!:');
 		console.dir(inParams);
 		var sqlString = "DELETE FROM tb_deviceContacts WHERE userId =" + connection.escape(parseInt("0" + inParams.userId)) + " AND deviceId = " + connection.escape(parseInt("0" + inParams.deviceId)) + " ;";
