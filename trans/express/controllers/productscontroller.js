@@ -187,15 +187,125 @@ module.exports.controller = function(app){
 		}*/
 	});
 
+	app.get('/products/showCase', function(req, res){
+		if(userModel.verifySession(req,res)){
+			req.body['userId'] = req.session.userData.userId;
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/products/showCase A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
 
+				global.getSpecificProductInformation({}, function(inData){
 
+					res.render('products/showcase.jqm.jade',
+						{
+							userId:req.session.userData.userId,
+							deviceId:"815",
+							products:inData,
+							ownedProducts:inHash,
+						}
+					);
 
+				});//end getSpecificProductInformation
 
+			});//end getUserOwnedProducts
 
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
+		}
 
+	});
 
+	//TODO: this post need to make sense, condition the returning data by providing more options...
+	app.post('/products/showCase', function(req, res){
+		if(userModel.verifySession(req,res)){
+			req.body['userId'] = req.session.userData.userId;
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/products/showCase A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
 
+				global.getSpecificProductInformation({}, function(inData){
 
+					res.setHeader('Content-Type', 'application/json');
+					res.end(JSON.stringify(
+						{
+							products:inData,
+							ownedProducts:inHash,
+						}
+					));
+
+					/*res.render('products/showcase.jqm.jade',
+						{
+							userId:req.session.userData.userId,
+							deviceId:"815",
+							products:inData,
+							ownedProducts:inHash,
+						}
+					);*/
+
+				});//end getSpecificProductInformation
+
+			});//end getUserOwnedProducts
+
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
+		}
+
+	});
+
+	
+
+	//==================================================================
+	//--  PRODUCT INFO  ------------------------------------------------
+	//==================================================================
+	app.get('/products/information', function(req, res){
+		if(userModel.verifySession(req,res)){
+			req.body['userId'] = req.session.userData.userId;
+			global.getUserOwnedProducts(req.session.userData.userId, function(inOwnedProductIdArray, inHash){
+				global.reportNotify('/products/information A0', 
+					{
+						inOwnedProductIdArray:inOwnedProductIdArray,
+						userId:req.session.userData.userId,
+					}, 0
+				);
+
+				global.getSpecificProductInformation({}, function(inData){
+
+					res.render('products/information.jqm.jade',
+						{
+							userId:req.session.userData.userId,
+							deviceId:"815",
+							products:inData,
+							ownedProducts:inHash,
+							queryString:req.query,
+						}
+					);
+
+				});//end getSpecificProductInformation
+
+			});//end getUserOwnedProducts
+
+		}else{
+			//============================================================
+			//YOUR NOT LOGED IN ------------------------------------------
+			//============================================================
+			console.log("/jqm/contactmangaer    YOUR NOT LOGED IN????");
+		}
+
+	});
 
 
 

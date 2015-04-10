@@ -40,6 +40,9 @@ head
 body(style="background-color: #000000;")
 
 	style.
+		#div{
+			overflow:hidden;
+		}
 		//- .ui-widget-overlay {
 		//- 	//opacity: 0.5;
 		//- 	//filter: Alpha(Opacity=50);
@@ -56,9 +59,9 @@ body(style="background-color: #000000;")
 		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
 
 
-	div(data-role="header" data-mini="true"  data-theme="b" class="mainHeader")
+	div(data-role="header" data-mini="true"  data-theme="b" class="mainHeader" style="border:none;")
 		center
-			#inSliderDivId(style="background-color: #000000 !important; height:150px;")
+			#inSliderDivId(style="background-color: #000000 !important; height:150px; border:none;")
 
 	div(data-role="footer" data-mini="true" style="width:90%;left:1%;" class="footer ui-bar ui-state-persist" data-theme="b" data-position="fixed" data-fullscreen="true")
 		a(href="#" id="bt_pageLeft" data-role="button" data-mini="true" data-icon="arrow-l") Previous
@@ -84,8 +87,9 @@ body(style="background-color: #000000;")
 
 	- var i = 0;
 	each product in showCaseProducts
-		div(id="pg_page__#{i}" data-role="page"  data-fullscreen="true" data-theme="b"  class=".center-me pg-content is-pg" style="overflow-y:scroll; background-color: #000000 !important;")
-			div(style="")
+		//overflow-y:scroll;
+		div(id="pg_page__#{i}" data-role="page"  data-fullscreen="true" data-theme="b"  class=".center-me pg-content is-pg" style="overflow:hidden !important; background-color: #000000 !important;")
+			div(style="overflow-y:hidden;")
 				center
 					h3 #{product.productTitle}
 					img(src="#{product.imageUrl}" style="height:90px;")

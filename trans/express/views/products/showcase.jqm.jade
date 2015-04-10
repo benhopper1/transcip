@@ -1,0 +1,588 @@
+//h1 showcase
+
+//h1 #{products}h1 Product Manager
+center()
+	//div(data-mini="true" data-position="fixed" data-theme="a" style="border:none; background-color: transparent !important;" class="")
+	a(href="#" id="btBar_back_to_loginManager" data-role="button" style="background-color: transparent !important;" data-icon="back" class="ui-btn-left backButtonClass") Back to Login Manager
+		//h1 ArfSync
+		//a(id="bt_test2" href="" data-icon="delete" class="ui-btn-right") Rec Delete
+
+	br
+	//min-height: 500px; max-height:
+	div(id="showcase_master_div" class="ui-content ui-overlay-shadow ui-shadow" style="min-width: 650px; max-width: 800px; width:60%; height:60%;")
+		h1 Product Manager
+		div(id="showcaseDiv" data-position-to="window" style="margin:10px 15px 0px; height:75%;width:100%; overflow-y:auto;")
+			div(id="dynamicTableDiv_showcase")
+
+div(data-role="popup" id="popupVideo_000" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content" )
+	a(id="bt_iframe_close" href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
+	iframe(id="ifrm_n_000" src="" width="497" height="298" seamless allowfullscreen)
+
+div(data-role="popup" id="popupMessage" data-overlay-theme="a" data-theme="a" class="ui-content" )
+	a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
+	div(id="popupMessageContent" )
+
+
+
+script.
+	var ShowCaseProducts = new function(){
+		var _this = this;
+		var availableProducts = !{JSON.stringify(products)}
+		var ownedProducts = !{JSON.stringify(ownedProducts)}
+		var uniLock;
+
+		//- $(document).on("pagehide",function(e){
+		//- 	alert("pageshow xxxxx event fired - pagetwo is now shown");
+		//- 	console.dir(e);
+		//- });
+		
+		//- $(document).on("pageshow","#page_productManager",function(){ // When entering pagetwo
+		//- 	alert("page_productManager is now shown");
+		//- });
+
+		//- $(document).on("pagehide","#page_productManager",function(){ // When leaving pagetwo
+		//- 	alert("page_productManager is now hidden");
+		//- 	delete ShowCaseProducts;
+		//- });
+
+		//EVENT--------------------------------------------------------
+		eventObject.setOn('onProductManagerOpenClose', function(inData){
+			if(inData && inData.open){
+				_this.reportOnPageOpen(inData);
+			}else{
+				_this.reportOnPageClose(inData);
+			}
+		});
+
+		eventObject.setOn('onPageChange_prd_info', function(inData){
+			console.log('onPageChange_prd_info in SHWOCASE!!');
+			var theProductId = inData.productId;
+			if(theProductId){
+				console.log('onPageChange_prd_info in ID:' + theProductId);
+				var productIndex = _this.productIdToIndex(theProductId);
+				console.log('onPageChange_prd_info in productIndex:' + productIndex);
+				$('#dynamicTableDiv_showcase_table_tbody > tr').each(function(){
+					console.log('index' + $(this).attr('index'));
+					if($(this).attr('index') == productIndex){
+						console.log('MATCH');
+						$(this).css({backgroundColor: "#ffe"});
+						$(this).ScrollTo({
+							//onlyIfOutside: true
+						});
+					}else{
+						$(this).css('background-color','transparent');
+					}
+				});
+			}
+		});
+
+		eventObject.setOn('onPageExit_prd_info', function(inData){
+			$('#btBar_back_to_loginManager').trigger('click');
+		});
+
+		
+
+		$('#dynamicTableDiv_showcase').DynamicTable('create',
+			{
+				fieldHeader:
+					[
+						{
+							caption:'Owned',
+							attributes:
+								{
+									//'data-toggle':'true',
+									style:'width:50px;',
+
+								},
+							style:'',
+						},
+						{
+							caption:'Product Image',
+							attributes:
+								{
+									//'data-toggle':true,
+									style:'width:256px;'
+								},
+							style:'width:80%;',
+						},
+						{
+							caption:'Product Information',
+							attributes:
+								{
+									style:'width:20%;'
+								},
+							style:'',
+						},
+						{
+							caption:'Expiration',
+							attributes:
+								{
+									style:'width:50px;'
+								},
+							style:'',
+						},
+						{
+							caption:'Action',
+							attributes:
+								{
+									//'data-hide':"all",
+									style:'width:80%;',
+								},
+							style:'',
+						}
+					],
+				class:'footable toggle-arrow-circle-filled toggle-large ui-body-d ui-shadow table-stripe ui-responsive',
+				attributes:
+				{
+
+				},
+				onClick:function(inIndex, inData, inJref){
+				}
+			}
+		);
+
+		$('.footable').footable(
+			{
+				breakpoints: 
+					{
+						tiny: 100,
+						medium: 555,
+						big: 2048
+					}
+			}
+		);
+
+		//@@@@@@@@ REPORT PAGE STUFF  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		// has to be connected or the event bus never gets setup!!!
+		this.reportOnPageOpen = function(inJstruct){
+			//alert('reportOnPageOpen');
+			$(".mainHeader").hide();
+			_this.menuOpenProducts(Object.keys(_this.getProducts())[0]);
+
+			// REGISTER EVENTS--------
+			$('#btBar_back_to_loginManager').click(function(){
+				PageLoaderObject.loadPage('loginManager');
+			});
+		}
+
+		this.reportOnPageClose = function(inJstruct){
+			// UNREGISTER EVENTS--------
+			$('#btBar_back_to_loginManager').off('click');
+
+			$(".mainHeader").show();
+			_this.menuCloseProducts();
+		}
+
+
+		//@@@@@@@@ GET PRODUCTS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.getProducts = function(){
+			return availableProducts;
+		}
+
+		//@@@@@@@@ GET OWNED PRODUCTS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.getOwnedProducts = function(){
+			return ownedProducts;
+		}
+
+		//@@@@@@@@ SET PRODUCTS  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.setProducts = function(inData){
+			availableProducts = inData;
+		}
+
+		//@@@@@@@@ SET OWNED @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.setOwnedProducts = function(inData){
+			ownedProducts = inData;
+		}
+
+		this.productIdToIndex = function(inProductId){
+			var result = Object.keys(availableProducts).indexOf(inProductId);
+			if(result == -1){
+				return 0;
+			}
+
+			return Object.keys(availableProducts).indexOf(inProductId);
+		}
+
+		this.indexToProductId = function(inIndex){
+			return Object.keys(availableProducts)[inIndex];
+		}
+
+
+		this.redrawProducts = function(inProducts){
+			//setHeight();
+			//$('#showcaseDiv').height( $('#ui-content').height() - 100);
+			//$('#ui-content').trigger('create');
+			//$('#showcase_master_div').height('300px');
+			setHeightById('showcase_master_div', -100);
+			//setPositionAndHeight('#showcase_master_div', 300, 500);
+			$('#showcase_master_div').trigger('create').trigger('refresh');
+			
+			$('#dynamicTableDiv_showcase').DynamicTable('clear');
+			for(var theIndex in inProducts){
+
+				var owned_html;
+				var expireWhen = '';
+
+
+				if(ownedProducts[inProducts[theIndex].productId]){
+					var expireWhen = 'never';
+					if(ownedProducts[inProducts[theIndex].productId].purchaseTime != '0'){
+
+						var purchaseMoment = moment(mysqlEpochToLocalDateTime(ownedProducts[inProducts[theIndex].productId].purchaseTime));
+						var expireMoment;
+						var daysPeriod = parseInt(ownedProducts[inProducts[theIndex].productId].daysValidPeriod);
+						if(daysPeriod > 27 && daysPeriod < 32){
+							// use month as a period----
+							expireMoment = purchaseMoment.add(1, 'month');
+						}else{
+							expireMoment = purchaseMoment.add(daysPeriod, 'days');
+						}
+						
+						var daysUntilExpireString = expireMoment.fromNow();
+						expireWhen = daysUntilExpireString;
+
+					}
+					console.log('HJJHJHJHJHJHJHJHJHJHJHJH');
+					console.dir(ownedProducts);
+					owned_html = '<h4><center >YES</center></h4>'
+				}else{
+					owned_html = '<h4><center class="blink"><font color="red">NO</font></center></h4>'
+				}
+
+				var bt_purchase_class;
+				var bt_info_class;
+				var bt_video_class;
+
+				if(inProducts[theIndex].isBuyEnabled == 'true' && !(ownedProducts[inProducts[theIndex].productId])){
+					//buy OK
+					bt_purchase_class = 'ui-active';
+				}else{
+					bt_purchase_class = 'ui-disabled';
+				}
+
+				if(inProducts[theIndex].productUrl && inProducts[theIndex].productUrl != ''){
+					bt_info_class = 'ui-active';
+				}else{
+					bt_info_class = 'ui-disabled';
+				}
+
+				if(inProducts[theIndex].youtube && inProducts[theIndex].youtube != ''){
+					bt_video_class = 'ui-active';
+				}else{
+					bt_video_class = 'ui-disabled';
+				}
+
+				var buttonGroup_html;
+				buttonGroup_html = 
+					'<div id="bt_grp_000_' + inProducts[theIndex].id + '" data-role="controlgroup" data-mini="true" data-type="horizontal" >' 		+
+						'<a id="bt_purchase_' + inProducts[theIndex].id + '" productId="' + inProducts[theIndex].productId + '" class="' + bt_purchase_class + '" href="" data-icon="shop" ui-btn-icon-left data-role="button" data-theme="d">Purchase</a>' 			+ 
+						'<a id="bt_info_' + inProducts[theIndex].id + '" productId="' + inProducts[theIndex].productId + '" class="' + bt_info_class + '" href="" data-icon="info" ui-btn-icon-left data-role="button">Information</a>' 			+ 
+						'<a id="bt_video_' + inProducts[theIndex].id + '" productId="' + inProducts[theIndex].productId + '" class="' + bt_video_class + '" href="" data-icon="video" ui-btn-icon-left data-role="button">Video</a>' 		+
+					'</div>'
+				;
+
+				$('#dynamicTableDiv_showcase').DynamicTable('addRow', 
+					{
+						rowArray:
+							[
+								'<div onmouseover="ShowCaseProducts.menuSwitchProduct(\'' + inProducts[theIndex].productId + '\')">' + owned_html + '</div>',
+								'<center><img style="height:32px;" src="' + inProducts[theIndex].imageUrl + '" /></center>',
+								inProducts[theIndex].productTitle,
+								expireWhen,
+								buttonGroup_html,
+							],
+						data:inProducts[theIndex],
+					}
+				);
+			
+				$('.footable').trigger('footable_redraw');
+				$('#showcaseDiv').trigger('create');//bt_grp_000_' + inProducts[theIndex].id
+
+				// BUTTON EVENTS PER ITERATION
+				$('#bt_purchase_' + inProducts[theIndex].id).click(function(){
+					//alert( $(this).attr('productId'));
+					_this.makePurchase(
+						{
+							productId:$(this).attr('productId'),
+							productType:inProducts[$(this).attr('productId')].productType,
+						}
+					);
+
+				});
+
+				$('#bt_info_' + inProducts[theIndex].id).click(function(){
+					//alert( inProducts[$(this).attr('productId')].productUrl);
+					_this.loadUrlInNewWindow(inProducts[$(this).attr('productId')].productUrl);
+				});
+
+				$('#bt_video_' + inProducts[theIndex].id).click(function(){
+					var youtubeCode = inProducts[$(this).attr('productId')].youtube;
+					//alert( youtubeCode );
+					YouTubePopup.loadVideo(
+						{
+							code:youtubeCode,
+						}
+					);
+				});
+
+
+
+			}// end for
+
+			// CSS for menu and local mouse over
+			$('#dynamicTableDiv_showcase_table_tbody > tr').on('mouseover', function(){
+				$('#dynamicTableDiv_showcase_table_tbody > tr').css('background-color','transparent');
+				$(this).css({backgroundColor: "#ffe"});
+				var theProductId = _this.indexToProductId($(this).attr('index'));
+				if(theProductId){
+					_this.menuSwitchProduct(theProductId);
+				}
+			});
+		}
+
+		var lastUniTimeRelease;
+		this.setUniLock = function(inBool){
+			if(inBool){
+				uniLock = true;
+				if(lastUniTimeRelease){
+					clearTimeout(lastUniTimeRelease);
+				}
+				lastUniTimeRelease = setTimeout(function(){ 
+					uniLock = false;
+					lastUniTimeRelease = false;
+				}, 10000);
+			}else{
+				clearTimeout(lastUniTimeRelease);
+				uniLock = false;
+			}
+		}
+
+		this.makePurchase = function(inMakePurchaseOptions){
+			var makePurchaseOptions = 
+				{
+					productId:false,
+					productType:'inapp',
+				}
+			makePurchaseOptions = $.extend(true, makePurchaseOptions, inMakePurchaseOptions);
+
+
+			if(!(uniLock)){
+				//uniLock = true;
+				_this.setUniLock(true);
+				_this.popupMessage(
+					{
+						message:'Sending to Google, Please use <h1>phone screen</h1> to finalize request.',
+						height:'150px',
+						width:$(window).width() * .8,
+					}
+				);
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'product',
+								action:'buyProduct',
+							},
+						data:
+							{
+								productId:makePurchaseOptions.productId,
+								productType:makePurchaseOptions.productType,
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							_this.setUniLock(false);
+							if(inDataLayer.isGoodPurchase == 'true'){
+								_this.popupMessage(
+									{
+										message:'Thank you for your purchase, THE FORCE IS WITH YOU!!',
+										timeout:5000,
+										timeOutPostFunction:function(){
+										},
+									}
+								);
+								_this.updateProductData(function(){
+									//products updated before here, ready to redraw..
+									_this.redrawProducts(ShowCaseProducts.getProducts());
+								});
+
+							}else{
+								_this.popupMessage(
+									{
+										message:'Problem with purchase, BAD!!!!',
+										timeout:5000,
+									}
+								);
+							}
+
+						}
+					}
+				);
+			}
+		}
+
+	this.popupMessage = function(inPopupMessageOptions){
+		var popupMessageOptions = 
+			{
+				message:false,
+				timeout:false,
+				timeOutPostFunction:false,
+				height:false,
+				width:false,
+			}
+		popupMessageOptions = $.extend(true, popupMessageOptions, inPopupMessageOptions);
+		if(popupMessageOptions.timeout){
+			setTimeout(function(){
+				$('#popupMessage').popup('close');
+				if(popupMessageOptions.timeOutPostFunction){popupMessageOptions.timeOutPostFunction();}
+			}, popupMessageOptions.timeout);
+		}
+
+		if(popupMessageOptions.height){
+			//$('#popupMessage').height(popupMessageOptions.height);
+			$('#popupMessageContent').height(popupMessageOptions.height);
+		}
+
+		if(popupMessageOptions.width){
+			//$('#popupMessage').width(popupMessageOptions.width);
+			$('#popupMessageContent').width(popupMessageOptions.width);
+		}
+
+		$('#popupMessageContent').html(
+			'<center>' + popupMessageOptions.message + '</center>'
+		);
+
+
+		if(!($('#popupMessage').parent().hasClass('ui-popup-active'))){
+			$('#popupMessage').popup('open');
+		}
+	}
+
+	this.updateProductData = function(inPostFunction){
+		//AJAX-------
+		$postAjax(
+			{
+				url:'/products/showCase',
+				send:
+					{
+
+					},
+				onAjaxSuccess:function(inJsonData_txt){
+					var freshProductData = JSON.parse(inJsonData_txt);
+					if(freshProductData && freshProductData.products){
+						_this.setProducts(freshProductData.products);
+					}
+					if(freshProductData && freshProductData.ownedProducts){
+						_this.setOwnedProducts(freshProductData.ownedProducts);
+					}
+
+					if(inPostFunction){inPostFunction(freshProductData)}
+
+				}
+			}
+		);
+	}
+
+	this.loadUrlInNewWindow = function(inUrl){
+		var left = (screen.width/2)-(($(window).width() * .85)/2);
+		var top = (screen.height/2)-(($(window).height() * .85)/2);
+		window.open(inUrl, null, 'height=' + ($(window).height() * .85) + ',width=' + ($(window).width() * .85) + ',status=yes,toolbar=no,menubar=no,location=no, top=' + top + ', left=' + left);
+	}
+
+	this.menuOpenProducts = function(inProductId){
+		commManager.transactionToDeviceToken(
+			{
+				routing:
+					{
+						command:'product',
+						action:'openProductInformation'
+					},
+				data:
+					{
+						productId:inProductId
+					},
+		onComplete:function(inDataLayer, inTransportLayer){
+					console.log('menuOpenProducts onComplete entered');
+				}
+			}
+		);
+	}
+
+	this.menuCloseProducts = function(){
+		commManager.transactionToDeviceToken(
+			{
+				routing:
+					{
+						command:'product',
+						action:'closeProductInformation'
+					},
+				data:
+					{
+					},
+		onComplete:function(inDataLayer, inTransportLayer){
+					console.log('menuCloseProducts onComplete entered');
+				}
+			}
+		);
+	}
+
+	this.menuSwitchProduct = function(inProductId){
+		commManager.transactionToDeviceToken(
+			{
+				routing:
+					{
+						command:'product',
+						action:'switchProduct'
+					},
+				data:
+					{
+						productId:inProductId
+					},
+		onComplete:function(inDataLayer, inTransportLayer){
+					console.log('menuOpenProducts onComplete entered');
+				}
+			}
+		);
+	}
+
+	}(); //END ShowCaseProducts -------------------------------------------------------------------
+
+	//==================================================================
+	//--  YOUTUBE POPUP  -----------------------------------------------
+	//==================================================================
+	var YouTubePopup = new function(){
+		var _this = this;
+
+		this.loadVideo = function(inLoadVideoOptions){
+			var loadVideoOptions = 
+				{
+					code:false,
+					url:'https://www.youtube.com/embed/',
+				}
+			loadVideoOptions = $.extend(true, loadVideoOptions, inLoadVideoOptions);
+			$('#ifrm_n_000').attr('src', loadVideoOptions.url + loadVideoOptions.code);
+			$("#popupVideo_000").popup( "open", {});
+
+			$('#bt_iframe_close').click(function(){
+				_this.destroy();
+			});
+		}
+
+		this.destroy = function(){
+			//$('#ifrm_ns').attr("src", " ");
+		}
+
+
+	}();
+
+
+
+
+	
+
+
+	console.log('Products');
+	console.dir(ShowCaseProducts.getProducts());
+	ShowCaseProducts.redrawProducts(ShowCaseProducts.getProducts());
+	//ShowCaseProducts.menuOpenProducts(Object.keys(ShowCaseProducts.getProducts())[0]);
+
+	//ShowCaseProducts.redrawProducts(ShowCaseProducts.getProducts());

@@ -338,11 +338,18 @@ var phoneDisplayFormat = function(inNumber){
 	return inNumber;*/
 }
 var mysqlEpochToLocalDateTime = function(inValue){
+	if(inValue.toString().length > 10){
+		inValue = inValue.toString().substring(0,10);
+	}
 	var utcSeconds = inValue;
 	var newDate = new Date(0); // The 0 there is the key, which sets the date to the epoch
 	newDate.setUTCSeconds(utcSeconds);
 	return newDate.toLocaleString();
 }
+
+/*var dateAddDays = function(inDate, inDays){
+	return inDate.setDate(inDate.getDate() + parseInt(inDays));
+}*/
 
 var copyObject = function(inObject){
 	return $.extend(true, {},inObject);

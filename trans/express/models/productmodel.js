@@ -355,20 +355,27 @@ var Model = function(){
 				productIds:[],
 			}
 		getSpecificProductInformationOptions = extend(true, getSpecificProductInformationOptions, inGetSpecificProductInformationOptions);
-
-		_this.getShowCaseProducts({}, function(err, result){
-			var resultHash = {};
-			for(var theInProductId in getSpecificProductInformationOptions.productIds){
-				for(var theResultIndex in result){
-					if(getSpecificProductInformationOptions.productIds[theInProductId] == result[theResultIndex].productId){
-						resultHash[result[theResultIndex].productId] = result[theResultIndex];
+		if(getSpecificProductInformationOptions.productIds.length > 0){
+			_this.getShowCaseProducts({}, function(err, result){
+				var resultHash = {};
+				for(var theInProductId in getSpecificProductInformationOptions.productIds){
+					for(var theResultIndex in result){
+						if(getSpecificProductInformationOptions.productIds[theInProductId] == result[theResultIndex].productId){
+							resultHash[result[theResultIndex].productId] = result[theResultIndex];
+						}
 					}
 				}
-			}
-			if(inPostFunction){inPostFunction(resultHash);}
-		});
-
-
+				if(inPostFunction){inPostFunction(resultHash);}
+			});
+		}else{
+			_this.getShowCaseProducts({}, function(err, result){
+				var resultHash = {};
+				for(var theResultIndex in result){
+						resultHash[result[theResultIndex].productId] = result[theResultIndex];
+				}
+				if(inPostFunction){inPostFunction(resultHash);}
+			});
+		}
 	}
 
 	this.getShowCaseProducts = function(inParams, inPostFunction){
@@ -420,7 +427,9 @@ var Model = function(){
 					"AND"																		+ " " +
 						"t1.itemType LIKE " 	+ connection.escape(fieldData.itemType)			+ " " +
 					"AND"																		+ " " +
-						"t1.userId = "			+ connection.escape(parseInt(fieldData.userId))
+						"t1.userId = "			+ connection.escape(parseInt(fieldData.userId))	+ " " +
+					"AND"																		+ " " +
+						"t2.userId = "			+ connection.escape(parseInt(fieldData.userId))
 		;
 		global.reportNotify('SQL productModel.getOwnedProductsForUser()', sqlString, 0);
 

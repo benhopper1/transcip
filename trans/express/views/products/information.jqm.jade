@@ -1,0 +1,281 @@
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() ArfSync Product Information
+	link(rel="icon" type="image/png" href="/public/icons/favicon-32x32.png")
+
+body(style="")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+
+	style.
+		.magicCirc{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:10px;
+			-webkit-border-radius: 150px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.magicSquare{
+			padding:4px;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.magicSquarePnt{
+			padding:4px;
+			cursor:pointer;
+			display:inline-block;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			color:#666;
+			border:1px solid #999;
+			background-color:#eee;
+			-moz-border-radius:00px;
+			-webkit-border-radius: 15px;
+			-moz-box-shadow:#999 2px 0px 3px;
+			-webkit-box-shadow:#999 2px 0px 3px;
+			margin-bottom:4px;
+		}
+		.imageAndText{
+			//left:10px;
+			//vertical-align: middle;
+			//margin-bottom: 0.75em;
+			//left: 5px ;
+			text-align: left;
+			padding-left: 20px !important;
+		}
+
+		img{
+			object-fit: cover;
+			overflow: hidden;
+		}
+
+
+	script.
+
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	//background-color: #000000 !important;
+	div(id="pg_info" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" style="background: #000000 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center;") 
+		br
+		center
+			//div(id="showcase_master_div" class="ui-content ui-overlay-shadow ui-shadow" style="width:90%;")
+			center
+				//div(id="showcase_master_div" class="ui-content ui-overlay-shadow ui-shadow" style="width:90%; height:90%;")
+				b(id="tx_productInformation_title") The title here
+			center
+				img(id="img_productInformation" style="height:128px")
+			center
+				//p PRODUCT ID:
+				//p(id="tx_productInformation_productId")
+				div(style="max-width:300px")
+					p(id="tx_productInformation_description" style="")
+			a(href="#" style="min-width:20%;" id="bt_information_exit" data-role="button" data-mini="true" data-icon="arrow-l") Previous
+
+		div(data-role="footer" data-mini="true" style="width:90%;left:1%;" class="footer ui-bar ui-state-persist" data-theme="a" data-position="fixed" data-fullscreen="true")
+			a(href="#" style="min-width:20%;" id="bt_pageLeft" data-role="button" data-mini="true" data-icon="arrow-l") Previous
+			//a(href="#" data-role="button" data-icon="plus") Add Me On Twitter
+			a(href="#" style="min-width:20%;" id="bt_pageRight" data-role="button" data-mini="true" data-iconpos="right" class="ui-btn-right" data-icon="arrow-r") Next
+			div(style="width:50px;")
+
+
+
+
+script.
+	var ProductsInformation = new function(){
+		var _this = this;
+		var availableProducts = !{JSON.stringify(products)}
+		var ownedProducts = !{JSON.stringify(ownedProducts)}
+		var focusProductId = false;
+		var focusIndex = 0;
+		//----------------- events --------------------------
+		$('#bt_pageLeft').click(function(){
+			if(focusIndex > 0){
+				focusIndex--;
+				var theProductId = _this.indexToProductId(focusIndex);
+				_this.updateDisplay(theProductId);
+				//@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(!(typeof Android === 'undefined')){
+					Android.reportOnEvent('onPageChange_prd_info', JSON.stringify(
+						{
+							productId:theProductId,
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}//END @@@@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			}else{
+				focusIndex = (Object.keys(availableProducts).length - 1);
+				var theProductId = _this.indexToProductId(focusIndex);
+				_this.updateDisplay(theProductId);
+								//@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(!(typeof Android === 'undefined')){
+					Android.reportOnEvent('onPageChange_prd_info', JSON.stringify(
+						{
+							productId:theProductId,
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}//END @@@@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			}
+		});
+
+		$('#bt_pageRight').click(function(){
+			if(focusIndex < (Object.keys(availableProducts).length - 1)){
+				focusIndex++;
+				var theProductId = _this.indexToProductId(focusIndex);
+				_this.updateDisplay(theProductId);
+				//@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(!(typeof Android === 'undefined')){
+					Android.reportOnEvent('onPageChange_prd_info', JSON.stringify(
+						{
+							productId:theProductId,
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}//END @@@@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			}else{
+				focusIndex = 0;
+				var theProductId = _this.indexToProductId(focusIndex);
+				_this.updateDisplay(theProductId);
+				//@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(!(typeof Android === 'undefined')){
+					Android.reportOnEvent('onPageChange_prd_info', JSON.stringify(
+						{
+							productId:theProductId,
+						}
+					));
+				}else{
+					console.log('----------ANDROID------(not defined)----------------');
+				}//END @@@@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			}
+		});
+		$('#bt_information_exit').click(function(){
+			//@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			if(!(typeof Android === 'undefined')){
+				Android.reportOnEvent('onPageExit_prd_info', JSON.stringify(
+					{
+					}
+				));
+			}else{
+				console.log('----------ANDROID------(not defined)----------------');
+			}//END @@@@@@ ANDROID CALL @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		});
+		//Object.keys(availableProducts)
+		// ---------------- methods -------------------------
+		this.updateDisplay = function(inProductId){
+			if(!(availableProducts)){return;}
+
+			focusProductId = Object.keys(availableProducts)[0];
+			if(availableProducts[inProductId]){
+				console.log('xxxx');
+				console.dir(availableProducts[inProductId]);
+				focusProductId = inProductId;
+				focusIndex = _this.productIdToIndex(inProductId);
+			}
+
+			// UI update -------------------------------------
+
+			$('#tx_productInformation_title').html(availableProducts[focusProductId].productTitle);
+			$('#tx_productInformation_productId').html(availableProducts[focusProductId].productId);
+			$('#img_productInformation').attr('src', availableProducts[focusProductId].imageUrl);
+			$('#tx_productInformation_description').html( availableProducts[focusProductId].productDescription);
+			console.log('focus:' + focusProductId);
+
+		}
+
+		//@@@@@@@@ GET PRODUCTS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.getProducts = function(){
+			return availableProducts;
+		}
+
+		//@@@@@@@@ GET OWNED PRODUCTS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.getOwnedProducts = function(){
+			return ownedProducts;
+		}
+
+		//@@@@@@@@ SET PRODUCTS  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.setProducts = function(inData){
+			availableProducts = inData;
+		}
+
+		//@@@@@@@@ SET OWNED @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		this.setOwnedProducts = function(inData){
+			ownedProducts = inData;
+		}
+
+		this.productIdToIndex = function(inProductId){
+			var result = Object.keys(availableProducts).indexOf(inProductId);
+			if(result == -1){
+				return 0;
+			}
+
+			return Object.keys(availableProducts).indexOf(inProductId);
+		}
+
+		this.indexToProductId = function(inIndex){
+			return Object.keys(availableProducts)[inIndex];
+		}
+
+
+		this.updateProductData = function(inPostFunction){ 
+			//AJAX-------
+			$postAjax(
+				{
+					url:'/products/showCase',
+					send:
+						{
+
+						},
+					onAjaxSuccess:function(inJsonData_txt){
+						var freshProductData = JSON.parse(inJsonData_txt);
+						if(freshProductData && freshProductData.products){
+							_this.setProducts(freshProductData.products);
+						}
+						if(freshProductData && freshProductData.ownedProducts){
+							_this.setOwnedProducts(freshProductData.ownedProducts);
+						}
+
+						_this.updateDisplay(focusProductId);
+						if(inPostFunction){inPostFunction(freshProductData)}
+
+					}
+				}
+			);
+		}
+
+	}();
+
+	var startupProductId = '#{queryString.productId}'
+	if(startupProductId){
+		ProductsInformation.updateDisplay(startupProductId);
+	}
+
+	console.log(ProductsInformation.productIdToIndex('android.test.purchased22'));

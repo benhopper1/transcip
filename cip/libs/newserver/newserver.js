@@ -164,6 +164,10 @@ var NewServer = function(inOptions){
 					sourcePublicPath:util.format('%s/express/purchase.log',options.mainServerPathSource),
 					targetPublicPath:util.format('%s/express/purchase.log',options.mainServerPathTarget),
 				},
+				{
+					sourcePublicPath:util.format('%s/express/filestoragedat.json',options.mainServerPathSource),
+					targetPublicPath:util.format('%s/express/filestoragedat.json',options.mainServerPathTarget),
+				},
 
 			]
 		);

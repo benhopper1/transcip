@@ -274,6 +274,7 @@ productModel.getRoutesProducts(function(err, records){
 
 global.isProductsAuthForRoute = function(inRoute, inUserActiveProductsArray){
 	console.log('isProductsEnabledForRoute ENETERED');
+
 	var theRouteProducts = global.productHashOfArray.getArrayFromHash(inRoute);
 	var resultBool = true;
 	if(!(theRouteProducts)){
@@ -284,7 +285,7 @@ global.isProductsAuthForRoute = function(inRoute, inUserActiveProductsArray){
 				error:'the route does not exist in global.productHashOfArray.getArrayFromHash',
 			}, 0
 		);
-		return false;
+		return true;
 	};
 	for(var theRouteProductsIndex in theRouteProducts){
 		if(inUserActiveProductsArray.indexOf(theRouteProducts[theRouteProductsIndex]) == -1){

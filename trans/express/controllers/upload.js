@@ -6,7 +6,8 @@ var fs = require('fs');
 var multiparty = require(basePath + '/node_modules/multiparty');
 var finish = require(basePath + '/node_modules/finish');
 var uuid = require(basePath + '/node_modules/node-uuid');
-
+var FileStorageClient = require(basePath + '/node_modules/filestorageclient/filestorageclient.js');
+var FileMutator = require(basePath + '/node_modules/filemutator/filemutator.js');
 
 var configData = fs.readFileSync(path.dirname(require.main.filename) + '/main.conf', 'utf8');
 configData = JSON.parse(configData);
@@ -512,6 +513,102 @@ module.exports.controller = function(app){
 
 	});
 
+//==================================================================
+//--  FILE STORAG CLIENT  ------------------------------------------
+//==================================================================
+var fileMutator = new FileMutator();
+var fileStorageClient = new FileStorageClient(
+	{
+		datFilePath:basePath + '/filestoragedat.json',
+		onSave:function(inStream, inType, inFileStruct, inWriteStream, inTargetFileInfo){
+			var storageKey = inTargetFileInfo.storageKey;
+
+			if(inType.toLowerCase() == 'png' || inType.toLowerCase() == 'jpg'){
+				var mutatorFunctionalKey;
+				if(storageKey == 'userImage'){
+					mutatorFunctionalKey = 'saveNormalUserImage';
+				}
+				if(storageKey == 'contactImage'){
+					mutatorFunctionalKey = 'saveNormalContactImage';
+				}
+				var theResult = fileMutator.mutate('saveNormalUserImage',
+					{
+						stream:inStream,
+						type:inType,
+						fileStruct:inFileStruct,
+						writeStreamFunction:inWriteStream,
+						targetFileInfo:inTargetFileInfo,
+						writeOver:'writeOver-' + storageKey,
+					}
+				);
+				console.log('--- the result of call ----');
+				console.dir(theResult);
+
+			}else{
+				inWriteStream(inStream);
+			}
+
+		},
+	}
+);
+
+			//-----P O S T ---------------------------------
+	app.post('/upload/universal', function(req, res){
+		console.log('USERID=>:' + req.session.userData.userId);
+
+		var form = new multiparty.Form();
+		form.parse(req, function(err, fields, files){
+			if(!(files)){
+				//files empty send error
+				//res.send(err.message, 500);
+				res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify({error:'error'}));
+				return false;
+			}
+			if(files.uploadedFile){
+				var fieldsHash = {};
+				var tmpFilePath = files.uploadedFile[0].path;
+				var fileName = files.uploadedFile[0].originalFilename;
+				var encoding = '';
+				var mimeType = '';
+				var fieldName ='';
+
+				//var file = fs.createReadStream(tmpFilePath);
+
+				Object.keys(fields).forEach(function(name){
+					fieldsHash[name] = fields[name][0];
+				});
+
+				var fileData = 
+					{
+						request:'',
+						response:'',
+						//file:file,
+						fileName:fileName,
+						encoding:encoding,
+						mimeType:mimeType,
+						data:fieldsHash
+					}
+
+				global.reportNotify('UPLOAD UNIVERSAL', 
+					{
+						fileData:fileData,
+						fileName:fileName,
+						tmpFilePath:tmpFilePath,
+						fieldsHash:fieldsHash,
+						testEXT:path.extname(tmpFilePath), //.replace('.','')
+
+					}, 0);
+				fileStorageClient.storeFile(fieldsHash['storageKey'], tmpFilePath, function(inData){
+					res.setHeader('Content-Type', 'application/json');
+					res.end(JSON.stringify(inData));
+				});
+			}
+
+
+		});
+
+	});
 
 
 

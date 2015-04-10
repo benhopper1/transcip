@@ -1,0 +1,58 @@
+{
+  "userImage": {
+    "maxFolderFileCount": 4,
+    "maxFolderSizeBytes": 1000,
+    "createNewFolderUsageCountPercent": 99,
+    "currentFolderUsageCountPercent": 66.66666666666667,
+    "createNewFolderUsageSizePercent": 0.9,
+    "currentTotalFileCount": 87450,
+    "currentTotalFolderCount": 48133,
+    "currentTotalFileSize": 3214623360,
+    "folderBasePath": "/home/ben/git_project/transcip/trans/express/public/images/users/",
+    "folderDomainPath": "/public/images/users/",
+    "useFolderPath": "bf4b26a0-df18-11e4-ae51-2b36451003e5",
+    "leastFolderCount": 0,
+    "folders": {
+      "1277cba0-dec2-11e4-8c11-efdb36f3a582": {
+        "name": "1277cba0-dec2-11e4-8c11-efdb36f3a582",
+        "fullPath": "/home/ben/git_project/transcip/trans/express/public/images/users/1277cba0-dec2-11e4-8c11-efdb36f3a582",
+        "currentFolderFileCount": 4,
+        "currentFolderFileSizeBytes": 139996
+      },
+      "1b8cc3f0-dee3-11e4-ae51-2b36451003e5": {
+        "name": "1b8cc3f0-dee3-11e4-ae51-2b36451003e5",
+        "fullPath": "/home/ben/git_project/transcip/trans/express/public/images/users/1b8cc3f0-dee3-11e4-ae51-2b36451003e5",
+        "currentFolderFileCount": 4,
+        "currentFolderFileSizeBytes": 156275
+      },
+      "bf4b26a0-df18-11e4-ae51-2b36451003e5": {
+        "name": "bf4b26a0-df18-11e4-ae51-2b36451003e5",
+        "fullPath": "/home/ben/git_project/transcip/trans/express/public/images/users/bf4b26a0-df18-11e4-ae51-2b36451003e5",
+        "currentFolderFileCount": 0,
+        "currentFolderFileSizeBytes": 0
+      }
+    }
+  },
+  "contactImage": {
+    "maxFolderFileCount": 60,
+    "maxFolderSizeBytes": 1000,
+    "createNewFolderUsageCountPercent": 90,
+    "currentFolderUsageCountPercent": 6.666666666666671,
+    "createNewFolderUsageSizePercent": 0.9,
+    "currentTotalFileCount": 3275167,
+    "currentTotalFolderCount": 86604,
+    "currentTotalFileSize": 3243247674649,
+    "folderBasePath": "/home/ben/git_project/transcip/trans/express/public/images/contacts/",
+    "folderDomainPath": "/public/images/contacts/",
+    "useFolderPath": "1277f2b0-dec2-11e4-8c11-efdb36f3a582",
+    "leastFolderCount": 4,
+    "folders": {
+      "1277f2b0-dec2-11e4-8c11-efdb36f3a582": {
+        "name": "1277f2b0-dec2-11e4-8c11-efdb36f3a582",
+        "fullPath": "/home/ben/git_project/transcip/trans/express/public/images/contacts/1277f2b0-dec2-11e4-8c11-efdb36f3a582",
+        "currentFolderFileCount": 4,
+        "currentFolderFileSizeBytes": 175396
+      }
+    }
+  }
+}

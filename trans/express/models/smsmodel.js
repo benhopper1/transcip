@@ -18,7 +18,92 @@ connection = Connection.getInstance('arf').getConnection();
 var Model = function(){
 	connection = Connection.getInstance('arf').getConnection();
 	var _this = this;
+
 	this.addManySms = function(inParams, inPostFunction){
+		console.log('---------------addManySms starting------------------------------------------');
+		//validate input
+		/*for(index in inParams.dataArray){
+			inParams.dataArray[index].userId = inParams.userId;
+		}*/
+		if(!(inParams.userId)){
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+			}
+		}
+
+		var smsArray = inParams.dataArray;
+		var insertSQL = "";
+
+		var isInit = true;
+		for(var theIndex in smsArray){
+			var fieldData = 
+				{
+					body:"",
+					cleanContactPhoneNumber:"",
+					contactName:"",
+					contactPhoneNumber:"",
+					date:"",
+					dateSent:"",
+					smsId: smsArray[theIndex].id,
+					read: "0",
+					smsContext: "",
+					thread: "",
+					userId:inParams.userId
+				}
+			fieldData = extend(fieldData, smsArray[theIndex]);
+			if(!(isInit)){
+				insertSQL += ",";
+			}else{
+				isInit = false;
+			}
+
+			insertSQL +=
+				"(" 																			  +
+					connection.escape(fieldData.body) 										+ "," +
+					connection.escape(cleanPhoneNumber(fieldData.cleanContactPhoneNumber))	+ "," +
+					connection.escape(fieldData.contactName) 								+ "," +
+					connection.escape(cleanPhoneNumber(fieldData.contactPhoneNumber))		+ "," +
+					connection.escape(fieldData.date) 										+ "," +
+					connection.escape(fieldData.dateSent) 									+ "," +
+					connection.escape(fieldData.read) 										+ "," +
+					connection.escape(fieldData.smsContext) 								+ "," +
+					connection.escape(fieldData.smsId) 										+ "," +
+					connection.escape(fieldData.thread) 									+ "," +
+					connection.escape(fieldData.userId) 										  +
+				" )"
+			;
+
+		}//end for
+
+		var sqlString = 
+			"INSERT INTO `tb_smsStore` ( `body`, `cleanContactPhoneNumber`, `contactName`, `contactPhoneNumber`, `date`, `dateSent`, `read`, `smsContext`, `smsId`, `thread`, `userId`) VALUES " + 
+				insertSQL + 
+			";"
+		console.log('sql:' + sqlString);
+		connection.query(sqlString, function(err, result){
+			console.log('error' + err);
+			if(inPostFunction){inPostFunction(err, result);}
+		});
+
+		/*finish.map(smsArray, function(value, done){
+			_this.addSms(value, function(inErr, inResult){
+				done(null, value);
+			});
+		},
+
+		//completed Function--------------------------------
+		function(err, results){
+			console.log('--------------------------------------------------------');
+			console.log('addManySms complete err/result:');
+			if(inPostFunction){
+				inPostFunction();
+			}
+		});*/
+
+	}
+
+	this.addManySmsOLD = function(inParams, inPostFunction){
 		console.log('---------------addManySms starting------------------------------------------');
 		//validate input
 		for(index in inParams.dataArray){

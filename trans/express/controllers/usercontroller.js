@@ -52,10 +52,25 @@ module.exports.controller = function(app) {
 	});
 
 	
-
 	app.get('/user/mobileLogin', function(req, res){
 		res.render('users/mobilelogin.jade',req.body);
 	});
+
+	/*
+	app.get('/user/mobileLoginOrCreate', function(req, res){
+		var userNameArray = [];
+		if(req.body['userNameArray']){
+			userNameArray = req.body['userNameArray'];
+		}
+		req.body.userNameArray = userNameArray;
+		userModel.userNamesExist(userNameArray, function(inResultHash){
+			res.render('users/mobilelogin.jade',req.body);
+			
+		});
+	});
+	*/
+
+
 
 	app.post('/user/mobileLogin', function(req, res){
 		userModel.verifyAndGetUserData(
@@ -127,7 +142,15 @@ module.exports.controller = function(app) {
 						if(result.insertId){
 							if(req.body.emailAddress && req.body.activateCode){
 								console.log('sending email');
-								userModel.sendMailActivateCode(req.body.emailAddress, req.body.activateCode, result.insertId);
+								//userModel.sendMailActivateCode(req.body.emailAddress, req.body.activateCode, result.insertId);
+								userModel.activateUserAccount(
+									{
+										code:req.body.activateCode,
+										userId:result.insertId,
+									}, function(err, result){
+										//ddddddddddddddddd activated here!!!
+									}
+								);
 								res.setHeader('Content-Type', 'application/json');
 								res.end(JSON.stringify(
 									{
@@ -410,6 +433,23 @@ module.exports.controller = function(app) {
 			console.log('userModel.userStartUp COMPLETE');
 		});
 		res.end();
+	});
+
+	app.post('/users/userNamesExist', function(req, res){
+		var userNameArray = [];
+		if(req.body['userNameArray']){
+			userNameArray = req.body['userNameArray'];
+		}
+		userModel.userNamesExist(userNameArray, function(inResultHash){
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(
+				{
+					//hadError:((err)? true : false),
+					//err:err,
+					result:inResultHash
+				}
+			));
+		});
 	});
 
 

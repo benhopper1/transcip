@@ -1,0 +1,77 @@
+start time:
+1427653923062
+
+INSERT INTO `tb_purchases`(
+    `id`,
+    `itemType`,
+    `orderId`,
+    `packageName`,
+    `purchaseTime`,
+    `purchaseState`,
+    `developerPayLoad`,
+    `token`,
+    `originalJson`,
+    `signature`,
+    `userId`,
+    `userGuid`,
+    `entryTime`,
+    `lastUpdateTime`,
+    `productId`
+) VALUES (
+    2,
+    'subs',
+    '',
+    'hopper.arfsync.v001',
+    '1427653923062',
+    '0',
+    '42dc3fe2-b1f9-11e4-af6e-a5c901a9',
+    'ffghejodmhffjlknooeamdjf.AO-J1OxAmhq5gXif-LHmP_lYyqwSq-HKtivRM6jGZEkLcC95N9YrwvUxV3yln2ydqpo5uvpSpOSDygwtlr3qcHomjTYImVRuEl36YTYBWxk5mBapyDeYlAVcIdFNS44pq0w3cbuArBUH8TOSUmQPRKJwwbv7skovgw',
+    '{"packageName":"hopper.arfsync.v001","productId":"arfsync.testapp.test_subscribe_product_500","purchaseTime":1427653923062,"purchaseState":0,"developerPayload":"42dc3fe2-b1f9-11e4-af6e-a5c901a9","purchaseToken":"ffghejodmhffjlknooeamdjf.AO-J1OxAmhq5gXif-L',
+    'TJwynYn/rj2fBwR7rRMhKcRQiZtALUFN8nKtnLWoK3Vp8gWDjRYTBUVxYXU+IsQp1twL5RuVkw/2UaLZH2ZfH3+mz64to8aIMJ7SaUuPBLaSnrI805rt4EUu9J44iXsVrS13PZitFZQPe4p7cX/l2GjI9/7hUpepASZCxKA+3sffJC7R9gw+la1U8+DF2v7pE0vK5PvDFV5pXNBTtZoxHGt35To5nNcWjCoADKlvQHUar+I6XpmiMsWb5vUbLM0',
+    291,
+    '',
+    '2015-03-29 14:32:16',
+    '0000-00-00 00:00:00',
+    'arfsync.testapp.test_subscribe_product_500'
+ );
+
+ 
+INSERT INTO `tb_products`(
+    `guid`,
+    `productId`,
+    `productType`,
+    `title`,
+    `description`,
+    `price`,
+    `microPrice`,
+    `currencyCode`,
+    `isOwned`,
+    `userId`,
+    `userGuid`,
+    `entryTimeStamp`,
+    `updateTimeStamp`,
+    `appId`,
+    `startDate`,
+    `endDate`,
+    `id`,
+    `isOverRideOwned`
+) VALUES (
+    '',
+    'arfsync.testapp.test_subscribe_product_500',
+    'subs',
+    'Monthly Subscription (ArfSync Test Project)',
+    'Gives unlimited access to all of the services for installed apps or addins',
+    '$1.99',
+    '1990000',
+    'USD',
+    'true',
+    291,
+    '',
+    '2015-03-24 12:33:02',
+    '2015-03-29 14:32:16',
+    '',
+    '0000-00-00 00:00:00',
+    '0000-00-00 00:00:00',
+    0,
+    ''
+ );

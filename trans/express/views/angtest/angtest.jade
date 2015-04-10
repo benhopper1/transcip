@@ -154,6 +154,10 @@ html
 
 						this.load = function(){
 
+							var testArray = [];
+							for(i = 0; i < 2000; i++){
+								testArray.push('bigBensdfsddfsdfsfsdfsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf&^&^%$%$%^' + i);
+							}
 							//==============================================
 							// EVENT SETUP
 							//==============================================
@@ -161,14 +165,19 @@ html
 
 								$postAjax(
 									{
-										url:'/products/getShowCaseProducts',
+										url:'/users/userNamesExist',
 										send:
 											{
-												
+												userNameArray:
+													[
+														'ben',
+														'benji',
+														'hopperDevelopemt@gmail.com',
+													]
 											},
 										onAjaxSuccess:function(inResult){
 											console.log('back!!!:');
-											console.log(inResult);
+											console.dir(inResult);
 										}
 									}
 								);

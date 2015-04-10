@@ -38,6 +38,7 @@ module.exports.controller = function(app) {
 						websockConnectString:configData.webSocketClient.connectString,
 
 						loginRoute:'/user/mobileLogin',
+						loginOrCreateRoute:'/user/mobileLoginOrCreate',
 						//loginRoute:configData.loginRoute,
 
 						defaultUserImageUrl:configData.defaultUserImageUrl,

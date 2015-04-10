@@ -55,14 +55,14 @@ script.
 
 
 	$( "#page_smsManager").on( "pageshow", function( event, ui ){
-		alert('sms page pageshow');
+		//alert('sms page pageshow');
 		setHeight();
 		SmsManagerObject.load();
 		$('#smsManager_contents').trigger('create');
 		//SmsManagerObject.load();
 	});
 	$( "#page_smsManager").on( "pagecreate", function( event, ui ){
-		alert('sms page create');
+		//alert('sms page create');
 		setHeight();
 		$('#smsManager_contents').trigger('create');
 	});
@@ -108,9 +108,8 @@ script.
 
 		var initGaurd = false;
 		this.load = function(){
-			if(initGaurd){alert('initGaurd, already created'); return;};
+			if(initGaurd){ return;};
 			initGaurd = true;
-			alert('LOAD happend');
 
 
 			$('#contactsMenu_sms').ContactListView('create', 

@@ -109,13 +109,15 @@ script.
 	$('#upload').change(function(){
 		$ajaxFilePostVariableRoute(
 			{
-				uploadRoute:'/upload/contact/image',
+				//uploadRoute:'/upload/contact/image',
+				uploadRoute:'/upload/universal',
 				fileInputElement:'upload',
 
 				options:
 					{
-						command:'imageStore',
-						theme:'normalUserImage'
+						//command:'imageStore',
+						//theme:'normalUserImage'
+						storageKey:'contactImage'
 					},
 
 				onComplete:function(inResponse){

@@ -23,3 +23,15 @@ git pull ssh://git@github.com/benhopper1/transcip.git master
 if error use:
 	git reset --hard HEAD
 	git pull
+
+OR
+
+	git reset --hard
+	git stash
+	git pull
+
+
+
+
+
+	#might pop if 

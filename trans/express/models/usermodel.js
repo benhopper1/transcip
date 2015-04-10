@@ -102,7 +102,47 @@ var Model = function(){
 		});		
 	}
 
+	// ARRAYED VERSION ------
+	this.userNamesExist = function(inUserNames, inPostFunction){
+		var resultHash = {};
+		finish.map(inUserNames, function(value, done){
+			_this.userNameExist(value, function(inError, resultJstruct){
+				if(resultJstruct){
+					resultHash[resultJstruct.userName] = 
+						{
+							exist:resultJstruct.exist,
+							isActive:resultJstruct.isActive,
+						}
+				}
+				done();
+			});
+		},
+		//completed Function(PART:0)---------------------------
+		function(){
+			if(inPostFunction){inPostFunction(resultHash);}
+		});//finsh_0
+	}
+
 	this.userNameExist = function(inUserName, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
+		var sqlString = 
+			"SELECT userName, active FROM tb_user WHERE userName = " + connection.escape(inUserName) + ";"
+		;
+		connection.query(sqlString, function(err, result){
+			if(inPostFunction){
+				inPostFunction(err, 
+					{
+						userName:inUserName,
+						isActive:(result[0]) ? ((result[0].active == 1) ? true : false)  : false,
+						exist:(result.length > 0)
+					}
+				);
+			}
+			
+		});
+	}
+
+	this.userNameExist_OLD = function(inUserName, inPostFunction){
 		connection = Connection.getInstance('arf').getConnection();
 		if(!(inUserName)){
 			if(inPostFunction){
@@ -495,8 +535,8 @@ var Model = function(){
 		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
-				inCode:'', 
-				inUserId:''
+				code:'', 
+				userId:''
 			}
 		fieldData = extend(fieldData, inParams);
 

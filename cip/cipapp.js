@@ -558,6 +558,38 @@ if(global.MEM_WATCH_ENABLED){
 }
 
 
+//==================================================================
+//--  FILE STORAGE SERVER ------------------------------------------
+//==================================================================
+var FileStorageServer = require(basePath + '/node_modules/filestorageserver/filestorageserver.js');
+var fileStorageServer = new FileStorageServer(
+	{
+		//datFilePath:FILE_STORAGE_DAT,
+	}
+);
+
+fileStorageServer.overRideDatFile(
+	{
+		userImage:
+			{
+				folderBasePath:path.join(basePath, '..', '/trans/express/public/images/users/'),
+				folderDomainPath:'/public/images/users/'
+			},
+		contactImage:
+			{
+				folderBasePath:path.join(basePath, '..', '/trans/express/public/images/contacts/'),
+				folderDomainPath:'/public/images/contacts/'
+			},
+	}
+);
+
+var counter = 0;
+fileStorageServer.startCycle(5000, function(){
+
+});
+
+
+
 
 
 

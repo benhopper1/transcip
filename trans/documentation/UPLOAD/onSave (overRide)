@@ -1,0 +1,67 @@
+var gm = require(basePath + '/node_modules/gm');
+
+
+
+var gm = require(basePath + '/node_modules/gm');
+
+//--------testing area --------
+var fileStorageClient = new FileStorageClient(
+	{
+		datFilePath:FILE_STORAGE_DAT,
+		onSave:function(inStream, inType, inFileStruct, inWriteStream, inTargetFileInfo){
+			console.log('onSave:' + inType);
+
+			gm(inStream, inFileStruct.fileName)
+				.resize('150^', '100^')
+				.gravity('Center')
+				.quality(100)
+				.stroke('#ffffff')
+				.font('Helvetica.ttf')
+				.drawText(5, 20, 'HOPPE222R')
+				.crop(300, 200)
+
+				.stream(function (err, stdout, stderr) {
+					inWriteStream(stdout);
+				});
+			;
+		},
+	}
+);
+
+
+
+
+
+
+specify target information---------------------------------------------------------------
+
+
+//--------testing area --------
+var fileStorageClient = new FileStorageClient(
+	{
+		datFilePath:FILE_STORAGE_DAT,
+		onSave:function(inStream, inType, inFileStruct, inWriteStream, inTargetFileInfo){
+			console.log('onSave:' + inType);
+
+			gm(inStream, inFileStruct.fileName)
+				.resize('150^', '100^')
+				.gravity('Center')
+				.quality(100)
+				.stroke('#ffffff')
+				.font('Helvetica.ttf')
+				.drawText(5, 20, 'HOPPER')
+				.crop(300, 200)
+
+				.stream(function (err, stdout, stderr) {
+					inWriteStream(stdout, 
+						{
+							name:'myFileBabby',
+							ext:inTargetFileInfo.ext,
+							path:inTargetFileInfo.path,
+						}
+					);
+				});
+			;
+		},
+	}
+);

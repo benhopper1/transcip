@@ -34,6 +34,9 @@ head
 
 
 
+	script(type='text/javascript', src='/public/js/moment/moment.js')
+
+
 	//link(href="/public/js/objectfit/dist/polyfill.object-fit.css" rel="stylesheet" type="text/css")
 	//script(src="/public/js/objectfit/dist/polyfill.object-fit.js")
 
@@ -105,41 +108,80 @@ body
 
 	//#incomingSmsScreenMessageDiv(data-role="popup" class="ui-content" style="width:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
 	#incomingSmsScreenMessageDiv()
-	div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader")
-		a(href="#" id="btBar_main_back" data-icon="back" class="ui-btn-left backButtonClass") Back
-		h1 ArfSync
-		a(id="bt_test" href="" data-icon="delete" class="ui-btn-right") Rec Delete
+	div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
+		div(data-role="fieldcontain" class="" style="margin: 0 0 0 0;")
+			div(id="btg_header" data-role="controlgroup" data-mini="true" data-type="horizontal" class="" style="")
+				a(href="javascript:ZsetHeaderSize();" id="hdr_bt_phoneState" class="bt-bck-000" style="text-align:left;" data-role="button" data-theme="d") Wake
+					img(id="hdr_img_phoneState" src="/public/images/ui/speaker_on.png" class="bt-hdr-img-left")
+				a(href="#" id="btBar_main_contactManagerxxx" class="bt-bck-000" ui-btn-icon-left data-role="button" data-theme="d" style="") Test
+				a(href="#" id="btBar_main_contactManager2xxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
+				a(href="#" id="btBar_main_contactManager2xxx3" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
+				a(href="#popupAccord" class="bt-bck-000" data-rel="popup" data-transition="fade" data-icon="bullets" ui-btn-icon-left data-position-to="origin" data-role="button")
+				a(href="#" id="btBar_main_contactManagerxxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
+				a(href="#" id="btBar_main_contactManager2xxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
+
+
+				div(data-role="popup" style="width:450px;" data-overlay-theme="b" id="popupAccord" data-corners="true" data-theme="none" data-shadow="true" data-tolerance="0,0")
+					a(href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right")
+					div(data-role="collapsibleset"  data-mini="true" data-theme="a" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d")
+						div(data-role="collapsible" )
+							h3 Phone Wake Settings
+							div(style="background-image: url('/public/images/characters/face5.jpg');")
+								label(for="flip-min") Auto Wake Phone:
+								select(name="flip-min" id="flip-min"  data-mini="true" data-role="slider" style="width:200px;" data-theme="d")
+									option(value="off") No
+									option(value="on") Yes
+
+						div(data-role="collapsible")
+							h3 Event Log
+							p This collapsible also gets the icon from the set.
+						div(data-role="collapsible" data-collapsed-icon="gear" data-expanded-icon="delete")
+							h3 NA
+							p I will put something here soon!!
+
+				//- div(class="containing-element")
+				//- 	label(for="flip-min")
+
+
+
+			//a(href="#" id="btBar_main_contactManager2" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d") Contact Manager
+		//- a(href="#" id="btBar_main_back" data-icon="back" class="ui-btn-left backButtonClass") Back
+		//- h1 ArfSync
+		//- a(id="bt_test" href="" data-icon="delete" class="ui-btn-right") Rec Delete
 		div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
 			ul
 				li
-					a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button") Login Manager
+					a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button bt-bck-000") Login Manager
 				li
-					a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button") Contact Manager
+					a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button bt-bck-000") Contact Manager
 				li
-					a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button") User Profile
+					a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button bt-bck-000") User Profile
 				li
-					a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button") Sms Manager
+					a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
 				li
-					a(href="#" data-theme="a" id="btBar_main_handSet" data-icon="phone" class="header-main-button") Hand Set
+					a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+
 
 	#allScreenMessageDiv
-
 
 
 	//data-dialog="true"
 	//=================================================================================================================================================================================
 	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================================================================================
-	div(id="pg_page_0" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" )
+	div(id="pg_page_0" data-role="page"  data-fullscreen="true" data-theme="a"  class="" )
+
+		//div(id="productPopup" data-role="popup")
 
 		#contactsWindow
-		//====================================
-		//-)--> GRID--------------------------
-		//====================================
-		div(class="ui-grid-b")
-			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			div(class="ui-block-a" syle="overflow:hidden;")
-				div(data-role="main" class="ui-content" syle="overflow:hidden;")
+		div(data-role="main" class="ui-content" style="overflow:hidden !important;")
+			//====================================
+			//-)--> GRID--------------------------
+			//====================================
+			div(class="ui-grid-b")
+				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-a" syle="overflow:hidden;")
+					//div(data-role="main" class="" syle="overflow:hidden;")
 					div(class="ui-field-contain" id="main_bg" style="width:300px; left:10px")
 						ul(data-role="listview" id="mainmenu" class=""  data-inset="true" )
 							li(id="contactManagerDiv" class="menu_li" )
@@ -150,8 +192,11 @@ body
 								a() Sms Manager
 									img(src="/public/images/ui/android_sms.png" )
 							//br
+							li(id="productManagerDiv" class="menu_li")
+								a() Product Manager
+									img(src="/public/images/ui/androidPhoneImg.png" )
 							//- li(id="handsetControllerDiv" class="menu_li")
-							//- 	a() Handset Controller
+							//- 	a() Product Manager
 							//- 		img(src="/public/images/ui/androidPhoneImg.png" )
 							li(id="userProfileDiv" class="menu_li")
 								a() User Profile
@@ -163,18 +208,18 @@ body
 
 
 
-			///@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			div(class="ui-block-b")
-				center
-					img(src="/public/images/ui/arfsync_logo3.png")
-				#masterDiv(style="border:0px;")
-					#qrAccord(class="center magicShadow" data-options="" style=" width:320px; ")
-						#lay1(title="Scan to login" data-options="iconCls:'icon-search',collapsed:false,collapsible:true" style="padding:10px;")
-							center
-								#qrCodeDiv(style="background-color: #ffffff;")
+				///@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-b")
+					center
+						img(src="/public/images/ui/arfsync_logo3.png")
+					#masterDiv(style="border:0px;")
+						#qrAccord(class="center magicShadow" data-options="" style=" width:320px; ")
+							#lay1(title="Scan to login" data-options="iconCls:'icon-search',collapsed:false,collapsible:true" style="padding:10px;")
+								center
+									#qrCodeDiv(style="background-color: #ffffff;")
 
-			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid C @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			div(class="ui-block-c")
+				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid C @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-c")
 
 
 
@@ -288,7 +333,14 @@ body
 	//-)--> PAGE 5---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================================================================================
 
-	div(id="page_handsetController" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="true")
+	div(id="page_handsetController" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 6---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_productManager" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
 
 
 
@@ -371,7 +423,9 @@ body
 		$('#btBar_main_handSet').click(function(){
 			PageLoaderObject.loadPage('handsetController');
 		});
-
+		$('#btBar_main_productManager').click(function(){
+			PageLoaderObject.loadPage('productManager');
+		});
 
 
 		//=========================================================
@@ -450,11 +504,20 @@ body
 									console.log('loading /handset/jqm/handsetcontroller');
 									$('#page_handsetController').trigger('create');
 									$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
-									loadedHash['handsetController'] = true;
+									//loadedHash['handsetController'] = true;
 								});
 							},
 
+							productManager:function(){
+								$('#page_productManager').load("/products/showcase ", function(){
+									console.log('loading /products/showcase');
+									$('#page_productManager').trigger('create');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_productManager', {transition:'turn', reverse:'true'});
+									//loadedHash['handsetController'] = true;
+								});
+							},
 
+							
 
 
 						},
@@ -476,6 +539,10 @@ body
 							handsetController:function(){
 								$('#page_handsetController').trigger('create');
 								$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
+							},
+							productManager:function(){
+								$('#page_productManager').trigger('create');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_productManager', {transition:'turn', reverse:'true'});
 							},
 						},
 
@@ -548,6 +615,9 @@ body
 				$('#handsetControllerDiv').click(function(){
 					PageLoaderObject.loadPage('handsetController');
 				});
+				$('#productManagerDiv').click(function(){
+					PageLoaderObject.loadPage('productManager');
+				});
 				$('#userProfileDiv').click(function(){
 					PageLoaderObject.loadPage('userProfile');
 				});
@@ -570,6 +640,7 @@ body
 
 		//@@--> SET HEIGHT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		var setHeight = function(){
+			console.log('========== SET HEIGHT ENETERED ================================');
 			var screen = $.mobile.getScreenHeight();
 			var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
 			var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
@@ -584,6 +655,9 @@ body
 			var content = screen - 120;  // 115;
 
 			$(".ui-content").height(content);
+			$(".ui-content").css({ top: '121' });
+
+
 			//$(".over-shot").height(content - 20);
 
 			$(".sms-top-height").height(220);
@@ -598,9 +672,69 @@ body
 
 			var bottomOfButton = $('#bt_smsManager_send').css('bottom');
 			$('#dynamicTable_content_sms_div').css('top', bottomOfButton);
+			console.dir(
+				{
+					screen:screen,
+					content:content,
+					header:header,
+					footer:footer,
+					navbar:navbar,
+				}
+			);
 
+			//setHeaderSize();
 
 		}
+
+		var setHeightById = function(inId, inDiffValue){
+			var screen = $.mobile.getScreenHeight();
+			var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
+			var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
+			var navbar = $(".ui-header > .ui-navbar").outerHeight();
+
+			var contentCurrent = $('#' + inId).outerHeight() - $('#' + inId).height();
+
+			//var content = screen - (header + navbar) - footer - contentCurrent;
+			var content = screen - 120;  // 115;
+			console.log('content:' + content);
+
+			if(inDiffValue){
+				if(inDiffValue > 0){
+					$('#' + inId).height(content + inDiffValue);
+				}else{
+					$('#' + inId).height(Math.abs(content + inDiffValue));
+				}
+			}else{
+				$('#' + inId).height(content)
+			}
+
+			console.log('new height:' + $('#' + inId).height());
+		}
+
+		var setPositionAndHeight = function(inElement, inTop, inHeight){
+			$(inElement).height(inHeight);
+			$(inElement).css({ top: inTop });
+		}
+
+		var setHeaderSize = function(){
+			$('#btg_header .ui-controlgroup-controls').css({width:'100%'})
+
+			var theAtags = $('#btg_header .ui-controlgroup-controls').children('a');
+			var perPartage = Math.floor(($('#btg_header .ui-controlgroup-controls').width() / theAtags.length) - 44); // - 42; //42   - (theAtags.length * 11)
+			console.log('theWidthOf:' + $('#btg_header .ui-controlgroup-controls').width());
+			console.log('perPartage:' + perPartage);
+			$(theAtags).each(function(){
+				console.log('a element' + $(this).attr('id'));
+				console.log('a widthBefore' + $(this).width());
+				$(this).css({'width':perPartage});
+				console.log('a widthAfter' + $(this).width());
+			});
+			//$('.bt-grp-1').css({width:$('#btg_header .ui-controlgroup-controls').width()});
+			$('#btg_header').trigger('create');
+			$('#btg_header').enhanceWithin().controlgroup('refresh');
+		}
+		setHeaderSize();
+
 
 		//@@--> JQUERY . CENTER @@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		jQuery.fn.center = function () {
@@ -707,6 +841,7 @@ body
 											id:'mm-m0-p0'
 										}
 									);
+								setHeight();
 							});
 							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE TWO -> CONTACT MANAGER @@@@@@@@@@@@@@@
 							$(document).on("pageshow","#pg_page_2",function(){ // When entering pagetwo
@@ -755,6 +890,22 @@ body
 							});
 							$(document).on("pagehide","#page_handsetController",function(){
 
+							});
+
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> ProductManager @@@@@@@@@@
+							$(document).on("pageshow","#page_productManager",function(){
+								eventObject.reportOn('onProductManagerOpenClose',
+									{
+										open:true,
+									}
+								);
+							});
+							$(document).on("pagehide","#page_productManager",function(){
+								eventObject.reportOn('onProductManagerOpenClose',
+									{
+										open:false,
+									}
+								);
 							});
 
 
@@ -882,7 +1033,6 @@ body
 
 
 				if(inTransportLayer_json.dataLayer.action == 'incomingSms'){
-					//alert('PHONE' + inTransportLayer_json.dataLayer.phoneNumber);
 					EventLogObject.addEvent(
 						{
 							type:'incomingSms',
@@ -968,6 +1118,18 @@ body
 					location.reload();
 				}
 
+				// PHONE STATE CHANGE--------------------------------------------------
+				if(inTransportLayer_json.dataLayer.action == 'onNewPhoneState'){
+					if(inTransportLayer_json.dataLayer.newState == 'screenOn'){
+						PhoneHardwareObject.reportOnWake(inTransportLayer_json.dataLayer);
+
+					}
+
+					if(inTransportLayer_json.dataLayer.newState == 'screenOff'){
+						PhoneHardwareObject.reportOnSleep(inTransportLayer_json.dataLayer);
+					}
+				}
+
 
 
 
@@ -991,6 +1153,16 @@ body
 
 				if(inTransportLayer_json.dataLayer.action == 'onPanelOpenClose'){
 					eventObject.reportOn('onPanelOpenClose', inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPageChange_prd_info'){
+					console.log('onPageChange_prd_info %%%5555555%5');
+					eventObject.reportOn('onPageChange_prd_info', inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPageExit_prd_info'){
+					console.log('onPageExit_prd_info %%%5555555%5');
+					eventObject.reportOn('onPageExit_prd_info', inTransportLayer_json.dataLayer);
 				}
 
 			});
@@ -1060,6 +1232,20 @@ body
 				if(inData.id == 'mainMenu_userProfile' && inData.command == 'close'){
 					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
 				}
+
+
+
+				//=========PRODUCT MANAGER==================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_products' && inData.command == 'open'){
+					PageLoaderObject.loadPage('productManager')
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_products' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
 
 
 			});
@@ -1879,6 +2065,77 @@ body
 				);
 			}
 		}
+
+
+		//==================================================================
+		//--  PHONE HARDWARE OBJECT  ---------------------------------------
+		//==================================================================
+		var PhoneHardwareObject = new function(){
+			var _this = this;
+			var imageWakeState = '';
+			var imageSleepState = '';
+			var state = 'awake';
+			var options = 
+				{
+					sleep:
+						{
+							imageUrl:'/public/images/ui/phone_state_awake.png',
+							text:'Make Sleep',
+						},
+					awake:
+						{
+							imageUrl:'/public/images/ui/phone_state_sleep.png',
+							text:'Make Wake',
+						},
+				}
+			//@@@ EVENT SETUP -----------------------------
+			$('#hdr_bt_phoneState').click(function(){
+				if(state == 'sleep'){
+					_this.reportOnMakeWake();
+				}
+				if(state == 'awake'){
+					_this.reportOnMakeSleep();
+				}
+			});
+
+			this.reportOnSleep = function(inDataLayerFromDevice){
+				state = 'sleep';
+				var imgHtml = $('#hdr_img_phoneState');
+				$('#hdr_bt_phoneState').text(options.awake.text).append(imgHtml);
+				$('#hdr_img_phoneState').attr('src', options.awake.imageUrl);
+			}
+
+			this.reportOnWake = function(inDataLayerFromDevice){
+				state = 'awake';
+				var imgHtml = $('#hdr_img_phoneState');
+				$('#hdr_bt_phoneState').text(options.sleep.text).append(imgHtml);
+				$('#hdr_img_phoneState').attr('src', options.sleep.imageUrl);
+			}
+
+			this.reportOnMakeWake = function(){
+				commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'hardware',
+							action:'makeWake',
+						},
+					data:
+						{
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('reportOnMakeWake BACK from device... ');
+					}
+				}
+			);
+
+			}
+
+			this.reportOnMakeSleep = function(){
+				alert('reportOnMakeSleep');
+			}
+		}();
 
 
 

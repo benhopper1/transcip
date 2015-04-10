@@ -1,0 +1,19 @@
+I checked it with multi page template and found the following result:
+(Navigate from A to B)
+
+page B---pagebeforecreate
+
+page B---pagecreate
+
+page B---pageinit
+
+page A---pagebeforehide
+
+page B---pagebeforeshow
+
+page A---pageremove
+
+page A---pagehide
+
+page B---pageshow
+

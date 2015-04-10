@@ -18,38 +18,53 @@ configData = JSON.parse(configData);
 var basePath = path.dirname(require.main.filename);
 
 
+
 console.log('test App running');
-/*
-http://192.168.0.16
-port35001
 
-https://192.168.0.16
-8000
-
-192.168.0.16
-30300,
-connectString": "hkjhkjh"
+var FileStorageClient = require(basePath + '/node_modules/filestorageclient/filestorageclient.js');
+var FileMutator = require(basePath + '/node_modules/filemutator/filemutator.js');
+//==================================================================
+//--  FILE STORAG CLIENT  ------------------------------------------
+//==================================================================
 
 
-*/
-//child_process.fork(modulePath[, args][, options])#
-var childProcess = require('child_process');
-
-var modulePath = basePath + '/app.js'
-var args = 
-	[
-		'http://192.168.0.16',
-		'35001',
-		'https://192.168.0.16',
-		'8000',
-		'192.168.0.16',
-		'30300'
-	]
-;
-
-var options = 
+var fileMutator = new FileMutator();
+var fileStorageClient = new FileStorageClient(
 	{
+		datFilePath:basePath + '/filestoragedat.json',
+		onSave:function(inStream, inType, inFileStruct, inWriteStream, inTargetFileInfo){
+			console.log('onSave:' + inType);
 
+			if(inType == 'png' || inType == 'jpg'){
+				var theResult = fileMutator.mutate('saveNormalUserImage',
+					{
+						stream:inStream,
+						type:inType,
+						fileStruct:inFileStruct,
+						writeStreamFunction:inWriteStream,
+						targetFileInfo:inTargetFileInfo,
+					}
+				);
+				console.log('--- the result of call ----');
+				console.dir(theResult);
+
+			}else{
+				inWriteStream(inStream);
+			}
+
+		},
 	}
+);
 
-var ls = childProcess.fork(modulePath, args, {});
+
+function again(inCount){
+	if(inCount <= 0){return;}
+	fileStorageClient.storeFile('contactImage', '/home/ben/git_project/transcip/trans/express/public/images/characters/face2.jpg', function(inData){
+		console.log('file stored:');
+		console.dir(inData);
+		//again(inCount-1);
+		setTimeout(function(){ again(inCount-1); }, 250);
+	});
+}
+
+again(1);
