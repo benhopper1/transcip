@@ -340,7 +340,7 @@ var Model = function(){
 				zipcode:"",
 				country:"",
 				userGroup:"",
-				screenImage:"",
+				screenImage:configData.defaultUserImageUrl,
 				activateCode:"",
 			}
 		fieldData = extend(fieldData, inParams);

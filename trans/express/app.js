@@ -24,6 +24,7 @@ global.CIP_ENABLED 						= false;
 global.DATABASE_STORE_USER_REQUEST_DATA = true;
 global.RECORD_ROUTES 					= false;
 global.PRODUCT_BLOCK_ENABLED 			= true;
+global.MAX_UPLOAD_FILE_SIZE_BYTES = 1000000;
 
 
 //==================================================================

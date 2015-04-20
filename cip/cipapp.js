@@ -20,7 +20,7 @@ var util = require('util');
 var url = require('url');
 
 global.DEBUG_ENABLED = true;
-global.MEM_WATCH_ENABLED = false;
+global.MEM_WATCH_ENABLED = true;
 
 
 global.prepairingPorts = {};
@@ -40,6 +40,24 @@ global.qrCountHashByServer = {};
 global.serverBuildsHash = {};
 
 
+
+//==========================================================
+// REPORT ERROR --------------------------------------------
+//==========================================================
+var deleteFileLog = new DebugObject(
+	{
+		label:'general',
+		filePath:basePath + '/deletefile.log'
+	}
+);
+global.reportDeleteFile = function(inCaption, inData, inClass){
+	console.log(util.inspect('===============  DELETE FILE NOTIFY  =====================================', false, 2, true));
+	console.log(util.inspect(inCaption + '        CLASS:' + inClass, false, 1, true));
+	console.log('---------------------------------------------------------------------');
+	console.log(util.inspect(inData, false, 7, true));
+	console.log(util.inspect('=====================================================================', false, 2, true));
+	deleteFileLog.reportError(inCaption, inData);
+}
 
 //==========================================================
 // REPORT ERROR --------------------------------------------
@@ -119,27 +137,14 @@ global.maintenance_0_20_40 = new MaintenanceObject(
 	}
 );
 global.maintenance_0_20_40.start();
+
+/*
 global.maintenance_0_20_40.add(function(inOptions, inData){
 	console.log('maintenance_0_20_40 DUMP');
 	var theHash = global.activeServersHash;
 	for(theKey in theHash){
 		console.log('[' + theKey + '] count:' + global.getConnectionCount(theKey));
 	}
-/*
-	console.log('serverHashOfArray.getHash()');
-	console.dir(serverHashOfArray.getHash());
-	console.log('-----------------------------------------');
-*/
-
-/*
-	console.log('global.activeServersHash');
-	console.log(util.inspect(global.activeServersHash, false, 1, true));
-*/	
-
-/*
-	console.log('global.serverBuildsHash');
-	console.dir(global.serverBuildsHash);
-*/
 
 	console.log('global.userId_hashOfArray');
 	console.dir(userId_hashOfArray.getHash() );
@@ -166,7 +171,7 @@ global.maintenance_0_20_40.add(function(inOptions, inData){
 
 
 });
-
+*/
 
 
 
@@ -424,7 +429,9 @@ server.on('connection', function(sock){
 			global.reportError('cipapp.sock.on data', 
 				{
 					error:e,
-					transportStr:inTransportLayer_str.toString(),
+					//iFaceConnectionHash:interfaceConnectionsHash[connectId],
+					connectId:connectId,
+					transportStr:transportLayer_json,
 				}, 0
 			);
 		}
@@ -558,16 +565,17 @@ if(global.MEM_WATCH_ENABLED){
 }
 
 
-//==================================================================
-//--  FILE STORAGE SERVER ------------------------------------------
-//==================================================================
+//===============================================================================================================================
+//--  FILE STORAGE SERVER -------------------------------------------------------------------------------------------------------
+//===============================================================================================================================
 var FileStorageServer = require(basePath + '/node_modules/filestorageserver/filestorageserver.js');
 var fileStorageServer = new FileStorageServer(
 	{
-		//datFilePath:FILE_STORAGE_DAT,
+		datFilePath:path.join(basePath, '..', '/trans/express/filestoragedat.json'),
 	}
 );
 
+//When moved to remote server, these paths must be recreated by override!!!!!!
 fileStorageServer.overRideDatFile(
 	{
 		userImage:
@@ -580,13 +588,77 @@ fileStorageServer.overRideDatFile(
 				folderBasePath:path.join(basePath, '..', '/trans/express/public/images/contacts/'),
 				folderDomainPath:'/public/images/contacts/'
 			},
+		errorFileSize:
+			{
+				folderBasePath:path.join(basePath, '..', '/trans/express/public/images/errors/'),
+				folderDomainPath:'/public/images/errors/'
+			},
+		phoneCache:
+			{
+				folderBasePath:path.join(basePath, '..', '/trans/express/public/phonecache/'),
+				folderDomainPath:'/public/phonecache/'
+			}
 	}
 );
-
-var counter = 0;
-fileStorageServer.startCycle(5000, function(){
-
+//==================================================================
+//...............  MAINTENANCY CYCLE  ..............................
+//--  FILE STORAGE (updates datFile/ creates vacancy)---------------
+//==================================================================
+var fileStorageServer_maintenanceCycle = new MaintenanceObject(
+	{
+		label:'fileStorageServer_maintenanceCycle',
+		when:
+			{
+				minute:[0,5, 10, 15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95],
+			},
+	}
+);
+fileStorageServer_maintenanceCycle.start();
+fileStorageServer_maintenanceCycle.add(function(inOptions, inData){
+	fileStorageServer.cycleNow(function(){
+		global.reportNotify('fileStorageServer_maintenanceCycle', {}, 0);
+	});
 });
+
+
+
+//==================================================================
+//...............  MAINTENANCY CYCLE [HEAVEY].......................
+//--  FILE STORAGE (Deletes Orphaned files)  -----------------------
+//==================================================================
+var fileStorageServer_orphanedDelete_maintenanceCycle = new MaintenanceObject(
+	{
+		label:'fileStorageServer_ToDB',
+		when:
+			{
+				minute:[56],
+			},
+	}
+);
+fileStorageServer_orphanedDelete_maintenanceCycle.start();
+fileStorageServer_orphanedDelete_maintenanceCycle.add(function(inOptions, inData){
+	global.reportNotify('START fileStorageServer_orphanedDelete_maintenanceCycle', {}, 0);
+	var grpKey = '';
+	fileStorageServer.insertAllFileDataToDatabase(grpKey, function(){
+		fileStorageServer.deleteOrphans({limit:50}, function(){
+			global.reportNotify('COMPLETE fileStorageServer_orphanedDelete_maintenanceCycle', {}, 0);
+		});
+
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

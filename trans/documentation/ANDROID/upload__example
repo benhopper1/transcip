@@ -1,0 +1,13 @@
+
+//LocalUserStore.getValueAsString("secureDomain") + "/upload/universal"
+
+SecUploadFile uploadFile = new SecUploadFile(this.uploadServiceUrl, SecUploadFile.fileToInputStream(selectedImagePath), selectedImagePath);
+String fileExtension = FileAndFolder.getExtension(selectedImagePath);
+uploadFile.setCookieStore(ArfableApplication.getSecureLink().getCookieStore());            
+Pair<String,String> pair = new Pair<String,String>("storageKey",this.command);
+Pair<String,String> hashCode_0_pair = new Pair<String,String>("hashCode_0", "testName");	
+Pair<String,String> hashCode_1_pair = new Pair<String,String>("hashCode_1", fileExtension);
+Pair<String,String> hashCode_2_pair = new Pair<String,String>("hashCode_2", "uriString");
+Pair<String,String> typePair = new Pair<String,String>("type", "image");	
+String resultString = uploadFile.uploadByStream(pair, hashCode_0_pair, hashCode_1_pair,hashCode_2_pair, typePair);
+console.log("RESULT FROM uploadFile" + resultString);

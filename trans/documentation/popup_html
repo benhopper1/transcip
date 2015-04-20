@@ -1,0 +1,22 @@
+div(data-role="popup" id="popupAccord" style="background-color:#ffffff !important; width:425px;" data-position-to="window" data-overlay-theme="b" data-corners="true" data-theme="a" data-shadow="true" data-tolerance="0,0")
+	div(data-role="header" data-theme="b" class="pop-part-000")
+		h1 Event Log
+		a(href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right")
+		//div(id="zzz" data-role="main"  class="ui-content ui-overlay-shadow ui-shadow" style="background:#ffffff !important;padding: 0px;width:100%;")
+		//#reportDetails
+		//div(style="background:red !important;")
+	div(class="ui-content" style="overflow-y: auto;")
+		ul(data-role="listview" class=""   data-inset="true" style="width:100%; ")
+			li(class="pop-part-000" data-icon="false")
+				a(style="color:#000000")
+					img(style="height:100%" class="magicSquare" src="/public/images/ui/speaker_on.png")
+					h2 Missed Call
+					p Ben Hopper 256-499-8120
+			li(class="pop-part-000" data-icon="false")
+				a(style="color:#000000" )
+					img(style="height:100%" class="magicSquare" src="/public/images/ui/speaker_on.png")
+					h2 Missed Call
+					p Ben Hopper 256-499-8120
+					p 10:00Am 04-15-2015
+					img(style="height:100px" class="magicSquare" src="/public/images/ui/speaker_on.png")
+					h2 www.google.com

@@ -11,12 +11,13 @@ body
 		form(method="post" id="userProfileForm" data-mini="true" style="")
 			div(class="ui-field-contain" style="" )
 
-
+				center
+					h2(id="userProfile_userName")
 				div(class="ui-grid-a" style="")
 					div(class="ui-block-a" style="width:25%")
 						center(style="height:150px;")
 							//h6 (click to change)
-							h2(id="userProfile_userName")
+							//h2(id="userProfile_userName")
 							img(id="userProfile_image" name="userImg" class="magicSquarePnt contactAddImage" src="/public/images/contacts/default.jpg" style="height:200px; width:200px;  object-fit: cover;" )
 							h5 Click Image To Change 
 
@@ -69,13 +70,14 @@ script.
 	$('#user_upload').change(function(){
 		$ajaxFilePostVariableRoute(
 			{
-				uploadRoute:'/upload/user/image',
+				uploadRoute:'/upload/universal',
 				fileInputElement:'user_upload',
 
 				options:
 					{
-						command:'imageStore',
-						theme:'normalUserImage'
+						//command:'imageStore',
+						//theme:'normalUserImage'
+						storageKey:'userImage'
 					},
 
 				onComplete:function(inResponse){

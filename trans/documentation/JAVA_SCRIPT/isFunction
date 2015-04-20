@@ -1,0 +1,7 @@
+//isFunction
+
+if(!!($inDiv && $inDiv.constructor && $inDiv.call && $inDiv.apply)){
+	alert('isFunction');
+}else{
+	alert('NOT a Function');
+}

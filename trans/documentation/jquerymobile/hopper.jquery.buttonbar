@@ -1,0 +1,58 @@
+
+//==============================================================================================================================
+//--  BUTTON NAV BAR THINGS!!!  ------------------------------------------------------------------------------------------------
+//==============================================================================================================================
+$('#buttonNavBar_div').ButtonNavBar('create',
+	{
+		onClick:function(inId, inState){
+			console.log('onClick' + inId + ' ' + inState);
+		},
+		onStateChange:function(inId, inState, inOldState){
+		},
+	}
+);
+
+
+
+
+
+$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+	{
+		imageUrls:
+			{
+				awake:'/public/images/ui/phone_state_awake_001.jpg',
+				sleep:'/public/images/ui/phone_state_sleep.png',
+			},
+			tooltip:
+				{
+					awake:'The Phone is AWAKE!!!',
+					sleep:'Phone is sleeping(click to wake it up!!!)',
+				},
+		state:'awake',
+		id:'phoneState',
+
+	}
+);
+
+
+
+
+// must render after add's
+$('#buttonNavBar_div').ButtonNavBar('render',{});
+
+
+$('#buttonNavBar_div').ButtonNavBar('changeState',
+	{
+		id:'missedCallSection',
+		state:'onDetails',
+	}
+);
+
+//BLNK WHEN CHANGES FOR n
+$('#buttonNavBar_div').ButtonNavBar('blink',
+	{
+		id:inId, 
+		duration:5000,
+	}
+);
+

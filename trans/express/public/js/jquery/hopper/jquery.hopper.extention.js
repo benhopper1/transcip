@@ -35,6 +35,87 @@ var constructor = new function(){
 	$('body').append(  $(document.createElement('div')).attr('id', 'validationRulesDiv')  );
 }();
 
+$.fn.blink = function(inDuration, inPostFunction){
+	var $_this = $(this).get( 0 );
+	$($_this).addClass('blink');
+	$($_this).data("blinkPostFunction", inPostFunction);
+
+	var blink = function(selector){
+		$(selector).fadeOut(250, function(){
+			$(this).fadeIn(250, function(){
+				if($(this).hasClass( "blink" )){
+					blink(selector);
+				}
+			});
+		});
+	}
+
+	if(inDuration && inDuration > 0){
+		var expireTimer = setTimeout(function(){
+			$($_this).removeClass('blink');
+			var postFunction = $($_this).data("blinkPostFunction");
+			if(postFunction){
+				postFunction(true);
+			}
+		}, inDuration);
+		$($_this).data("expireTimer", expireTimer);
+	}
+
+	blink($_this);
+}
+
+$.fn.unblink = function(){
+	var $_this = $(this).get( 0 );
+	var expireTimer = $($_this).data("expireTimer");
+	if(expireTimer){
+		clearTimeout(expireTimer);
+	}
+	$($_this).removeClass('blink');
+	var postFunction = $($_this).data("blinkPostFunction");
+	if(postFunction){
+		postFunction(false);
+	}
+}
+
+
+
+
+$.fn.getCss = function(inX){
+	var _this = $(this).get( 0 );
+	var getComputedStyle = function( dom ) {
+        var style;
+        var returns = {};
+        // FireFox and Chrome way
+        if(window.getComputedStyle){
+            style = window.getComputedStyle(dom, null);
+            for(var i = 0, l = style.length; i < l; i++){
+                var prop = style[i];
+                var val = style.getPropertyValue(prop);
+                returns[prop] = val;
+            }
+            return returns;
+        }
+        // IE and Opera way
+        if(dom.currentStyle){
+            style = dom.currentStyle;
+            for(var prop in style){
+                returns[prop] = style[prop];
+            }
+            return returns;
+        }
+        // Style from style attribute
+        if(style = dom.style){
+            for(var prop in style){
+                if(typeof style[prop] != 'function'){
+                    returns[prop] = style[prop];
+                }
+            }
+            return returns;
+        }
+        return returns;
+    };
+	return getComputedStyle(_this);
+}
 
 
 $.fn.validate = function(inValidationType){

@@ -311,6 +311,15 @@ img{
 	//background-color: transparent !important;
 }
 
+.bt-bck-001 {
+	background-image: url('/public/images/ui/hanger_button_bkg.png');
+	background-repeat: no-repeat;
+	//background-size: contain;
+	background-size:100% 100%;
+	background-position: center;
+	//background-color: transparent !important;
+}
+
 .bt-hdr-img-left{
 	float: left; padding-right: 10px;
 	height:16px;
@@ -333,3 +342,124 @@ img{
 .bt-sz-10 {
 	font-size: 10px !important;
 }
+
+.ui-controlgroup-controls{
+	width:100% !important;;
+}
+
+.img-bt-cont-000{
+	width:34px;
+	height:34px;
+	//position:relative;
+	background-image: url('/public/images/ui/bck34x34.png');
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+	background-position: center;
+
+}
+.img-cont-000{
+	height:16px;
+	width:16px;
+}
+
+/*.quick-launch-bar{
+	width:100%;
+	height:35px;
+	background-image: url('/public/images/ui/button-bck_002.png');
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+	background-position: center;
+
+	display:block; margin:0 auto; position:relative;
+}*/
+
+// center left right, stuck to top
+.img-cont-002{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height:16px;
+	width:16px;
+}
+
+.img-cont-001{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height:16px;
+	width:16px;
+
+	top:50%;
+	margin-top:50%;
+}
+
+
+
+//================================
+
+/*#nav-wrapper {
+width:100%;
+margin:0 auto;
+padding:20px 0;
+background:#3D3331;
+//background:transparent !important;
+}*/
+
+/*ul#nav {
+font-family: Verdana;
+font-size:14px;
+list-style:none;
+margin:0 auto;
+padding:0;
+width:100%;
+overflow: auto;
+}*/
+
+ul#nav li {
+display:inline;
+}
+
+ul#nav li a {
+	height:34px;
+	width:68px;
+text-decoration:none;
+display: block;
+background-repeat: no-repeat;
+background-size:16px 16px;
+background-position: center;
+color:#000;
+float:left;
+text-align:center;
+
+}
+
+ul#nav li a:hover {
+background:#a37666;
+color:#000;
+border-top:2px solid #815444;
+border-right:2px solid #c59888;
+border-bottom:2px solid #c59888;
+border-left:2px solid #815444;
+
+background-repeat: no-repeat;
+background-size:20px 20px;
+background-position: center;
+//height:34px;
+
+}
+
+.txt-bt-000{
+	height:34px;
+	//width:68px;
+	text-decoration:none;
+	display: block;
+	padding:10px 21px;
+	//background:#5F3222;
+	//background:transparent !important;
+	//color:#eee;
+	//background-repeat: no-repeat;
+	//background-size:16px 16px;
+	//background-position: center;
+}
+
+

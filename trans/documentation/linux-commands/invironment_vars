@@ -1,0 +1,10 @@
+export NEW_VAR="Testing export"
+
+echo $NEW_VAR
+
+
+
+
+env
+
+list all environment vars

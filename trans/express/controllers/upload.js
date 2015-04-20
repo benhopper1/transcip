@@ -6,8 +6,8 @@ var fs = require('fs');
 var multiparty = require(basePath + '/node_modules/multiparty');
 var finish = require(basePath + '/node_modules/finish');
 var uuid = require(basePath + '/node_modules/node-uuid');
-var FileStorageClient = require(basePath + '/node_modules/filestorageclient/filestorageclient.js');
-var FileMutator = require(basePath + '/node_modules/filemutator/filemutator.js');
+//var FileStorageClient = require(basePath + '/node_modules/filestorageclient/filestorageclient.js');
+//var FileMutator = require(basePath + '/node_modules/filemutator/filemutator.js');
 
 var configData = fs.readFileSync(path.dirname(require.main.filename) + '/main.conf', 'utf8');
 configData = JSON.parse(configData);
@@ -387,8 +387,132 @@ module.exports.controller = function(app){
 	//###########################################################################
 	var FileCacheModel = require('../models/filecachemodel.js');
 	var fileCacheModel = new FileCacheModel();
+	app.post('/upload/phone/cache', function(req, res){
+		console.log('/upload/phone/cache');
+		console.log('USERID=>:' + req.session.userData.userId);
+		var form = new multiparty.Form();
+		form.parse(req, function(err, fields, files){
+			if(!(files)){
+				res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify({error:'error'}));
+				return false;
+			}
+			if(files.uploadedFile){
+				var fieldsHash = {};
+				var tmpFilePath = files.uploadedFile[0].path;
+				var fileName = files.uploadedFile[0].originalFilename;
+				var fileSizeBytes = fs.statSync(tmpFilePath).size;
+				var encoding = '';
+				var mimeType = '';
+				var fieldName ='';
 
 
+				Object.keys(fields).forEach(function(name){
+					fieldsHash[name] = fields[name][0];
+				});
+
+				var fileData = 
+					{
+						request:'',
+						response:'',
+						//file:file,
+						fileName:fileName,
+						encoding:encoding,
+						mimeType:mimeType,
+						data:fieldsHash
+					}
+
+				//@@@@@@@@@@@@@@@@@@@@@@@@@
+				//--  FILE SIZE CHECKING  -
+				//@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(fileSizeBytes > global.MAX_UPLOAD_FILE_SIZE_BYTES){
+					global.reportError('fileSize',
+						{
+							error:true,
+							errorCaption:'fileSize',
+							errorData:
+								{
+									statSync:fs.statSync(tmpFilePath),
+								},
+						}, 0
+					);
+
+					if(Model.fileStorageClient.isImageFile(fileName)){
+
+						var errorFilePath = basePath + '/public/images/ui/error.png';
+						Model.fileStorageClient.storeFile('errorFileSize', errorFilePath, function(inData){
+							if(!(inData.error)){
+								inData.errorCaption = 'imageFileSize';
+								inData.errorData = {};
+							}
+
+							res.setHeader('Content-Type', 'application/json');
+							res.end(JSON.stringify(inData));
+						});
+						return;
+
+					}else{
+
+						res.setHeader('Content-Type', 'application/json');
+						res.end(JSON.stringify(
+							{
+								error:true,
+								errorCaption:'fileSize',
+								errorData:
+									{
+										statSync:fs.statSync(tmpFilePath),
+									},
+							})
+						);
+						return;
+
+					}
+
+
+
+				}
+				//phoneCacheImage
+				global.reportNotify('UPLOAD UNIVERSAL', 
+					{
+						fileData:fileData,
+						fileName:fileName,
+						tmpFilePath:tmpFilePath,
+						fieldsHash:fieldsHash,
+						testEXT:path.extname(tmpFilePath), //.replace('.','')
+						fileSize:fs.statSync(tmpFilePath).size,
+						statSync:fs.statSync(tmpFilePath),
+
+					}, 0);
+				Model.fileStorageClient.storeFile(fieldsHash['storageKey'], tmpFilePath, function(inData){
+					fileCacheModel.add(
+						{
+								path:inData.domainFilePath,
+								type:fieldsHash.type,
+								route:req.url,
+								hashCode_0:fieldsHash.hashCode_0,
+								hashCode_1:fieldsHash.hashCode_1,
+								hashCode_2:fieldsHash.hashCode_2,
+								hashCode_3:fieldsHash.hashCode_3,
+
+								userId:req.session.userData.userId,
+	  						}, 
+	  						function(err, result){
+	  							res.setHeader('Content-Type', 'application/json');
+								res.end(JSON.stringify(inData));
+	  					});
+
+
+
+					//res.setHeader('Content-Type', 'application/json');
+					//res.end(JSON.stringify(inData));
+				});
+			}
+
+
+		});
+
+	});
+/*
 	app.post('/upload/phone/cache', function(req, res){
 		console.log('USERID=>:' + req.session.userData.userId);
 
@@ -478,7 +602,7 @@ module.exports.controller = function(app){
 		});
 
 	});
-
+*/
 
 	app.post('/database/fileCache/add', function(req, res){
 		console.log("/database/phonelog/getLast");
@@ -513,6 +637,7 @@ module.exports.controller = function(app){
 
 	});
 
+/*
 //==================================================================
 //--  FILE STORAG CLIENT  ------------------------------------------
 //==================================================================
@@ -551,16 +676,14 @@ var fileStorageClient = new FileStorageClient(
 		},
 	}
 );
-
+*/
 			//-----P O S T ---------------------------------
+
 	app.post('/upload/universal', function(req, res){
 		console.log('USERID=>:' + req.session.userData.userId);
-
 		var form = new multiparty.Form();
 		form.parse(req, function(err, fields, files){
 			if(!(files)){
-				//files empty send error
-				//res.send(err.message, 500);
 				res.setHeader('Content-Type', 'application/json');
 				res.end(JSON.stringify({error:'error'}));
 				return false;
@@ -569,11 +692,11 @@ var fileStorageClient = new FileStorageClient(
 				var fieldsHash = {};
 				var tmpFilePath = files.uploadedFile[0].path;
 				var fileName = files.uploadedFile[0].originalFilename;
+				var fileSizeBytes = fs.statSync(tmpFilePath).size;
 				var encoding = '';
 				var mimeType = '';
 				var fieldName ='';
 
-				//var file = fs.createReadStream(tmpFilePath);
 
 				Object.keys(fields).forEach(function(name){
 					fieldsHash[name] = fields[name][0];
@@ -590,6 +713,56 @@ var fileStorageClient = new FileStorageClient(
 						data:fieldsHash
 					}
 
+				//@@@@@@@@@@@@@@@@@@@@@@@@@
+				//--  FILE SIZE CHECKING  -
+				//@@@@@@@@@@@@@@@@@@@@@@@@@
+				if(fileSizeBytes > global.MAX_UPLOAD_FILE_SIZE_BYTES){
+					global.reportError('fileSize',
+						{
+							error:true,
+							errorCaption:'fileSize',
+							errorData:
+								{
+									statSync:fs.statSync(tmpFilePath),
+								},
+						}, 0
+					);
+
+					if(Model.fileStorageClient.isImageFile(fileName)){
+
+						var errorFilePath = basePath + '/public/images/ui/error.png';
+						Model.fileStorageClient.storeFile('errorFileSize', errorFilePath, function(inData){
+							if(!(inData.error)){
+								inData.errorCaption = 'imageFileSize';
+								inData.errorData = {};
+							}
+
+							res.setHeader('Content-Type', 'application/json');
+							res.end(JSON.stringify(inData));
+						});
+						return;
+
+					}else{
+
+						res.setHeader('Content-Type', 'application/json');
+						res.end(JSON.stringify(
+							{
+								error:true,
+								errorCaption:'fileSize',
+								errorData:
+									{
+										statSync:fs.statSync(tmpFilePath),
+									},
+							})
+						);
+						return;
+
+					}
+
+
+
+				}
+
 				global.reportNotify('UPLOAD UNIVERSAL', 
 					{
 						fileData:fileData,
@@ -597,9 +770,11 @@ var fileStorageClient = new FileStorageClient(
 						tmpFilePath:tmpFilePath,
 						fieldsHash:fieldsHash,
 						testEXT:path.extname(tmpFilePath), //.replace('.','')
+						fileSize:fs.statSync(tmpFilePath).size,
+						statSync:fs.statSync(tmpFilePath),
 
 					}, 0);
-				fileStorageClient.storeFile(fieldsHash['storageKey'], tmpFilePath, function(inData){
+				Model.fileStorageClient.storeFile(fieldsHash['storageKey'], tmpFilePath, function(inData){
 					res.setHeader('Content-Type', 'application/json');
 					res.end(JSON.stringify(inData));
 				});

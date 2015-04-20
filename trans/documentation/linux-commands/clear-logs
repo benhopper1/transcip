@@ -1,2 +1,9 @@
 cat /dev/null > your_file
 
+
+
+
+cd /home/wally/transcip/cip
+cat /dev/null > gennotify.log
+cat /dev/null > nohup.out
+

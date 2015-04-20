@@ -23,6 +23,8 @@ head
 	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
 	script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
 
+	//POPUP LIST VIEW ---------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.popuplistview.js")
 
 
 	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
@@ -68,7 +70,8 @@ head
 	//script(src="/public/js/iscrollview/lib/jquery.mobile.iscrollview.js")
 
 
-
+	//BUTTON NAV BAR ----------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
 
 	//script(type='text/javascript', src='public/js/hashofarray/hashofarrayobject.js')
 	script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
@@ -109,45 +112,6 @@ body
 	//#incomingSmsScreenMessageDiv(data-role="popup" class="ui-content" style="width:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
 	#incomingSmsScreenMessageDiv()
 	div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
-		div(data-role="fieldcontain" class="" style="margin: 0 0 0 0;")
-			div(id="btg_header" data-role="controlgroup" data-mini="true" data-type="horizontal" class="" style="")
-				a(href="javascript:ZsetHeaderSize();" id="hdr_bt_phoneState" class="bt-bck-000" style="text-align:left;" data-role="button" data-theme="d") Wake
-					img(id="hdr_img_phoneState" src="/public/images/ui/speaker_on.png" class="bt-hdr-img-left")
-				a(href="#" id="btBar_main_contactManagerxxx" class="bt-bck-000" ui-btn-icon-left data-role="button" data-theme="d" style="") Test
-				a(href="#" id="btBar_main_contactManager2xxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
-				a(href="#" id="btBar_main_contactManager2xxx3" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
-				a(href="#popupAccord" class="bt-bck-000" data-rel="popup" data-transition="fade" data-icon="bullets" ui-btn-icon-left data-position-to="origin" data-role="button")
-				a(href="#" id="btBar_main_contactManagerxxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
-				a(href="#" id="btBar_main_contactManager2xxx" class="bt-bck-000" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d")
-
-
-				div(data-role="popup" style="width:450px;" data-overlay-theme="b" id="popupAccord" data-corners="true" data-theme="none" data-shadow="true" data-tolerance="0,0")
-					a(href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right")
-					div(data-role="collapsibleset"  data-mini="true" data-theme="a" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d")
-						div(data-role="collapsible" )
-							h3 Phone Wake Settings
-							div(style="background-image: url('/public/images/characters/face5.jpg');")
-								label(for="flip-min") Auto Wake Phone:
-								select(name="flip-min" id="flip-min"  data-mini="true" data-role="slider" style="width:200px;" data-theme="d")
-									option(value="off") No
-									option(value="on") Yes
-
-						div(data-role="collapsible")
-							h3 Event Log
-							p This collapsible also gets the icon from the set.
-						div(data-role="collapsible" data-collapsed-icon="gear" data-expanded-icon="delete")
-							h3 NA
-							p I will put something here soon!!
-
-				//- div(class="containing-element")
-				//- 	label(for="flip-min")
-
-
-
-			//a(href="#" id="btBar_main_contactManager2" data-icon="bullets" ui-btn-icon-left data-role="button" data-theme="d") Contact Manager
-		//- a(href="#" id="btBar_main_back" data-icon="back" class="ui-btn-left backButtonClass") Back
-		//- h1 ArfSync
-		//- a(id="bt_test" href="" data-icon="delete" class="ui-btn-right") Rec Delete
 		div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
 			ul
 				li
@@ -160,6 +124,11 @@ body
 					a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
 				li
 					a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+
+
+		#buttonNavBar_div
+		#eventLogDiv
+		#msgEvent_div
 
 
 	#allScreenMessageDiv
@@ -358,6 +327,7 @@ body
 		//======================================================================
 		var GLOBAL_USER_IMAGE_URL;
 		var GLOBAL_USER_NAME;
+
 		var commManager;
 		var deviceTokenId;
 
@@ -365,6 +335,16 @@ body
 		var eventObject = new EventOrigin();//TODO: move inside create event
 		var widgetSmsMessageWindowScript;
 
+		//@@@@@@ QR-HOLD TIMEOUT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		inQrHold = false
+		const QR_HOLD_TIMEOUT_MS = 1000 * 60 * 1;
+		var inQrHold = true;
+		setTimeout(function(){
+			if(inQrHold){
+				alert('#{productsRoute} @375');
+				//window.location = '#{productsRoute}';
+			}
+		}, QR_HOLD_TIMEOUT_MS);
 
 		//======================================================================
 		//>--- LOGIN PAGE EVENTS------------------------------------------------
@@ -379,6 +359,258 @@ body
 			$.mobile.navigate( "#btBar_main_back", {
 				info: "info about the #bar hash"
 			});
+
+
+			//==============================================================================================================================
+			//--  BUTTON NAV BAR THINGS!!!  ------------------------------------------------------------------------------------------------
+			//==============================================================================================================================
+			$('#buttonNavBar_div').ButtonNavBar('create',
+				{
+					onClick:function(inId, inState){
+						console.log('onClick' + inId + ' ' + inState);
+						if(inId == 'phoneState' && inState == 'sleep'){
+							PhoneHardwareObject.reportOnMakeWake();
+						}
+
+						//==================================================================
+						//--  MISSED CALL  CLICK EVENTING  ---------------------------------
+						//==================================================================
+						if(inId == 'missedCallSection' && inState == 'onMissedCall'){
+							var theSpecificEventsLog = EventLogObject.getEventsByType(['missedPhoneCall']);
+							console.log('theSpecificEventsLog');
+							console.dir(theSpecificEventsLog);
+							$('#eventLogDiv').PopupListView('clear',{});
+							for(var theIndex in theSpecificEventsLog){
+								if(theSpecificEventsLog[theIndex].data && theSpecificEventsLog[theIndex].data.lookedupContact){
+									var contact = theSpecificEventsLog[theIndex].data.lookedupContact;
+									$('#eventLogDiv').PopupListView('addItem', 
+										{
+											id:contact.id + '_' + theIndex,
+											template:0,
+											zOrder:true,
+											imageUrl:contact.imageUrl,
+											imageClass:'magicSquare',
+											caption:'Missed Call',
+											details:
+												[
+													contact.name + '    '  + phoneDisplayFormat(contact.phoneNumber),
+													theSpecificEventsLog[theIndex].data.when,
+												],
+											data:theSpecificEventsLog[theIndex].data,
+										}
+									);
+								}
+							}
+
+							$('#eventLogDiv').PopupListView('open', {});
+
+							// set back to details state....
+							$('#buttonNavBar_div').ButtonNavBar('changeState',
+								{
+									id:'missedCallSection',
+									state:'onDetails',
+								}
+							);
+
+
+							console.log('-------EventLogObject------:');
+							console.dir(EventLogObject.getEvents());
+
+						}// end if miissed SECTION  missedCall-------------------------
+
+						//==================================================================
+						//--  EVENT LOG  ------------------------------------------------
+						//==================================================================
+						if(inId == 'missedCallSection' && inState == 'onDetails'){
+							var theSpecificEventsLog = EventLogObject.getEventsByType(['missedPhoneCall', 'onOffHook', 'onAnswerCall', 'outgoingPhoneCall', 'outgoingSms' , 'incomingSms']);
+							console.log('theSpecificEventsLog');
+							console.dir(theSpecificEventsLog);
+
+							$('#eventLogDiv').PopupListView('clear',{});
+							for(var theIndex in theSpecificEventsLog){
+								var caption = '';
+								if(theSpecificEventsLog[theIndex].type == 'missedPhoneCall'){
+									caption = 'Missed Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'incomingPhoneCall'){
+									caption = 'Incoming Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'onOffHook'){
+									caption = 'Placed Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'onAnswerCall'){
+									caption = 'Answered Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'outgoingSms'){
+									caption = 'Outgoing Sms';
+								}else if(theSpecificEventsLog[theIndex].type == 'incomingSms'){
+									caption = 'Incoming Sms';
+								}else{
+									caption = 'Unknown Event';
+								}
+
+
+								if(theSpecificEventsLog[theIndex].data && theSpecificEventsLog[theIndex].data.lookedupContact){
+									var contact = theSpecificEventsLog[theIndex].data.lookedupContact;
+									$('#eventLogDiv').PopupListView('addItem', 
+										{
+											id:contact.id + '_' + theIndex,
+											template:0,
+											zOrder:true,
+											imageUrl:contact.imageUrl,
+											imageClass:'magicSquare',
+											caption:caption,
+											details:
+												[
+													contact.name + '    '  + phoneDisplayFormat(contact.phoneNumber),
+													theSpecificEventsLog[theIndex].data.when,
+													theSpecificEventsLog[theIndex].data.detail,
+												],
+											data:theSpecificEventsLog[theIndex].data,
+										}
+									);
+								}
+							}
+
+							$('#eventLogDiv').PopupListView('open', {});
+
+						}// end if miissed SECTION  onDetails---------------------------
+
+						//==================================================================
+						//---------  ------------------------------------------------
+						//==================================================================
+						
+
+					},
+					onStateChange:function(inId, inState, inOldState){
+						console.log('onStateChange' + inId + ' ' + inState + ' ' + inOldState);
+
+						//BLNK WHEN CHANGES FOR n
+						$('#buttonNavBar_div').ButtonNavBar('blink',
+							{
+								id:inId, 
+								duration:5000,
+							}
+						);
+
+
+
+					},
+				}
+			);
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							awake:'/public/images/ui/phone_state_awake_001.jpg',
+							sleep:'/public/images/ui/phone_state_sleep.png',
+						},
+						tooltip:
+							{
+								awake:'The Phone is AWAKE!!!',
+								sleep:'Phone is sleeping(click to wake it up!!!)',
+							},
+					state:'awake',
+					id:'phoneState',
+
+				}
+			);
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							offhook:'/public/images/ui/phone_offhook_000.png',
+							onhook:'/public/images/ui/phone_onhook_000.png',
+							onRinging:'/public/images/ui/phone_ringing_002.gif',
+						},
+					tooltip:
+						{
+							offhook:'The Phone is Off the Hook !!!',
+							onhook:'The Phone is On the Hook !!!',
+							onRinging:'The Phone is Ringing !!!',
+						},
+					state:'onhook',
+					id:'telephonyState',
+				}
+			);
+
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							onMissedCall:'/public/images/ui/phone_missedcall_000.png',
+							onDetails:'/public/images/ui/phone_calllogdetails_000.png',
+
+						},
+					tooltip:
+						{
+							onMissedCall:'Missed Call (Click to View Details)',
+							onDetails:'Call Log (Click to View Details)',
+						},
+					state:'onDetails',
+					id:'missedCallSection',
+				}
+			);
+
+
+
+
+
+			$('#buttonNavBar_div').ButtonNavBar('render',{});
+
+			eventObject.setOn('endPhoneCall', function(){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onhook',
+					}
+				);
+
+			});
+
+			eventObject.setOn('onOffHook', function(){
+				//put icon to on offhook---
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'offhook',
+					}
+				);
+			});
+
+			eventObject.setOn('incomingPhoneCall', function(){
+				//put icon to on ringing---
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onRinging',
+					}
+				);
+			});
+
+			eventObject.setOn('missedPhoneCall', function(){
+				//put missed icon
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'missedCallSection',
+						state:'onMissedCall',
+					}
+				);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onhook',
+					}
+				);
+			});
+
+
+
+			// END BUTTON BAR THINGS-----------------------------------
+
+
+
+
+
 
 		});
 
@@ -797,6 +1029,9 @@ body
 						console.log('onReady');
 					},
 					onLoginSuccess:function(inTransportLayer_string, inFamilyCredentialArray, filteredCredentialsArray){
+						//@@@@@@ QR-HOLD TIMEOUT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+						inQrHold = false
+
 						console.log('onLoginSuccess');
 						console.dir(inTransportLayer_string);
 
@@ -1003,15 +1238,41 @@ body
 
 
 
-
-		//------
+		//==============================================================================================================================================
+		//--  FILTERS  -----------------------------------------------------------------------------------------------------------------------------
+		//==============================================================================================================================================
 		var filterObj;
 		var createFilters = function(){
 			filterObj = new commManager.FilterObject();
+			//==================================================================
+			//--  (FILTER(==)) notification  -----------------------------------
+			//==================================================================
 			filterObj.add('notification', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				console.log('notification');
+				console.dir(inTransportLayer_json);
 
+				//==================================================================
+				//--  CONTACT LOOKUP  ----------------------------------------------
+				//==================================================================
+				var lookedupContact;
+				if(inTransportLayer_json.dataLayer && inTransportLayer_json.dataLayer.phoneNumber){
+					lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+					if(lookedupContact == false){
+						ContactDataCache.addtempContact(
+							{
+								imageUrl:getDefaultMemberImageUrl(),
+								name:'Unknown Caller',
+								phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
+								type:'[MOBILE]',
+							}
+						);
+						lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+					}
+				}
 
-
+				//==================================================================
+				//--  outgoingSms  -------------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'outgoingSms'){
 					console.log('outgoingSms--------------------');
 
@@ -1020,8 +1281,11 @@ body
 							type:'outgoingSms',
 							data:
 								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
 									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
 									message:inTransportLayer_json.dataLayer.msg,
+									lookedupContact:lookedupContact,
+									detail:inTransportLayer_json.dataLayer.msg,
 								},
 						}
 					);
@@ -1031,94 +1295,213 @@ body
 
 
 
-
+				//==================================================================
+				//--  incomeing sms  ------------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'incomingSms'){
 					EventLogObject.addEvent(
 						{
 							type:'incomingSms',
 							data:
 								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
 									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
 									message:inTransportLayer_json.dataLayer.msg,
+									lookedupContact:lookedupContact,
+									detail:inTransportLayer_json.dataLayer.msg,
 								},
 						}
 					);
 
 
-
-					$.debug('showSmsIncomingSmsMessage', inTransportLayer_json.dataLayer);
-					var lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
-					$.debug('lookedupContact', lookedupContact);
-					if(lookedupContact == false){
-						ContactDataCache.addtempContact(
-							{
-								imageUrl:getDefaultMemberImageUrl(),
-								name:inTransportLayer_json.dataLayer.name,
-								phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
-								type:'[MOBILE]',
-							}
-						);
-
-						lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
-						$.debug('lookedupContact II', lookedupContact);
-					}
-
-
-
-
-					showSmsIncomingSmsMessage(
+					//==================================================================
+					//--  showSmsIncomingSmsMessage  -----------------------------------
+					//==================================================================
+					$('#msgEvent_div').PopupListView('clear', {});
+					$('#msgEvent_div').PopupListView('addItem', 
 						{
-							//phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
-							//message:inTransportLayer_json.dataLayer.msg,
-	
-
-							name:lookedupContact.name,
-							phoneNumber:lookedupContact.phoneNumber,
-							message:inTransportLayer_json.dataLayer.msg,
+							id:'someId',
+							template:0,
 							imageUrl:lookedupContact.imageUrl,
+							caption:lookedupContact.name,
+							html:function(){
+								var $lvHeader = $('<div></div>').append
+									(
+										$('<p>' + phoneDisplayFormat(lookedupContact.phoneNumber) + '</p>')
+									).append
+									(
+										$('<p>' + inTransportLayer_json.dataLayer.msg + '</p>')
+									)
+								return $($lvHeader).html();
+							}(),
 						}
 					);
+					$('#msgEvent_div').PopupListView('setHeading', 'Incoming Sms');
+					$('#msgEvent_div').PopupListView('open', {});
+
+
+					//- showSmsIncomingSmsMessage(
+					//- 	{
+					//- 		name:lookedupContact.name,
+					//- 		phoneNumber:lookedupContact.phoneNumber,
+					//- 		message:inTransportLayer_json.dataLayer.msg,
+					//- 		imageUrl:lookedupContact.imageUrl,
+					//- 	}
+					//- );
+
 					eventObject.reportOn('incomingSms', inTransportLayer_json);
 				}
 
+				//==================================================================
+				//--  incomingPhoneCall  -------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'incomingPhoneCall'){
 					EventLogObject.addEvent(
 						{
 							type:'incomingPhoneCall',
-							data:inTransportLayer_json.dataLayer,
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'Your Phone is RINGING!!!',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									idleDuration:inTransportLayer_json.dataLayer.idleDuration,
+									lookedupContact:lookedupContact,
+								}
 						}
 					);
-					//inTransportLayer_json.dataLayer.phoneNumber
+
+					$('#msgEvent_div').PopupListView('clear', {});
+					$('#msgEvent_div').PopupListView('addItem', 
+						{
+							id:'someId',
+							template:0,
+							imageUrl:lookedupContact.imageUrl,
+							caption:lookedupContact.name,
+							html:function(){
+								var $lvHeader = $('<div></div>').append
+									(
+										$('<p>' + phoneDisplayFormat(lookedupContact.phoneNumber) + '</p>')
+									)
+								return $($lvHeader).html();
+							}(),
+						}
+					);
+					$('#msgEvent_div').PopupListView('setHeading', 'Incoming Phone Call');
+					$('#msgEvent_div').PopupListView('open', {});
 
 					eventObject.reportOn('incomingPhoneCall', inTransportLayer_json);
-					//- $.messager.show(
-					//- 	{
-					//- 		timeout:5000,
-					//- 		title:"<img style='float: left; height:40px' src='public/images/ui/email.png'/>" + "Incoming Phone Call",
-					//- 		msg:'Name:' + inTransportLayer_json.dataLayer.name + '<br>' + 'Phone Number:' + inTransportLayer_json.dataLayer.phoneNumber,
-					//- 		showType:'slide',
-					//- 		height:'300px',
-					//- 		style:
-					//- 			{
-					//- 				right:'',
-					//- 				top:document.body.scrollTop+document.documentElement.scrollTop,
-					//- 				bottom:''
-					//- 			}
-					//- 	}
-					//- );
 				}
 
+				//==================================================================
+				//--  missedPhoneCall  ------------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'missedPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'missedPhoneCall',
+							data:
+								{
+									when:moment().format("hh:mm:ss a dddd MMM Do YYYY"),
+									message:'You Missed a call',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									ringDuration:inTransportLayer_json.dataLayer.ringDuration,
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
 					eventObject.reportOn('missedPhoneCall', inTransportLayer_json);
-					alert("missedPhoneCall");
+					//alert("missedPhoneCall");
 				}
 
-				//- //reset----------------
+				//==================================================================
+				//--  onOffHook  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onOffHook'){
+					EventLogObject.addEvent(
+						{
+							type:'onOffHook',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('onOffHook', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  onAnswerCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onAnswerCall'){
+					EventLogObject.addEvent(
+						{
+							type:'onAnswerCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('onAnswerCall', inTransportLayer_json);
+				}
+
+
+				//==================================================================
+				//--  endPhoneCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'endPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'endPhoneCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You hung up your phone',
+									callType:inTransportLayer_json.dataLayer.callType,
+									duration:inTransportLayer_json.dataLayer.duration,
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('endPhoneCall', inTransportLayer_json);
+				}
+				//==================================================================
+				//--  outgoingPhoneCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'outgoingPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'outgoingPhoneCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									idleDuration:inTransportLayer_json.dataLayer.idleDuration,
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('outgoingPhoneCall', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  reset  ------------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'reset'){
 					location.reload();
 				}
 
-				// PHONE STATE CHANGE--------------------------------------------------
+				//==================================================================
+				//--  phoen state change  ------------------------------------------------
+				//==================================================================
 				if(inTransportLayer_json.dataLayer.action == 'onNewPhoneState'){
 					if(inTransportLayer_json.dataLayer.newState == 'screenOn'){
 						PhoneHardwareObject.reportOnWake(inTransportLayer_json.dataLayer);
@@ -1628,15 +2011,27 @@ body
 			}
 
 			this.getEventsByType = function(inType){
+				var types = [];
+				if(!(Array.isArray(inType))){
+					types.push(inType);
+				}else{
+					types = inType;
+				}
 				var resultArray = [];
 				for(var eventLogArrayIndex in eventLogArray){
-					if(eventLogArray[eventLogArrayIndex].type == inType){
+					if(types.indexOf(eventLogArray[eventLogArrayIndex].type) != -1){
 						resultArray.push(eventLogArray[eventLogArrayIndex]);
 					}
 				}
 				return resultArray;
 			}
 		}();
+		//@@@@ TODO: remove,,,, TESTING
+		$('#btBar_main_contactManager2xxx').click(function(){
+			console.log('---------EventLogObject DUMP -------------------------------------------');
+			console.dir(EventLogObject.getEvents());
+		});
+
 
 
 
@@ -1967,7 +2362,7 @@ body
 
 
 		//DEVELOPMENT DELETE ALL FOR USER (ONLY FOR DEVELOPMENT) TODO:REMOVE
-		$('#bt_test').click(function(){
+		$('#btBar_main_contactManager2xxx').click(function(){
 			$postAjax(
 				{
 					url:'/database/deleteAllForUser',
@@ -2100,16 +2495,28 @@ body
 
 			this.reportOnSleep = function(inDataLayerFromDevice){
 				state = 'sleep';
-				var imgHtml = $('#hdr_img_phoneState');
-				$('#hdr_bt_phoneState').text(options.awake.text).append(imgHtml);
-				$('#hdr_img_phoneState').attr('src', options.awake.imageUrl);
+				//var imgHtml = $('#hdr_img_phoneState');
+				//$('#hdr_bt_phoneState').text(options.awake.text).append(imgHtml);
+				//$('#hdr_img_phoneState').attr('src', options.awake.imageUrl);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'phoneState',
+						state:state,
+					}
+				);
 			}
 
 			this.reportOnWake = function(inDataLayerFromDevice){
 				state = 'awake';
-				var imgHtml = $('#hdr_img_phoneState');
-				$('#hdr_bt_phoneState').text(options.sleep.text).append(imgHtml);
-				$('#hdr_img_phoneState').attr('src', options.sleep.imageUrl);
+				//var imgHtml = $('#hdr_img_phoneState');
+				//$('#hdr_bt_phoneState').text(options.sleep.text).append(imgHtml);
+				//$('#hdr_img_phoneState').attr('src', options.sleep.imageUrl);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'phoneState',
+						state:state,
+					}
+				);
 			}
 
 			this.reportOnMakeWake = function(){
@@ -2137,5 +2544,61 @@ body
 			}
 		}();
 
+		//==================================================================
+		//--  POPUP LIST VIEW  ---------------------------------------------
+		//==================================================================
+		$('#eventLogDiv').PopupListView('create', 
+			{
+				headingCaption:'Event Log',
+				css:
+					{
+						width:'425px',
+					},
+				onClick:function(inId, inData){
+					console.log('On CLICK:' + inId);
+					console.dir(inData);
+					//$('#eventLogDiv').PopupListView('deleteItem', inId);
+				},
 
+			}
+		);
 
+		//==================================================================
+		//--  POPUP MESSAGE  -----------------------------------------------
+		//==================================================================
+			$('#msgEvent_div').PopupListView('create', 
+				{
+					timedClose:15000,
+					overlayTheme:'',
+					css:
+						{
+							width:'425px',
+						},
+					onClick:function(inId, inData){
+
+					},
+
+				}
+			);
+
+		//- $('#eventLogDiv').PopupListView('addItem', 
+		//- 	{
+		//- 		id:'someId',
+		//- 		template:0,
+		//- 		imageUrl:'/public/images/ui/speaker_on.png',
+		//- 		imageClass:'zz',
+		//- 		caption:'this is better',
+		//- 		details:
+		//- 			[
+		//- 				'this is line 1',
+		//- 				'this is line 2',
+		//- 				'this is line 3',
+		//- 				'this is line 4',
+		//- 			],
+		//- 		data:
+		//- 			{
+		//- 				testKey1:'testValue1',
+		//- 			}
+
+		//- 	}
+		//- );

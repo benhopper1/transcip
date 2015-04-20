@@ -1,0 +1,408 @@
+doctype html
+html
+	head(lang="en")
+		title Account
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+
+
+		link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+		script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+		script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+
+		//BUTTON NAV BAR ----------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
+
+		//POPUP LIST VIEW ---------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.popuplistview.js")
+
+
+		//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
+		//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
+		//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
+
+		script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
+		script(type='text/javascript', src='/js/clientutil/clientutil.js')
+
+		//arfsync.jqm   CSS ---------
+		link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+		script(type='text/javascript', src='/js/crypto/crypto.js')
+
+		//TOOL TIP
+		//link(rel="stylesheet" href="/public/js/tooltip/css/tooltipster.css")
+		//script(type='text/javascript', src='/public/js/tooltip/js/jquery.tooltipster.min.js')
+
+
+		//style.
+
+		body(style="")
+
+			div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
+				div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
+					ul
+						li
+							a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button bt-bck-000") Login Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button bt-bck-000") Contact Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button bt-bck-000") User Profile
+						li
+							a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+
+
+				#buttonNavBar_div
+
+				#popuplistview_div
+
+			#msgEvent_div
+
+
+			img(id="img_0" src="/public/images/ui/speaker_on.png")
+			img(id="img_1" src="/public/images/ui/speaker_on.png")
+			#testDiv
+			#smsPopupIncoming(data-dialog="false" style="position:relative;" class="")
+			//   /upload
+			form(action="/upload/contact/image", method="post", enctype="multipart/form-data")
+				input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+
+			div(id="page_userForm" data-role="page" data-dialog="false" data-theme="b" style="" class=".center-me")
+
+
+
+
+
+				div(id="contactsWindow" data-role="main"  class="ui-content" style="")
+					form(method="post" id="userForm")
+						div(class="ui-field-contain")
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+							br
+
+							input(data-icon="action" id="addEditUser_save" 	type="button" value="Save")
+							input(data-icon="back" id="addEditUser_clear" 	type="button" value="Cancel")
+
+			div(id="page_userForm2" data-role="page" data-dialog="true" data-theme="b" style="" class=".center-me")
+			#xxxxx
+
+
+			script.
+				//======================================================================
+				//>--- HEADER SETUP-----------------------------------------------------
+				//======================================================================
+				$(".mainHeader").toolbar();
+
+				var renderData = !{JSON.stringify(body)}
+
+				console.log('renderData');
+				console.dir(renderData);
+
+
+						//@@--> SET HEIGHT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				var setHeight = function(){
+					console.log('========== SET HEIGHT ENETERED ================================');
+					var screen = $.mobile.getScreenHeight();
+					var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
+					var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
+					var navbar = $(".ui-header > .ui-navbar").outerHeight();
+					
+					/* content div has padding of 1em = 16px (32px top+bottom). This step
+						can be skipped by subtracting 32px from content var directly. 
+					*/
+					var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
+
+					//var content = screen - (header + navbar) - footer - contentCurrent;
+					var content = screen - 120;  // 115;
+
+					$(".ui-content").height(content);
+					$(".ui-content").css({ top: '121' });
+
+
+					$(".sms-top-height").height(220);
+					$(".sms-bottom-height").height(content - 220);
+
+					var bottomOfButton = $('#bt_smsManager_send').css('bottom');
+					$('#dynamicTable_content_sms_div').css('top', bottomOfButton);
+					console.dir(
+						{
+							screen:screen,
+							content:content,
+							header:header,
+							footer:footer,
+							navbar:navbar,
+						}
+					);
+				}
+
+
+
+
+
+
+
+				var Widget_userFormScript;
+				$(document).ready(function(){
+					Widget_userFormScript = new function(){
+						var _this = this;
+
+						this.load = function(){
+
+							
+							//==============================================
+							// EVENT SETUP
+							//==============================================
+							$('#addEditUser_save').click(function(){
+								
+
+
+								//- $postAjax(
+								//- 	{
+								//- 		url:'/users/userNamesExist',
+								//- 		send:
+								//- 			{
+								//- 				userNameArray:
+								//- 					[
+								//- 						'ben',
+								//- 						'benji',
+								//- 						'hopperDevelopemt@gmail.com',
+								//- 					]
+								//- 			},
+								//- 		onAjaxSuccess:function(inResult){
+								//- 			console.log('back!!!:');
+								//- 			console.dir(inResult);
+								//- 		}
+								//- 	}
+								//- );
+
+
+
+
+
+
+							});
+
+
+							$('#addEditUser_clear').click(function(){
+								
+							});
+
+
+
+						}//end of load
+
+
+
+						_this.load();
+
+					}();
+
+				});
+
+				var setThePopupHeight = function(inMainDiv){
+					var $contentDiv = $(inMainDiv).find('.ui-content');
+					var calculatedHeight = 0;
+					var maxHeight = $.mobile.getScreenHeight() * .90;
+					console.log('--------setThePopupHeight----------------');
+					$(inMainDiv).find('ul').each(function(){
+						console.log('ul');
+						if($(this).attr('data-role') == 'listview'){
+							console.log('data-role');
+							$(this).children('li').each(function(){
+								console.log('----------- li ----------------------------');
+								console.log('height:' + $(this).height() );
+								//calculatedHeight += $(this).height();
+								calculatedHeight += ($(this).outerHeight() + 20);
+							});
+						}
+					});
+					if(calculatedHeight > maxHeight){
+						console.log('using max:' + maxHeight);
+						$($contentDiv).height(maxHeight);
+						//$($contentDiv).css({'overflow-y': 'scroll'})
+					}else{
+						console.log('using calculatedHeight:' + calculatedHeight);
+						$($contentDiv).height(calculatedHeight);
+						//$($contentDiv).css({'overflow-y': 'scroll'})
+					}
+				}
+
+
+
+				$( document ).ready(function() {
+					console.log( "ready!" );
+					$('#btBar_main_loginManager').click(function(){
+						$('#popupAccord').popup('open');
+						$('#zzz').trigger('create');
+						setThePopupHeight('#popupAccord');
+
+
+
+
+					});
+
+					$('#btBar_main_contactManager').click(function(){
+						//$('#popuplistview_div').PopupListView('test', {});
+						$('#popuplistview_div').PopupListView('addItem', 
+							{
+								id:'someId',
+								template:0,
+								imageUrl:'/public/images/ui/speaker_on.png',
+								//imageClass:'ui-li-icon',
+								caption:'this is better',
+								//html:'<center><h1>Yes babby Doll!!</h1></center><img src="/public/images/ui/speaker_on.png" style="height:250px;"></img>',
+								html:'<span class="ui-li-count"><h1>Ben Hopper HOW LONG CAN IT GET</h1><br><h1>Ben Hopper HOW LONG CAN IT GET</h1></span><span class=""><h1>Ben Hopper HOW LONG CAN IT GET</h1></span>',
+								details:
+									[
+										'this is line 1',
+										'this is line 2',
+										'this is line 3',
+										'this is line 4',
+									],
+								data:
+									{
+										testKey1:'testValue1',
+									}
+
+							}
+						);
+
+
+
+
+						//- for(inde in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]){
+						//- $('#popuplistview_div').PopupListView('addItem', 
+						//- 	{
+						//- 		template:0,
+						//- 		useDataIcon:true,
+						//- 		imageUrl:'/public/images/ui/speaker_on.png',
+						//- 		caption:'this is better',
+
+						//- 	}
+						//- );
+						//- }
+
+
+
+
+
+						$('#popuplistview_div').PopupListView('open', {});
+
+					});
+
+
+					$('#popuplistview_div').PopupListView('create', 
+						{
+							timedClose:5000,
+							headingCaption:'The Heading Caption',
+							css:
+								{
+									width:'425px',
+								},
+							onClick:function(inId, inData){
+								console.log('On CLICK:' + inId);
+								console.dir(inData);
+								$('#popuplistview_div').PopupListView('deleteItem', inId);
+							},
+
+						}
+					);
+
+
+
+
+
+					//==================================================================
+					//--  xxxxxxxxxxxx  ------------------------------------------------
+					//==================================================================
+						$('#msgEvent_div').PopupListView('create', 
+							{
+								//timedClose:5000,
+								overlayTheme:'',
+								//dataDismissible:false,
+								//closeButton:false,
+								//headingCaption:'The Heading Caption',
+								css:
+									{
+										width:'425px',
+									},
+								onClick:function(inId, inData){
+									
+									//- $('#msgEvent_div').PopupListView('chainOpen', function(){
+									//- 	$('#popuplistview_div').PopupListView('open', {});
+									//- });
+									$('#msgEvent_div').PopupListView('append', 
+										{
+											id:inId,
+											html:'<input type="text" name="name" id="basic" value="">',
+										}
+									);
+									
+								},
+
+							}
+						);
+						for(i in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,]){
+						$('#msgEvent_div').PopupListView('addItem', 
+							{
+								id:'someId' + i,
+								template:0,
+								imageUrl:'/public/images/contacts/9bb5c610-df26-11e4-9b5c-13ad466e7d46.jpg',
+								//caption:'Benjamin Hopper (256) 466-3434',
+								html:function(){
+									var $lvHeader = $('<div></div>').append
+											(
+												$('<p><strong>Benjamin Hopper</strong>    (256) 466-3434</p>')
+											)
+										.append
+											(
+												$('<p>2015-04-18 18:15:57</p>')
+											)
+										.append
+											(
+												$('<p>This is my short liitle message</p>')
+											)
+									return $($lvHeader).html();
+								}(),
+							}
+						);
+
+						$('#btBar_main_userProfile').click(function(){
+							$('#msgEvent_div').PopupListView('setHeading', 'Incoming Sms');
+							$('#msgEvent_div').PopupListView('open', {});
+						});
+					}
+
+
+
+
+					$('#btBar_main_smsManager').click(function(){
+						$('#msgEvent_div').PopupListView('append', 
+							{
+								id:'someId2',
+								html:'<h1>Should be appended!!</h1>',
+							}
+						);
+					});
+
+				});
+
+
+				
+
+
+		

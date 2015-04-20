@@ -21,6 +21,7 @@ var Model = function(){
 
 	this.addManySms = function(inParams, inPostFunction){
 		console.log('---------------addManySms starting------------------------------------------');
+		console.dir(inParams);
 		//validate input
 		/*for(index in inParams.dataArray){
 			inParams.dataArray[index].userId = inParams.userId;
@@ -29,11 +30,17 @@ var Model = function(){
 			if(inPostFunction){
 				var err = 'No User Id, records will not be added(contactModel.addContact)';
 				inPostFunction(err, false, false);
+				return;
 			}
 		}
 
 		var smsArray = inParams.dataArray;
 		var insertSQL = "";
+
+		if(smsArray.length < 1){
+			if(inPostFunction){inPostFunction(false, false);}
+			return;
+		}
 
 		var isInit = true;
 		for(var theIndex in smsArray){
@@ -226,6 +233,61 @@ var Model = function(){
 	}
 
 	this.getAllSmsByPhone = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
+		console.log('-----getAllSmsByPhone ENETERED-----------------------------------------------------');
+		var fieldData = 
+			{
+				userId:false,
+				phoneNumber:''
+			}
+		fieldData = extend(fieldData, inParams);
+		if(!(fieldData.userId)){
+			console.log('ERROR _> no USERID!!!!');
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+			}
+		}
+
+		var sqlString;
+		if(fieldData.limit){
+
+			sqlString = 
+				"SELECT DISTINCT t1.smsId,t1.contactName,t1.contactPhoneNumber AS smsPhoneNumber, t1.date, t1.dateSent ,t1.thread,t1.read,t1.smsContext,t1.userId,t1.body, t2.imageUrl, t2.name AS smsName, concat(t3.fName, ' ', t3.lName) AS userName, t3.screenImage, CONVERT(smsId, UNSIGNED INTEGER) AS sortOrder FROM tb_smsStore AS t1 LEFT JOIN tb_storedContacts AS t2 ON t1.userId = t2.userId AND t1.contactphonenumber=t2.phoneNumber LEFT JOIN tb_user AS t3 ON t1.userId = t3.id" + " " +
+					"WHERE" 																+ " " +
+						"t1.userId = " + connection.escape(parseInt(fieldData.userId)) 		+ " " +
+					"AND"  																	+ " " +
+						"t1.contactPhoneNumber="+ connection.escape(fieldData.phoneNumber) 	+ " " +
+					"ORDER BY sortOrder DESC LIMIT "+ connection.escape(fieldData.limit)
+			;
+
+		}else{
+
+			sqlString = 
+				"SELECT DISTINCT t1.smsId,t1.contactName,t1.contactPhoneNumber AS smsPhoneNumber, t1.date, t1.dateSent ,t1.thread,t1.read,t1.smsContext,t1.userId,t1.body, t2.imageUrl, t2.name AS smsName, concat(t3.fName, ' ', t3.lName) AS userName, t3.screenImage, CONVERT(smsId, UNSIGNED INTEGER) AS sortOrder FROM tb_smsStore AS t1 LEFT JOIN tb_storedContacts AS t2 ON t1.userId = t2.userId AND t1.contactphonenumber=t2.phoneNumber LEFT JOIN tb_user AS t3 ON t1.userId = t3.id" + " " +
+					"WHERE" 																+ " " +
+						"t1.userId = " + connection.escape(parseInt(fieldData.userId)) 		+ " " +
+					"AND"  																	+ " " +
+						"t1.contactPhoneNumber="+ connection.escape(fieldData.phoneNumber) 	+ " " +
+					"ORDER BY sortOrder DESC"
+			;
+
+		}
+
+		//console.log('sql:' + sqlString);
+		global.reportNotify('THeCaption', 
+			{
+				sql:sqlString,
+			}, 0
+		);
+
+		connection.query(sqlString, function(err, rows, fields){
+			if(inPostFunction){inPostFunction(err, rows, fields);}
+		});
+
+	}
+	//TODO: reomove
+	this.getAllSmsByPhoneOLD = function(inParams, inPostFunction){
 		connection = Connection.getInstance('arf').getConnection();
 		console.log('-----getAllSmsByPhone ENETERED-----------------------------------------------------');
 		var fieldData = 

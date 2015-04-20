@@ -28,6 +28,7 @@ module.exports.controller = function(app){
 					deviceId:"815",//req.cookies.deviceId,
 					URL:configData.domain.address + ":" + configData.domain.port,
 					androidAppRoute:'http://play.google.com/store/apps/details?id=hopper.arfsync.v001',//configData.androidAppRoute,
+					productsRoute:configData.domain.address + ":" + configData.domain.port + '/products/products',
 					webSocketClient:configData.webSocketClient,
 					defaultUserImageUrl:configData.defaultUserImageUrl,
 					defaultMemberImageUrl:configData.defaultMemberImageUrl,
@@ -57,6 +58,7 @@ module.exports.controller = function(app){
 					webSocketClient:configData.webSocketClient,
 					defaultUserImageUrl:configData.defaultUserImageUrl,
 					defaultMemberImageUrl:configData.defaultMemberImageUrl,
+					productsRoute:'/products/products',
 					data:
 						{
 						}

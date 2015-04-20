@@ -5,12 +5,14 @@ head
 body
 
 
-	div(id="import_navBar" data-role="navbar")
+	div(id="import_navBar" data-role="navbar" style="height:55px !important;")
 		ul
 			li
-				a(href="#" id="contactImport_import" data-icon="arrow-l") Import From Phone
+				//a(href="#" id="contactImport_import" data-icon="arrow-l") Import From Phone
+				a(href="" id="contactImport_import" style="background-color: transparent !important;width:50%;" data-icon="arrow-l" class="ui-btn-left") Import From Phone
 			li
-				a(href="" id="contactImport_refresh" data-icon="refresh") Refresh List
+				//a(href="" id="contactImport_refresh" data-icon="refresh") Refresh List
+				a(href="" id="contactImport_refresh" style="background-color: transparent !important;width:50%;" data-icon="refresh" class="ui-btn-right") Refresh List
 	//div(data-role="main" class="ui-content")
 	//div(id="dynamicTable_content_sms_div" class="sms-bottom-height" data-position-to="window" style="margin:10px 15px 0px; height:200px;width:100%; overflow-y:auto;")
 	div(id="importListDivContainer" style="margin:10px 15px 0px; height:200px;width:60%; overflow-y:auto;")
@@ -47,10 +49,11 @@ body
 		//=========================================================
 		$('#contactImport_import').click(function(){
 			ImportObject.import();
-
+			setTimeout(function(){$('#contactImport_import').removeClass('ui-btn-active'); }, 1000);
 		});
 		$('#contactImport_refresh').click(function(){
 			ImportObject.refresh();
+			setTimeout(function(){$('#contactImport_refresh').removeClass('ui-btn-active'); }, 1000);
 		});
 		$('#tab_contactManager_import').click(function(){
 			ImportObject.refresh();

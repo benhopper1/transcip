@@ -13,13 +13,13 @@ div(data-role="main" class="")
 				ul(data-role="listview" id="contactsMenu_sms" class=""   data-inset="false" style="width:100%; ")
 
 		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		//all tabs here
+		//all tabs here smsContactSleeveCls
 		div(class="ui-block-b" style="width:50%;")
 			div(class="ui-content ui-overlay-shadow ui-shadow")
 				div(class="sms-top-height" data-position-to="window" style="border:1;width:90%; overflow-y:hide;")
 					div(id="smsContactSleeve" class=" ui-overlay-shadow ui-shadow" style="padding:5px 15px 0px; width:100%;")
-					div(class="ui-overlay-shadow ui-shadow smsContactSleeveCls" style="padding:5px 15px 5px; width:100%")
-						textarea(id="ta_smsMessage" data-mini="true" style="heigth:63px;" name="ref" placeholder="Sms message to send...")
+					div(class="ui-overlay-shadow ui-shadow" style="padding:5px 15px 5px; width:100%")
+						textarea(id="ta_smsMessage" data-mini="true" style="height:63px;" name="ref" placeholder="Sms message to send...")
 						input(data-icon="action" id="bt_smsManager_send" 	data-mini="true" type="button" value="Send Sms Message")
 
 					div(id="dynamicTable_content_sms_div" class="sms-bottom-height" data-position-to="window" style="margin:10px 15px 0px; height:200px;width:100%; overflow-y:auto;")
@@ -40,7 +40,7 @@ div(data-role="main" class="")
 
 script.
 	
-
+	var sms_startup_textarea_height;
 	//========================================================
 	//--EVENTS-----
 	//========================================================
@@ -65,6 +65,7 @@ script.
 		//alert('sms page create');
 		setHeight();
 		$('#smsManager_contents').trigger('create');
+		sms_startup_textarea_height = $('#ta_smsMessage').height();
 	});
 
 	$('#bt_smsManager_send').click(function(){
@@ -83,6 +84,9 @@ script.
 		})
 
 		$('#ta_smsMessage').val(''); //clear
+		console.log('sms_startup_textarea_height:' + sms_startup_textarea_height);
+		$('#ta_smsMessage').height(sms_startup_textarea_height);
+		$('#smsManager_contents').trigger('create');
 	});
 
 

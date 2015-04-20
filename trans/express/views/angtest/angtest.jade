@@ -13,6 +13,8 @@ html
 		script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
 		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
 
+		//BUTTON NAV BAR ----------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
 
 
 
@@ -25,8 +27,11 @@ html
 
 		//arfsync.jqm   CSS ---------
 		link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
-
 		script(type='text/javascript', src='/js/crypto/crypto.js')
+
+		//TOOL TIP
+		//link(rel="stylesheet" href="/public/js/tooltip/css/tooltipster.css")
+		//script(type='text/javascript', src='/public/js/tooltip/js/jquery.tooltipster.min.js')
 
 
 		//GOOGLE ------------------
@@ -38,15 +43,13 @@ html
 		script(src="https://apis.google.com/js/client:platform.js?onload=render" async defer)
 
 
-
 				//script(src="https://apis.google.com/js/client:platform.js" async defer)
-
+		style.
+			.ui-controlgroup-controls{
+				width:100% !important;;
+			}
 		body(style="")
 			script.
-
-				//window.location.href = 'https://192.168.0.16:30800/angtest';
-
-
 				function render(){
 					// Additional params
 					var additionalParams = 
@@ -56,18 +59,38 @@ html
 					gapi.signin.render('myButton', additionalParams);
 				}
 			
-			h1
-				p ss
-				//- if(products.subscriptions['arfsync.v001.subscription.month'].active == true)
-				//	p got subscription
-				//	br
-				//	br
-				//	br
-				//	br
-				//	
-				//	p !{JSON.stringify(products)}
 
+			div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
+				div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
+					ul
+						li
+							a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button bt-bck-000") Login Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button bt-bck-000") Contact Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button bt-bck-000") User Profile
+						li
+							a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
+						li
+							a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+			
+				//- div(class="quick-launch-bar" )
+				//- 	div(id="nav-wrapper")
+				//- 		ul(id="nav")
+				//- 			li
+				//- 				a(id="hdr_img_phoneStatezzz2" style="background-image: url('/public/images/ui/speaker_on.png')" class="")
+				//- 			li
+				//- 				a(id="hdr_img_phoneStatezzz3" style="background-image: url('/public/images/ui/speaker_on.png')" class="")
+				//- 			li
+				//- 				a(href="" class="txt-bt-000") FAQ
 
+				#buttonNavBar_div
+
+			br
+			br
+			br
+			img(id="img_0" src="/public/images/ui/speaker_on.png")
+			img(id="img_1" src="/public/images/ui/speaker_on.png")
 			#testDiv
 			#smsPopupIncoming(data-dialog="false" style="position:relative;" class="")
 			//   /upload
@@ -107,6 +130,14 @@ html
 				//input(data-icon="action" id="bt_login_postMail" 	type="button" value="Login" style="")
 
 			script.
+				//======================================================================
+				//>--- HEADER SETUP-----------------------------------------------------
+				//======================================================================
+				$(".mainHeader").toolbar();
+
+				//$('#buttonNavBar_div').ButtonNavBar('test',{});
+				
+
 				function signinCallback(authResult) {
 					if (authResult['status']['signed_in']){
 						// Update the app to reflect a signed in user
@@ -162,6 +193,14 @@ html
 							// EVENT SETUP
 							//==============================================
 							$('#addEditUser_save').click(function(){
+								//$('#img_0').unblink();
+								$('#buttonNavBar_div').ButtonNavBar('changeState',
+									{
+										id:'hoho',
+										state:'state2',
+									}
+								);
+
 
 								$postAjax(
 									{
@@ -191,19 +230,33 @@ html
 
 
 							$('#addEditUser_clear').click(function(){
-								$postAjax(
+								//- $('#img_0').blink(20000, function(isExpired){
+								//- 	console.log('blink callback:' + isExpired);
+								//- });
+
+
+								$('#buttonNavBar_div').ButtonNavBar('blink',
 									{
-										url:'/products/updateProductsSession',
-										send:
-											{
-												
-											},
-										onAjaxSuccess:function(inResult){
-											console.log('back!!!:');
-											console.log(inResult);
-										}
+										id:'hoho', 
+										duration:10000,
 									}
 								);
+
+								$('#buttonNavBar_div').ButtonNavBar('disable', 'hoho');
+
+								//- $postAjax(
+								//- 	{
+								//- 		url:'/products/updateProductsSession',
+								//- 		send:
+								//- 			{
+												
+								//- 			},
+								//- 		onAjaxSuccess:function(inResult){
+								//- 			console.log('back!!!:');
+								//- 			console.log(inResult);
+								//- 		}
+								//- 	}
+								//- );
 							});
 
 
@@ -329,4 +382,69 @@ html
 						  userId: 1 }
 
 
+				var setHeaderSize = function(){
+					$('#btg_header .ui-controlgroup-controls').css({width:'100%'})
+					var screenWidth = $(window).width();//$('#btg_header .ui-controlgroup-controls').width()
 
+					var theAtags = $('#btg_header .ui-controlgroup-controls').children('a');
+					var perPartage = Math.floor((screenWidth / theAtags.length)) - 40; // - 42; //42   - (theAtags.length * 11)
+					console.log('theWidthOf:' + $('#btg_header .ui-controlgroup-controls').width());
+					console.log('perPartage:' + perPartage);
+					$(theAtags).each(function(){
+						console.log('a element' + $(this).attr('id'));
+						console.log('a widthBefore' + $(this).width());
+						$(this).css({'width':perPartage});
+						console.log('a widthAfter' + $(this).width());
+					});
+					//$('.bt-grp-1').css({width:$('#btg_header .ui-controlgroup-controls').width()});
+					$('#btg_header').trigger('create');
+					$('#btg_header').enhanceWithin().controlgroup('refresh');
+				}
+				$( document ).ready(function() {
+
+					//$('.tooltip').tooltipster();
+
+					console.log( "ready!" );
+					$('#buttonNavBar_div').ButtonNavBar('create',
+						{
+							onClick:function(inId, inState){
+								console.log('onClick' + inId + ' ' + inState);
+							},
+							onStateChange:function(inId, inState, inOldState){
+								console.log('onStateChange' + inId + ' ' + inState + ' ' + inOldState);
+							},
+						}
+					);
+
+
+					$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+						{
+							imageUrls:
+								{
+									default:'/public/images/ui/phone_state_awake.png',
+									state2:'/public/images/ui/speaker_on.png',
+								},
+							tooltip:
+								{
+									default:'The default State 123!!!',
+									state2:'State2',
+								},
+							state:'default',
+							id:'hoho',
+
+						}
+					);
+					$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+						{
+							imageUrls:
+								{
+									default:'/public/images/ui/speaker_on.png',
+								},
+							state:'default',
+						}
+					);
+
+					$('#buttonNavBar_div').ButtonNavBar('render',{});
+					$('#buttonNavBar_div').ButtonNavBar('test',{});
+					//setHeaderSize();
+				});

@@ -1,0 +1,16 @@
+To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:
+find /directory_path -mtime -1 -ls
+
+
+
+-------------------------------------------------------------
+modified in the last 3 days
+find . -mtime -3
+
+-------------------------------------------------------------
+created in the last 3 days
+find . -ctime -3
+
+-------------------------------------------------------------
+Which will find all files changed, and thus modified, at least one day ago but within three days ago.
+find . -ctime +1 -a -ctime -3

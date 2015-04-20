@@ -1,0 +1,52 @@
+//==================================================================
+//--  POPUP LIST VIEW  ---------------------------------------------
+//==================================================================
+$('#eventLogDiv').PopupListView('create', 
+	{
+		headingCaption:'Event Log',
+		css:
+			{
+				width:'425px',
+			},
+		onClick:function(inId, inData){
+			console.log('On CLICK:' + inId);
+			console.dir(inData);
+			//$('#eventLogDiv').PopupListView('deleteItem', inId);
+		},
+
+	}
+);
+
+
+$('#eventLogDiv').PopupListView('clear',{});
+
+
+$('#eventLogDiv').PopupListView('addItem', 
+	{
+		id:contact.id + '_' + theIndex,
+		template:0,
+		zOrder:true,
+		imageUrl:contact.imageUrl,
+		imageClass:'magicSquare',
+		caption:'Missed Call',
+		details:
+			[
+				contact.name + '    '  + phoneDisplayFormat(contact.phoneNumber),
+				theSpecificEventsLog[theIndex].data.when,
+			],
+		data:theSpecificEventsLog[theIndex].data,
+	}
+);
+
+
+
+
+$('#eventLogDiv').PopupListView('open', {});
+
+
+
+$('#msgEvent_div').PopupListView('chainOpen', $('#popuplistview_div'));
+OR function version...
+$('#msgEvent_div').PopupListView('chainOpen', function(){
+	$('#popuplistview_div').PopupListView('open', {});
+});

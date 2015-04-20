@@ -139,4 +139,26 @@ module.exports.controller = function(app){
 
 		));
 	});
+
+
+	app.get('/angtest2', function(req, res){
+		console.log("/angtest2");
+		console.log('session');
+		console.dir(req.session);
+
+			global.reportNotify('tt0', 
+				{
+					name:'nnnnn',
+					req:req,
+					res:res,
+				}, 0
+			);
+			res.render('angtest/angtest2.jade',
+				{
+					body:req.body,
+					products:req.session.products,
+					test:'ben'
+				}
+			);
+	});
 }

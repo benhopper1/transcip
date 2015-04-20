@@ -7,6 +7,8 @@ var finish = require(basePath + '/node_modules/finish');
 
 var extend = require(basePath + '/node_modules/node.extend');
 
+var UploadModel = require('../models/uploadmodel');
+var uploadModel = new UploadModel();
 
 var Connection = require(__dirname + '/connection.js');
 var nodemailer = require(basePath + '/node_modules/nodemailer');
@@ -219,6 +221,95 @@ var Model = function(){
 	}
 
 	this.moveCachedContact = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
+		var fieldData = 
+			{
+				userId:false,
+				refId:false,
+				filePathToCopy:false,
+			}
+		fieldData = extend(fieldData, inParams);
+
+		if(!(fieldData.userId)){
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+				return;
+			}
+		}
+
+		global.reportNotify('moveCachedContact TP_0', 
+			{
+				fieldData:fieldData,
+			}, 0);
+
+		var secureSourceFilePath;
+		var targetFilePath;
+		if(fieldData.filePathToCopy){
+			secureSourceFilePath = basePath + fieldData.filePathToCopy;// = basePath + configData.phoneCacheStorageFolder + '/' + path.basename(fieldData.filePathToCopy);
+			targetFilePath = basePath + configData.contactImageFolder + '/' + path.basename(fieldData.filePathToCopy);
+		}
+
+		global.reportNotify('moveCachedContact TP_1', 
+			{
+				secureSourceFilePath:secureSourceFilePath,
+				targetFilePath:targetFilePath,
+			}, 0);
+
+		if(path.basename(targetFilePath).indexOf(path.basename(configData.defaultMemberImageUrl)) != -1){
+			global.reportNotify('moveCachedContact TP_2', 'TRUE', 0);
+			//is default!!!
+			if(inPostFunction){
+				inPostFunction(err, 
+					{	
+						message:'file used existing',
+						refId:fieldData.refId,
+						newFilePath:configData.defaultMemberImageUrl,
+					}
+				);
+			}
+		}else{
+
+			UploadModel.fileStorageClient.storeFile('contactImage', secureSourceFilePath, function(inData){
+
+				//lookup() -- fieldData.filePathToCopy
+				//changeTo -- inData.domainFilePath
+				// userId --  fieldData.userId
+				_this.changePathInFileCache(
+					{
+						oldPath:fieldData.filePathToCopy,
+						newPath:inData.domainFilePath,
+						userId:fieldData.userId,
+					}, function(err, changePathResult){
+
+							global.reportNotify('moveCachedContact TP_3 copy complete', 
+								{
+									message:'file copied',
+										refId:fieldData.refId,
+										newFilePath:inData.domainFilePath,
+								}, 0);
+							var err = false;
+							if(inPostFunction){
+								inPostFunction(err, 
+									{	
+										message:'file copied',
+										refId:fieldData.refId,
+										newFilePath:inData.domainFilePath,
+										//newFilePath:configData.contactImageFolder + '/' + path.basename(targetFilePath),
+										//newFilePath:targetFilePath,
+									}
+								);
+							}
+					}
+				);//end changePathInFileCache
+
+			});//end UploadModel
+		}
+
+	}
+
+	//TODO remove old---
+	this.moveCachedContactOLD = function(inParams, inPostFunction){
 		connection = Connection.getInstance('arf').getConnection();
 		var fieldData = 
 			{
@@ -546,6 +637,36 @@ var Model = function(){
 		var sqlString = 
 			"DELETE FROM tb_worker"+ " " +
 				"WHERE CODE = " + connection.escape(inCode)
+		;
+		console.log('SQL:' + sqlString);
+		connection.query(sqlString, function(err, result){
+			console.log('error' + err);
+			if(inPostFunction){inPostFunction(err, result);}
+		});
+	}
+
+	this.changePathInFileCache = function(inParams, inPostFunction){
+		connection = Connection.getInstance('arf').getConnection();
+		var fieldData = 
+			{
+				oldPath:false,
+				newPath:false,
+				userId:false,
+			}
+		fieldData = extend(fieldData, inParams);
+		if(!(fieldData.userId)){
+			if(inPostFunction){
+				var err = 'No User Id, records will not be added(contactModel.addContact)';
+				inPostFunction(err, false, false);
+			}
+		}
+		var sqlString = 
+			"UPDATE tb_fileCache SET"											+ " " +
+				"path = " + connection.escape(fieldData.newPath)				+ " " +
+			"WHERE"																+ " " +
+				"path = " + connection.escape(fieldData.oldPath)				+ " " +
+			"and"																+ " " +
+				"userId = " + connection.escape(parseInt(fieldData.userId))
 		;
 		console.log('SQL:' + sqlString);
 		connection.query(sqlString, function(err, result){
