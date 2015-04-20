@@ -34,7 +34,8 @@ module.exports.controller = function(app){
 					defaultMemberImageUrl:configData.defaultMemberImageUrl,
 					data:
 						{
-						}
+						},
+					useMini:configData.useMini,
 				}
 			);
 		}else{
@@ -61,7 +62,8 @@ module.exports.controller = function(app){
 					productsRoute:'/products/products',
 					data:
 						{
-						}
+						},
+					useMini:configData.useMini,
 				}
 			);
 		}

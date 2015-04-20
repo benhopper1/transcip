@@ -649,6 +649,51 @@ fileStorageServer_orphanedDelete_maintenanceCycle.add(function(inOptions, inData
 
 
 
+//==================================================================
+//--  NODE - MINIFY ------------------------------------------------
+// Prepares mini versions for client side loadup, 
+// epressServer config useMini
+//==================================================================
+///public/js/arfsync.mini.js
+//path.join(basePath, '..', '/trans/express/public/js/arfsync.mini.js'),
+
+var compressor = require(basePath + '/node_modules/node-minify');
+new compressor.minify(
+	{
+		type: 'hopper',
+		fileIn: 
+			[
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.extention.js'),
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.database.js'),
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.checkboxlines.js'),
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.contactlistview.js'),
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.popuplistview.js'),
+				path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js'),
+
+				//path.join(basePath, '..', '/trans/express/public/js/qrcode/jquery.composite.qrcode.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/commmanager/commmanager.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/phoneformat/phoneformat.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/clientutil/clientutil.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/hashofarray/v002/hashofarrayobject.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/eventorigin/eventorigin.js'),
+				//path.join(basePath, '..', '/trans/express/public/js/async/async.js'),
+
+
+
+
+
+
+			],
+		fileOut: path.join(basePath, '..', '/trans/express/public/js/arfsync/arfsync.mini.js'),
+		callback: function(err, min){
+			console.log('MINIFY ERROR:');
+			console.dir(err);
+		//        console.log(min); 
+		}
+});
+
+//console.log('miniPath:' + path.join(basePath, '..', '/trans/express/public/js/arfsync/arfsync.mini.js'));
 
 
 

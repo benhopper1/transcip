@@ -16,46 +16,64 @@ head
 	link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
 
 	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
 	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
 	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
-	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
-	script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
-	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
-	script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
 
-	//POPUP LIST VIEW ---------------------------------------------------
-	script(src="/public/js/jquery/hopper/jquery.hopper.popuplistview.js")
+	if useMini
+		script(src="/public/js/arfsync/arfsync.mini.js")
+
+	else
+		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
 
 
-	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
+		//POPUP LIST VIEW ---------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.popuplistview.js")
+		//dynamictable ---------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+
+
+	script(src='/js/commmanager/commmanager.js')
+
+
+	script(src='/js/clientutil/clientutil.js')
+	//BUTTON NAV BAR ----------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
+	script(src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+
+
+
+	script(src='/js/qrcode/jquery.composite.qrcode.mini.js')
+	script(src="/public/js/scrollto/lib/jquery-scrollto.mini.js")
+	script(src='/public/js/moment/moment.mini.js')
+	script(src="/public/js/footable/js/footable.mini.js")
+	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.mini.js')
+	script(type='text/javascript', src='/public/js/async/async.mini.js')
 	//script(src="/public/js/jquery/hopper/jquery.hopper.extension.footable.js")
 
 
 	//script(src="/public/js/scrollto/vendor/jquery.js")
-	script(src="/public/js/scrollto/lib/jquery-scrollto.js")
-
-
-
-	script(type='text/javascript', src='/public/js/moment/moment.js')
+	
 
 
 	//link(href="/public/js/objectfit/dist/polyfill.object-fit.css" rel="stylesheet" type="text/css")
 	//script(src="/public/js/objectfit/dist/polyfill.object-fit.js")
 
 
-	script(src="/public/js/footable/js/footable.js")
-
-	script(type='text/javascript', src='/js/qrcode/jquery.composite.qrcode.js')
+	
 	//script(type='text/javascript', src='/js/qrcode/jquery.qrcode.js')
 	//script(type='text/javascript', src='/js/qrcode/qrcode.js')
 
-	script(type='text/javascript', src='/js/commmanager/commmanager.js')
-
-	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
-	script(type='text/javascript', src='/js/clientutil/clientutil.js')
+	
 
 	//arfsync.jqm   CSS ---------
-	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+	//link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
 
 
 	//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
@@ -70,14 +88,10 @@ head
 	//script(src="/public/js/iscrollview/lib/jquery.mobile.iscrollview.js")
 
 
-	//BUTTON NAV BAR ----------------------------------------------------
-	script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
+	
 
 	//script(type='text/javascript', src='public/js/hashofarray/hashofarrayobject.js')
-	script(type='text/javascript', src='/public/js/hashofarray/v002/hashofarrayobject.js')
-	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
-
-	script(type='text/javascript', src='/public/js/async/async.js')
+	
 
 	//script(type='text/javascript', src='/public/js/reportview/reportview.js')
 
@@ -108,6 +122,8 @@ body
 				fittype: 'cover'
 			});
 		});*/
+	if useMini
+		h1 useMini
 
 	//#incomingSmsScreenMessageDiv(data-role="popup" class="ui-content" style="width:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
 	#incomingSmsScreenMessageDiv()
@@ -551,6 +567,26 @@ body
 				}
 			);
 
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							mobile:'/public/images/ui/phone_mobile_000.png',
+							WIFI:'/public/images/ui/phone_wifi_000.png',
+							noConnection:'/public/images/ui/phone_noconnection_000.png',
+						},
+						tooltip:
+							{
+								mobile:'Phone is Connected Via MOBILE',
+								WIFI:'Phone is Connected Via WIFI',
+								noConnection:'Phone is NOT Connected',
+							},
+					state:'noConnection',
+					id:'connection',
+
+				}
+			);
+
 
 
 
@@ -599,6 +635,26 @@ body
 					{
 						id:'telephonyState',
 						state:'onhook',
+					}
+				);
+			});
+
+			eventObject.setOn('onReconnect', function(inDataLayer){
+				//put icon to on ringing---
+				//networkType":"mobile    networkCaption":"epc.tmobile.com
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'connection',
+						state:inDataLayer.networkType,
+					}
+				);
+			});
+
+			eventObject.setOn('onGetConnectionStatus', function(inDataLayer){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'connection',
+						state:inDataLayer.networkType,
 					}
 				);
 			});
@@ -1143,6 +1199,29 @@ body
 								);
 							});
 
+							//==================================================================
+							//--  Connected Device's Hardware Network Status  ------------------
+							//==================================================================
+							commManager.transactionToDeviceToken(
+								{
+									routing:
+										{
+											command:'hardware',
+											action:'getConnectionStatus'
+										},
+									data:
+										{
+											//url:"/webmenu/normalmenu"
+											//url:"arfsync"
+										},
+
+									onComplete:function(inDataLayer, inTransportLayer){
+										console.log('onComplete getConnectionStatus call back entered');
+										eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+									}
+								}
+							);
+
 
 						});
 
@@ -1165,6 +1244,7 @@ body
 
 					onFamilyDeviceDisconnect:function(inMsg, inLocal, inData, inRefObj){
 						eventObject.reportOn('disconnect', inData);
+						//alert('GONE')
 					}
 				}
 			);
@@ -1513,6 +1593,13 @@ body
 					}
 				}
 
+
+				//==================================================================
+				//--  On RECONNECT  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onReconnect'){
+					eventObject.reportOn('onReconnect', inTransportLayer_json.dataLayer);
+				}
 
 
 

@@ -202,3 +202,6 @@
 {"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-16 06:13:19","data":{"error":{},"connectId":"192.168.0.1643264"}}
 {"debugObject":"general","label":"[models.connection.js] MySql.connect","when":"2015-04-18 05:14:16","data":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect","fatal":true}}
 {"debugObject":"general","label":"[models.connection.js] MySql.connect","when":"2015-04-18 06:20:58","data":{"code":"ECONNREFUSED","errno":"ECONNREFUSED","syscall":"connect","fatal":true}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-20 09:13:13","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-20 09:22:59","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-20 16:24:07","data":{"error":{},"connectId":"192.168.0.1637434"}}
