@@ -205,3 +205,8 @@
 {"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-20 09:13:13","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
 {"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-20 09:22:59","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
 {"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-20 16:24:07","data":{"error":{},"connectId":"192.168.0.1637434"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:13:47","data":{"error":{},"connectId":"192.168.0.1636567"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:32:08","data":{"error":{},"connectId":"192.168.0.1636567"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:50:06","data":{"error":{},"connectId":"192.168.0.1636567"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:58:26","data":{"error":{},"connectId":"192.168.0.1636567"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 13:11:39","data":{"error":{},"connectId":"192.168.0.1636567"}}

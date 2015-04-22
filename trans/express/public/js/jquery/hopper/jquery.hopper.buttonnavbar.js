@@ -317,6 +317,20 @@ var ButtonNavBar = function(inJrefOfThis, inJsonStruct){
 		});
 	}
 
+	this.getImageUrl = function(inId){
+		var theresult = '';
+		$('.click-bar-img').each(function(){
+			if($(this).attr('refId') == inId){
+				var bg = $(this).css('background-image');
+				bg = bg.replace('url(','').replace(')','');
+				theresult = bg;
+				return;
+			}
+		});
+
+		return theresult;
+	}
+
 }
 
 
@@ -362,5 +376,11 @@ $.fn.ButtonNavBar = function(inAction, inJsonStruct){
 		console.log('disable');
 		return buttonNavBar.disable(inJsonStruct);
 	}
+
+	if(inAction == 'getImageUrl'){
+		console.log('getImageUrl');
+		return buttonNavBar.getImageUrl(inJsonStruct);
+	}
+
 
 }

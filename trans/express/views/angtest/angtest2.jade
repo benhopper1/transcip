@@ -30,6 +30,7 @@ html
 		//arfsync.jqm   CSS ---------
 		link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
 		script(type='text/javascript', src='/js/crypto/crypto.js')
+		script(src='/public/js/moment/moment.mini.js')
 
 		//TOOL TIP
 		//link(rel="stylesheet" href="/public/js/tooltip/css/tooltipster.css")
@@ -272,6 +273,7 @@ html
 										'this is line 2',
 										'this is line 3',
 										'this is line 4',
+										'this is line 4',
 									],
 								data:
 									{
@@ -307,7 +309,7 @@ html
 
 					$('#popuplistview_div').PopupListView('create', 
 						{
-							timedClose:5000,
+							//timedClose:5000,
 							headingCaption:'The Heading Caption',
 							css:
 								{
@@ -316,7 +318,7 @@ html
 							onClick:function(inId, inData){
 								console.log('On CLICK:' + inId);
 								console.dir(inData);
-								$('#popuplistview_div').PopupListView('deleteItem', inId);
+								//$('#popuplistview_div').PopupListView('deleteItem', inId);
 							},
 
 						}
@@ -356,7 +358,7 @@ html
 
 							}
 						);
-						for(i in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,]){
+						for(i in [1,1,1,]){
 						$('#msgEvent_div').PopupListView('addItem', 
 							{
 								id:'someId' + i,
@@ -398,6 +400,25 @@ html
 							}
 						);
 					});
+
+				
+				console.log('------ time ----');
+
+				var xx = moment().diff(66, 'minutes' );
+
+				var mxx = moment().from(xx);
+				//console.log(  mxx.format("YYYY-MM-DD HH:mm:ss")  );
+				subX = moment().subtract(66, 's').fromNow(); //format("YYYY-MM-DD HH:mm:ss");
+
+				//console.log(subX().format("YYYY-MM-DD HH:mm:ss"));
+				//console.log(subX.format("YYYY-MM-DD HH:mm:ss"));
+				console.log(subX);
+
+
+
+
+
+
 
 				});
 

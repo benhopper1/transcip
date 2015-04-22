@@ -5,14 +5,14 @@ div(id="smsPopupHeader" data-role="header")
 div(id="smsPopDiv_000" class="" data-position-to="window" style="width:400px; height:80%")
 	a(href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right") Close
 	#contactsMenu_sms_popup(style="height:90%;overflow-y: auto")
-	br
-	div(id="smsPopupButtonAreaDiv" style="position:absolute;bottom:10px;width:400px;")
-		div(class="ui-grid-a" style="position:relative !important;")
-			center()
-				div(class="ui-block-a" style="width:50%")
-					a(data-icon="delete" data-theme="a" id="bt_smsPopup_clear" 	data-mini="true" class="ui-overlay-shadow ui-btn") Clear
-				div(class="ui-block-b" style="width:50%;")
-					a(data-icon="minus" data-theme="a" id="bt_smsPopup_hidePanel" 	data-mini="true" class="ui-overlay-shadow ui-btn") Hide Panel
+		br
+		div(id="smsPopupButtonAreaDiv" style="position:absolute;bottom:10px;width:400px;")
+			div(class="ui-grid-a" style="position:relative !important;")
+				center()
+					div(class="ui-block-a" style="width:50%")
+						a(data-icon="delete" data-theme="a" id="bt_smsPopup_clear" 	data-mini="true" class="ui-overlay-shadow ui-btn") Clear
+					div(class="ui-block-b" style="width:50%;")
+						a(data-icon="minus" data-theme="a" id="bt_smsPopup_hidePanel" 	data-mini="true" class="ui-overlay-shadow ui-btn") Hide Panel
 
 	br
 
@@ -49,7 +49,7 @@ script.
 
 
 	//set height inner section for popup
-	$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
+	//$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
 
 
 	$('#contactsMenu_sms_popup').trigger('create');

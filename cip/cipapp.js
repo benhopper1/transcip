@@ -20,7 +20,7 @@ var util = require('util');
 var url = require('url');
 
 global.DEBUG_ENABLED = true;
-global.MEM_WATCH_ENABLED = true;
+global.MEM_WATCH_ENABLED = false;
 
 
 global.prepairingPorts = {};

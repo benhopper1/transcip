@@ -1,0 +1,9 @@
+rm wallet
+
+-f
+While rm normally asks for confirmation before 
+deleting a write-protected file, the -f (force) flag overrides this promp
+
+-i
+prompted before the deletion, use the -i flag.
+

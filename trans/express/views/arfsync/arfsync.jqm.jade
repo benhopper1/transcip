@@ -450,6 +450,8 @@ body
 								}else if(theSpecificEventsLog[theIndex].type == 'incomingPhoneCall'){
 									caption = 'Incoming Call';
 								}else if(theSpecificEventsLog[theIndex].type == 'onOffHook'){
+									caption = 'Off Hook';
+								}else if(theSpecificEventsLog[theIndex].type == 'outgoingPhoneCall'){
 									caption = 'Placed Call';
 								}else if(theSpecificEventsLog[theIndex].type == 'onAnswerCall'){
 									caption = 'Answered Call';
@@ -489,11 +491,49 @@ body
 						}// end if miissed SECTION  onDetails---------------------------
 
 						//==================================================================
-						//---------  ------------------------------------------------
+						//--------- NETWORK DETAIL CLICK -----------------------------------
 						//==================================================================
-						
+						if(inId == 'connection'){
+							console.log('CCCConect');
+							//inState
+							getConnectionStatus(function(inDataLayer){
+								console.log('inDataLayer');
+								console.dir(inDataLayer);
+								var connectionTimeMinutes = 0;
+								if(inDataLayer.currentDuration){
+									connectionTimeSeconds = inDataLayer.currentDuration;
+								}
+								$('#msgEvent_div').PopupListView('clear', {});
+								$('#msgEvent_div').PopupListView('addItem', 
+									{
+										//id:'someId',
+										template:0,
+										imageUrl:$('#buttonNavBar_div').ButtonNavBar('getImageUrl', inId),
+										caption:'Phone Internet Connected Via:',
+										html:function(){
+											var $lvHeader = $('<div></div>').append
+												(
+													$('<p>' + inDataLayer.networkType + '</p>')
+												).append
+												(
+													$('<p>' + inDataLayer.networkCaption + '</p>')
+												)
+												.append
+												(
+													$('<p>' + 'Connection started ' +  moment().subtract(connectionTimeSeconds, 's').fromNow() + '</p>')
+												)
+											return $($lvHeader).html();
+										}(),
+									}
+								);
+								$('#msgEvent_div').PopupListView('setHeading', 'Phone Connection');
+								$('#msgEvent_div').PopupListView('open', {});
+
+							});
+						}
 
 					},
+
 					onStateChange:function(inId, inState, inOldState){
 						console.log('onStateChange' + inId + ' ' + inState + ' ' + inOldState);
 
@@ -659,7 +699,14 @@ body
 				);
 			});
 
-
+			eventObject.setOn('outgoingPhoneCall', function(inDataLayer){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'offhook',
+					}
+				);
+			});
 
 			// END BUTTON BAR THINGS-----------------------------------
 
@@ -774,10 +821,10 @@ body
 									}else{
 										$('#smsManager_contents').trigger('create');
 										//load popup----
-										$('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
-											console.log('popup thingy loaded!');
-											//$('#contactPopup_sms').trigger('create');
-										});
+										//- $('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
+										//- 	console.log('popup thingy loaded!');
+										//- 	//$('#contactPopup_sms').trigger('create');
+										//- });
 
 										loadedHash['smsManager'] = true;
 									}
@@ -1198,29 +1245,33 @@ body
 									}
 								);
 							});
-
+							
 							//==================================================================
 							//--  Connected Device's Hardware Network Status  ------------------
 							//==================================================================
-							commManager.transactionToDeviceToken(
-								{
-									routing:
-										{
-											command:'hardware',
-											action:'getConnectionStatus'
-										},
-									data:
-										{
-											//url:"/webmenu/normalmenu"
-											//url:"arfsync"
-										},
+							getConnectionStatus(function(inDataLayer){
+								eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+							});
+							//- commManager.transactionToDeviceToken(
+							//- 	{
+							//- 		routing:
+							//- 			{
+							//- 				command:'hardware',
+							//- 				action:'getConnectionStatus'
+							//- 			},
+							//- 		data:
+							//- 			{
+							//- 				//url:"/webmenu/normalmenu"
+							//- 				//url:"arfsync"
+							//- 			},
 
-									onComplete:function(inDataLayer, inTransportLayer){
-										console.log('onComplete getConnectionStatus call back entered');
-										eventObject.reportOn('onGetConnectionStatus', inDataLayer);
-									}
-								}
-							);
+							//- 		onComplete:function(inDataLayer, inTransportLayer){
+							//- 			console.log('onComplete getConnectionStatus call back entered');
+							//- 			eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+							//- 		}
+							//- 	}
+							//- );
+
 
 
 						});
@@ -1336,7 +1387,7 @@ body
 				//==================================================================
 				var lookedupContact;
 				if(inTransportLayer_json.dataLayer && inTransportLayer_json.dataLayer.phoneNumber){
-					lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+					lookedupContact = ContactDataCache.getContactByPhoneNumber(cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber));
 					if(lookedupContact == false){
 						ContactDataCache.addtempContact(
 							{
@@ -1346,7 +1397,7 @@ body
 								type:'[MOBILE]',
 							}
 						);
-						lookedupContact = ContactDataCache.getContactByPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber);
+						lookedupContact = ContactDataCache.getContactByPhoneNumber(cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber));
 					}
 				}
 
@@ -2667,6 +2718,34 @@ body
 
 				}
 			);
+
+
+
+			//==================================================================
+			//--  Connected Device's Hardware Network Status  ------------------
+			//==================================================================
+			var getConnectionStatus = function(inPostFunction){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'hardware',
+								action:'getConnectionStatus'
+							},
+						data:
+							{
+								//url:"/webmenu/normalmenu"
+								//url:"arfsync"
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete getConnectionStatus call back entered');
+							if(inPostFunction){inPostFunction(inDataLayer);}
+							//eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+						}
+					}
+				);
+			}
 
 		//- $('#eventLogDiv').PopupListView('addItem', 
 		//- 	{

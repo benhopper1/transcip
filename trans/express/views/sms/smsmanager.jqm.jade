@@ -6,7 +6,16 @@ div(data-role="main" class="")
 		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		//CONTACT LIST VIEW
 		div(class="ui-block-a" style="width:25%")
-			#contactPopup_sms(data-role="popup" class="ui-content responseNotice" style="background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+			//#contactPopup_sms(data-role="popup" class="ui-content responseNotice" style="background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+			#contactPopup_sms(data-role="popup" class="" style="width:400px;height:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+				div(data-role="header")
+					h4 Grouped Recipients
+					a(title="close" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right")
+					a(id="sms_popup_clear_content" title="clear" data-rel="" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-recycle ui-btn-icon-notext ui-btn-left")
+
+				//h1 testing !! //height:200px !important;
+				div(id="contactsMenu_sms_popup" class="" style="overflow-y: auto;") 
+
 
 
 			div(class="ui-content" data-position-to="window" style="width:90%; ")
@@ -104,6 +113,16 @@ script.
 
 		}
 
+		this.openBrief = function(inCount){
+			var countTally = 0;
+			$('#dynamicTableDiv_table_tbody').find('.footable-toggle').each(function(){
+				if(countTally < inCount){
+					countTally++;
+					$(this).trigger('click');
+				}
+			});
+		}
+
 		this.addContactToHotLinks = function(inContact){
 			$.debug('addContactToHotLinks', inContact);
 			if(!(inContact)){return false;}
@@ -114,6 +133,22 @@ script.
 		this.load = function(){
 			if(initGaurd){ return;};
 			initGaurd = true;
+
+
+			//------popup build not pop ----------
+			$('#contactsMenu_sms_popup').CheckboxLines('create', 
+				{
+					onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
+						console.dir(dataWrapper);
+						var checkedArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+						//SmsManagerObject.drawToContactSleeve(checkedArray);
+						_this.drawToContactSleeve(checkedArray);
+					}
+				}
+			);
+			$('#contactsMenu_sms_popup').trigger('create');
+
+
 
 
 			$('#contactsMenu_sms').ContactListView('create', 
@@ -287,6 +322,7 @@ script.
 								formStyle:'border:0;width:400px;'
 							}
 						);
+						setSmsRecepiantSelectionPopupHeight();
 					},
 
 					onEdit:function(inRecord){
@@ -301,6 +337,8 @@ script.
 
 					onDelete:function(inRecord){
 						$('#contactsMenu_sms_popup').CheckboxLines('remove', inRecord.id);
+						
+						setSmsRecepiantSelectionPopupHeight();
 					},
 
 					onTempContactInsert:function(inRecord){
@@ -345,6 +383,43 @@ script.
 					}
 				}
 			);
+
+			//- //------popup build not pop ----------
+			//- $('#contactsMenu_sms_popup').CheckboxLines('create', 
+			//- 	{
+			//- 		onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
+			//- 			console.dir(dataWrapper);
+			//- 			var checkedArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+			//- 			//SmsManagerObject.drawToContactSleeve(checkedArray);
+			//- 			_this.drawToContactSleeve(checkedArray);
+			//- 		}
+			//- 	}
+			//- );
+			//- $('#contactsMenu_sms_popup').trigger('create');
+
+			//- $('#bt_smsPopup_clear').click(function(){
+			//- 	var theDataArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+			//- 	for(var theDataArrayIndex in theDataArray){
+			//- 		$('#contactsMenu_sms_popup').CheckboxLines('setCheckbox',
+			//- 			{
+			//- 				lookupId:theDataArray[theDataArrayIndex].lookupId,
+			//- 				isChecked:false,
+			//- 			}
+			//- 		);
+			//- 	}
+
+			//- });
+			//- $('#bt_smsPopup_hidePanel').click(function(){
+			//- 	$('#contactPopup_sms').popup().popup( "close" );
+			//- });
+
+
+
+			//set height inner section for popup
+			//$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
+
+
+			//$('#contactsMenu_sms_popup').trigger('create');
 			//CACHE-----------------------------------------------------------------------------------
 		}//end of load
 
@@ -392,6 +467,7 @@ script.
 								);
 							}
 							$('.footable').trigger('footable_redraw');
+							_this.openBrief(5);
 						}else{
 							SmsManagerObject.noMessageShow();
 						}
@@ -477,6 +553,25 @@ script.
 
 			$('#bt_smsGroupBuild').click(function(){
 				$("#contactPopup_sms").trigger("create");
+				//$("#contactPopup_sms").toolbar();
+
+				if($( "#contactsMenu_sms_popup" ).height() > $.mobile.getScreenHeight() * .8){
+					// too big
+					$( "#contactsMenu_sms_popup" ).height($.mobile.getScreenHeight() * .8);
+				}else{
+					$( "#contactsMenu_sms_popup" ).attr('max-height', $.mobile.getScreenHeight() * .8);
+				}
+
+				//$( "#contactsMenu_sms_popup" ).attr('max-height', $.mobile.getScreenHeight() * .8); //.height($.mobile.getScreenHeight() * .8);
+				$( "#contactPopup_sms" ).popup({
+					afteropen: function( event, ui ){
+						//alert('set height');
+						//$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
+						//$('#contactPopup_sms').css('height', '60%');
+						
+					}
+				});
+
 				$('#contactPopup_sms').popup().popup("open");
 			});
 		}
@@ -529,6 +624,29 @@ script.
 		//==================================================================================================
 		//====================  event Listeners ============================================================
 		//==================================================================================================
+		//- $('#bt_smsGroupBuild').click(function(){
+		//- 	$("#contactPopup_sms").trigger("create");
+		//- 	//$("#contactPopup_sms").toolbar();
+
+		//- 	if($( "#contactsMenu_sms_popup" ).height() > $.mobile.getScreenHeight() * .8){
+		//- 		// too big
+		//- 		$( "#contactsMenu_sms_popup" ).height($.mobile.getScreenHeight() * .8);
+		//- 	}else{
+		//- 		$( "#contactsMenu_sms_popup" ).attr('max-height', $.mobile.getScreenHeight() * .8);
+		//- 	}
+
+		//- 	//$( "#contactsMenu_sms_popup" ).attr('max-height', $.mobile.getScreenHeight() * .8); //.height($.mobile.getScreenHeight() * .8);
+		//- 	$( "#contactPopup_sms" ).popup({
+		//- 		afteropen: function( event, ui ){
+		//- 			//alert('set height');
+		//- 			//$('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
+		//- 			//$('#contactPopup_sms').css('height', '60%');
+					
+		//- 		}
+		//- 	});
+
+		//- 	$('#contactPopup_sms').popup().popup("open");
+		//- });
 		eventObject.setOn('incomingSms', function(inTransportLayer_Json){
 			if(inTransportLayer_Json){
 				if(inTransportLayer_Json.dataLayer){
@@ -574,6 +692,8 @@ script.
 								contact = theContacts[0];
 							}
 
+							setSmsRecepiantSelectionPopupHeight();
+
 
 
 						}
@@ -596,6 +716,7 @@ script.
 									}
 								);
 								$('.footable').trigger('footable_redraw');
+								_this.openBrief(1);
 							}
 						}
 
@@ -646,3 +767,67 @@ script.
 
 
 	}();
+
+	//==================================================================
+	//--  POPUP SCRIPTING STUFF  ---------------------------------------
+	//==================================================================
+	var setSmsRecepiantSelectionPopupHeight = function(){
+		var headerHeight = 0;
+		$('#contactPopup_sms').children().each(function(){
+			if($(this).attr('data-role') == 'header'){
+				headerHeight = $(this).height();
+			}
+		});
+		var compHeight = $('#contactsMenu_sms_popup_form').height() + headerHeight;
+		if(compHeight > $.mobile.getScreenHeight() * .8){
+			// too big
+			$( "#contactsMenu_sms_popup" ).height($.mobile.getScreenHeight() * .8);
+		}else{
+			$( "#contactsMenu_sms_popup" ).height(compHeight);
+		}
+	}
+
+	$('#sms_popup_clear_content').click(function(){
+		var theDataArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+		for(var theDataArrayIndex in theDataArray){
+			$('#contactsMenu_sms_popup').CheckboxLines('setCheckbox',
+				{
+					lookupId:theDataArray[theDataArrayIndex].lookupId,
+					isChecked:false,
+				}
+			);
+		}
+	});
+	//- $('#contactsMenu_sms_popup').CheckboxLines('create', 
+	//- 	{
+	//- 		onChange:function(lookupId, isChecked, dataWrapper, formJref, inputJref, labelJref){
+	//- 			console.dir(dataWrapper);
+	//- 			var checkedArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+	//- 			SmsManagerObject.drawToContactSleeve(checkedArray);
+	//- 		}
+	//- 	}
+	//- );
+
+	//- $('#bt_smsPopup_clear').click(function(){
+	//- 	var theDataArray = $('#contactsMenu_sms_popup').CheckboxLines('getCheckedData');
+	//- 	for(var theDataArrayIndex in theDataArray){
+	//- 		$('#contactsMenu_sms_popup').CheckboxLines('setCheckbox',
+	//- 			{
+	//- 				lookupId:theDataArray[theDataArrayIndex].lookupId,
+	//- 				isChecked:false,
+	//- 			}
+	//- 		);
+	//- 	}
+
+	//- });
+	//- $('#bt_smsPopup_hidePanel').click(function(){
+	//- 	$('#contactPopup_sms').popup().popup( "close" );
+	//- });
+
+
+
+	//- //set height inner section for popup
+	//- $('#contactsMenu_sms_popup').css('height', $('#contactPopup_sms').height() - ($('#smsPopupHeader').height() + $('#smsPopupButtonAreaDiv').height()));
+
+
+	//- $('#contactsMenu_sms_popup').trigger('create');
