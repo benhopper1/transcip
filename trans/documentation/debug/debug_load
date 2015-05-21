@@ -1,0 +1,2 @@
+bash /home/ben/git_project/transcip/cip/server_0/websocket/server_start.sh
+bash /home/ben/git_project/transcip/cip/server_0/express/server_start.sh

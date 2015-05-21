@@ -25,3 +25,6 @@ The name of the file.
 
 -----------------------------------------------------
 chmod 755 file.txt
+
+
+chmod 755 /folder -R

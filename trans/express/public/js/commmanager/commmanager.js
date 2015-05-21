@@ -26,6 +26,21 @@ var CommManagerNameSpace = function(){
 			console.log('advise');
 			if(inData){
 					if(inData.dataLayer.action == 'login'){
+
+						//==================================================================
+						//--  set connected device  ----------------------------------------
+						//==================================================================
+						if(commManager.getConnectToDeviceTypes().length){
+							for(dTypesIndex in commManager.getConnectToDeviceTypes()){
+								if(inData.dataLayer.deviceType == commManager.getConnectToDeviceTypes()[dTypesIndex]){
+									commManagerInstance.setConnectedDeviceTokenId(inData.dataLayer.deviceTokenId);
+								}
+							}
+						}else{
+							commManagerInstance.setConnectedDeviceTokenId(inData.dataLayer.deviceTokenId);
+						}
+						//===================================================================
+
 						commManagerInstance.familyDeviceConnect(inMsg, inLocal, inData, inRefObj);
 						if(inInstanceData.onFamilyDeviceConnect){
 							inInstanceData.onFamilyDeviceConnect(inMsg, inLocal, inData, inRefObj);
@@ -72,6 +87,8 @@ var CommManagerNameSpace = function(){
 				'isGroupDevice'
 			];
 
+		this.getConnectToDeviceTypes = function(){ return connectToDeviceTypes;}
+
 		if(inData.connectToDeviceTypesWhen){
 			connectToDeviceTypesWhen = inData.connectToDeviceTypesWhen;
 		}
@@ -107,6 +124,40 @@ var CommManagerNameSpace = function(){
 			console.log('--------------new familyDeviceDisconnect-----------------');
 			console.dir(inData);
 			_this.deviceConnections.remove(inData);
+		}
+
+		this.loginByGoogle = function(inData, inGooglePostFunction){
+			var transportLayer = new TransportLayer();
+			transportLayer
+				.userId('')
+				.deviceId('')
+				.securityToken('$ecurity4')
+				.transactionId(false)
+			;
+			transportLayer.routingLayer()
+				.type('transactionToServer')
+				.add('command', 'googleLogin')
+			;
+			transportLayer.dataLayer()
+				.add('userName', 'na')
+				.add('password', 'na')
+				.add('deviceNumber', 'devNumber$rr')
+				.add('userAgent', navigator.userAgent)
+				.add('deviceType', 'desktopBrowser')
+
+				.add('googleData', inData)
+
+				/*.add('accessToken', inData.accessToken)
+				.add('apiKey', inData.apiKey)
+				.add('clientId', inData.clientId)
+				.add('email', inData.email)
+				.add('idToken', inData.idToken)*/
+
+			;
+
+			_this.sendTransaction(transportLayer, function(inTransportLayer){
+				if(inGooglePostFunction){inGooglePostFunction(inTransportLayer);}
+			});
 		}
 
 		this.loginByScan = function(inData){
@@ -284,6 +335,8 @@ var CommManagerNameSpace = function(){
 				//EVENT -> OnLoginSuccess           WebSocketClient
 				//#################################################
 				webSocketClient.setOnLoginSuccess(function(data){
+					console.log('chk_0');
+					console.dir(data);
 					if(inData.onLoginSuccess){
 
 						commManagerInstance.getFamilyDevicesCredentials(function(inCredentialsArray){

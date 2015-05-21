@@ -1,0 +1,1 @@
+find . -type f -size +10000k -exec ls -lh {} \; | awk '{ print $8 ": " $5 }'

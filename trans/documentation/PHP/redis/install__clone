@@ -1,0 +1,44 @@
+http://www.sitepoint.com/an-introduction-to-redis-in-php-using-predis/
+
+
+install:
+git clone git://github.com/nrk/predis.git
+
+folder = 
+--predis--
+
+require "predis/autoload.php";
+PredisAutoloader::register();
+ 
+
+try {
+    $redis = new PredisClient();
+/*
+    $redis = new PredisClient(array(
+        "scheme" => "tcp",
+        "host" => "127.0.0.1",
+        "port" => 6379));
+*/
+    echo "Successfully connected to Redis";
+}
+catch (Exception $e) {
+    echo "Couldn't connected to Redis";
+    echo $e->getMessage();
+}
+
+
+------------------------------------------
+install 2----
+https://github.com/phpredis/phpredis#installation
+
+download zip
+copy to source folder for project
+go into top dir
+
+phpize
+./configure
+make && make install
+
+--------------------------------------
+install3
+https://code.google.com/p/php-redis/

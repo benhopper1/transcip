@@ -155,6 +155,14 @@ var PopupListView = function(inJrefOfThis, inJsonStruct){
 		}
 	}
 
+	//@@@@@@@@ timedClosed @@@@@@@@@@@@@@@@@@@@@@@@@
+	this.timedClosed = function(inExpireMs){
+		if(closeTimer){clearTimeout(closeTimer);}
+		closeTimer = setTimeout(function(){
+				$(theDivRef).popup( "close" );
+		}, inExpireMs);
+	}
+
 	//@@@@@@@@ ADD  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	this.addItem = function(inAddItemOptions){
 		var result;
@@ -342,7 +350,29 @@ var PopupListView = function(inJrefOfThis, inJsonStruct){
 		$headingCaption.html(inNewCaption);
 	}
 
-	this.close = function(){
+	this.close = function(inCloseOptions){
+		var closeOptions = 
+			{
+				timedClose:false,
+				onClose:false,
+			}
+		closeOptions = $.extend(true, closeOptions, inCloseOptions);
+		if(closeOptions.onClose){
+			var existingOnClose = false;
+			if(options.onClose){
+				existingOnClose = $.extend({}, options.onClose);
+				console.dir(existingOnClose);
+			}
+			options.onClose = function(){
+				closeOptions.onClose();
+				if(existingOnClose){existingOnClose();}
+				options.onClose = existingOnClose;
+			}
+		}
+		if(closeOptions.timedClose){
+			return _this.timedClosed(closeOptions.timedClose);
+		}
+
 		$(theDivRef).popup('close');
 	}
 
@@ -417,7 +447,7 @@ $.fn.PopupListView = function(inAction, inJsonStruct){
 
 	if(inAction == 'close'){
 		console.log('close');
-		popupListView.close();
+		return popupListView.close(inJsonStruct);
 	}
 
 	if(inAction == 'chainOpen'){

@@ -3,6 +3,7 @@
 //h1 #{products}h1 Product Manager
 center()
 	//div(data-mini="true" data-position="fixed" data-theme="a" style="border:none; background-color: transparent !important;" class="")
+	#msgPopup_showcase
 	a(href="#" id="btBar_back_to_loginManager" data-role="button" style="background-color: transparent !important;" data-icon="back" class="ui-btn-left backButtonClass") Back to Login Manager
 		//h1 ArfSync
 		//a(id="bt_test2" href="" data-icon="delete" class="ui-btn-right") Rec Delete
@@ -18,9 +19,9 @@ div(data-role="popup" id="popupVideo_000" data-overlay-theme="a" data-theme="d" 
 	a(id="bt_iframe_close" href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
 	iframe(id="ifrm_n_000" src="" width="497" height="298" seamless allowfullscreen)
 
-div(data-role="popup" id="popupMessage" data-overlay-theme="a" data-theme="a" class="ui-content" )
-	a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
-	div(id="popupMessageContent" )
+//- div(data-role="popup" id="popupMessage" data-overlay-theme="a" data-theme="a" class="ui-content" )
+//- 	a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
+//- 	div(id="popupMessageContent" )
 
 
 
@@ -31,19 +32,6 @@ script.
 		var ownedProducts = !{JSON.stringify(ownedProducts)}
 		var uniLock;
 
-		//- $(document).on("pagehide",function(e){
-		//- 	alert("pageshow xxxxx event fired - pagetwo is now shown");
-		//- 	console.dir(e);
-		//- });
-		
-		//- $(document).on("pageshow","#page_productManager",function(){ // When entering pagetwo
-		//- 	alert("page_productManager is now shown");
-		//- });
-
-		//- $(document).on("pagehide","#page_productManager",function(){ // When leaving pagetwo
-		//- 	alert("page_productManager is now hidden");
-		//- 	delete ShowCaseProducts;
-		//- });
 
 		//EVENT--------------------------------------------------------
 		eventObject.setOn('onProductManagerOpenClose', function(inData){
@@ -369,13 +357,33 @@ script.
 			if(!(uniLock)){
 				//uniLock = true;
 				_this.setUniLock(true);
-				_this.popupMessage(
+				$('#msgPopup_showcase').PopupListView('clear',{});
+				$('#msgPopup_showcase').PopupListView('setHeading', 'Purchase Request');
+				$('#msgPopup_showcase').PopupListView('addItem', 
 					{
-						message:'Sending to Google, Please use <h1>phone screen</h1> to finalize request.',
-						height:'150px',
-						width:$(window).width() * .8,
+						id:'purchaseScreen000',
+						template:0,
+						zOrder:true,
+						html:function(){
+							var $lvHeader = $('<div></div>').append
+								(
+									$('<center><h1>' + 'Contacting Google' + '</h1></center>')
+								).append
+								(
+									$('<center><p>' + 'Please use your phone screen' + '</p></center>')
+								)
+								.append
+								(
+									$('<center><p>' + 'to finalize this purchase.' + '</p></center>')
+								)
+							return $($lvHeader).html();
+						}(),
 					}
 				);
+
+				$('#msgPopup_showcase').PopupListView('open', {});
+
+
 				commManager.transactionToDeviceToken(
 					{
 						routing:
@@ -392,12 +400,40 @@ script.
 						onComplete:function(inDataLayer, inTransportLayer){
 							_this.setUniLock(false);
 							if(inDataLayer.isGoodPurchase == 'true'){
-								_this.popupMessage(
+								//==================================================================
+								//--  GOOD PURCHASE  -----------------------------------------------
+								//==================================================================
+								$('#msgPopup_showcase').PopupListView('setHeading', 'Purchase Accepted');
+								$('#msgPopup_showcase').PopupListView('deleteItem', 'purchaseScreen000');
+								$('#msgPopup_showcase').PopupListView('addItem', 
 									{
-										message:'Thank you for your purchase, THE FORCE IS WITH YOU!!',
-										timeout:5000,
-										timeOutPostFunction:function(){
-										},
+										id:'purchaseScreen002',
+										template:0,
+										zOrder:true,
+										html:function(){
+											var $lvHeader = $('<div></div>').append
+												(
+													$('<center><h1>' + 'You now own: ' + '</h1></center>')
+												)
+												.append
+												(
+													$('<center><p>' + (_this.getProducts())[makePurchaseOptions.productId].productTitle + '</p></center>')
+												)
+												.append
+												(
+													$('<center><p>' + 'Your product is enabled and ready for use' + '</p></center>')
+												)
+											return $($lvHeader).html();
+										}(),
+									}
+								);
+								$('#msgPopup_showcase').blink(3000);
+								$('#msgPopup_showcase').PopupListView('close', 
+									{
+										timedClose:10000,
+										onClose:function(){
+											console.log('onClose close method');
+										}
 									}
 								);
 								_this.updateProductData(function(){
@@ -406,10 +442,39 @@ script.
 								});
 
 							}else{
-								_this.popupMessage(
+								//==================================================================
+								//--  BAD PURCHASE  ------------------------------------------------
+								//==================================================================
+								$('#msgPopup_showcase').PopupListView('setHeading', 'Purchase Error');
+								$('#msgPopup_showcase').PopupListView('deleteItem', 'purchaseScreen000');
+								$('#msgPopup_showcase').PopupListView('addItem', 
 									{
-										message:'Problem with purchase, BAD!!!!',
-										timeout:5000,
+										id:'purchaseScreen001',
+										template:0,
+										zOrder:true,
+										html:function(){
+											var $lvHeader = $('<div></div>').append
+												(
+													$('<center><h1>' + 'There was a problem with the purchase' + '</h1></center>')
+												).append
+												(
+													$('<center><p>' + 'You were not able to purchase the product.' + '</p></center>')
+												)
+												//- .append
+												//- (
+												//- 	$('<center><a href="javascript:sendEmail()">' + 'to finalize this purchase.' + '</a></center>')
+												//- )
+											return $($lvHeader).html();
+										}(),
+									}
+								);
+								$('#msgPopup_showcase').blink(3000);
+								$('#msgPopup_showcase').PopupListView('close', 
+									{
+										timedClose:10000,
+										onClose:function(){
+											console.log('onClose close method');
+										}
 									}
 								);
 							}
@@ -420,42 +485,42 @@ script.
 			}
 		}
 
-	this.popupMessage = function(inPopupMessageOptions){
-		var popupMessageOptions = 
-			{
-				message:false,
-				timeout:false,
-				timeOutPostFunction:false,
-				height:false,
-				width:false,
-			}
-		popupMessageOptions = $.extend(true, popupMessageOptions, inPopupMessageOptions);
-		if(popupMessageOptions.timeout){
-			setTimeout(function(){
-				$('#popupMessage').popup('close');
-				if(popupMessageOptions.timeOutPostFunction){popupMessageOptions.timeOutPostFunction();}
-			}, popupMessageOptions.timeout);
-		}
+	//- this.popupMessage = function(inPopupMessageOptions){
+	//- 	var popupMessageOptions = 
+	//- 		{
+	//- 			message:false,
+	//- 			timeout:false,
+	//- 			timeOutPostFunction:false,
+	//- 			height:false,
+	//- 			width:false,
+	//- 		}
+	//- 	popupMessageOptions = $.extend(true, popupMessageOptions, inPopupMessageOptions);
+	//- 	if(popupMessageOptions.timeout){
+	//- 		setTimeout(function(){
+	//- 			$('#popupMessage').popup('close');
+	//- 			if(popupMessageOptions.timeOutPostFunction){popupMessageOptions.timeOutPostFunction();}
+	//- 		}, popupMessageOptions.timeout);
+	//- 	}
 
-		if(popupMessageOptions.height){
-			//$('#popupMessage').height(popupMessageOptions.height);
-			$('#popupMessageContent').height(popupMessageOptions.height);
-		}
+	//- 	if(popupMessageOptions.height){
+	//- 		//$('#popupMessage').height(popupMessageOptions.height);
+	//- 		$('#popupMessageContent').height(popupMessageOptions.height);
+	//- 	}
 
-		if(popupMessageOptions.width){
-			//$('#popupMessage').width(popupMessageOptions.width);
-			$('#popupMessageContent').width(popupMessageOptions.width);
-		}
+	//- 	if(popupMessageOptions.width){
+	//- 		//$('#popupMessage').width(popupMessageOptions.width);
+	//- 		$('#popupMessageContent').width(popupMessageOptions.width);
+	//- 	}
 
-		$('#popupMessageContent').html(
-			'<center>' + popupMessageOptions.message + '</center>'
-		);
+	//- 	$('#popupMessageContent').html(
+	//- 		'<center>' + popupMessageOptions.message + '</center>'
+	//- 	);
 
 
-		if(!($('#popupMessage').parent().hasClass('ui-popup-active'))){
-			$('#popupMessage').popup('open');
-		}
-	}
+	//- 	if(!($('#popupMessage').parent().hasClass('ui-popup-active'))){
+	//- 		$('#popupMessage').popup('open');
+	//- 	}
+	//- }
 
 	this.updateProductData = function(inPostFunction){
 		//AJAX-------
@@ -586,3 +651,34 @@ script.
 	//ShowCaseProducts.menuOpenProducts(Object.keys(ShowCaseProducts.getProducts())[0]);
 
 	//ShowCaseProducts.redrawProducts(ShowCaseProducts.getProducts());
+	//msgPopup_showcase
+	//==================================================================
+	//--  POPUP LIST VIEW  ---------------------------------------------
+	//==================================================================
+	$('#msgPopup_showcase').PopupListView('create', 
+		{
+			headingCaption:'Product Manager Message',
+			css:
+				{
+					width:'425px',
+				},
+			onClick:function(inId, inData){
+				console.log('On CLICK:' + inId);
+				console.dir(inData);
+				//$('#eventLogDiv').PopupListView('deleteItem', inId);
+			},
+			//- onClose:function(){
+			//- 	console.log('close on create');
+			//- },
+
+		}
+	);
+
+
+	//- var sendEmail = function(){
+	//- 	var email = 'hopperdevelopment@gmail.com';
+	//- 	var subject = 'Circle Around subject';
+	//- 	var emailBody = 'Some blah body';
+
+	//- 	window.open('mailto:' + email + '?subject=' + subject + '&body=' +   emailBody, "popupWindow", "width=600,height=600,scrollbars=yes");
+	//- }

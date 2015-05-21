@@ -5,9 +5,10 @@
 	//a(href="#popupVideo") click me
 	
 	center
-		h1 You are missing a product or subscription.
+		div(id="noSub_main_div" class="ui-content ui-overlay-shadow ui-shadow" style="min-width: 650px; max-width: 800px; width:60%; height:60%;")
+			h1 You are missing a product or subscription.
 
-		div(id="dynamicTableDiv_#{resetPageName}")
+			div(id="dynamicTableDiv_#{resetPageName}")
 		div(data-role="popup" id="popupVideo" data-overlay-theme="a" data-theme="d" data-tolerance="15,15" class="ui-content" )
 			a(href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right") Close
 			iframe(id="ifrm_ns" src="" width="497" height="298" seamless allowfullscreen)
@@ -17,6 +18,7 @@
 			div(id="popupMessageContent" )
 				//h1 testing
 				button OK
+		#popup_div
 
 
 
@@ -68,34 +70,33 @@ script.
 					.attr( "height", 0 );    
 			}
 		});
+
+		$('#noSub_main_div').trigger('create').trigger('refresh');
+		//$('#popupVideo').hide();
+		//==================================================================
+		//--  POPUP MESSAGE  -----------------------------------------------
+		//==================================================================
+			$('#popup_div').PopupListView('create', 
+				{
+					//timedClose:15000,
+					overlayTheme:'',
+					css:
+						{
+							width:'425px',
+						},
+					onClick:function(inId, inData){
+
+					},
+
+				}
+			);
+
+
+
+
+
+
 	});
-
-	//- $( document ).on( "pageinit", function() {
-	//- 	$( "#popupMessage popupMessageContent" )
-	//- 		.attr( "width", 0 )
-	//- 		.attr( "height", 0 );
-			  
-	//- 	$( "#popupMessage" ).on({
-	//- 		popupbeforeposition: function() {
-	//- 			var size = scale( 497, 298, 15, 1 ),
-	//- 				w = size.width,
-	//- 				h = size.height;
-
-	//- 			$( "#popupMessage popupMessageContent" )
-	//- 				.attr( "width", w )
-	//- 				.attr( "height", h );
-	//- 		},
-	//- 		popupafterclose: function() {
-	//- 			$( "#popupMessage popupMessageContent" )
-	//- 				.attr( "width", 0 )
-	//- 				.attr( "height", 0 );    
-	//- 		}
-	//- 	});
-	//- });
-
-
-
-
 
 	console.log('nosubscription PageLoaderObject.resetLoaderForPage()');
 	setTimeout(function(){
@@ -103,11 +104,6 @@ script.
 		$('#lll99').remove();
 	},3000)
 
-	//- setTimeout(function(){
-	//- 	console.log('REMOVE EMBER');
-	//- 	$('#embed').remove();
-	//- 	delete MyProductVsRequiredProductObject;
-	//- },10000)
 	var loadUrlToIframe = function(inUrl){
 		//popupVideo
 		$('#ifrm_ns').attr('src', inUrl);
@@ -116,7 +112,6 @@ script.
 	}
 
 	var loadUrlInNewWindow = function(inUrl){
-		//console.log('wwwwwwww:' + window.height);
 		var left = (screen.width/2)-(($(window).width() * .85)/2);
 		var top = (screen.height/2)-(($(window).height() * .85)/2);
 		window.open(inUrl, null, 'height=' + ($(window).height() * .85) + ',width=' + ($(window).width() * .85) + ',status=yes,toolbar=no,menubar=no,location=no, top=' + top + ', left=' + left);
@@ -150,11 +145,35 @@ script.
 	var buyProduct = function(inProductId, inProductType){
 		if(!(uniLock)){
 			uniLock = true;
-			popupMessage(
+			//- popupMessage(
+			//- 	{
+			//- 		message:'Sending to Google, Please use phone screen to finalize request.',
+			//- 	}
+			//- );
+
+			$('#popup_div').PopupListView('clear', {});
+			$('#popup_div').PopupListView('addItem', 
 				{
-					message:'Sending to Google, Please use phone screen to finalize request.',
+					//id:'someId',
+					template:0,
+					//imageUrl:$('#buttonNavBar_div').ButtonNavBar('getImageUrl', inId),
+					caption:'Sending to Google',
+					html:function(){
+						var $lvHeader = $('<div></div>').append
+							(
+								$('<p>' + 'Please use phone screen to finalize request.' + '</p>') 
+							);
+						return $($lvHeader).html();
+					}(),
 				}
 			);
+			$('#popup_div').PopupListView('setHeading', 'Product Purchase');
+			$('#popup_div').PopupListView('open', {});
+
+
+
+
+
 			commManager.transactionToDeviceToken(
 				{
 					routing:
@@ -174,26 +193,89 @@ script.
 							MyProductVsRequiredProductObject.addProduct(inDataLayer.freshProductId);
 							$('#img_owned_' + inDataLayer.freshProductId.replace(/\./g, '_')).attr('src', MyProductVsRequiredProductObject.getOwnedImage(true));
 							$('#bt_ns_buyProd_' + inDataLayer.freshProductId.replace(/\./g, '_')).removeClass('ui-active').addClass('ui-disabled');
-							popupMessage(
+							//- popupMessage(
+							//- 	{
+							//- 		message:'Thank you for your purchase, THE FORCE IS WITH YOU!!',
+							//- 		timeout:5000,
+							//- 		timeOutPostFunction:function(){
+							//- 			if(MyProductVsRequiredProductObject.haveMetRequirement()){
+							//- 				PageLoaderObject.loadPage('loginManager');
+							//- 				PageLoaderObject.loadPage('#{resetPageName}');
+							//- 			}
+							//- 		},
+							//- 	}
+							//- );
+							$('#popup_div').PopupListView('clear', {});
+							$('#popup_div').PopupListView('addItem', 
 								{
-									message:'Thank you for your purchase, THE FORCE IS WITH YOU!!',
-									timeout:5000,
-									timeOutPostFunction:function(){
+									//id:'someId',
+									template:0,
+									//imageUrl:$('#buttonNavBar_div').ButtonNavBar('getImageUrl', inId),
+									caption:'Thank you for your purchase!!!',
+									html:function(){
+										var $lvHeader = $('<div></div>').append
+											(
+												$('<p>' + 'You own product ?????????' + '</p>') 
+											);
+										return $($lvHeader).html();
+									}(),
+								}
+							);
+							$('#popup_div').PopupListView('setHeading', 'Product Purchased');
+							$('#popup_div').PopupListView('open', {});
+							$('#popup_div').blink(3000);
+							$('#popup_div').PopupListView('close', 
+								{
+									timedClose:10000,
+									onClose:function(){
 										if(MyProductVsRequiredProductObject.haveMetRequirement()){
 											PageLoaderObject.loadPage('loginManager');
 											PageLoaderObject.loadPage('#{resetPageName}');
 										}
-									},
+									}
 								}
 							);
+							
 						}else{
 							$('#img_owned_' + inDataLayer.freshProductId.replace(/\./g, '_')).attr('src', MyProductVsRequiredProductObject.getOwnedImage(false));
-							popupMessage(
+							//- popupMessage(
+							//- 	{
+							//- 		message:'Problem with purchase, BAD!!!!',
+							//- 		timeout:5000,
+							//- 	}
+							//- );
+							$('#popup_div').PopupListView('clear', {});
+							$('#popup_div').PopupListView('addItem', 
 								{
-									message:'Problem with purchase, BAD!!!!',
-									timeout:5000,
+									//id:'someId',
+									template:0,
+									//imageUrl:$('#buttonNavBar_div').ButtonNavBar('getImageUrl', inId),
+									caption:'Puchase Error!!!',
+									html:function(){
+										var $lvHeader = $('<div></div>').append
+											(
+												$('<p>' + 'You were NOT able to purchase!!!' + '</p>') 
+											);
+										return $($lvHeader).html();
+									}(),
 								}
 							);
+							$('#popup_div').PopupListView('setHeading', 'ERROR');
+							$('#popup_div').PopupListView('open', {});
+							
+							$('#popup_div').blink(3000);
+							$('#popup_div').PopupListView('close', 
+								{
+									timedClose:10000,
+									onClose:function(){
+										console.log('onClose close method');
+									}
+								}
+							);
+
+
+
+
 						}
 
 					}
@@ -359,4 +441,4 @@ script.
 
 	}();
 
-	
+

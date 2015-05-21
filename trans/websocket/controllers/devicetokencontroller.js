@@ -4,7 +4,8 @@ var basePath = path.dirname(require.main.filename);
 var TransportLayer = require(basePath + '/libs/transportlayer.js');
 var uuid = require(basePath + '/node_modules/node-uuid');
 var moment = require(basePath + '/node_modules/moment');
-
+//var RedClient = require(basePath + '/libs/redclient/redclient.js');
+var redClient = global.redClient;
 //------------------>--COMMUNICATION--<-------------
 var Controller = function(router){
 	var CLIENT_HISTORY_EXPIRE_SECONDS = 60 * 60; // 1 - HOUR
@@ -91,29 +92,33 @@ var Controller = function(router){
 				deviceNumber:inWs.deviceNumber,
 				deviceType:inWs.deviceType,
 				userAgent:inWs.userAgent,
+				serverName:global.SEVER_NAME,
+				deviceTokenId:inWs.deviceTokenId,
 				action:'login'
 			}
 		);
 
 		router.familyBroadcast(inWss, inWs, inWs.userId, transportLayer);
-		if(global.CIP_ENABLED){
-			//================================================================
-			// CIP NOTIFICATION
-			//================================================================
-			var cipTransportLayer = transportLayer;
-			cipTransportLayer.cipLayer =
-				{
-					type:'toCipInformation',
-					isWsPassThrough:false,
-					command:'addConnection',
-					userId:inWs.userId,
-					deviceId:inData.toJson().routingLayer.usingDeviceId,
-					deviceTokenId:inWs.deviceTokenId,
-					serverName:global.SEVER_NAME,
-				}
-			router.getCipClient().send(cipTransportLayer);
-			//END OF CIP
-		}
+		//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		global.reportNotify('addConnection', 
+			{
+				message:global.SEVER_NAME,
+			}, 0
+		);
+
+
+		redClient.send('addConnection', 
+			{
+				userId:inWs.userId,
+				deviceId:inData.toJson().routingLayer.usingDeviceId,
+				deviceTokenId:inWs.deviceTokenId,
+				serverName:global.SEVER_NAME,
+				deviceType:inWs.deviceType,
+				userAgent:inWs.userAgent,
+				action:'login'
+			}
+		);
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 	});
@@ -121,26 +126,26 @@ var Controller = function(router){
 
 
 	router.onDisconnect(function(inWss, inWs){
-		//remove from connected devices for specific user
+		//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		global.reportNotify('removeConnection', 
+			{
+				message:global.SEVER_NAME,
+			}, 0
+		);
 
-		//================================================================
-		// CIP NOTIFICATION
-		//================================================================
-		if(global.CIP_ENABLED){
-			var cipTransportLayer = new TransportLayer();
-			cipTransportLayer.cipLayer =
-				{
-					type:'toCipInformation',
-					isWsPassThrough:false,
-					command:'removeConnection',
-					userId:inWs.userId,
-					deviceId:inWs.deviceId,
-					deviceTokenId:inWs.deviceTokenId,
-					serverName:global.SEVER_NAME,
-				}
-			router.getCipClient().send(cipTransportLayer);
-			//END OF CIP
-		}
+
+		redClient.send('removeConnection', 
+			{
+				userId:inWs.userId,
+				deviceId:inWs.deviceId,
+				deviceTokenId:inWs.deviceTokenId,
+				serverName:global.SEVER_NAME,
+				deviceType:inWs.deviceType,
+				userAgent:inWs.userAgent,
+				action:'logout'
+			}
+		);
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 		delete inWss.connectedDeviceHash[inWs.deviceId];
@@ -154,7 +159,7 @@ var Controller = function(router){
 				type:'tokenToTokenUseFilter',
 				filterKey:'filter',
 				filterValue:'advise',
-				fromDeviceTokenId:inWs.deviceTokenId
+				fromDeviceTokenId:inWs.deviceTokenId,
 			}
 		);
 
@@ -163,6 +168,8 @@ var Controller = function(router){
 				deviceNumber:inWs.deviceNumber,
 				deviceType:inWs.deviceType,
 				userAgent:inWs.userAgent,
+				serverName:global.SEVER_NAME,
+				deviceTokenId:inWs.deviceTokenId,
 				action:'logout'
 			}
 		);

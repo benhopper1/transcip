@@ -3,11 +3,13 @@ var path = require('path');
 var basePath = path.dirname(require.main.filename);
 var TransportLayer = require(basePath + '/libs/transportlayer.js');
 var SecurityModel = require(basePath + '/models/securitymodel.js');
-
+//var RedClient = require(basePath + '/libs/redclient/redclient.js');
+var redClient = global.redClient;
+var moment = require(basePath + '/node_modules/moment');
 //------------------>--COMMUNICATION--<-------------
 var Controller = function(router){
 
-	router.type('setupToServer', function(inWss, inWs, inTransportLayer){	
+	router.type('setupToServer', function(inWss, inWs, inTransportLayer){
 		console.log('setupToServer routing........');
 		if(inWs.isConnected){console.log('can not be connect to execute here!!!, kicking you out!!!');return;}
 
@@ -20,17 +22,50 @@ var Controller = function(router){
 				onDone:function(err, data, info, newDeviceId){
 					console.log('info->:' + info);
 					if(info == 'newDeviceIdCreated' || info == 'dataCheckedGood'){
+
+						//$SECURITY TOKEN HERE-----
+						var securityToken = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
+						var googleData = transportLayer_json.dataLayer.googleData;
+
+						if(googleData){
+							//REMOVE ID TOKEN-----too big to store, but here if needed NOW!!!!
+							googleData.idToken = false;
+							global.reportNotify('googleData', 
+								{
+									googleData:googleData,
+									//googleData:transportLayer_json.dataLayer.googleData,
+								}, 0
+							);
+						}
+
+						//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+						redClient.send('CIP', 
+							{
+								command:'timedSecurityToken',
+								params:false,
+								data:
+									{
+										securityToken:securityToken,
+										expireMoment:moment().add(60, 's'),
+										userId:parseInt(transportLayer_json.userId),
+										googleData:googleData,
+									},
+							}
+						);
+						//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
 						console.log('onDone----');
 						inWs.isConnected = true;
 						inWs.userName = data.dataLayer.userName;
 						inWs.password = data.dataLayer.password;
 						var TL_replyForClient = new TransportLayer();
-						TL_replyForClient.toClientBuild(data.userId, data.deviceId, data.securityToken, data.transactionId);
+						TL_replyForClient.toClientBuild(data.userId, data.deviceId, securityToken, data.transactionId);
 						if(info == 'newDeviceIdCreated'){
 							inWss.connectedDeviceHash[newDeviceId.toString()] = inWs;
 							inWs.userId = transportLayer_json.userId;
 							inWs.deviceId = newDeviceId.toString();
-							inWs.securityToken = "notImplementedYet$$$";
+							inWs.securityToken = securityToken;
 							inWs.deviceNumber = data.dataLayer.deviceNumber;
 							inWs.userAgent = data.dataLayer.userAgent;
 							inWs.deviceType = data.dataLayer.deviceType;
@@ -49,7 +84,7 @@ var Controller = function(router){
 							inWss.connectedDeviceHash[data.deviceId.toString()] = inWs;
 							inWs.userId = transportLayer_json.userId;
 							inWs.deviceId = data.deviceId.toString();
-							inWs.securityToken = "notImplementedYet$$$";
+							inWs.securityToken = securityToken;
 							inWs.deviceNumber = data.dataLayer.deviceNumber;
 							inWs.userAgent = data.dataLayer.userAgent;
 							inWs.deviceType = data.dataLayer.deviceType;

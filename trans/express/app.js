@@ -7,8 +7,8 @@ var app = express();
 var fs = require('fs');
 var basePath = path.dirname(require.main.filename);
 var moment = require(basePath + '/node_modules/moment');
-var CipClient = require(basePath + '/library/cip/client.js');
-var CipRequestHandler = require(basePath + '/library/cip/ciprequesthandler.js');
+//var CipClient = require(basePath + '/library/cip/client.js');
+//var CipRequestHandler = require(basePath + '/library/cip/ciprequesthandler.js');
 
 var DebugObject = require(basePath + '/library/debug/debugobject.js');
 var MaintenanceObject = require(basePath + '/library/maintenance/maintenanceobject.js');
@@ -18,7 +18,11 @@ var HashOfArray = require(basePath + '/library/hashofarrayobject.js');
 var ProductModel = require(basePath + '/models/productmodel');
 
 var extend = require(basePath + '/node_modules/node.extend');
-
+var RedClient = require(basePath + '/library/redclient/redclient.js');
+//==================================================================
+//--  GLOBAL REDCLIENT INSTANCE  -----------------------------------
+//==================================================================
+global.redClient = new RedClient();
 
 global.CIP_ENABLED 						= false;
 global.DATABASE_STORE_USER_REQUEST_DATA = true;
@@ -65,7 +69,7 @@ global.resume = function(){
 if(process.argv[9]){
 	if(process.argv[9] && parseInt(process.argv[9]) == 1){
 		console.log('Express is  Cip Enabled');
-		global.CIP_ENABLED = true;
+		//global.CIP_ENABLED = true;
 	}
 }
 
@@ -101,10 +105,12 @@ global.scoreMaintenanceCycle = new MaintenanceObject(
 			},
 	}
 );
-global.scoreMaintenanceCycle.start();
 
+global.scoreCurrentJstruct = {};
+
+global.scoreMaintenanceCycle.start();
 global.scoreMaintenanceCycle.add(function(inOptions, inData){
-	if(global.CIP_ENABLED){
+	/*if(global.CIP_ENABLED){
 		global.cipClient.sendCommand(
 			{
 				command:'remoteServerScore',
@@ -124,7 +130,29 @@ global.scoreMaintenanceCycle.add(function(inOptions, inData){
 					},
 			}
 		);
-	}
+	}*/
+
+	global.scoreCurrentJstruct = extend(true, {}, 
+		{
+			REQUEST_SCORE_INTERVAL_SECOND:global.REQUEST_SCORE_INTERVAL_SECOND,
+			PROCESSING_SCORE_INTERVAL_SECOND:global.PROCESSING_SCORE_INTERVAL_SECOND,
+
+			requestScore:global.requestScore,
+			requestScoreOld:global.requestScoreOld,
+			REQUEST_SCORE_COMMON:global.REQUEST_SCORE_COMMON,
+
+			processingScore:global.processingScore,
+			processingOld:global.processingOld,
+			PROCESSING_SCORE_COMMON:global.PROCESSING_SCORE_COMMON,
+			routes:global.recordedRouteArray,
+			serverName:global.SEVER_NAME,
+			serverType:global.SERVER_TYPE,
+		}
+	);
+
+
+
+
 	global.requestScoreOld = global.requestScore;
 	global.requestScore = 0;
 	//if(global.RECORD_ROUTES){
@@ -501,7 +529,7 @@ app.isMobile = function(inAgent){
 		return false;
 	}
 }
-
+/*
 //==============================================================================
 //> -- CIP ---------------------------------------------------------------------
 //==============================================================================
@@ -516,10 +544,6 @@ if(global.CIP_ENABLED){
 			onData:function(inTransportLayer_json){
 				console.log('cipClient onData');
 				console.dir(inTransportLayer_json);
-				//communicationRouter.reportOnRoute(wss, ws, inTransportLayer_json);
-				/*if(inTransportLayer_json.cipLayer && inTransportLayer_json.cipLayer.isWsPassThrough){
-					console.log('YOU HAVE A PASSTHRUE!!!!!');
-				}*/
 				cipRequestHandler.handleRequest(inTransportLayer_json.cipLayer, inTransportLayer_json);
 
 			},
@@ -538,15 +562,7 @@ if(global.CIP_ENABLED){
 }
 
 if(global.CIP_ENABLED){
-	/*global.cipClient.sendCommand(
-		{
-			command:'remoteError',
-			data:
-				{
-					testKey0:'HELLO BEN HOPPER 11',
-				},
-		}
-	);*/
+	
 	setTimeout(function(){
 		global.cipClient.testConnection(
 			{
@@ -571,7 +587,7 @@ if(global.CIP_ENABLED){
 //communicationRouter.setCipClient(cipClient);
 
 // END OF CIP
-
+*/
 //========================================================================
 // CLEAN UP AND EXIT FACILITY
 //========================================================================
@@ -602,3 +618,21 @@ process.on('SIGINT', exitHandler.bind(null, {exit:true}));
 
 //catches uncaught exceptions
 process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+
+//==================================================================
+//--  INFORMATION MODEL  -------------------------------------------
+//==================================================================
+var InformationModel = require(basePath + '/models/informationmodel.js');
+var informationModel = new InformationModel();
+
+
+
+setTimeout(function(){
+	//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	redClient.send('onServerStart', 
+		{
+			serverName:global.SEVER_NAME,
+		}
+	);
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+}, 1000);

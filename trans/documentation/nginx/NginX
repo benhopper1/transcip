@@ -33,6 +33,15 @@ upstream node_app {
 
 
 
+==== UNINSTALL =========================================================
+sudo service nginx stop
+sudo apt-get remove nginx
+sudo apt-get purge nginx
+sudo apache2ctl restart
+sudo apt-get remove nginx-*
+sudo apt-get purge nginx-*
+
+
 
 
 ==== APACHE =========================================================

@@ -5,6 +5,7 @@ configData = JSON.parse(configData);
 var UserModel = require('../models/usermodel');
 var userModel = new UserModel();
 var basePath = path.dirname(require.main.filename);
+var url = require('url');
 
 module.exports.controller = function(app){
 	app.get('/angtestSession', function(req, res){
@@ -31,13 +32,13 @@ module.exports.controller = function(app){
 			global.reportNotify('tt0', 
 				{
 					name:'nnnnn',
-					req:req,
-					res:res,
+					//req:req,
+					//res:res,
 				}, 0
 			);
 			res.render('angtest/angtest.jade',
 				{
-					body:req.body,
+					//body:req.body,
 					products:req.session.products,
 					test:'ben'
 				}
@@ -146,19 +147,122 @@ module.exports.controller = function(app){
 		console.log('session');
 		console.dir(req.session);
 
-			global.reportNotify('tt0', 
-				{
-					name:'nnnnn',
-					req:req,
-					res:res,
-				}, 0
-			);
-			res.render('angtest/angtest2.jade',
-				{
-					body:req.body,
-					products:req.session.products,
-					test:'ben'
-				}
-			);
+		var url_parts = url.parse(req.url, false, false);
+
+		var reloadUrl;
+		if(req.protocol == 'http'){
+			reloadUrl = global.cipServerData.domain.address + ':' + global.cipServerData.domain.port + url_parts.pathname;
+		}
+		if(req.protocol == 'https'){
+			reloadUrl = global.cipServerData.secureDomain.address + ':' + global.cipServerData.secureDomain.port + url_parts.pathname;
+		}
+
+		global.reportNotify('tt0', 
+			{
+				name:'nnnnn',
+				req:req.body,
+				//res:res,
+			}, 0
+		);
+		res.render('angtest/angtest2.jade',
+			{
+				userId:req.cookies.userId,
+				deviceId:"815",//req.cookies.deviceId,
+				URL:configData.domain.address + ":" + configData.domain.port,
+				reloadUrl:reloadUrl,
+				androidAppRoute:configData.androidAppRoute,
+				webSocketClient:configData.webSocketClient,
+				defaultUserImageUrl:configData.defaultUserImageUrl,
+				defaultMemberImageUrl:configData.defaultMemberImageUrl,
+				productsRoute:'/products/products',
+				data:
+					{
+					},
+				useMini:configData.useMini,
+			}
+		);
 	});
+
+	app.get('/angtest3', function(req, res){
+		console.log("/angtest2");
+		console.log('session');
+		console.dir(req.session);
+
+		var url_parts = url.parse(req.url, false, false);
+
+		var reloadUrl;
+		if(req.protocol == 'http'){
+			reloadUrl = global.cipServerData.domain.address + ':' + global.cipServerData.domain.port + url_parts.pathname;
+		}
+		if(req.protocol == 'https'){
+			reloadUrl = global.cipServerData.secureDomain.address + ':' + global.cipServerData.secureDomain.port + url_parts.pathname;
+		}
+
+		global.reportNotify('tt0', 
+			{
+				name:'nnnnn',
+				req:req.body,
+				//res:res,
+			}, 0
+		);
+		res.render('angtest/angtest3.jade',
+			{
+				userId:req.cookies.userId,
+				deviceId:"815",//req.cookies.deviceId,
+				URL:configData.domain.address + ":" + configData.domain.port,
+				reloadUrl:reloadUrl,
+				androidAppRoute:configData.androidAppRoute,
+				webSocketClient:configData.webSocketClient,
+				defaultUserImageUrl:configData.defaultUserImageUrl,
+				defaultMemberImageUrl:configData.defaultMemberImageUrl,
+				productsRoute:'/products/products',
+				data:
+					{
+					},
+				useMini:configData.useMini,
+			}
+		);
+	});
+
+	app.post('/angtest3', function(req, res){
+		console.log("/angtest2");
+		console.log('session');
+		console.dir(req.session);
+
+		var url_parts = url.parse(req.url, false, false);
+
+		var reloadUrl;
+		if(req.protocol == 'http'){
+			reloadUrl = global.cipServerData.domain.address + ':' + global.cipServerData.domain.port + url_parts.pathname;
+		}
+		if(req.protocol == 'https'){
+			reloadUrl = global.cipServerData.secureDomain.address + ':' + global.cipServerData.secureDomain.port + url_parts.pathname;
+		}
+
+		global.reportNotify('tt0', 
+			{
+				name:'nnnnn',
+				req:req.body,
+				//res:res,
+			}, 0
+		);
+		res.render('angtest/angtest3.jade',
+			{
+				userId:req.cookies.userId,
+				deviceId:"815",//req.cookies.deviceId,
+				URL:configData.domain.address + ":" + configData.domain.port,
+				reloadUrl:reloadUrl,
+				androidAppRoute:configData.androidAppRoute,
+				webSocketClient:configData.webSocketClient,
+				defaultUserImageUrl:configData.defaultUserImageUrl,
+				defaultMemberImageUrl:configData.defaultMemberImageUrl,
+				productsRoute:'/products/products',
+				data:
+					{
+					},
+				useMini:configData.useMini,
+			}
+		);
+	});
+
 }

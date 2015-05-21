@@ -1,0 +1,39 @@
+var RedClient = require(basePath + '/libs/redclient/redclient.js');
+//==================================================================
+//--  GLOBAL REDCLIENT INSTANCE  -----------------------------------
+//==================================================================
+global.redClient = new RedClient();
+
+
+
+//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+global.redClient.send('CIP', 
+	{
+		command:'serverKilled',
+		data:
+			{
+				serverName:global.SEVER_NAME,
+			},
+	}
+);
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+global.redClient.sendTransaction('CIP_query',
+	{
+		command:'getSecurityTokenJstruct',
+		params:false,
+		data:
+			{
+				securityToken:inSecurityToken,
+			},
+	},function(inReturnData){
+		if(inReturnData){
+
+
+		}
+	}
+);
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

@@ -5,6 +5,9 @@ var basePath = path.dirname(require.main.filename);
 var TransportLayer = require(basePath + '/libs/transportlayer.js');
 var uuid = require(basePath + '/node_modules/node-uuid');
 var DebugObject = require(basePath + '/libs/debug/debugobject.js');
+//var RedClient = require(basePath + '/libs/redclient/redclient.js');
+var redClient = global.redClient;
+
 
 var hashOfWaitingWs = {};
 
@@ -31,29 +34,26 @@ var Controller = function(router){
 				};
 
 			inWss.waitDeviceTokenIdHash[waitingId] = inWs;
-			//@@@@ CIP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-			if(global.CIP_ENABLED){
-				global.cipMessenger.addWaitingQr(
-					{
-						waitingId:waitingId,
-						transportData:inTransportLayer.toJson(),
-					}
-				);
-			}
+			//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			redClient.send('addWaitingQr', 
+				{
+					serverName:global.SEVER_NAME,
+					waitingId:waitingId,
+					transportData:inTransportLayer.toJson(),
+				}
+			);
 			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 			//cleanup entry
 			inWs.cleanupFunctionHash['removeFromWaitingQ'] = function(){
 				delete inWss.waitDeviceTokenIdHash[inWs.waitingId];
-				//@@@@ CIP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-				if(global.CIP_ENABLED){
-					global.cipMessenger.removeWaitingQr(
-						{
-							waitingId:waitingId,
-							//transportData:inTransportLayer.toJson(),
-						}
-					);
-				}
+				//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				redClient.send('removeWaitingQr', 
+					{
+						serverName:global.SEVER_NAME,
+						waitingId:waitingId,
+					}
+				);
 				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			}
 
@@ -77,13 +77,6 @@ var Controller = function(router){
 		//device scanned code, asking server to login the waiting client by scan code-----
 
 		if(inTransportLayer.toJson().routingLayer.command == 'connectWaitingQr'){
-
-			console.log('connectWaitingQr');
-			console.log('cmd' + inTransportLayer.toJson().dataLayer.cmd);
-			console.log('cd' + inTransportLayer.toJson().dataLayer.cd);
-			console.log('dump hashOfWaitingWs--------------------');
-			console.log('geting from hash:' + inTransportLayer.toJson().dataLayer.cd);
-
 			var waitingData = hashOfWaitingWs[inTransportLayer.toJson().dataLayer.cd];
 			if(waitingData){
 				var waitingTransportLayer = waitingData.transportLayer;
@@ -92,51 +85,41 @@ var Controller = function(router){
 				waitingTransportLayer.toJson().routingLayer.type = "setupToServer";
 				router.reportOnRoute(waitingData.wss, waitingData.ws, waitingTransportLayer);
 				delete  hashOfWaitingWs[inTransportLayer.toJson().dataLayer.cd];
-				//@@@@ CIP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-				if(global.CIP_ENABLED){
-					global.cipMessenger.removeWaitingQr(
-						{
-							waitingId:inTransportLayer.toJson().dataLayer.cd,
-						}
-					);
-				}
+				//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				redClient.send('removeWaitingQr', 
+					{
+						serverName:global.SEVER_NAME,
+						waitingId:inTransportLayer.toJson().dataLayer.cd,
+					}
+				);
 				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			}else{
 				console.log('wait code is not on this server!!!!!');
-				//@@@@ CIP @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-				if(global.CIP_ENABLED){
-					global.cipMessenger.findWaitingQr(
-						{
-							waitingId:inTransportLayer.toJson().dataLayer.cd,
-							transportData:inTransportLayer.toJson(),
-						},
-						// CALLBACK---------------------
-						function(inParams){
-							global.reportNotify('CIP Callback through function', inParams, 0);
-							// need filter for reconnect / mobile migration
-							var transportLayer = inTransportLayer.getTransportLayerOnly();
-							transactionTransportLayer.addRoutingLayer(
-								{
-									type:'tokenToTokenUseFilter',
-									filterValue:'mobileMigration',
-									filterKey:'filter',
+				//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				redClient.sendTransaction('findWaitingQr',
+					{
+						serverName:global.SEVER_NAME,
+						waitingId:inTransportLayer.toJson().dataLayer.cd,
+						transportData:inTransportLayer.toJson(),
 
-									fromDeviceTokenId:'0',
-									toDeviceTokenId:'0',
-									fromUserId:'0'
-								}
-							);
-							transactionTransportLayer.addDataLayer(
-								inParams
-							);
+					},function(inReturnData){
+						var transportLayer = inTransportLayer.getTransportLayerOnly();
+						transactionTransportLayer.addRoutingLayer(
+							{
+								type:'tokenToTokenUseFilter',
+								filterValue:'mobileMigration',
+								filterKey:'filter',
 
-							inWs.send(transactionTransportLayer.toString());
-						}
-					);
-				}
+								fromDeviceTokenId:'0',
+								toDeviceTokenId:'0',
+								fromUserId:'0'
+							}
+						);
+						transactionTransportLayer.addDataLayer(inReturnData);
+						inWs.send(transactionTransportLayer.toString());
+					}
+				);
 				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
 
 			}
 

@@ -3,6 +3,9 @@ var fs = require('fs');
 var configData = fs.readFileSync(path.dirname(require.main.filename) + '/main.conf', 'utf8');
 configData = JSON.parse(configData);
 var basePath = path.dirname(require.main.filename);
+//var RedClient = require(basePath + '/library/redclient/redclient.js');
+var redClient = global.redClient;
+
 
 var UserModel = require(basePath + '/models/usermodel');
 var userModel = new UserModel();
@@ -11,6 +14,106 @@ var userModel = new UserModel();
 module.exports.controller = function(app){
 
 	app.post('/security/process', function(req, res){
+		console.log('##############################################');
+		console.log('SECURITY ver002');
+		console.log('##############################################');
+
+		//var waitingDeviceTokenId = req.body.waitingDeviceTokenId;
+		var securityToken = req.body.securityToken;
+		//console.log('SECURITY waitingDeviceTokenId' + securityToken);
+		securityCheck(req, res, securityToken, function(inSecurityOk, inUserId){
+			global.reportNotify('SECURITY CONTROLLER t0', 
+				{
+					inSecurityOk:inSecurityOk,
+					inUserId:inUserId,
+				}, 0
+			);
+
+			if(inSecurityOk){
+				console.log('SECURITY Secutiy == OK');
+				console.log('SECURITY userId from security check:' + inUserId);
+				res.cookie('canProcess', "true", { maxAge: (60000 * 60 * 24), httpOnly: true });
+
+				res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify(
+					{
+						userId:inUserId
+					}
+				));
+			}else{
+				console.log('SECURITY Secutiy == BAD');
+				console.log('SECURITY userId from security check:' + inUserId);
+				res.cookie('canProcess', "false", { maxAge: (60000 * 60 * 240000), httpOnly: true });
+				res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify(
+					{
+						error:
+							{
+								caption:"security did not get verified"
+							}
+					}
+				));
+			}
+		});
+
+	});
+
+
+	var securityCheck = function(req, res, inSecurityToken, inPostFunction){
+		//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		redClient.sendTransaction('CIP_query',
+			{
+				command:'getSecurityTokenJstruct',
+				params:false,
+				data:
+					{
+						securityToken:inSecurityToken,
+					},
+			},function(inReturnData){
+				if(inReturnData){
+					//was valid----
+					res.cookie('userId', inReturnData.userId, { maxAge: (60000 * 60 * 24), httpOnly: true });
+
+					userModel.getUserDataById(inReturnData.userId, function(err, record, fields){
+						if(!(err) || record){
+							//========================================================
+							//SESSION SETUP
+							//========================================================
+							console.log('Security Mobile Login');
+							userModel.createSession(req, 
+								{
+									userId:record.id,
+									userGuid:record.userGuid,
+									deviceId:false,
+									userGroup:record.userGroup,
+									status:record.status,
+								}
+							);
+
+
+							if(inPostFunction){
+								inPostFunction(true, record.id);
+							}
+						}else{
+							// problems
+							inPostFunction(false, false);
+						}
+					});// end user model
+
+				}
+			}
+		);
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	}
+
+
+
+
+
+
+
+
+/*	app.post('/security/process', function(req, res){
 		console.log('##############################################');
 		console.log('SECURITY');
 		console.log('##############################################');
@@ -45,6 +148,15 @@ module.exports.controller = function(app){
 			}
 		});
 
+	});*/
+
+	app.post('/security/googleProcess', function(req, res){
+		console.log('##############################################');
+		console.log('GOOGLE SECURITY');
+		console.log('##############################################');
+
+		console.dir(req.body);
+
 	});
 
 
@@ -53,11 +165,9 @@ module.exports.controller = function(app){
 
 
 
+/*
 
-
-
-
-	var securityCheck = function(req, res, inWaitingDeviceTokenId, inPostFunction){
+	var securityCheckOLD = function(req, res, inWaitingDeviceTokenId, inPostFunction){
 		console.log('securityCheck-----:');
 		var TcpClient = require(basePath + '/library/tcpservices/tcpclient.js');
 		tcpClient = new TcpClient(
@@ -111,9 +221,7 @@ module.exports.controller = function(app){
 							//console.log('sessionSecurityOk:' + sessionSecurityOk);
 
 
-							/*if(inPostFunction){
-								inPostFunction(true, inMessage.userId);
-							}*/
+							
 						}
 
 					}
@@ -122,7 +230,7 @@ module.exports.controller = function(app){
 		);
 
 		return true;
-	}
+	}*/
 
 
 }

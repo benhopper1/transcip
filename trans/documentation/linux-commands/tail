@@ -1,1 +1,4 @@
 tail -f xxxxx.xxx
+
+- php errors-------------------------
+tail -f /var/log/apache2/error.log

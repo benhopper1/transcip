@@ -210,3 +210,46 @@
 {"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:50:06","data":{"error":{},"connectId":"192.168.0.1636567"}}
 {"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 08:58:26","data":{"error":{},"connectId":"192.168.0.1636567"}}
 {"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-21 13:11:39","data":{"error":{},"connectId":"192.168.0.1636567"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-24 11:25:11","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 07:07:36","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 07:37:02","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 07:39:20","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 08:36:57","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 13:40:17","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 13:42:43","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 15:06:21","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 15:27:02","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 15:37:47","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 15:47:11","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 16:02:12","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 16:14:56","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 16:15:21","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 16:52:08","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 16:52:38","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 17:00:43","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-26 22:41:47","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-27 12:39:04","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-27 14:44:25","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-27 16:05:46","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-27 16:07:02","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"cipapp.sock.on data","when":"2015-04-28 07:11:38","data":{"error":{},"connectId":"192.168.0.1651656"}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-04-28 19:49:25","data":{"command":false,"error":"command does not exist","message":{"returnChannel":"956c0c00-ee09-11e4-bab1-653920cce2ed","data":{"command":"getSecurityTokenJstruct","params":false,"data":{}}}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-04-28 19:50:39","data":{"error":{}}}
+{"debugObject":"general","label":"CIP SERVER INTERFACE","when":"2015-04-29 15:30:33","data":{"code":"ECONNRESET","errno":"ECONNRESET","syscall":"read"}}
+{"debugObject":"general","label":"googleModel.verifyInformation()","when":"2015-04-30 10:10:13","data":{"error":null,"response":{"statusCode":400,"body":"{\n \"error\": \"invalid_token\",\n \"error_description\": \"Invalid Value\"\n}\n","headers":{"vary":"X-Origin","content-type":"application/json; charset=UTF-8","date":"Thu, 30 Apr 2015 15:10:13 GMT","expires":"Thu, 30 Apr 2015 15:10:13 GMT","cache-control":"private, max-age=0","x-content-type-options":"nosniff","x-frame-options":"SAMEORIGIN","x-xss-protection":"1; mode=block","server":"GSE","alternate-protocol":"443:quic,p=1","accept-ranges":"none","transfer-encoding":"chunked"},"request":{"uri":{"protocol":"https:","slashes":true,"auth":null,"host":"www.googleapis.com","port":443,"hostname":"www.googleapis.com","hash":null,"search":"?access_token=false","query":"access_token=false","pathname":"/oauth2/v1/tokeninfo","path":"/oauth2/v1/tokeninfo?access_token=false","href":"https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=false"},"method":"GET","headers":{}}},"body":"{\n \"error\": \"invalid_token\",\n \"error_description\": \"Invalid Value\"\n}\n"}}
+{"debugObject":"general","label":"googleModel.verifyInformation()","when":"2015-04-30 10:27:14","data":{"error":null,"rspStatusCode":400,"body":"{\n \"error\": \"invalid_token\",\n \"error_description\": \"Invalid Value\"\n}\n"}}
+{"debugObject":"general","label":"googleModel.verifyInformation()","when":"2015-04-30 10:30:06","data":{"error":null,"rspStatusCode":400,"body":"{\n \"error\": \"invalid_token\",\n \"error_description\": \"Invalid Value\"\n}\n"}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-01 10:37:51","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-01 10:38:07","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:15:14","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:16:22","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:16:50","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:53:49","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:53:59","data":{"error":{}}}
+{"debugObject":"general","label":"redClient (redClient_sub)","when":"2015-05-04 20:54:04","data":{"error":{}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-04 20:59:56","data":{"command":false,"error":"command does not exist","message":{"returnChannel":"theCallback","data":"dataStuff"}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-04 21:00:04","data":{"command":false,"error":"command does not exist","message":{"returnChannel":"theCallback","data":"dataStuff"}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-04 21:00:09","data":{"command":false,"error":"command does not exist","message":{"returnChannel":"theCallback","data":"dataStuff"}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-04 21:03:43","data":{"command":false,"error":"command does not exist","message":{"returnChannel":"theCallback","data":{"command":"commands","params":false,"data":false}}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-06 07:39:11","data":{"command":false,"error":"command does not exist","message":{"data":{"command":"serverKilled","params":false,"data":{"anythingKey":"anythingValue"}}}}}
+{"debugObject":"general","label":"INFORMATION MODEL undefined","when":"2015-05-06 07:39:26","data":{"command":false,"error":"command does not exist","message":{"data":{"command":"serverKilled","params":false,"data":{"anythingKey":"anythingValue"}}}}}

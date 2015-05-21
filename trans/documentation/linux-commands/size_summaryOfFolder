@@ -1,0 +1,7 @@
+du -h
+du -c
+
+
+
+ONLY TOTAL
+du -ch | grep total

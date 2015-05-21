@@ -9,6 +9,12 @@ var net = require('net');
 var HashArrayObject = require(basePath + '/libs/hashofarrayobject.js');
 var DebugObject = require(basePath + '/libs/debug/debugobject.js');
 var MaintenanceObject = require(basePath + '/libs/maintenance/maintenanceobject.js');
+var redis = require(basePath + '/node_modules/redis')
+var RedClient = require(basePath + '/libs/redclient/redclient.js');
+var SecurityTokenObject = require(basePath + '/libs/securitytokenobject/securitytokenobject.js');
+global.securityTokenObject = new SecurityTokenObject();
+
+
 //var PortUtility = require(basePath + '/libs/portutility/portutility.js');
 //var finish = require(basePath + '/node_modules/finish');
 //var util = require('util');
@@ -39,6 +45,10 @@ global.qrCountHashByServer = {};
 
 global.serverBuildsHash = {};
 
+//==================================================================
+//--  GLOBAL REDCLIENT INSTANCE  -----------------------------------
+//==================================================================
+global.redClient = new RedClient();
 
 
 //==========================================================
@@ -186,6 +196,8 @@ var addressToIp = function(inAddress){
 //----readin my secrets /git ignored conf file-----
 var configData = fs.readFileSync('cip.conf', 'utf8');
 configData = JSON.parse(configData);
+
+global.configData = configData;
 
 global.ip = configData.cipInterface.host;
 
@@ -512,15 +524,18 @@ server.on('connection', function(sock){
 		serverNumberArray:[1],
 	}
 );*/
-ServerBuild.getMaybeCreate(
-	{
-		serverNumber:1,
-		createFileSystem:true,
-	},
-	function(inServerInstance){
-		console.log('SERVER LOADED:' + inServerInstance.getServerBuildName());
-	}
-);
+
+setTimeout(function(){
+	ServerBuild.getMaybeCreate(
+		{
+			serverNumber:1,
+			createFileSystem:true,
+		},
+		function(inServerInstance){
+			console.log('SERVER LOADED:' + inServerInstance.getServerBuildName());
+		}
+	);
+}, 600);
 /*ServerBuild.getMaybeCreate(
 	{
 		serverNumber:2,
@@ -649,6 +664,60 @@ fileStorageServer_orphanedDelete_maintenanceCycle.add(function(inOptions, inData
 
 
 
+
+//==================================================================
+//...............  MAINTENANCY CYCLE [LIGHT].......................
+//--  RETREIVE SERVER SCORES  -------------------------------------
+//==================================================================
+var retreiveServerScore_maintenanceCycle = new MaintenanceObject(
+	{
+		label:'retreiveServerScore_maintenanceCycle',
+		when:
+			{
+				second:[0, 20, 40],
+			},
+	}
+);
+var redClient_pub = global.redClient;
+retreiveServerScore_maintenanceCycle.start();
+retreiveServerScore_maintenanceCycle.add(function(inOptions, inData){
+	for(var theKey in global.activeServersHash){
+		//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		redClient.sendTransaction(theKey + '_query',
+			{
+				command:'serverScore',
+				params:false,
+				data:false,
+
+			},function(inReturnData){
+				var theServerBuildInstance = global.ServerBuild.getServerByServerName(theKey);
+				if(theServerBuildInstance){
+					theServerBuildInstance.addNewScoreEntry(inReturnData);
+				}else{
+					global.reportError('retreiveServerScore_maintenanceCycle',
+						{
+								error:'NO ServerBuildInstance',
+								serverName:theKey,
+						}, 0
+					);
+				}
+			}
+		);
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+	}//end for
+	//global.activeServersHash[]
+});
+
+
+
+
+
+
+
+/*
+
+
 //==================================================================
 //--  NODE - MINIFY ------------------------------------------------
 // Prepares mini versions for client side loadup, 
@@ -694,12 +763,96 @@ new compressor.minify(
 });
 
 //console.log('miniPath:' + path.join(basePath, '..', '/trans/express/public/js/arfsync/arfsync.mini.js'));
+*/
+//==================================================================
+//--  REDIS TESTING  -----------------------------------------------
+//==================================================================
+// /home/ben/git_project/transcip/trans/websocket/libs/redclient/
+
+var redClient = global.redClient;
+redClient.subscribeTransaction('testChannel', function(inMessage, done){
+	global.reportNotify('REDIS onMessage ttt444', 
+		{
+			message:inMessage,
+		}, 0
+	);
+	done(
+		{
+			benKey0:'benval0'
+		}
+	);
+});
+
+
+
+
+//==================================================================
+//--  INFORMATION MODEL  -------------------------------------------
+//==================================================================
+var InformationModel = require(basePath + '/models/informationmodel.js');
+var informationModel = new InformationModel();
 
 
 
 
 
 
+
+
+/*redClient.subscribe('testChannel', function(inMessage){
+	global.reportNotify('REDIS onMessage ttt555', 
+		{
+			message:inMessage,
+		}, 0
+	);
+});
+
+redClient.unsubscribe('testChannel');*/
+
+/*redClient.subscribe('testChannel', function(inMessage){
+	global.reportNotify('REDIS onMessage ttt444', 
+		{
+			message:inMessage,
+		}, 0
+	);
+});*/
+
+
+
+/*testClient = redis.createClient();
+testClient.subscribe("testChannel2");
+testClient.on("message", function (channel, message){
+	global.reportNotify('REDIS onMessage', 
+		{
+			channel:channel,
+			message:message,
+		}, 0
+	);
+
+
+});
+*/
+//==================================================================
+//--  RED CLIENT MONITOR  ------------------------------------------
+//==================================================================
+var client  = redis.createClient();
+var util = require("util");
+
+client.monitor(function (err, res) {
+    console.log("Entering monitoring mode.");
+});
+
+client.on("monitor", function (time, args) {
+	global.reportNotify('monitor', 
+		{
+			time:time,
+			gTime:new Date().getTime(),
+			args:args,
+		}, 0
+	);
+
+});
+//   bb_5
 
 
 

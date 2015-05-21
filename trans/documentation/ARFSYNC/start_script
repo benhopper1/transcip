@@ -1,0 +1,5 @@
+cd ~/git_project/transcip/cip/server_0/express
+cd ~/git_project/transcip/cip/server_0/websocket
+
+bash ~/git_project/transcip/cip/server_0/express/server_start.sh
+bash ~/git_project/transcip/cip/server_0/websocket/server_start.sh

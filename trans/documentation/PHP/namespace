@@ -1,0 +1,15 @@
+namespace Predis;
+
+class Autoloader{
+	// stuff ....
+	public static function register($prepend = false){
+        spl_autoload_register(array(new self, 'autoload'), true, $prepend);
+    }
+}
+
+
+
+
+
+looks like this::::
+Predis\Autoloader::register();

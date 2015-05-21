@@ -1,0 +1,356 @@
+
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() ArfSync
+	link(rel="icon" type="image/png" href="/public/icons/favicon-32x32.png")
+
+	//link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+
+	script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+	script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
+	//POPUP LIST VIEW ---------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.mobilepoplistview.js")
+	//dynamictable ---------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
+
+
+	script(src='/js/commmanager/commmanager.js')
+
+
+	script(src='/js/clientutil/clientutil.js')
+	//BUTTON NAV BAR ----------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
+	script(src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
+
+
+
+
+	script(src='/js/qrcode/jquery.composite.qrcode.mini.js')
+	script(src="/public/js/scrollto/lib/jquery-scrollto.mini.js")
+	script(src='/public/js/moment/moment.mini.js')
+	script(src="/public/js/footable/js/footable.mini.js")
+	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.mini.js')
+	script(type='text/javascript', src='/public/js/async/async.mini.js')
+
+
+
+style.
+	.menu-button {
+		background-image: url('/public/images/ui/button-bck_001.png');
+		background-repeat: no-repeat;
+		background-size:100% 100%;
+		background-position: center;
+		border: none !important;
+		color:black;
+		//margin: 2em 15px;
+	}
+	.menu-button a h1{
+		color:black;
+	}
+	.menu-button a{
+		color:black;
+	}
+	.menu-button p{
+		color:black;
+	}
+	.ui-btn-hover-c {
+		background: #ff0000;
+	}
+
+
+
+
+
+	body{
+		background: url(/public/images/ui/whitecloudsimage.jpg) !important;;
+		background-repeat: no-repeat;
+		//background-size:100% 100%;
+		background-position: center;
+	}
+
+	.user-img{
+
+	}
+	.lst-center-img {
+		//- padding-top: 15px;
+		//- padding-right: 10px;
+		//- padding-bottom: 0px;
+		//- padding-left: 10px;
+		position:absolute;
+		top:0;
+		bottom:0;
+		margin:auto;
+	}
+	.magic-sqr-lst{
+		//padding:4px;
+		//display:inline-block;
+		font:12px/14px Arial, Helvetica, sans-serif;
+		color:#666;
+		border:1px solid #999;
+		background-color:#eee;
+		-moz-border-radius:00px;
+		-webkit-border-radius: 15px;
+		-moz-box-shadow:#999 2px 0px 3px;
+		-webkit-box-shadow:#999 2px 0px 3px;
+		margin-left:8px;
+	}
+
+
+
+
+body()
+	
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getHomePageURL = function(){
+			//return '#{URL}/jqm/arfsync';
+			return '#{reloadUrl}';
+		}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_page_0" data-role="page" data-theme="none" data-fullscreen="true" style="background: transparent !important;")
+		#msgEvent_div(style="")
+		div(data-role="panel" id="mypanel" class="" style="width:90% !important;")
+			ul(data-role="listview" class="noBorders" style="border: none !important;")
+				li(data-icon="delete" class="" style="border: none !important;")
+					div(data-role="collapsible" data-theme="a" class="custom-collapsible")
+						//a(href="" ) Demo intro
+						//img(class="lst-center-img magic-sqr-lst" src="/public/images/contacts/48342dd0-df7e-11e4-9e8b-81eedea64c61/e3e48290-e832-11e4-9a32-2db8bd4df187.jpg" style="height:90%;")
+						h1 ok giiiiii
+						ul(data-role="listview")
+							li
+								a(href="#") List item 1
+							li
+								a(href="#") List item 2
+							li
+								a(href="#") List item 3
+
+
+				li(data-icon="back" class="menu-button" style="border: none !important;")
+					a(href="" ) Demo intro
+						img(class="lst-center-img magic-sqr-lst" src="/public/images/contacts/48342dd0-df7e-11e4-9e8b-81eedea64c61/e3e48290-e832-11e4-9a32-2db8bd4df187.jpg" style="height:90%;")
+						h1 ok giiiiii
+						p fffff
+				each val in [1, 2, 3]
+					li(data-icon="back" class="menu-button" style="border: none !important;")
+						a(href="" )
+							img(class="lst-center-img magic-sqr-lst" src="/public/images/contacts/48342dd0-df7e-11e4-9e8b-81eedea64c61/e3e48290-e832-11e4-9a32-2db8bd4df187.jpg" style="height:90%;")
+							//h1 ok giiiiii
+							p fffff
+
+
+		div(data-role="main" class="ui-content" style="height:300px;overflow:hidden !important; background-color: transparent !important;")
+			a(id="openMenu" data-role="button" style="background-color: transparent !important;" data-icon="back" class="ui-btn-left backButtonClass") Menu
+
+
+
+
+
+
+	script.
+		/*$(window).on('beforeunload', function(){
+			return 'Are you sure you want to leave ArfSync?';
+		});*/
+
+		//======================================================================
+		//>--- GLOBAL DECLARE SECTION-------------------------------------------
+		//======================================================================
+		var eventObject = new EventOrigin();//TODO: move inside create event
+
+
+		//======================================================================
+		//>--- LOGIN PAGE EVENTS------------------------------------------------
+		//======================================================================
+
+		$( "#pg_page_0").on( "pagecreate", function( event, ui ){
+			$(".mainHeader").toolbar();
+			$(".mainHeader").show();
+			console.log('PAGE CREATE---------------------------LoginManager');
+			window.location.hash = '';
+
+			//$('#pg_page_0').removeClass('page-theme-a');
+
+
+			//$("[data-role=panel]").panel().enhanceWithin();
+			$('#openMenu').click(function(){
+				console.log('click');
+				$( "#mypanel" ).panel( "open" , {} );
+			});
+			setTimeout(function(){
+
+				$('#msgEvent_div').MobilePopListView('addItem', 
+					{
+						//id:'someId',
+						template:0,
+						imageUrl:'/public/images/contacts/48342dd0-df7e-11e4-9e8b-81eedea64c61/e3e48290-e832-11e4-9a32-2db8bd4df187.jpg',
+						caption:'Testing again:',
+						html:function(){
+							var $lvHeader = $('<div></div>').append
+								(
+									$('<p>' + 'entry 1' + '</p>')
+								).append
+								(
+									$('<p>' + 'entry 2' + '</p>')
+								)
+								.append
+								(
+									$('<p>' + 'entry 3' + '</p>')
+								)
+							return $($lvHeader).html();
+						}(),
+					}
+				);
+								$('#msgEvent_div').MobilePopListView('addItem', 
+					{
+						//id:'someId',
+						template:0,
+						imageUrl:'/public/images/contacts/48342dd0-df7e-11e4-9e8b-81eedea64c61/e3e48290-e832-11e4-9a32-2db8bd4df187.jpg',
+						caption:'Testing again:',
+						html:function(){
+							var $lvHeader = $('<div></div>').append
+								(
+									$('<p>' + 'entry 1' + '</p>')
+								).append
+								(
+									$('<p>' + 'entry 2' + '</p>')
+								)
+								.append
+								(
+									$('<p>' + 'entry 3' + '</p>')
+								)
+							return $($lvHeader).html();
+						}(),
+					}
+				);
+				$('#msgEvent_div').MobilePopListView('open', {});
+				//- $('#msgEvent_div-popup').css(
+				//- 	{
+				//- 		width: '100%',
+				//- 		left: '0%',
+				//- 		right: '0%',
+				//- 	}
+				//- );
+				$('.noBorders').children().removeClass('ui-body-c');
+
+
+			}, 1000 * 10);
+
+
+
+
+
+			//==================================================================
+			//--  POPUP MESSAGE  -----------------------------------------------
+			//==================================================================
+			$('#msgEvent_div').MobilePopListView('create', 
+				{
+					hideContainer:true,
+					containerCss:
+						{
+							height:'100%',
+							top:'5%',
+							bottom:'95%',
+							width: '90%',
+							left: '5%',
+							right: '5%',
+						},
+					timedClose:false,
+					//overlayTheme:'',
+					css:
+						{
+							width:'90%',
+						},
+					onClick:function(inId, inData){
+
+					},
+
+				}
+			);
+
+
+
+		});
+
+
+
+		$( document ).ready(function(){
+			$('#pg_page_0').trigger('create');
+			$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'turn', reverse:'true'});
+			$('#pg_page_0').removeClass('page-theme-a');
+
+			$('.noBorders').children().removeClass('ui-body-c');
+			//- $('#pg_page_0').find().each(function(){
+			//- 	$(this).removeClass('ui-btn');
+			//- });
+		});
+
+
+		//================================================================
+		// PAGE CHANGES REPORT TO EVENT OBJECT ---------------------------
+		//================================================================
+		$(document).on("pagechange",function(event, data){
+			//console.log('pagechange_id:' + $(data.toPage).attr('id'));
+			//eventObject.reportOn('onPageChange', $(data.toPage).attr('id'));
+		});
+		$(document).on("pagecreate",function(event, data){
+			//console.log('pageLoad_id:' + $(data.toPage).attr('id'));
+			//eventObject.reportOn('onPageload', $(data.toPage).attr('id'));
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//==================================================================
+		//--  SECURITY  ----------------------------------------------------
+		//==================================================================
+		var sessionSetupAndValidation = function(inType, inSecurityToken, inPostFunction){
+			$postAjax(
+				{
+					url:'/security/process',
+					send:
+						{
+							type:inType,
+							securityToken:inSecurityToken
+						},
+					onAjaxSuccess:function(inResponseText){
+						//alert(inResponseText);
+						if(inPostFunction){inPostFunction(JSON.parse(inResponseText));}
+					}
+				}
+			);
+		}
+
+
+
+
+
+
+
+
+
+

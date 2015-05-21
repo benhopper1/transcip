@@ -1,0 +1,16 @@
+class User {
+    public $pub = "Mister X.";
+    protected $pro = "hidden";
+    private $priv = "hidden too";
+
+    public $func;
+    public $notUsed;
+
+    public function __construct() {
+        $this->func = function() {
+            return "Foo";
+        };
+    }
+}
+
+$user = new User();

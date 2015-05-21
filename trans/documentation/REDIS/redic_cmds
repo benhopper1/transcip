@@ -1,0 +1,10 @@
+http://www.tutorialspoint.com/redis/redis_pub_sub.htm
+
+redis-cli
+
+
+# get active channels
+redis-cli PUBSUB CHANNELS
+
+
+sudo service redis-server restart

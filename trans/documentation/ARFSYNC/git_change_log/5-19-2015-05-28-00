@@ -1,0 +1,191 @@
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   cip/cipapp.js
+#       modified:   cip/controllers/interfacecontroller.js
+#       modified:   cip/generror.log
+#       modified:   cip/gennotify.log
+#       new file:   cip/libs/redclient/redclient.js
+#       new file:   cip/libs/securitytokenobject/securitytokenobject.js
+#       new file:   cip/models/googlemodel.js
+#       new file:   cip/models/informationmodel.js
+#       new file:   cip/node_modules/redis/.npmignore
+#       new file:   cip/node_modules/redis/README.md
+#       new file:   cip/node_modules/redis/connection_breaker.js
+#       new file:   cip/node_modules/redis/index.js
+#       new file:   cip/node_modules/redis/lib/commands.js
+#       new file:   cip/node_modules/redis/lib/parser/hiredis.js
+#       new file:   cip/node_modules/redis/lib/parser/javascript.js
+#       new file:   cip/node_modules/redis/lib/queue.js
+#       new file:   cip/node_modules/redis/lib/to_array.js
+#       new file:   cip/node_modules/redis/lib/util.js
+#       new file:   cip/node_modules/redis/package.json
+#       modified:   cip/node_modules/request/node_modules/aws-sign2/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/core-util-is/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/inherits/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/isarray/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/node_modules/readable-stream/node_modules/string_decoder/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/node_modules/readable-stream/package.json
+#       modified:   cip/node_modules/request/node_modules/bl/package.json
+#       modified:   cip/node_modules/request/node_modules/caseless/package.json
+#       renamed:    cip/node_modules/request/node_modules/combined-stream/node_modules/delayed-stream/.npmignore -> cip/node_modules/request/node_modules/combined-stream/node_modules/delayed-stream/.gitignore
+#       modified:   cip/node_modules/request/node_modules/combined-stream/node_modules/delayed-stream/package.json
+#       modified:   cip/node_modules/request/node_modules/combined-stream/package.json
+#       modified:   cip/node_modules/request/node_modules/forever-agent/package.json
+#       modified:   cip/node_modules/request/node_modules/form-data/package.json
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/boom/.travis.yml
+#       deleted:    cip/node_modules/request/node_modules/hawk/node_modules/boom/Makefile
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/boom/README.md
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/boom/lib/index.js
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/boom/package.json
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/boom/test/index.js
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/cryptiles/package.json
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/hoek/.travis.yml
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/hoek/README.md
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/hoek/lib/index.js
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/hoek/package.json
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/hoek/test/index.js
+#       modified:   cip/node_modules/request/node_modules/hawk/node_modules/sntp/package.json
+#       modified:   cip/node_modules/request/node_modules/hawk/package.json
+#       modified:   cip/node_modules/request/node_modules/http-signature/node_modules/asn1/package.json
+#       modified:   cip/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json
+#       modified:   cip/node_modules/request/node_modules/http-signature/node_modules/ctype/package.json
+#       modified:   cip/node_modules/request/node_modules/http-signature/package.json
+#       deleted:    cip/node_modules/request/node_modules/isstream/LICENSE
+#       new file:   cip/node_modules/request/node_modules/isstream/LICENSE.md
+#       modified:   cip/node_modules/request/node_modules/isstream/README.md
+#       modified:   cip/node_modules/request/node_modules/isstream/package.json
+#       modified:   cip/node_modules/request/node_modules/json-stringify-safe/package.json
+#       modified:   cip/node_modules/request/node_modules/mime-types/HISTORY.md
+#       modified:   cip/node_modules/request/node_modules/mime-types/README.md
+#       modified:   cip/node_modules/request/node_modules/mime-types/node_modules/mime-db/HISTORY.md
+#       modified:   cip/node_modules/request/node_modules/mime-types/node_modules/mime-db/README.md
+#       modified:   cip/node_modules/request/node_modules/mime-types/node_modules/mime-db/db.json
+#       modified:   cip/node_modules/request/node_modules/mime-types/node_modules/mime-db/package.json
+#       modified:   cip/node_modules/request/node_modules/mime-types/package.json
+#       modified:   cip/node_modules/request/node_modules/oauth-sign/package.json
+#       modified:   cip/node_modules/request/node_modules/qs/package.json
+#       modified:   cip/node_modules/request/node_modules/stringstream/package.json
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/.editorconfig
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/.npmignore
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/.travis.yml
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/CONTRIBUTING.md
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/LICENSE
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/README.md
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/generate-pubsuffix.js
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/lib/cookie.js
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/lib/memstore.js
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/lib/pubsuffix.js
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/lib/store.js
+#       deleted:    cip/node_modules/request/node_modules/tough-cookie/node_modules/punycode/LICENSE-MIT.txt
+#       deleted:    cip/node_modules/request/node_modules/tough-cookie/node_modules/punycode/README.md
+#       deleted:    cip/node_modules/request/node_modules/tough-cookie/node_modules/punycode/package.json
+#       deleted:    cip/node_modules/request/node_modules/tough-cookie/node_modules/punycode/punycode.js
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/package.json
+#       modified:   cip/node_modules/request/node_modules/tough-cookie/public-suffix.txt
+#       deleted:    cip/node_modules/request/node_modules/tough-cookie/test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/api_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/cookie_jar_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/cookie_sorting_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/cookie_to_json_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/cookie_to_string_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/date_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/domain_and_path_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/ietf_data/dates/bsd-examples.json
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/ietf_data/dates/examples.json
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/ietf_data/parser.json
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/ietf_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/lifetime_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/parsing_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/test/regression_test.js
+#       new file:   cip/node_modules/request/node_modules/tough-cookie/tough-cookie-deps.tsv
+#       modified:   cip/node_modules/request/node_modules/tunnel-agent/package.json
+#       modified:   cip/node_modules/request/package.json
+#       deleted:    cip/nohup.out
+#       deleted:    cip/nohup.out.old
+#       new file:   trans/documentation/ANDROID/ADB/logcat
+#       new file:   trans/documentation/ARFSYNC/start_script
+#       new file:   trans/documentation/GOOGLE/login/logo11w.png
+#       new file:   trans/documentation/GOOGLE/login/server_side_code_flow.png
+#       new file:   trans/documentation/GOOGLE/login/serverside_flow
+#       new file:   trans/documentation/PHP/class/class___normal
+#       new file:   trans/documentation/PHP/extend
+#       new file:   trans/documentation/PHP/namespace
+#       new file:   trans/documentation/PHP/redis/install__clone
+#       new file:   trans/documentation/PHP/redis/pub_sub
+#       new file:   trans/documentation/PHP/singleton/singleton.php
+#       new file:   trans/documentation/REDIS/redic_cmds
+#       new file:   trans/documentation/REDIS/redis_nodejs
+#       new file:   trans/documentation/apache/apache
+#       new file:   trans/documentation/composer/install
+#       new file:   trans/documentation/debug/debug_load
+#       new file:   trans/documentation/git/clone
+#       new file:   trans/documentation/git/init
+#       modified:   trans/documentation/linux-commands/chmod
+#       new file:   trans/documentation/linux-commands/find_files_greaterThan
+#       new file:   trans/documentation/linux-commands/list_node_process_sockets_etc
+#       new file:   trans/documentation/linux-commands/size_summaryOfFolder
+#       modified:   trans/documentation/linux-commands/tail
+#       modified:   trans/documentation/nginx/NginX
+#       new file:   trans/documentation/redClient/RedClient_example
+#       modified:   trans/express/app.js
+#       modified:   trans/express/controllers/angtestcontroller.js
+#       new file:   trans/express/controllers/googlecontroller.js
+#       modified:   trans/express/controllers/securitycontroller.js
+#       modified:   trans/express/filestoragedat.json
+#       deleted:    trans/express/library/cip/ciprequesthandler.js
+#       deleted:    trans/express/library/cip/client.js
+#       new file:   trans/express/library/redclient/redclient.js
+#       new file:   trans/express/models/informationmodel.js
+#       new file:   trans/express/node_modules/redis/.npmignore
+#       new file:   trans/express/node_modules/redis/README.md
+#       new file:   trans/express/node_modules/redis/connection_breaker.js
+#       new file:   trans/express/node_modules/redis/index.js
+#       new file:   trans/express/node_modules/redis/lib/commands.js
+#       new file:   trans/express/node_modules/redis/lib/parser/hiredis.js
+#       new file:   trans/express/node_modules/redis/lib/parser/javascript.js
+#       new file:   trans/express/node_modules/redis/lib/queue.js
+#       new file:   trans/express/node_modules/redis/lib/to_array.js
+#       new file:   trans/express/node_modules/redis/lib/util.js
+#       new file:   trans/express/node_modules/redis/package.json
+#       modified:   trans/express/public/docs/hopper_resume_o_source.docx
+#       new file:   trans/express/public/images/ui/google_plus_signin.png
+#       modified:   trans/express/public/js/arfsync/arfsync.mini.js
+#       modified:   trans/express/public/js/commmanager/commmanager.js
+#       new file:   trans/express/public/js/jquery/hopper/jquery.hopper.mobilepoplistview.js
+#       modified:   trans/express/public/js/jquery/hopper/jquery.hopper.popuplistview.js
+#       modified:   trans/express/purchase.log
+#       modified:   trans/express/views/angtest/angtest.jade
+#       modified:   trans/express/views/angtest/angtest2.jade
+#       renamed:    trans/express/views/angtest/angtest2.jade -> trans/express/views/angtest/angtest2.jade.old
+#       new file:   trans/express/views/angtest/angtest3.jade
+#       modified:   trans/express/views/products/nosubscription.jqm.jade
+#       new file:   trans/express/views/products/nosubscription.jqm.jade.05-10-15.OLD
+#       modified:   trans/express/views/products/showcase.jqm.jade
+#       modified:   trans/websocket/controllers/devicetokencontroller.js
+#       modified:   trans/websocket/controllers/familtycontroller.js
+#       new file:   trans/websocket/controllers/googlecontroller.js
+#       modified:   trans/websocket/controllers/loginlogoutcontroller.js
+#       modified:   trans/websocket/controllers/qrcontroller.js
+#       deleted:    trans/websocket/libs/cip/cipmessenger.js
+#       deleted:    trans/websocket/libs/cip/ciprequesthandler.js
+#       deleted:    trans/websocket/libs/cip/client.js
+#       new file:   trans/websocket/libs/redclient/redclient.js
+#       new file:   trans/websocket/models/googlemodel.js
+#       new file:   trans/websocket/models/informationmodel.js
+#       new file:   trans/websocket/models/usermodel.js
+#       new file:   trans/websocket/node_modules/redis/.npmignore
+#       new file:   trans/websocket/node_modules/redis/README.md
+#       new file:   trans/websocket/node_modules/redis/connection_breaker.js
+#       new file:   trans/websocket/node_modules/redis/index.js
+#       new file:   trans/websocket/node_modules/redis/lib/commands.js
+#       new file:   trans/websocket/node_modules/redis/lib/parser/hiredis.js
+#       new file:   trans/websocket/node_modules/redis/lib/parser/javascript.js
+#       new file:   trans/websocket/node_modules/redis/lib/queue.js
+#       new file:   trans/websocket/node_modules/redis/lib/to_array.js
+#       new file:   trans/websocket/node_modules/redis/lib/util.js
+#       new file:   trans/websocket/node_modules/redis/package.json
+#       modified:   trans/websocket/wsapp.js
+#       modified:   trans/websocket/wstestapp.js
+#

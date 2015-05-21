@@ -8,16 +8,22 @@ var MaintenanceObject = require(basePath + '/libs/maintenance/maintenanceobject.
 var moment = require(basePath + '/node_modules/moment');
 var fs = require('fs');
 var domain = require('domain');
-var CipClient = require(basePath + '/libs/cip/client.js');
-var CipRequestHandler = require(basePath + '/libs/cip/ciprequesthandler.js');
-var CipMessenger = require(basePath + '/libs/cip/cipmessenger.js');
+//var CipClient = require(basePath + '/libs/cip/client.js');
+//var CipRequestHandler = require(basePath + '/libs/cip/ciprequesthandler.js');
+//var CipMessenger = require(basePath + '/libs/cip/cipmessenger.js');
 var util = require('util');
-
-
+var extend = require(basePath + '/node_modules/node.extend');
+var RedClient = require(basePath + '/libs/redclient/redclient.js');
+//==================================================================
+//--  GLOBAL REDCLIENT INSTANCE  -----------------------------------
+//==================================================================
+global.redClient = new RedClient();
 
 
 global.DEBUG_MODE = true;
 global.CIP_ENABLED = false;
+
+global.cipServerData = {};
 
 //==================================================================
 //--  GLOBAL PAUSE  ------------------------------------------------
@@ -64,28 +70,22 @@ global.scoreMaintenanceCycle = new MaintenanceObject(
 	}
 );
 global.scoreMaintenanceCycle.start();
-
+global.scoreCurrentJstruct = {};
 global.scoreMaintenanceCycle.add(function(inOptions, inData){
-	if(global.CIP_ENABLED){
-		global.cipClient.sendCommand(
-			{
-				command:'remoteServerScore',
-				data:
-					{
-						REQUEST_SCORE_INTERVAL_SECOND:global.REQUEST_SCORE_INTERVAL_SECOND,
-						PROCESSING_SCORE_INTERVAL_SECOND:global.PROCESSING_SCORE_INTERVAL_SECOND,
-
-						requestScore:global.requestScore,
-						requestScoreOld:global.requestScoreOld,
-						REQUEST_SCORE_COMMON:global.REQUEST_SCORE_COMMON,
-
-						processingScore:global.processingScore,
-						processingOld:global.processingOld,
-						PROCESSING_SCORE_COMMON:global.PROCESSING_SCORE_COMMON,
-					},
-			}
-		);
-	}
+	global.scoreCurrentJstruct = extend(true, {}, 
+		{
+			REQUEST_SCORE_INTERVAL_SECOND:global.REQUEST_SCORE_INTERVAL_SECOND,
+			PROCESSING_SCORE_INTERVAL_SECOND:global.PROCESSING_SCORE_INTERVAL_SECOND,
+			requestScore:global.requestScore,
+			requestScoreOld:global.requestScoreOld,
+			REQUEST_SCORE_COMMON:global.REQUEST_SCORE_COMMON,
+			processingScore:global.processingScore,
+			processingOld:global.processingOld,
+			PROCESSING_SCORE_COMMON:global.PROCESSING_SCORE_COMMON,
+			serverName:global.SEVER_NAME,
+			serverType:global.SERVER_TYPE,
+		}
+	);
 });
 
 
@@ -141,7 +141,7 @@ console.dir(process.argv);
 if(process.argv[5]){
 	if(process.argv[5] && parseInt(process.argv[5]) == 1){
 		console.log('WS is  Cip Enabled');
-		global.CIP_ENABLED = true;
+		//global.CIP_ENABLED = true;
 	}
 }
 
@@ -212,6 +212,7 @@ app = https.createServer({
 
 var WebSocketServer = require(basePath + '/node_modules/ws').Server;
 var wss = new WebSocketServer( {server: app});
+global.wss = wss;
 //END OF SECURE SECTION------------------------------------------------------
 
 
@@ -270,7 +271,12 @@ global.maintenance_0_20_40.add(function(inOptions, inData){
 	for(var clientHistoryHashIndex in clientHistoryHash){
 		var expireMoment = clientHistoryHash[clientHistoryHashIndex].expireMoment;
 		if(expireMoment && moment().isAfter(expireMoment)){
-			console.log('REMOVEING clientHistoryHash entry, is expired');
+			//console.log('REMOVEING clientHistoryHash entry, is expired');
+			global.reportNotify('REMOVEING clientHistoryHash entry', 
+				{
+					clientHistoryHashIndex:clientHistoryHashIndex,
+				}, 0
+			);
 			delete clientHistoryHash[clientHistoryHashIndex];
 		}
 	}
@@ -284,7 +290,7 @@ var CommunicationRouter = require(basePath + '/node_modules/communicationrouter/
 var communicationRouter = new CommunicationRouter();
 console.log('path:' + __dirname + '/controllers');
 communicationRouter.loadAllFilesInFolderAsControllers(__dirname + '/controllers');
-
+/*
 //==============================================================================
 //> -- CIP ---------------------------------------------------------------------
 //==============================================================================
@@ -298,13 +304,7 @@ if(global.CIP_ENABLED){
 			port:configData.cip.port,
 			serverName:global.SEVER_NAME,
 			onData:function(inTransportLayer_json){
-				//console.log('cipClient onData');
-				//console.dir(inTransportLayer_json);
 				global.reportNotify('cip.onData.inTransportLayer_json', inTransportLayer_json, 1);
-				//communicationRouter.reportOnRoute(wss, ws, inTransportLayer_json);
-				/*if(inTransportLayer_json.cipLayer && inTransportLayer_json.cipLayer.isWsPassThrough){
-					console.log('YOU HAVE A PASSTHRUE!!!!!');
-				}*/
 				cipRequestHandler.handleRequest(inTransportLayer_json.cipLayer, inTransportLayer_json);
 
 			},
@@ -331,17 +331,6 @@ if(global.CIP_ENABLED){
 
 // END OF CIP
 if(global.CIP_ENABLED){
-	/*
-	global.cipClient.sendCommand(
-		{
-			command:'remoteError',
-			data:
-				{
-					testKey0:'HELLO BEN HOPPER 22',
-				},
-		}
-	);
-	*/
 	setTimeout(function(){
 		global.cipClient.testConnection(
 			{
@@ -361,7 +350,7 @@ if(global.CIP_ENABLED){
 }
 
 
-
+*/
 
 
 
@@ -434,7 +423,7 @@ wss.on('connection', function(ws){
 
 
 
-
+/*
 
 //######################################################################################
 //----------- > -- S E R V E R   B R I D G E   S E R V I C E S -- < --------------------
@@ -514,7 +503,7 @@ var tcpServer = new TcpServer(
 		}
 	}
 );
-
+*/
 
 //========================================================================
 // CLEAN UP AND EXIT FACILITY
@@ -546,14 +535,26 @@ function exitHandler(options, err){
 
 		Connection.terminateAll();
 
-		global.cipClient.sendCommand(
+
+		//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		redClient.send('CIP', 
+			{
+				command:'serverKilled',
+				data:
+					{
+						serverName:global.SEVER_NAME,
+					},
+			}
+		);
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		/*global.cipClient.sendCommand(
 			{
 				command:'serverKilled',
 				type:'toCipInformation',
 				data:false,
 				isWsPassThrough:false,
 			}
-		);
+		);*/
 
 		global.cipClient.destroy();
 		//close cip connection......
@@ -578,4 +579,18 @@ process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 
 
+//==================================================================
+//--  INFORMATION MODEL  -------------------------------------------
+//==================================================================
+var InformationModel = require(basePath + '/models/informationmodel.js');
+var informationModel = new InformationModel();
 
+setTimeout(function(){
+	//@@@@ RED CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	redClient.send('onServerStart', 
+		{
+			serverName:global.SEVER_NAME,
+		}
+	);
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+}, 1000);

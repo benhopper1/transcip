@@ -1,429 +1,2899 @@
-doctype html
-html
-	head(lang="en")
-		title Account
-		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
-		meta(name="description", content="")
-		meta(name="keywords", content="")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
 
+head 
+	meta(charset="UTF-8")
+	meta(name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+	title() ArfSync
+	link(rel="icon" type="image/png" href="/public/icons/favicon-32x32.png")
 
-		link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
-		script(src="https://code.jquery.com/jquery-1.11.1.min.js")
-		script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+	link(href="/public/js/footable/css/footable.core.css" rel="stylesheet" type="text/css")
+
+	link(rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css")
+	link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
+
+	script(src="https://code.jquery.com/jquery-1.11.1.min.js")
+	script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
+
+	if useMini
+		script(src="/public/js/arfsync/arfsync.mini.js")
+
+	else
 		script(src="/public/js/jquery/hopper/jquery.hopper.extention.js")
 
-		//BUTTON NAV BAR ----------------------------------------------------
-		script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
 
+		script(src="/public/js/jquery/hopper/jquery.hopper.database.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.checkboxlines.js")
+		script(src="/public/js/jquery/hopper/jquery.hopper.contactlistview.js")
 		//POPUP LIST VIEW ---------------------------------------------------
 		script(src="/public/js/jquery/hopper/jquery.hopper.popuplistview.js")
+		//dynamictable ---------------------------------------------------
+		script(src="/public/js/jquery/hopper/jquery.hopper.extension.dynamictable.js")
 
 
-		//script(type='text/javascript', src='/public/js/easyui/jquery.easyui.min.js')
-		//link(rel='stylesheet', href='/public/js/easyui/themes/default/easyui.css')
-		//link(rel='stylesheet', href='/public/js/easyui/themes/default/icon.css')
-
-		script(type='text/javascript', src='/public/js/phoneformat/phoneformat.js')
-		script(type='text/javascript', src='/js/clientutil/clientutil.js')
-
-		//arfsync.jqm   CSS ---------
-		link(rel="stylesheet" href="/public/css/arfsync.jqm/arfsync.jqm.css")
-		script(type='text/javascript', src='/js/crypto/crypto.js')
-		script(src='/public/js/moment/moment.mini.js')
-
-		//TOOL TIP
-		//link(rel="stylesheet" href="/public/js/tooltip/css/tooltipster.css")
-		//script(type='text/javascript', src='/public/js/tooltip/js/jquery.tooltipster.min.js')
+	script(src='/js/commmanager/commmanager.js')
 
 
-		//style.
-
-		body(style="")
-
-			div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
-				div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
-					ul
-						li
-							a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button bt-bck-000") Login Manager
-						li
-							a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button bt-bck-000") Contact Manager
-						li
-							a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button bt-bck-000") User Profile
-						li
-							a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
-						li
-							a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+	script(src='/js/clientutil/clientutil.js')
+	//BUTTON NAV BAR ----------------------------------------------------
+	script(src="/public/js/jquery/hopper/jquery.hopper.buttonnavbar.js")
+	script(src='/public/js/hashofarray/v002/hashofarrayobject.js')
+	script(src="/public/js/eventorigin/eventorigin.js" type="text/javascript")
 
 
-				#buttonNavBar_div
-
-				#popuplistview_div
-
-			#msgEvent_div
 
 
-			img(id="img_0" src="/public/images/ui/speaker_on.png")
-			img(id="img_1" src="/public/images/ui/speaker_on.png")
-			#testDiv
-			#smsPopupIncoming(data-dialog="false" style="position:relative;" class="")
-			//   /upload
-			form(action="/upload/contact/image", method="post", enctype="multipart/form-data")
-				input(id="upload" type="file" name="uploadedFile" style="display: none;" onchange="console.log('changed!!!')")
+	script(src='/js/qrcode/jquery.composite.qrcode.mini.js')
+	script(src="/public/js/scrollto/lib/jquery-scrollto.mini.js")
+	script(src='/public/js/moment/moment.mini.js')
+	script(src="/public/js/footable/js/footable.mini.js")
+	script(type='text/javascript', src='/public/js/phoneformat/phoneformat.mini.js')
+	script(type='text/javascript', src='/public/js/async/async.mini.js')
 
-			div(id="page_userForm" data-role="page" data-dialog="false" data-theme="b" style="" class=".center-me")
+
+	//==================================================================
+	//--  GOOGLE -------------------------------------------------------
+	//==================================================================
+	script.
+		(function() {
+			var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+			po.src = 'https://apis.google.com/js/client.js?onload=google_onLoadCallback';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		})();
 
 
 
 
 
-				div(id="contactsWindow" data-role="main"  class="ui-content" style="")
-					form(method="post" id="userForm")
-						div(class="ui-field-contain")
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-							br
-
-							input(data-icon="action" id="addEditUser_save" 	type="button" value="Save")
-							input(data-icon="back" id="addEditUser_clear" 	type="button" value="Cancel")
-
-			div(id="page_userForm2" data-role="page" data-dialog="true" data-theme="b" style="" class=".center-me")
-			#xxxxx
 
 
-			script.
-				//======================================================================
-				//>--- HEADER SETUP-----------------------------------------------------
-				//======================================================================
-				$(".mainHeader").toolbar();
-
-				var renderData = !{JSON.stringify(body)}
-
-				console.log('renderData');
-				console.dir(renderData);
-
-
-						//@@--> SET HEIGHT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-				var setHeight = function(){
-					console.log('========== SET HEIGHT ENETERED ================================');
-					var screen = $.mobile.getScreenHeight();
-					var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
-					var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
-					var navbar = $(".ui-header > .ui-navbar").outerHeight();
-					
-					/* content div has padding of 1em = 16px (32px top+bottom). This step
-						can be skipped by subtracting 32px from content var directly. 
-					*/
-					var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
-
-					//var content = screen - (header + navbar) - footer - contentCurrent;
-					var content = screen - 120;  // 115;
-
-					$(".ui-content").height(content);
-					$(".ui-content").css({ top: '121' });
+body
+	script.
+		var getUserId =function(){return '#{userId}';}
+		var getDeviceId = function(){return '#{deviceId}';}
+		var getURL = function(){return '#{URL}';}
+		var getHomePageURL = function(){
+			//return '#{URL}/jqm/arfsync';
+			return '#{reloadUrl}';
+		}
+		var getDefaultUserImageUrl = function(){return '#{defaultUserImageUrl}';}
+		var getDefaultMemberImageUrl = function(){return '#{defaultMemberImageUrl}';}
+		if (screen.width <= 800) {
+			window.location = "/mobile/arfsync";
+		}
 
 
-					$(".sms-top-height").height(220);
-					$(".sms-bottom-height").height(content - 220);
 
-					var bottomOfButton = $('#bt_smsManager_send').css('bottom');
-					$('#dynamicTable_content_sms_div').css('top', bottomOfButton);
-					console.dir(
-						{
-							screen:screen,
-							content:content,
-							header:header,
-							footer:footer,
-							navbar:navbar,
+
+	if useMini
+		h1 useMini
+	a(href="https://www.positivessl.com" style="font-family: arial; font-size: 10px; color: #212121; text-decoration: none;")
+		img(src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans2.png" alt="SSL Certificate" title="SSL Certificate" border="0")
+	//#incomingSmsScreenMessageDiv(data-role="popup" class="ui-content" style="width:80%;background: #00ff00 url('/public/images/ui/whitecloudsimage.jpg') no-repeat fixed center; ")
+	#incomingSmsScreenMessageDiv()
+	div(data-role="header" data-mini="true" data-position="fixed" data-theme="a" class="mainHeader ui-header" style="height:71;width:100%;")
+		div(data-role="navbar" data-theme="a" data-iconpos="left" data-mini="true")
+			ul
+				li
+					a(href="#" data-theme="a" id="btBar_main_loginManager" data-icon="home" class="header-main-button bt-bck-000") Login Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_contactManager" data-icon="bullets" class="header-main-button bt-bck-000") Contact Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_userProfile" data-icon="user" class="header-main-button bt-bck-000") User Profile
+				li
+					a(href="#" data-theme="a" id="btBar_main_smsManager" data-icon="mail" class="header-main-button bt-bck-000") Sms Manager
+				li
+					a(href="#" data-theme="a" id="btBar_main_productManager" data-icon="phone" class="header-main-button bt-bck-000") Product Manager
+
+
+		#buttonNavBar_div
+		#eventLogDiv
+		#msgEvent_div
+
+
+	#allScreenMessageDiv
+
+
+
+	//data-dialog="true"
+	//=================================================================================================================================================================================
+	//-)--> PAGE 0---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+	div(id="pg_page_0" data-role="page"  data-fullscreen="true" data-theme="a"  class="" )
+
+		//div(id="productPopup" data-role="popup")
+
+		#contactsWindow
+		div(data-role="main" class="ui-content" style="overflow:hidden !important;")
+			//GOOGLE+
+			a(id="google_forced_login")
+				img(src="/public/images/ui/google_plus_signin.png" )
+			//====================================
+			//-)--> GRID--------------------------
+			//====================================
+			div(class="ui-grid-b")
+				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-a" syle="overflow:hidden;")
+					//div(data-role="main" class="" syle="overflow:hidden;")
+					div(class="ui-field-contain" id="main_bg" style="width:300px; left:10px")
+						ul(data-role="listview" id="mainmenu" class=""  data-inset="true" )
+							li(id="contactManagerDiv" class="menu_li" )
+								a() Contact Manager
+									img(src="/public/images/ui/members.png" )
+							//br
+							li(id="smsManagerDiv" class="menu_li")
+								a() Sms Manager
+									img(src="/public/images/ui/android_sms.png" )
+							//br
+							li(id="productManagerDiv" class="menu_li")
+								a() Product Manager
+									img(src="/public/images/ui/androidPhoneImg.png" )
+							//- li(id="handsetControllerDiv" class="menu_li")
+							//- 	a() Product Manager
+							//- 		img(src="/public/images/ui/androidPhoneImg.png" )
+							li(id="userProfileDiv" class="menu_li")
+								a() User Profile
+									img(id="img_loginManager_userImg" src="/public/images/ui/unconnecteduser.png" )
+							//br
+							li(id="downloaddiv" class="menu_li")
+								a() Get Android App
+									img(src="/public/images/ui/download_android_app_button.png" )
+
+
+
+				///@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-b")
+					center
+						img(src="/public/images/ui/arfsync_logo3.png")
+					#masterDiv(style="border:0px;")
+						#qrAccord(class="center magicShadow" data-options="" style=" width:320px; ")
+							#lay1(title="Scan to login" data-options="iconCls:'icon-search',collapsed:false,collapsible:true" style="padding:10px;")
+								center
+									#qrCodeDiv(style="background-color: #ffffff;")
+
+				//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid C @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+				div(class="ui-block-c")
+
+
+
+
+
+
+
+		//TODO: remove section---
+		#smsWindowDiv
+		#testHandset
+		#welcome_phoneWindowDiv
+
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 1---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="pg_page_1" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="true")
+		ul(data-role="listview" id="mainmenu2" class=""  style="width:300px" data-inset="false")
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+			li(id="contactManagerDiv" class="menu_li" )
+				a("/hjhjhjh") Contact Manager
+					img(src="/public/images/ui/userconfig.png" height="50px")
+					p 1(256)384-4752
+					p [WORK]
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 2-(CONTACT MANAGER)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="pg_page_2" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+
+		div(class="ui-grid-c" style="")
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid A @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			//CONTACT LIST VIEW
+			div(class="ui-block-a" style="width:25%")
+				div(class="ui-content" data-position-to="window" style="width:90%; ")
+					a(href="#contactPanel_0" data-ajax="false" style="")
+					ul(data-role="listview" id="contactsMenu" class=""   data-inset="false" style="width:100%; ")
+
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			//all tabs here
+			div(class="ui-block-b" style="width:75%;")
+				//=======================================
+				//
+				//=======================================
+				div(data-role="tabs" id="tabs" style="padding: 0px 0px 0px 0px !important;")
+					div(data-role="navbar")
+						ul
+							li
+								a(href="#tab_editContact" data-ajax="false") Edit Contact
+							li
+								a(href="#tab_import" data-ajax="false") Import
+							li
+								a(href="#tab_export" data-ajax="false") Export
+
+					//@@@@@@  TAB ---EDIT CONTACT----------------------------------------------
+					div(id="tab_editContact" class="ui-content" style="overflow: auto; ")
+
+					//@@@@@@  TAB ---IMPORT CONTACT--------------------------------------------
+					div(id="tab_import" class="ui-content" style="")
+
+					//@@@@@@  TAB ---EXPORT CONTACT--------------------------------------------
+					div(id="tab_export" class="ui-content")
+
+
+
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-c" style="width:0%") 
+			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SubGrid B @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			div(class="ui-block-d" style="width:0%")
+
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 3-(USER PROFILE)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_userProfile" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+		#userProfile_contents
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 4-(USER PROFILE)----------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_smsManager" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+		#smsManager_contents
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 5---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_handsetController" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+
+
+	//=================================================================================================================================================================================
+	//-)--> PAGE 6---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================================================================================
+
+	div(id="page_productManager" data-role="page"  data-fullscreen="true" data-theme="a"  class=".center-me" data-dialog="false")
+
+
+
+
+
+
+
+	script.
+		/*$(window).on('beforeunload', function(){
+			return 'Are you sure you want to leave ArfSync?';
+		});*/
+
+		//======================================================================
+		//>--- GLOBAL DECLARE SECTION-------------------------------------------
+		//======================================================================
+		var GLOBAL_USER_IMAGE_URL;
+		var GLOBAL_USER_NAME;
+
+		var commManager;
+		var deviceTokenId;
+
+		var LoginManagerObject;
+		var eventObject = new EventOrigin();//TODO: move inside create event
+		var widgetSmsMessageWindowScript;
+
+		//@@@@@@ QR-HOLD TIMEOUT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		inQrHold = false
+		const QR_HOLD_TIMEOUT_MS = 1000 * 60 * 1;
+		var inQrHold = true;
+		setTimeout(function(){
+			if(inQrHold){
+				alert('#{productsRoute} @375');
+				//window.location = '#{productsRoute}';
+			}
+		}, QR_HOLD_TIMEOUT_MS);
+
+		//======================================================================
+		//>--- LOGIN PAGE EVENTS------------------------------------------------
+		//======================================================================
+
+		$( "#pg_page_0").on( "pagecreate", function( event, ui ){
+			$(".mainHeader").hide();
+			console.log('PAGE CREATE---------------------------LoginManager');
+			loginManagerObject = new LoginManagerObject();
+			loginManagerObject.load();
+			window.location.hash = '';
+			$.mobile.navigate( "#btBar_main_back", {
+				info: "info about the #bar hash"
+			});
+
+
+			//==============================================================================================================================
+			//--  BUTTON NAV BAR THINGS!!!  ------------------------------------------------------------------------------------------------
+			//==============================================================================================================================
+			$('#buttonNavBar_div').ButtonNavBar('create',
+				{
+					onClick:function(inId, inState){
+						console.log('onClick' + inId + ' ' + inState);
+						if(inId == 'phoneState' && inState == 'sleep'){
+							PhoneHardwareObject.reportOnMakeWake();
 						}
-					);
-				}
 
-
-
-
-
-
-
-				var Widget_userFormScript;
-				$(document).ready(function(){
-					Widget_userFormScript = new function(){
-						var _this = this;
-
-						this.load = function(){
-
-							
-							//==============================================
-							// EVENT SETUP
-							//==============================================
-							$('#addEditUser_save').click(function(){
-								
-
-
-								//- $postAjax(
-								//- 	{
-								//- 		url:'/users/userNamesExist',
-								//- 		send:
-								//- 			{
-								//- 				userNameArray:
-								//- 					[
-								//- 						'ben',
-								//- 						'benji',
-								//- 						'hopperDevelopemt@gmail.com',
-								//- 					]
-								//- 			},
-								//- 		onAjaxSuccess:function(inResult){
-								//- 			console.log('back!!!:');
-								//- 			console.dir(inResult);
-								//- 		}
-								//- 	}
-								//- );
-
-
-
-
-
-
-							});
-
-
-							$('#addEditUser_clear').click(function(){
-								
-							});
-
-
-
-						}//end of load
-
-
-
-						_this.load();
-
-					}();
-
-				});
-
-				var setThePopupHeight = function(inMainDiv){
-					var $contentDiv = $(inMainDiv).find('.ui-content');
-					var calculatedHeight = 0;
-					var maxHeight = $.mobile.getScreenHeight() * .90;
-					console.log('--------setThePopupHeight----------------');
-					$(inMainDiv).find('ul').each(function(){
-						console.log('ul');
-						if($(this).attr('data-role') == 'listview'){
-							console.log('data-role');
-							$(this).children('li').each(function(){
-								console.log('----------- li ----------------------------');
-								console.log('height:' + $(this).height() );
-								//calculatedHeight += $(this).height();
-								calculatedHeight += ($(this).outerHeight() + 20);
-							});
-						}
-					});
-					if(calculatedHeight > maxHeight){
-						console.log('using max:' + maxHeight);
-						$($contentDiv).height(maxHeight);
-						//$($contentDiv).css({'overflow-y': 'scroll'})
-					}else{
-						console.log('using calculatedHeight:' + calculatedHeight);
-						$($contentDiv).height(calculatedHeight);
-						//$($contentDiv).css({'overflow-y': 'scroll'})
-					}
-				}
-
-
-
-				$( document ).ready(function() {
-					console.log( "ready!" );
-					$('#btBar_main_loginManager').click(function(){
-						$('#popupAccord').popup('open');
-						$('#zzz').trigger('create');
-						setThePopupHeight('#popupAccord');
-
-
-
-
-					});
-
-					$('#btBar_main_contactManager').click(function(){
-						//$('#popuplistview_div').PopupListView('test', {});
-						$('#popuplistview_div').PopupListView('addItem', 
-							{
-								id:'someId',
-								template:0,
-								imageUrl:'/public/images/ui/speaker_on.png',
-								//imageClass:'ui-li-icon',
-								caption:'this is better',
-								//html:'<center><h1>Yes babby Doll!!</h1></center><img src="/public/images/ui/speaker_on.png" style="height:250px;"></img>',
-								html:'<span class="ui-li-count"><h1>Ben Hopper HOW LONG CAN IT GET</h1><br><h1>Ben Hopper HOW LONG CAN IT GET</h1></span><span class=""><h1>Ben Hopper HOW LONG CAN IT GET</h1></span>',
-								details:
-									[
-										'this is line 1',
-										'this is line 2',
-										'this is line 3',
-										'this is line 4',
-										'this is line 4',
-									],
-								data:
-									{
-										testKey1:'testValue1',
-									}
-
-							}
-						);
-
-
-
-
-						//- for(inde in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]){
-						//- $('#popuplistview_div').PopupListView('addItem', 
-						//- 	{
-						//- 		template:0,
-						//- 		useDataIcon:true,
-						//- 		imageUrl:'/public/images/ui/speaker_on.png',
-						//- 		caption:'this is better',
-
-						//- 	}
-						//- );
-						//- }
-
-
-
-
-
-						$('#popuplistview_div').PopupListView('open', {});
-
-					});
-
-
-					$('#popuplistview_div').PopupListView('create', 
-						{
-							//timedClose:5000,
-							headingCaption:'The Heading Caption',
-							css:
-								{
-									width:'425px',
-								},
-							onClick:function(inId, inData){
-								console.log('On CLICK:' + inId);
-								console.dir(inData);
-								//$('#popuplistview_div').PopupListView('deleteItem', inId);
-							},
-
-						}
-					);
-
-
-
-
-
-					//==================================================================
-					//--  xxxxxxxxxxxx  ------------------------------------------------
-					//==================================================================
-						$('#msgEvent_div').PopupListView('create', 
-							{
-								//timedClose:5000,
-								overlayTheme:'',
-								//dataDismissible:false,
-								//closeButton:false,
-								//headingCaption:'The Heading Caption',
-								css:
-									{
-										width:'425px',
-									},
-								onClick:function(inId, inData){
-									
-									//- $('#msgEvent_div').PopupListView('chainOpen', function(){
-									//- 	$('#popuplistview_div').PopupListView('open', {});
-									//- });
-									$('#msgEvent_div').PopupListView('append', 
+						//==================================================================
+						//--  MISSED CALL  CLICK EVENTING  ---------------------------------
+						//==================================================================
+						if(inId == 'missedCallSection' && inState == 'onMissedCall'){
+							var theSpecificEventsLog = EventLogObject.getEventsByType(['missedPhoneCall']);
+							console.log('theSpecificEventsLog');
+							console.dir(theSpecificEventsLog);
+							$('#eventLogDiv').PopupListView('clear',{});
+							for(var theIndex in theSpecificEventsLog){
+								if(theSpecificEventsLog[theIndex].data && theSpecificEventsLog[theIndex].data.lookedupContact){
+									var contact = theSpecificEventsLog[theIndex].data.lookedupContact;
+									$('#eventLogDiv').PopupListView('addItem', 
 										{
-											id:inId,
-											html:'<input type="text" name="name" id="basic" value="">',
+											id:contact.id + '_' + theIndex,
+											template:0,
+											zOrder:true,
+											imageUrl:contact.imageUrl,
+											imageClass:'magicSquare',
+											caption:'Missed Call',
+											details:
+												[
+													contact.name + '    '  + phoneDisplayFormat(contact.phoneNumber),
+													theSpecificEventsLog[theIndex].data.when,
+												],
+											data:theSpecificEventsLog[theIndex].data,
 										}
 									);
-									
-								},
-
+								}
 							}
-						);
-						for(i in [1,1,1,]){
-						$('#msgEvent_div').PopupListView('addItem', 
+
+							$('#eventLogDiv').PopupListView('open', {});
+
+							// set back to details state....
+							$('#buttonNavBar_div').ButtonNavBar('changeState',
+								{
+									id:'missedCallSection',
+									state:'onDetails',
+								}
+							);
+
+
+							console.log('-------EventLogObject------:');
+							console.dir(EventLogObject.getEvents());
+
+						}// end if miissed SECTION  missedCall-------------------------
+
+						//==================================================================
+						//--  EVENT LOG  ------------------------------------------------
+						//==================================================================
+						if(inId == 'missedCallSection' && inState == 'onDetails'){
+							var theSpecificEventsLog = EventLogObject.getEventsByType(['missedPhoneCall', 'onOffHook', 'onAnswerCall', 'outgoingPhoneCall', 'outgoingSms' , 'incomingSms']);
+							console.log('theSpecificEventsLog');
+							console.dir(theSpecificEventsLog);
+
+							$('#eventLogDiv').PopupListView('clear',{});
+							for(var theIndex in theSpecificEventsLog){
+								var caption = '';
+								if(theSpecificEventsLog[theIndex].type == 'missedPhoneCall'){
+									caption = 'Missed Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'incomingPhoneCall'){
+									caption = 'Incoming Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'onOffHook'){
+									caption = 'Off Hook';
+								}else if(theSpecificEventsLog[theIndex].type == 'outgoingPhoneCall'){
+									caption = 'Placed Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'onAnswerCall'){
+									caption = 'Answered Call';
+								}else if(theSpecificEventsLog[theIndex].type == 'outgoingSms'){
+									caption = 'Outgoing Sms';
+								}else if(theSpecificEventsLog[theIndex].type == 'incomingSms'){
+									caption = 'Incoming Sms';
+								}else{
+									caption = 'Unknown Event';
+								}
+
+
+								if(theSpecificEventsLog[theIndex].data && theSpecificEventsLog[theIndex].data.lookedupContact){
+									var contact = theSpecificEventsLog[theIndex].data.lookedupContact;
+									$('#eventLogDiv').PopupListView('addItem', 
+										{
+											id:contact.id + '_' + theIndex,
+											template:0,
+											zOrder:true,
+											imageUrl:contact.imageUrl,
+											imageClass:'magicSquare',
+											caption:caption,
+											details:
+												[
+													contact.name + '    '  + phoneDisplayFormat(contact.phoneNumber),
+													theSpecificEventsLog[theIndex].data.when,
+													theSpecificEventsLog[theIndex].data.detail,
+												],
+											data:theSpecificEventsLog[theIndex].data,
+										}
+									);
+								}
+							}
+
+							$('#eventLogDiv').PopupListView('open', {});
+
+						}// end if miissed SECTION  onDetails---------------------------
+
+						//==================================================================
+						//--------- NETWORK DETAIL CLICK -----------------------------------
+						//==================================================================
+						if(inId == 'connection'){
+							console.log('CCCConect');
+							//inState
+							getConnectionStatus(function(inDataLayer){
+								console.log('inDataLayer');
+								console.dir(inDataLayer);
+								var connectionTimeMinutes = 0;
+								if(inDataLayer.currentDuration){
+									connectionTimeSeconds = inDataLayer.currentDuration;
+								}
+								$('#msgEvent_div').PopupListView('clear', {});
+								$('#msgEvent_div').PopupListView('addItem', 
+									{
+										//id:'someId',
+										template:0,
+										imageUrl:$('#buttonNavBar_div').ButtonNavBar('getImageUrl', inId),
+										caption:'Phone Internet Connected Via:',
+										html:function(){
+											var $lvHeader = $('<div></div>').append
+												(
+													$('<p>' + inDataLayer.networkType + '</p>')
+												).append
+												(
+													$('<p>' + inDataLayer.networkCaption + '</p>')
+												)
+												.append
+												(
+													$('<p>' + 'Connection started ' +  moment().subtract(connectionTimeSeconds, 's').fromNow() + '</p>')
+												)
+											return $($lvHeader).html();
+										}(),
+									}
+								);
+								$('#msgEvent_div').PopupListView('setHeading', 'Phone Connection');
+								$('#msgEvent_div').PopupListView('open', {});
+
+							});
+						}
+
+					},
+
+					onStateChange:function(inId, inState, inOldState){
+						console.log('onStateChange' + inId + ' ' + inState + ' ' + inOldState);
+
+						//BLNK WHEN CHANGES FOR n
+						$('#buttonNavBar_div').ButtonNavBar('blink',
 							{
-								id:'someId' + i,
-								template:0,
-								imageUrl:'/public/images/contacts/9bb5c610-df26-11e4-9b5c-13ad466e7d46.jpg',
-								//caption:'Benjamin Hopper (256) 466-3434',
-								html:function(){
-									var $lvHeader = $('<div></div>').append
-											(
-												$('<p><strong>Benjamin Hopper</strong>    (256) 466-3434</p>')
-											)
-										.append
-											(
-												$('<p>2015-04-18 18:15:57</p>')
-											)
-										.append
-											(
-												$('<p>This is my short liitle message</p>')
-											)
-									return $($lvHeader).html();
-								}(),
+								id:inId, 
+								duration:5000,
 							}
 						);
 
-						$('#btBar_main_userProfile').click(function(){
-							$('#msgEvent_div').PopupListView('setHeading', 'Incoming Sms');
-							$('#msgEvent_div').PopupListView('open', {});
+
+
+					},
+				}
+			);
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							awake:'/public/images/ui/phone_state_awake_001.jpg',
+							sleep:'/public/images/ui/phone_state_sleep.png',
+						},
+						tooltip:
+							{
+								awake:'The Phone is AWAKE!!!',
+								sleep:'Phone is sleeping(click to wake it up!!!)',
+							},
+					state:'awake',
+					id:'phoneState',
+
+				}
+			);
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							offhook:'/public/images/ui/phone_offhook_000.png',
+							onhook:'/public/images/ui/phone_onhook_000.png',
+							onRinging:'/public/images/ui/phone_ringing_002.gif',
+						},
+					tooltip:
+						{
+							offhook:'The Phone is Off the Hook !!!',
+							onhook:'The Phone is On the Hook !!!',
+							onRinging:'The Phone is Ringing !!!',
+						},
+					state:'onhook',
+					id:'telephonyState',
+				}
+			);
+
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							onMissedCall:'/public/images/ui/phone_missedcall_000.png',
+							onDetails:'/public/images/ui/phone_calllogdetails_000.png',
+
+						},
+					tooltip:
+						{
+							onMissedCall:'Missed Call (Click to View Details)',
+							onDetails:'Call Log (Click to View Details)',
+						},
+					state:'onDetails',
+					id:'missedCallSection',
+				}
+			);
+
+			$('#buttonNavBar_div').ButtonNavBar('addClickImage',
+				{
+					imageUrls:
+						{
+							mobile:'/public/images/ui/phone_mobile_000.png',
+							WIFI:'/public/images/ui/phone_wifi_000.png',
+							noConnection:'/public/images/ui/phone_noconnection_000.png',
+						},
+						tooltip:
+							{
+								mobile:'Phone is Connected Via MOBILE',
+								WIFI:'Phone is Connected Via WIFI',
+								noConnection:'Phone is NOT Connected',
+							},
+					state:'noConnection',
+					id:'connection',
+
+				}
+			);
+
+
+
+
+
+			$('#buttonNavBar_div').ButtonNavBar('render',{});
+
+			eventObject.setOn('endPhoneCall', function(){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onhook',
+					}
+				);
+
+			});
+
+			eventObject.setOn('onOffHook', function(){
+				//put icon to on offhook---
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'offhook',
+					}
+				);
+			});
+
+			eventObject.setOn('incomingPhoneCall', function(){
+				//put icon to on ringing---
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onRinging',
+					}
+				);
+			});
+
+			eventObject.setOn('missedPhoneCall', function(){
+				//put missed icon
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'missedCallSection',
+						state:'onMissedCall',
+					}
+				);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'onhook',
+					}
+				);
+			});
+
+			eventObject.setOn('onReconnect', function(inDataLayer){
+				//put icon to on ringing---
+				//networkType":"mobile    networkCaption":"epc.tmobile.com
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'connection',
+						state:inDataLayer.networkType,
+					}
+				);
+			});
+
+			eventObject.setOn('onGetConnectionStatus', function(inDataLayer){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'connection',
+						state:inDataLayer.networkType,
+					}
+				);
+			});
+
+			eventObject.setOn('outgoingPhoneCall', function(inDataLayer){
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'telephonyState',
+						state:'offhook',
+					}
+				);
+			});
+
+			// END BUTTON BAR THINGS-----------------------------------
+
+
+
+
+
+
+		});
+
+		$( "#pg_page_0").on( "pageshow", function( event, ui ){
+			$(".mainHeader").hide();
+			console.log('PAGE SHOW-----------------------------LoginManager');
+			window.location.hash = '';
+		});
+
+		$( "#pg_page_0").on( "pagehide", function( event, ui ){
+			$(".mainHeader").show();
+			console.log('PAGE HIDE-----------------------------LoginManager');
+			//window.location.hash = '';
+		});
+
+		//======================================================================
+		//>--- HEADER SETUP-----------------------------------------------------
+		//======================================================================
+		$(".mainHeader").toolbar();
+
+
+
+		//======================================================================
+		//>--- MAIN TOOLBAR -----/(EVENTS)--------------------------------------
+		//======================================================================
+		$('#btBar_main_back').click(function(){
+			history.back();
+			return false;
+		});
+		$('#btBar_main_loginManager').click(function(){
+			PageLoaderObject.loadPage('loginManager');
+		});
+		$('#btBar_main_contactManager').click(function(){
+			PageLoaderObject.loadPage('contactManager');
+		});
+		$('#btBar_main_userProfile').click(function(){
+			PageLoaderObject.loadPage('userProfile');
+		});
+		$('#btBar_main_smsManager').click(function(){
+			PageLoaderObject.loadPage('smsManager');
+		});
+		$('#btBar_main_handSet').click(function(){
+			PageLoaderObject.loadPage('handsetController');
+		});
+		$('#btBar_main_productManager').click(function(){
+			PageLoaderObject.loadPage('productManager');
+		});
+
+
+		//=========================================================
+		// PageLoaderObject
+		//=========================================================
+		var PageLoaderObject = new function(){
+			var _this = this;
+			var loadedHash = {};
+
+			var processHash = 
+				{
+					load:
+						{
+							loginManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'turn', reverse:'true'});
+								loadedHash['loginManager'] = true;
+							},
+							contactManager:function(){
+								$('#pg_page_2').load("/jqm/contactmanager ", function(){
+									loadedHash['contactManager'] = true;
+
+									//  setup events----------------------------
+									$('#tab_export').load("/jqm/contactexport ", function(){
+										console.log('loaded');
+										$('#tab_export').trigger('create');
+
+									});
+									$('#tab_import').load("/jqm/contactimport ", function(){
+										console.log('loaded');
+										$('#tab_import').trigger('create');
+
+									});
+									$('#tab_editContact').load("/jqm/contactedit ", function(){
+										console.log('loaded');
+										$('#tab_editContact').trigger('create');
+
+									});
+
+
+									$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_2', {reload:false, transition:'turn', reverse:'true'});
+									$('#pg_page_2').trigger('create');
+								});
+							},
+							userProfile:function(){
+								$('#userProfile_contents').load("/jqm/userprofile ", function(){
+									console.log('loading userprofile');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', {reload:false, transition:'turn', reverse:'true'});
+									loadedHash['userProfile'] = true;
+									$('#userProfile_contents').trigger('create');
+								});
+							},
+							smsManager:function(){
+								console.log('checklll');
+								$('#smsManager_contents').html('');
+								$('#smsManager_contents').load("/jqm/smsManager ", function(response, status, xhr){
+									if(response.indexOf('PRODUCT_MISSING') != -1){
+										//alert('PRODUCT MISSING');
+									}else{
+										$('#smsManager_contents').trigger('create');
+										//load popup----
+										//- $('#contactPopup_sms').load("/jqm/contactselectpopup ", function(){
+										//- 	console.log('popup thingy loaded!');
+										//- 	//$('#contactPopup_sms').trigger('create');
+										//- });
+
+										loadedHash['smsManager'] = true;
+									}
+
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false, transition:'turn', reverse:'true'});
+
+								});
+
+							},
+							handsetController:function(){
+								$('#page_handsetController').load("/handset/jqm/handsetcontroller ", function(){
+									console.log('loading /handset/jqm/handsetcontroller');
+									$('#page_handsetController').trigger('create');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
+									//loadedHash['handsetController'] = true;
+								});
+							},
+
+							productManager:function(){
+								$('#page_productManager').load("/products/showcase ", function(){
+									console.log('loading /products/showcase');
+									$('#page_productManager').trigger('create');
+									$(':mobile-pagecontainer').pagecontainer('change', '#page_productManager', {transition:'turn', reverse:'true'});
+									//loadedHash['handsetController'] = true;
+								});
+							},
+
+							
+
+
+						},
+					show:{
+							loginManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {reload:false, transition:'turn', reverse:'true'});
+							},
+							contactManager:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_2', {transition:'turn', reverse:'true'});
+							},
+							userProfile:function(){
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_userProfile', {transition:'turn', reverse:'true'});
+							},
+							smsManager:function(){
+								console.dir('changeing to page smsManager');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_smsManager', {reload:false,transition:'turn', reverse:'true'});
+								//$('#smsManager_contents').trigger('create');
+							},
+							handsetController:function(){
+								$('#page_handsetController').trigger('create');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_handsetController', {transition:'turn', reverse:'true'});
+							},
+							productManager:function(){
+								$('#page_productManager').trigger('create');
+								$(':mobile-pagecontainer').pagecontainer('change', '#page_productManager', {transition:'turn', reverse:'true'});
+							},
+						},
+
+					
+				}
+
+			var eventHash =
+				{
+					onLoad:
+						{
+							smsManager:function(){
+
+							}
+						},
+					onShow:
+						{
+							smsManager:function(){
+								
+							}
+						}
+				}
+
+			this.resetLoaderForPage = function(inPageName){
+				if(loadedHash[inPageName]){
+					delete loadedHash[inPageName];
+				}
+			}
+
+			this.loadPage = function(pageName){
+				if(_this.isLoaded(pageName)){
+					processHash.show[pageName]();
+				}else{
+					processHash.load[pageName]();
+				}
+			}
+
+			this.isLoaded = function(pageName){
+				return loadedHash[pageName];
+			}
+
+			this.getLoadedPages = function(){
+				var resultArray = [];
+				for(var theKey in loadedHash){
+					if(loadedHash[theKey]){
+						resultArray.push(theKey);
+					}
+				}
+				return resultArray;
+			}
+		}();
+
+
+		//=========================================================
+		// LoginManagerObject
+		//=========================================================
+
+		var LoginManagerObject = function(){
+			this.load = function(){
+
+				setHeight();
+				//=========================================================
+				// BUTTON EVENTS (LoginManagerObject)
+				//=========================================================
+				$('#contactManagerDiv').click(function(){
+					PageLoaderObject.loadPage('contactManager');
+				});
+				$('#smsManagerDiv').click(function(){
+					PageLoaderObject.loadPage('smsManager');
+				});
+				$('#handsetControllerDiv').click(function(){
+					PageLoaderObject.loadPage('handsetController');
+				});
+				$('#productManagerDiv').click(function(){
+					PageLoaderObject.loadPage('productManager');
+				});
+				$('#userProfileDiv').click(function(){
+					PageLoaderObject.loadPage('userProfile');
+				});
+				$('#downloaddiv').click(function(){
+					//window.location.href = "/public/download/androidapp/v002/Qr_Proj_3.apk";
+					//window.location.href = "http://play.google.com/store/apps/details?id=hopper.arfsync.v001";
+					var left = (screen.width/2)-(($(window).width() * .85)/2);
+					var top = (screen.height/2)-(($(window).height() * .85)/2);
+					window.open("http://play.google.com/store/apps/details?id=hopper.arfsync.v001", null, 'height=' + ($(window).height() * .85) + ',width=' + ($(window).width() * .85) + ',status=yes,toolbar=no,menubar=no,location=no, top=' + top + ', left=' + left);
+				
+				});
+			}
+		}
+
+		//=========================================================
+		// GLOBAL FUNCTIONS
+		//=========================================================
+
+
+
+		//@@--> SET HEIGHT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		var setHeight = function(){
+			console.log('========== SET HEIGHT ENETERED ================================');
+			var screen = $.mobile.getScreenHeight();
+			var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
+			var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
+			var navbar = $(".ui-header > .ui-navbar").outerHeight();
+			
+			/* content div has padding of 1em = 16px (32px top+bottom). This step
+				can be skipped by subtracting 32px from content var directly. 
+			*/
+			var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
+
+			//var content = screen - (header + navbar) - footer - contentCurrent;
+			var content = screen - 120;  // 115;
+
+			$(".ui-content").height(content);
+			$(".ui-content").css({ top: '121' });
+
+
+			//$(".over-shot").height(content - 20);
+
+			$(".sms-top-height").height(220);
+			$(".sms-bottom-height").height(content - 220);
+
+			//$(".contact-list-onEdit").height(content - 220);
+			//$("#userFormContactsList").height(content - 220);
+
+			//$(".sms-bottom-height").css({ top: (content * .2) + 100 }); //top(content * .2);
+			//$(".sms-bottom-height").css({ top: 800}); //top(content * .2);
+			//$("#contactsMenu").height(   content -50   );
+
+			var bottomOfButton = $('#bt_smsManager_send').css('bottom');
+			$('#dynamicTable_content_sms_div').css('top', bottomOfButton);
+			console.dir(
+				{
+					screen:screen,
+					content:content,
+					header:header,
+					footer:footer,
+					navbar:navbar,
+				}
+			);
+
+			//setHeaderSize();
+
+		}
+
+		var setHeightById = function(inId, inDiffValue){
+			var screen = $.mobile.getScreenHeight();
+			var header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight()  - 1 : $(".ui-header").outerHeight();
+			var footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight();
+			var navbar = $(".ui-header > .ui-navbar").outerHeight();
+
+			var contentCurrent = $('#' + inId).outerHeight() - $('#' + inId).height();
+
+			//var content = screen - (header + navbar) - footer - contentCurrent;
+			var content = screen - 120;  // 115;
+			console.log('content:' + content);
+
+			if(inDiffValue){
+				if(inDiffValue > 0){
+					$('#' + inId).height(content + inDiffValue);
+				}else{
+					$('#' + inId).height(Math.abs(content + inDiffValue));
+				}
+			}else{
+				$('#' + inId).height(content)
+			}
+
+			console.log('new height:' + $('#' + inId).height());
+		}
+
+		var setPositionAndHeight = function(inElement, inTop, inHeight){
+			$(inElement).height(inHeight);
+			$(inElement).css({ top: inTop });
+		}
+
+		var setHeaderSize = function(){
+			$('#btg_header .ui-controlgroup-controls').css({width:'100%'})
+
+			var theAtags = $('#btg_header .ui-controlgroup-controls').children('a');
+			var perPartage = Math.floor(($('#btg_header .ui-controlgroup-controls').width() / theAtags.length) - 44); // - 42; //42   - (theAtags.length * 11)
+			console.log('theWidthOf:' + $('#btg_header .ui-controlgroup-controls').width());
+			console.log('perPartage:' + perPartage);
+			$(theAtags).each(function(){
+				console.log('a element' + $(this).attr('id'));
+				console.log('a widthBefore' + $(this).width());
+				$(this).css({'width':perPartage});
+				console.log('a widthAfter' + $(this).width());
+			});
+			//$('.bt-grp-1').css({width:$('#btg_header .ui-controlgroup-controls').width()});
+			$('#btg_header').trigger('create');
+			$('#btg_header').enhanceWithin().controlgroup('refresh');
+		}
+		setHeaderSize();
+
+
+		//@@--> JQUERY . CENTER @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		jQuery.fn.center = function () {
+			this.css("position","absolute");
+			this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
+			$(window).scrollTop()) + "px");
+			this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
+			$(window).scrollLeft()) + "px");
+			return this;
+		}
+
+
+		//=========================================================
+		// GLOBAL EVENTS
+		//=========================================================
+		$('#goBackDiv').click(function(){
+			history.back();
+			return false;
+		});
+
+
+
+
+
+
+
+
+
+
+		$( document ).ready(function(){
+			var waitingDeviceTokenId;
+			
+
+			$('#login_panel').panel({
+				title:'ArfSync',
+				width:400,
+				height:400
+			});
+
+			commManager = commManagerNameSpace.getCommManagerInstance(
+				{
+					webSocketClient:!{JSON.stringify(webSocketClient)},
+					connectToDeviceTypes:
+						[
+							'androidApp'
+						],
+						//- loginByGoogle:
+						//- 	{
+						//- 		userName:'hopperdevelopment@gmail.com',
+						//- 		password:'4747'
+						//- 	},
+
+					loginByScan:
+						{
+							onScan:function(inData){
+								waitingDeviceTokenId = inData.cd;
+								deviceTokenId = inData.cd; //maybe delete this one
+								jQuery('#qrCodeDiv').qrcode({
+									render	: "table",
+									text	: JSON.stringify(inData)
+								});
+							}
+						},
+					onReady:function(){
+						console.log('onReady');
+					},
+					onLoginSuccess:function(inTransportLayer_string, inFamilyCredentialArray, filteredCredentialsArray, inSecurityToken){
+						//@@@@@@ QR-HOLD TIMEOUT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+						inQrHold = false
+
+						console.log('onLoginSuccess');
+						console.dir(inTransportLayer_string);
+						var loginData = JSON.parse(inTransportLayer_string);
+						var securityToken = loginData.securityToken;
+
+
+						console.log('##############################################################################');
+						console.log('############ SECURITY VERIFICATION (start)' + now() + '	   			  #########');
+						console.log('##############################################################################');
+						//sessionSetupAndValidation("loginByScan", waitingDeviceTokenId, function(inJsonStruct){
+						sessionSetupAndValidation("loginByScan", securityToken, function(inJsonStruct){
+							console.log('##############################################################################');
+							console.log('############ SECURITY VERIFICATION (done)' + now() + '	   			  #########');
+							console.log('##############################################################################');
+
+							createFilters();
+							userObject = new UserObject(function(userErr, userData){
+
+								GLOBAL_USER_IMAGE_URL = userData.screenImage;
+								GLOBAL_USER_NAME = userData.userName;
+
+								$('#img_loggedInUser').attr('src', userData.screenImage);
+								$('#lb_loggedInUserName').text(userData.fullName);
+
+								openWebMenuOnPhone();
+
+								//=======================================================
+								// CAUSE GLOBAL LOGIN EVENT -----------------------------
+								//=======================================================
+								eventObject.reportOn('loginReady', {});
+
+							});
+
+
+
+							//=====================================================================
+							// When Page changes by user catch here for remote menu purposes:
+							//=====================================================================
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE ONE -> START SCREEN @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#pg_page_0",function(){ // When entering pagetwo
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mm-m0-p0'
+										}
+									);
+								setHeight();
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE TWO -> CONTACT MANAGER @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#pg_page_2",function(){ // When entering pagetwo
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_contacts'
+										}
+									);
+							});
+							$(document).on("pagehide","#pg_page_2",function(){ // When leaving pagetwo
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE TWO -> CONTACT MANAGER @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#page_smsManager",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_sms'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_smsManager",function(){
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> USER PROFILE  @@@@@@@@@@@@@@@
+							$(document).on("pageshow","#page_userProfile",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_userProfile'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_userProfile",function(){
+
+							});
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> HANDSET CONTROLLER @@@@@@@@@@
+							$(document).on("pageshow","#page_handsetController",function(){
+								eventObject.reportOn('onOpenCloseToRemote',
+									{
+											open:true,
+											id:'mainMenu_handsetController'
+										}
+									);
+							});
+							$(document).on("pagehide","#page_handsetController",function(){
+
+							});
+
+							//@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAGE  -> ProductManager @@@@@@@@@@
+							$(document).on("pageshow","#page_productManager",function(){
+								eventObject.reportOn('onProductManagerOpenClose',
+									{
+										open:true,
+									}
+								);
+							});
+							$(document).on("pagehide","#page_productManager",function(){
+								eventObject.reportOn('onProductManagerOpenClose',
+									{
+										open:false,
+									}
+								);
+							});
+							
+							//==================================================================
+							//--  Connected Device's Hardware Network Status  ------------------
+							//==================================================================
+							getConnectionStatus(function(inDataLayer){
+								eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+							});
+							//- commManager.transactionToDeviceToken(
+							//- 	{
+							//- 		routing:
+							//- 			{
+							//- 				command:'hardware',
+							//- 				action:'getConnectionStatus'
+							//- 			},
+							//- 		data:
+							//- 			{
+							//- 				//url:"/webmenu/normalmenu"
+							//- 				//url:"arfsync"
+							//- 			},
+
+							//- 		onComplete:function(inDataLayer, inTransportLayer){
+							//- 			console.log('onComplete getConnectionStatus call back entered');
+							//- 			eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+							//- 		}
+							//- 	}
+							//- );
+
+
+
 						});
+
+					},
+
+					//WEBSOCKET CLOSED
+					onClose:function(){
+						console.log('onClose a22-3');
+						//eventObject.reportOn('websocketClose', false);
+						
+					},
+
+					//#############################################################################################################
+					//--------When one of your family devices dis/connect ---------------------------------------------------------
+					//#############################################################################################################
+
+					onFamilyDeviceConnect:function(inMsg, inLocal, inData, inRefObj){
+						eventObject.reportOn('reconnect', inData);
+					},
+
+					onFamilyDeviceDisconnect:function(inMsg, inLocal, inData, inRefObj){
+						eventObject.reportOn('disconnect', inData);
+						//alert('GONE')
+					}
+				}
+			);
+		});
+
+
+
+
+
+		//#############################################################################################################
+		//-------- U s e r   O b j e c t ---------------------------------------------------------
+		//#############################################################################################################
+		var UserObject = function(inPostFunction){
+			var _this = this;
+			var userData;
+			this.getUserData = function(){
+				return userData;
+			}
+
+			this.refresh = function(inPostFunction){
+				_this.loadData(inPostFunction);
+			}
+
+			this.getImageUrl = function(){
+				if(userData){
+					if(userData.screenImage){
+						return userData.screenImage;
+					}
+				}
+				return false;
+			}
+
+			var loadData = function(inPostFunction){
+				$postAjax(
+					{
+						url:'/database/getUserData',
+						send:
+							{
+
+							},
+						onAjaxSuccess:function(inResponseText){
+							inResponseText = JSON.parse(inResponseText);
+							//var contactInfoHashByPhone = {};
+							if(inResponseText.hadError == false){
+								console.log('inResponseText.hadError == false');
+								if(inResponseText.rows){
+									userData = inResponseText.rows[0];
+									console.log('userdata--------------------------');
+									console.dir(userData);
+									if(userData.screenImage && userData.fullName){
+										//---userimage update here??
+									}
+								}
+							}
+
+							if(inPostFunction){
+								inPostFunction(inResponseText.hadError, userData);
+							}
+						}
+					}
+				);
+			}
+			loadData(inPostFunction);
+		}//end userObj...
+
+
+
+
+
+
+
+
+
+		//==============================================================================================================================================
+		//--  FILTERS  -----------------------------------------------------------------------------------------------------------------------------
+		//==============================================================================================================================================
+		var filterObj;
+		var createFilters = function(){
+			filterObj = new commManager.FilterObject();
+			//==================================================================
+			//--  (FILTER(==)) notification  -----------------------------------
+			//==================================================================
+			filterObj.add('notification', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				console.log('notification');
+				console.dir(inTransportLayer_json);
+
+				//==================================================================
+				//--  CONTACT LOOKUP  ----------------------------------------------
+				//==================================================================
+				var lookedupContact;
+				if(inTransportLayer_json.dataLayer && inTransportLayer_json.dataLayer.phoneNumber){
+					lookedupContact = ContactDataCache.getContactByPhoneNumber(cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber));
+					if(lookedupContact == false){
+						ContactDataCache.addtempContact(
+							{
+								imageUrl:getDefaultMemberImageUrl(),
+								name:'Unknown Caller',
+								phoneNumber:inTransportLayer_json.dataLayer.phoneNumber,
+								type:'[MOBILE]',
+							}
+						);
+						lookedupContact = ContactDataCache.getContactByPhoneNumber(cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber));
+					}
+				}
+
+				//==================================================================
+				//--  outgoingSms  -------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'outgoingSms'){
+					console.log('outgoingSms--------------------');
+
+					EventLogObject.addEvent(
+						{
+							type:'outgoingSms',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									message:inTransportLayer_json.dataLayer.msg,
+									lookedupContact:lookedupContact,
+									detail:inTransportLayer_json.dataLayer.msg,
+								},
+						}
+					);
+
+					eventObject.reportOn('outgoingSms', inTransportLayer_json);
+				}//endOutgoingSms---
+
+
+
+				//==================================================================
+				//--  incomeing sms  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'incomingSms'){
+					EventLogObject.addEvent(
+						{
+							type:'incomingSms',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									message:inTransportLayer_json.dataLayer.msg,
+									lookedupContact:lookedupContact,
+									detail:inTransportLayer_json.dataLayer.msg,
+								},
+						}
+					);
+
+
+					//==================================================================
+					//--  showSmsIncomingSmsMessage  -----------------------------------
+					//==================================================================
+					$('#msgEvent_div').PopupListView('clear', {});
+					$('#msgEvent_div').PopupListView('addItem', 
+						{
+							id:'someId',
+							template:0,
+							imageUrl:lookedupContact.imageUrl,
+							caption:lookedupContact.name,
+							html:function(){
+								var $lvHeader = $('<div></div>').append
+									(
+										$('<p>' + phoneDisplayFormat(lookedupContact.phoneNumber) + '</p>')
+									).append
+									(
+										$('<p>' + inTransportLayer_json.dataLayer.msg + '</p>')
+									)
+								return $($lvHeader).html();
+							}(),
+						}
+					);
+					$('#msgEvent_div').PopupListView('setHeading', 'Incoming Sms');
+					$('#msgEvent_div').PopupListView('open', {});
+
+
+					//- showSmsIncomingSmsMessage(
+					//- 	{
+					//- 		name:lookedupContact.name,
+					//- 		phoneNumber:lookedupContact.phoneNumber,
+					//- 		message:inTransportLayer_json.dataLayer.msg,
+					//- 		imageUrl:lookedupContact.imageUrl,
+					//- 	}
+					//- );
+
+					eventObject.reportOn('incomingSms', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  incomingPhoneCall  -------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'incomingPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'incomingPhoneCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'Your Phone is RINGING!!!',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									idleDuration:inTransportLayer_json.dataLayer.idleDuration,
+									lookedupContact:lookedupContact,
+								}
+						}
+					);
+
+					$('#msgEvent_div').PopupListView('clear', {});
+					$('#msgEvent_div').PopupListView('addItem', 
+						{
+							id:'someId',
+							template:0,
+							imageUrl:lookedupContact.imageUrl,
+							caption:lookedupContact.name,
+							html:function(){
+								var $lvHeader = $('<div></div>').append
+									(
+										$('<p>' + phoneDisplayFormat(lookedupContact.phoneNumber) + '</p>')
+									)
+								return $($lvHeader).html();
+							}(),
+						}
+					);
+					$('#msgEvent_div').PopupListView('setHeading', 'Incoming Phone Call');
+					$('#msgEvent_div').PopupListView('open', {});
+
+					eventObject.reportOn('incomingPhoneCall', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  missedPhoneCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'missedPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'missedPhoneCall',
+							data:
+								{
+									when:moment().format("hh:mm:ss a dddd MMM Do YYYY"),
+									message:'You Missed a call',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									ringDuration:inTransportLayer_json.dataLayer.ringDuration,
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('missedPhoneCall', inTransportLayer_json);
+					//alert("missedPhoneCall");
+				}
+
+				//==================================================================
+				//--  onOffHook  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onOffHook'){
+					EventLogObject.addEvent(
+						{
+							type:'onOffHook',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('onOffHook', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  onAnswerCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onAnswerCall'){
+					EventLogObject.addEvent(
+						{
+							type:'onAnswerCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('onAnswerCall', inTransportLayer_json);
+				}
+
+
+				//==================================================================
+				//--  endPhoneCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'endPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'endPhoneCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You hung up your phone',
+									callType:inTransportLayer_json.dataLayer.callType,
+									duration:inTransportLayer_json.dataLayer.duration,
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('endPhoneCall', inTransportLayer_json);
+				}
+				//==================================================================
+				//--  outgoingPhoneCall  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'outgoingPhoneCall'){
+					EventLogObject.addEvent(
+						{
+							type:'outgoingPhoneCall',
+							data:
+								{
+									when:moment().format("YYYY-MM-DD HH:mm:ss"),
+									message:'You Dialed a Number',
+									phoneNumber:cleanPhoneNumber(inTransportLayer_json.dataLayer.phoneNumber),
+									idleDuration:inTransportLayer_json.dataLayer.idleDuration,
+									lookedupContact:lookedupContact,
+								},
+						}
+					);
+					eventObject.reportOn('outgoingPhoneCall', inTransportLayer_json);
+				}
+
+				//==================================================================
+				//--  reset  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'reset'){
+					location.reload();
+				}
+
+				//==================================================================
+				//--  phoen state change  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onNewPhoneState'){
+					if(inTransportLayer_json.dataLayer.newState == 'screenOn'){
+						PhoneHardwareObject.reportOnWake(inTransportLayer_json.dataLayer);
+
 					}
 
+					if(inTransportLayer_json.dataLayer.newState == 'screenOff'){
+						PhoneHardwareObject.reportOnSleep(inTransportLayer_json.dataLayer);
+					}
+				}
+
+
+				//==================================================================
+				//--  On RECONNECT  ------------------------------------------------
+				//==================================================================
+				if(inTransportLayer_json.dataLayer.action == 'onReconnect'){
+					eventObject.reportOn('onReconnect', inTransportLayer_json.dataLayer);
+				}
 
 
 
-					$('#btBar_main_smsManager').click(function(){
-						$('#msgEvent_div').PopupListView('append', 
-							{
-								id:'someId2',
-								html:'<h1>Should be appended!!</h1>',
+			});
+			
+
+			// --- MENU ---------------------------
+			filterObj.add('webMenu', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				console.log('FILTER == webMenu'  );
+				if(inTransportLayer_json.dataLayer.action == 'menuClick'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.id, inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'actionRequestClick'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.actionRequest, inTransportLayer_json.dataLayer.data);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'actionRequest'){
+					eventObject.reportOn(inTransportLayer_json.dataLayer.request, inTransportLayer_json.dataLayer.data);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPanelOpenClose'){
+					eventObject.reportOn('onPanelOpenClose', inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPageChange_prd_info'){
+					console.log('onPageChange_prd_info %%%5555555%5');
+					eventObject.reportOn('onPageChange_prd_info', inTransportLayer_json.dataLayer);
+				}
+
+				if(inTransportLayer_json.dataLayer.action == 'onPageExit_prd_info'){
+					console.log('onPageExit_prd_info %%%5555555%5');
+					eventObject.reportOn('onPageExit_prd_info', inTransportLayer_json.dataLayer);
+				}
+
+			});
+
+			//=========================================================
+			// FILTER PHONE TO BROWSER ONSCREEN MESSAGE
+			//=========================================================
+			filterObj.add('phoneMessage', function(inMsg, inLocal, inTransportLayer_json, inRefObj){
+				if(inTransportLayer_json.dataLayer.action == 'openMessage'){
+					eventObject.reportOn('phoneMessage_' + inTransportLayer_json.dataLayer.action , inTransportLayer_json.dataLayer);
+				}
+
+
+			});
+
+
+
+
+
+
+
+
+			//=========================================================
+			// EVENT OBJECT LOADING WINDOWS HERE
+			//=========================================================
+			eventObject.setOn('onPanelOpenClose', function(inData){
+				//=============================================
+				// WINDOW OPEN & CLOSE by remote
+				//============================================
+				//=========CONTACTS===========================
+					//==========OPEN==========================
+				if(inData.id == 'mainMenu_contacts' && inData.command == 'open'){
+					PageLoaderObject.loadPage('contactManager');
+				}
+
+				//==========CLOSE==========================
+				if(inData.id == 'mainMenu_contacts' && inData.command == 'close'){
+					console.log('CLOSEING mainMenu_contacts requested by remote');
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+
+
+				//=========SMS========================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_sms' && inData.command == 'open'){
+					PageLoaderObject.loadPage('smsManager')
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_sms' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+
+
+
+				//=========USER PROFILE=====================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_userProfile' && inData.command == 'open'){
+					PageLoaderObject.loadPage('userProfile');
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_userProfile' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+				//=========PRODUCT MANAGER==================
+					//==========OPEN==================
+				if(inData.id == 'mainMenu_products' && inData.command == 'open'){
+					PageLoaderObject.loadPage('productManager')
+				}
+					//==========CLOSE==================
+				if(inData.id == 'mainMenu_products' && inData.command == 'close'){
+					$(':mobile-pagecontainer').pagecontainer('change', '#pg_page_0', {transition:'turn', reverse:'true'});
+				}
+
+
+
+
+			});
+
+		}
+
+
+		//=====================================================================================================================
+		//DATA OBJECT
+		//=====================================================================================================================
+		
+		var contactDataObject = new DatabaseObject(
+			{
+				editProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/editContact',
+							send:inData,
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
 							}
-						);
+						}
+					);
+				},
+				selectProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/getContacts',
+							send:
+								{
+
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText).rows;
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				insertProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/addContact',
+							send:inData,
+								//{
+								//},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				deleteProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/deleteContact',
+							send:
+								{
+									id:inData.id
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText);
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				onChange:function(){
+					ContactDataCache.forceRefresh(function(inNewData){
+					});
+				}
+			}
+		);
+
+		//=====================================================================================================================
+		//DATA OBJECT
+		//=====================================================================================================================
+		
+		var userDataObject = new DatabaseObject(
+			{
+				editProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/updateUser',
+							send:inData,
+							onAjaxSuccess:function(inResponseText){
+								inPostFunction(inData);
+							}
+						}
+					);
+				},
+				selectProcess:function(inData, inPostFunction){
+					$postAjax(
+						{
+							url:'/database/getUserData',
+							send:
+								{
+
+								},
+							onAjaxSuccess:function(inResponseText){
+								inResponseText = JSON.parse(inResponseText).rows;
+								inPostFunction(inResponseText);
+							}
+						}
+					);
+				},
+				insertProcess:function(inData, inPostFunction){
+				},
+				deleteProcess:function(inData, inPostFunction){
+				},
+			}
+		);
+
+
+		userDataObject.getEventObject().setOn('onAfterEdit', function(inData){
+			var oldImageUrl = GLOBAL_USER_IMAGE_URL + '';
+			GLOBAL_USER_IMAGE_URL = inData.screenImage;
+
+			$('img').each(function(){
+				if(oldImageUrl == $(this).attr('src')){
+					$(this).attr('src', GLOBAL_USER_IMAGE_URL);
+				}
+			});
+		});
+
+
+
+
+
+		//=====================================================================================================================
+		//DATA CACHE
+		//=====================================================================================================================
+		var ContactDataCache = new function(){
+			var _this = this;
+			var eventObject = new EventOrigin();
+			var contactHash = {};
+			var tempContactHash = {};
+
+			contactDataObject.getEventObject().setOn('onAfterSelect', function(inData){
+			});
+
+			this.forceRefresh = function(inPostFunction){
+				contactDataObject.select({}, function(inRecords){
+					_this.updateCache(inRecords);
+					if(inPostFunction){inPostFunction(inRecords);}
+				});
+			}
+
+			this.updateCache = function(inData){
+				var freshHash = {};
+				for(var inDataIndex in inData){
+					freshHash[inData[inDataIndex].id] = inData[inDataIndex];
+				}
+
+				var oldKeys = [];
+
+				for(var theKey in contactHash){
+					oldKeys.push(parseInt(theKey));
+				}
+
+				var newKeys = [];// = Object.keys(freshHash);
+				for(var theKey in freshHash){
+					newKeys.push(parseInt(theKey));
+				}
+
+				var deletedKeys = arrayDiff(oldKeys, newKeys);
+				var addedKeys = arrayDiff(newKeys, oldKeys);
+				var keysToCheckForEdit = deletedKeys.concat(addedKeys);
+				var freshHashCopy = $.copyObject(freshHash);
+				for(var freshKey in freshHashCopy){
+					if(freshKey in keysToCheckForEdit){
+						delete freshHashCopy[freshKey];
+					}
+				}
+
+				//freshHashCopy is oldRecords minus deleted and not any added from new
+				for(var checkKey in freshHashCopy){
+					if(!(freshHash[checkKey] === 'undefined') && !(typeof contactHash[checkKey] === 'undefined')){
+						if(!($.compareObject(freshHash[checkKey], contactHash[checkKey]))){
+							//has been edited
+							eventObject.reportOn('onEdit', freshHash[checkKey]);
+						}
+					}
+				}
+
+				//fire deletes
+				$.debug('befre fire deletes', contactHash);
+				for(var theKey in deletedKeys){
+					eventObject.reportOn('onDelete', contactHash[deletedKeys[theKey]]);
+				}
+
+				//fire inserts
+				for(var theKey in addedKeys){
+					eventObject.reportOn('onInsert', freshHash[addedKeys[theKey]]);
+				}
+
+
+				//check keys for new deleted changed
+				if( JSON.stringify(Object.keys(contactHash).sort()) != JSON.stringify(Object.keys(freshHash).sort()) ){
+					contactHash = freshHash;
+					eventObject.reportOn('onChange', contactHash);
+				}else{
+					for(var theKey in contactHash){
+						var oldRecord = contactHash[theKey];
+						var freshRecord = freshHash[theKey];
+						for(recordIndex in oldRecord){
+							if(oldRecord[recordIndex] != freshRecord[recordIndex]){
+								contactHash = freshHash;
+								eventObject.reportOn('onChange', contactHash);
+								return;
+							}
+						}
+					}
+				}
+
+			}
+
+			this.getEventObject = function(){
+				return eventObject;
+			}
+
+			this.getCachedDataHash = function(){
+				return $.extend(true, {}, contactHash);
+			}
+
+			this.getUnionCachedDataHash = function(){
+				return $.extend(true, tempContactHash, contactHash);
+			}
+
+			this.getCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.extend(true, {}, contactHash)));}
+				return $.hashToArray($.extend(true, {}, contactHash));
+			}
+
+			this.getUnionCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.copyAsOne(tempContactHash, contactHash)));}
+				return $.hashToArray($.copyAsOne(tempContactHash, contactHash));
+			}
+
+			this.getTempCachedDataArray = function(inOptionalPostFunction){
+				if(inOptionalPostFunction){inOptionalPostFunction($.hashToArray($.copyObject(tempContactHash)));}
+				return inOptionalPostFunction($.hashToArray($.copyObject(tempContactHash)));
+			}
+
+			this.addtempContact = function(inContact){
+				var contact = 
+					{
+						id:new Date().getTime(),
+						imageUrl:getDefaultMemberImageUrl(),
+						name:'UnKnown Name',
+						type:'[MOBILE]',
+						phoneNumber:false,
+					}
+				contact = $.extend(contact, inContact);
+				contact.phoneNumber = cleanPhoneNumber(contact.phoneNumber);
+
+				var existingContact = _this.getContactByPhoneNumber(contact.phoneNumber);
+				if(existingContact){return;}
+
+				tempContactHash[contact.id] = contact;
+				if(contact){
+					eventObject.reportOn('onTempContactInsert', contact);
+				}
+			}
+
+			this.deleteTempContact = function(inContact){
+				var contact = 
+					{
+						phoneNumber:false
+					}
+				contact = $.extend(contact, inContact);
+				contact.phoneNumber = cleanPhoneNumber(contact.phoneNumber);
+
+				var existingContact = _this.getContactByPhoneNumber(contact.phoneNumber);
+				if(existingContact){
+					var passCopy = $.copyObject(existingContact);
+					delete tempContactHash[existingContact.id];
+					eventObject.reportOn('onTempContactDelete', passCopy);
+				}
+				
+			}
+
+
+			this.getContactByPhoneNumber = function(inPhoneNumber){
+				console.log('getContactByPhoneNumber ENTERED!!!!');
+				if(!(contactHash)){
+					contactDataObject.select({}, function(inRecords){
+						contactHash = $json.arrayToHash(inRecords);
+					});
+				}
+				// busy loop, should be rare if not ever, emergency case only!!!
+				while(!(contactHash)){console.log('BUSY LOOP');};
+
+				var combinedHash = $.extend(true, tempContactHash, contactHash);
+
+				for(var contactKey in combinedHash){
+					if(phoneNumberCompare(combinedHash[contactKey].phoneNumber, inPhoneNumber)){
+						return combinedHash[contactKey];
+					}
+				}
+
+				return false;
+			}
+
+			this.test = function(){
+				//alert('ContactDataCache TEST!!!');
+			}
+
+			this.getCache = function(inOptions){
+				var options = 
+					{
+						cacheOption:'getCachedDataArray',
+						forceRefresh:false,
+						onFinish:false,
+					}
+				options = $.extend(options, inOptions);
+
+				var execute = 
+					{
+						getCachedDataArray:function(){
+							if(options.forceRefresh){
+								_this.forceRefresh(function(){
+									_this.getCachedDataArray(options.onFinish);
+								});
+							}else{
+								_this.getCachedDataArray(options.onFinish);
+							}
+						},
+						getUnionCachedDataArray:function(){
+							if(options.forceRefresh){
+								_this.forceRefresh(function(){
+									_this.getUnionCachedDataArray(options.onFinish);
+								});
+							}else{
+								_this.getUnionCachedDataArray(options.onFinish);
+							}
+						},
+						getTempCachedDataArray:function(){
+							_this.getTempCachedDataArray(options.onFinish);
+						},
+					}
+				execute[options.cacheOption]();
+
+			}
+
+			this.subscribe = function(inOptions){
+				for(var theKey in inOptions){
+					_this.getEventObject().setOn(theKey, inOptions[theKey]);
+				}
+			}
+
+
+		}();
+
+
+
+		//=====================================================================================
+		// EVENT LOG
+		//=====================================================================================
+		var EventLogObject = new function(){
+			var _this = this;
+
+			var eventLogArray = [];
+
+			this.addEvent = function(inEvent){
+				var event = 
+					{
+						type:'general',
+						when:new Date().getTime(),
+						data:false,
+					}
+				event = $.extend(event, inEvent);
+				eventLogArray.push(event);
+			}
+
+			this.getEvents = function(){
+				return eventLogArray;
+			}
+
+			this.getEventsByType = function(inType){
+				var types = [];
+				if(!(Array.isArray(inType))){
+					types.push(inType);
+				}else{
+					types = inType;
+				}
+				var resultArray = [];
+				for(var eventLogArrayIndex in eventLogArray){
+					if(types.indexOf(eventLogArray[eventLogArrayIndex].type) != -1){
+						resultArray.push(eventLogArray[eventLogArrayIndex]);
+					}
+				}
+				return resultArray;
+			}
+		}();
+		//@@@@ TODO: remove,,,, TESTING
+		$('#btBar_main_contactManager2xxx').click(function(){
+			console.log('---------EventLogObject DUMP -------------------------------------------');
+			console.dir(EventLogObject.getEvents());
+		});
+
+
+
+
+		//================================================================
+		// PAGE CHANGES REPORT TO EVENT OBJECT ---------------------------
+		//================================================================
+		$(document).on("pagechange",function(event, data){
+			console.log('pagechange_id:' + $(data.toPage).attr('id'));
+			eventObject.reportOn('onPageChange', $(data.toPage).attr('id'));
+		});
+		$(document).on("pagecreate",function(event, data){
+			console.log('pageLoad_id:' + $(data.toPage).attr('id'));
+			eventObject.reportOn('onPageload', $(data.toPage).attr('id'));
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//==================================================================
+		//--  SECURITY  ----------------------------------------------------
+		//==================================================================
+		var sessionSetupAndValidation = function(inType, inSecurityToken, inPostFunction){
+			$postAjax(
+				{
+					url:'/security/process',
+					send:
+						{
+							type:inType,
+							securityToken:inSecurityToken
+						},
+					onAjaxSuccess:function(inResponseText){
+						//alert(inResponseText);
+						if(inPostFunction){inPostFunction(JSON.parse(inResponseText));}
+					}
+				}
+			);
+		}
+
+		var googleSessionSetupAndValidation = function(inGoogleSessionSetupAndValidationOptions, inPostFunction){
+			var googleSessionSetupAndValidationOptions = 
+				{
+					userName:false,
+					userAgent:false,
+					deviceType:false,
+					accessToken:false,
+					apiKey:false,
+					clientId:false,
+					email:false,
+					idToken:false,
+				}
+			googleSessionSetupAndValidationOptions = $.extend(true, googleSessionSetupAndValidationOptions, inGoogleSessionSetupAndValidationOptions);
+
+
+			$postAjax(
+				{
+					url:'/security/googleProcess',
+					send:googleSessionSetupAndValidationOptions,
+					onAjaxSuccess:function(inResponseText){
+						//alert(inResponseText);
+						if(inPostFunction){inPostFunction(JSON.parse(inResponseText));}
+					}
+				}
+			);
+		}
+
+
+
+
+
+		var imageShakeByPhone = function(inPhone){
+			//$('img').addClass('shake');
+			console.log('imageShakeByPhone start' + inPhone);
+			//$( "img[phone='" + inPhone + "']" ).next().addClass('shake');
+			$( "img[phone='" + inPhone + "']" ).each(function(index){
+				$( this ).addClass('shake');
+			});
+
+			setTimeout(function(){
+				//$('img').removeClass('shake');
+				console.log('imageShakeByPhone stop' + inPhone);
+				//$( "img[phone='" + inPhone + "']" ).next().removeClass('shake');
+				$( "img[phone='" + inPhone + "']" ).each(function(index){
+					$( this ).removeClass('shake');
+				});
+			}, 15000);
+			
+		}
+
+		//- var openHandset = function(){
+		//- 	//testHandset
+		//- 	$.get( "/phone/widget_phonewindow", function(data){
+		//- 		$("#welcome_phoneWindowDiv").append(data);
+		//- 	});
+		//- }
+
+
+
+		var openWebMenuOnPhone = function(){
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'openWebMenuActivity'
+						},
+					data:
+						{
+							url:"/webmenu/normalmenu"
+							//url:"arfsync"
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		}
+
+
+
+
+
+		//--outward
+		eventObject.setOn('onOpenCloseToRemote', function(inData){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('onOpenCloseToRemote');
+			console.dir(inData);
+			var openOrClose = (inData.open)? 'open' : 'close';
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'openClosePanel'
+						},
+					data:
+						{
+							id:inData.id,
+							command:openOrClose
+						},
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		});
+
+		//REQUEST REMOTE MENU TO REFRESH ITS CONTENTS-----------------------------------
+		eventObject.setOn('refreshOnRemote', function(inData){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('onOpenCloseToRemote');
+			console.dir(inData);
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'requestRefresh'
+						},
+					data:
+						{
+
+						},
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken call back entered');
+					}
+				}
+			);
+		});
+
+
+		//REMOTE MENU LINK -> CONTACT MANAGER CHANGE <-------------------------------------
+		eventObject.setOn('contactManager_onChange', function(inJstruct){
+			console.log('----EVENT OBJECT--------------------');
+			console.log('REMOTE MENU LINK -> contactManager_onChange ');
+			console.dir(inJstruct);
+			commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'webMenu',
+							action:'contactManager_onChange'
+						},
+					data:inJstruct,
+			onComplete:function(inDataLayer, inTransportLayer){
+						console.log('onComplete transactionToDeviceToken COMPLETED call back entered');
+					}
+				}
+			);
+		});
+
+
+
+
+
+
+
+
+
+		//=========================================================
+		// WINDOW STATES Object
+		//=========================================================
+		var WindowStateObject = new function(){
+			var windowStateHash = {};
+			var _this = this;
+
+			this.setState = function(inKey, inState){
+				windowStateHash[inKey] = inState;
+			}
+
+			this.getState = function(inKey){
+				var state = windowStateHash[inKey];
+				if(state){
+					console.log('xSTATE==' + state);
+					return state;
+				}else{
+					console.log('STATE==false');
+					return false;
+				}
+			}
+		}();
+
+
+
+
+
+
+
+		$(document).on("pagecreate","#page_smsManager",function(){
+			console.log('page_userProfile main pageinit!!!');
+			//alert('babbyttttt');
+		});
+
+		//==================================================================================================
+		// WELCOME MSG -------------------------------------------------------------------------------------
+		//==================================================================================================
+		var WelcomeMessage = new function(){
+			var _this = this;
+
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('loginReady', function(){
+				_this.show();
+			});
+
+			this.show = function(){
+				$('#masterDiv').hide(1000, function(){
+					//$('#img_loginManager_userImg').toggle( "explode" );
+					$('#img_loginManager_userImg').fadeOut(2000, function(){
+						$('#img_loginManager_userImg').attr('src',GLOBAL_USER_IMAGE_URL);
+						$('#img_loginManager_userImg').fadeIn(2000);
 					});
 
-				
-				console.log('------ time ----');
+					$postAjax(
+						{
+							url:'/jqm/message',
+							send:
+								{
+									messageId:'main_welcome',
+									imageUrl:GLOBAL_USER_IMAGE_URL,
+									name:GLOBAL_USER_NAME,
+								},
+							onAjaxSuccess:function(inResult){
+								$('#masterDiv').html(inResult);
+								$('#masterDiv').fadeIn(3000);
+								//noMessageHtml = inResult; TODO: add script to edit html in dom
+								return;
+							}
+						}
+					);
+				});
+			}
+		}
 
-				var xx = moment().diff(66, 'minutes' );
+		//==================================================================================================
+		// DISCONNECT MSG ----------------------------------------------------------------------------------
+		//==================================================================================================
+		var DisconnectMessage = new function(){
+			var _this = this;
+			var disconnectedDeviceId;
 
-				var mxx = moment().from(xx);
-				//console.log(  mxx.format("YYYY-MM-DD HH:mm:ss")  );
-				subX = moment().subtract(66, 's').fromNow(); //format("YYYY-MM-DD HH:mm:ss");
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('disconnect', function(inData){
+				disconnectedDeviceId = inData.routingLayer.fromDeviceTokenId;
+				PageLoaderObject.loadPage('loginManager');
+				_this.show();
+			});
 
-				//console.log(subX().format("YYYY-MM-DD HH:mm:ss"));
-				//console.log(subX.format("YYYY-MM-DD HH:mm:ss"));
-				console.log(subX);
+			this.show = function(){
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'lost_connect',
+								imageUrl:GLOBAL_USER_IMAGE_URL,
+								name:GLOBAL_USER_NAME,
+							},
+						onAjaxSuccess:function(inResult){
+							$('#allScreenMessageDiv').html(inResult);
+							return;
+						}
+					}
+				);
+			}
+
+			this.getDisconnectedDeviceTokenId = function(){
+				return disconnectedDeviceId;
+			}
+		}
+
+
+
+
+		//==================================================================================================
+		// DISCONNECT MSG ----------------------------------------------------------------------------------
+		//==================================================================================================
+		var ReconnectMessage = new function(){
+			var _this = this;
+			var reconnectedDeviceId;
+			//@@@@@@@-- event --@@@@@@@@@@@@@@@@@@
+			eventObject.setOn('reconnect', function(inData){
+				reconnectedDeviceId = inData.routingLayer.fromDeviceTokenId;
+				if(DisconnectMessage.getDisconnectedDeviceTokenId() != reconnectedDeviceId){return;}
+				console.log('reconnectedDeviceId:' + reconnectedDeviceId);
+				commManager.setConnectedDeviceTokenId(reconnectedDeviceId);
+				_this.show();
+			});
+
+			this.show = function(){
+				openWebMenuOnPhone();
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'reconnect',
+								imageUrl:GLOBAL_USER_IMAGE_URL,
+								name:GLOBAL_USER_NAME,
+							},
+						onAjaxSuccess:function(inResult){
+							$('#allScreenMessageDiv').html(inResult);
+							return;
+						}
+					}
+				);
+			}
+		}
+
+
+		//DEVELOPMENT DELETE ALL FOR USER (ONLY FOR DEVELOPMENT) TODO:REMOVE
+		$('#btBar_main_contactManager2xxx').click(function(){
+			$postAjax(
+				{
+					url:'/database/deleteAllForUser',
+					send:{},
+					onAjaxSuccess:function(inResult){
+						//$('#noSmsLogInfo').html(inResult);
+						//noMessageHtml = inResult; TODO: add script to edit html in dom
+						alert('All Files Have Been Deleted From Server!!!!');
+						return;
+					}
+				}
+			);
+		});
+
+
+
+		var showSmsIncomingSmsMessage = function(inJstruct){
+			//- $.debug('showSmsIncomingSmsMessage', inJstruct);
+			//- var lookedupContact = ContactDataCache.getContactByPhoneNumber(inJstruct.phoneNumber);
+			//- $.debug('lookedupContact', lookedupContact);
+			//- if(lookedupContact == false){
+			//- 	//alert('CREATE A TEMP CONTACT HERE');
+			//- 	ContactDataCache.addtempContact(
+			//- 		{
+			//- 			imageUrl:getDefaultMemberImageUrl(),
+			//- 			name:"UNKNOWN CONTACT",
+			//- 			phoneNumber:inJstruct.phoneNumber,
+			//- 			type:'[MOBILE]',
+			//- 		}
+			//- 	);
+
+			//- 	lookedupContact = ContactDataCache.getContactByPhoneNumber(inJstruct.phoneNumber);
+			//- 	$.debug('lookedupContact II', lookedupContact);
+			//- }
+			if( typeof IncomingSmsObject === "undefined" ){
+				$postAjax(
+					{
+						url:'/jqm/message',
+						send:
+							{
+								messageId:'incoming_sms',
+							},
+						onAjaxSuccess:function(inResult){
+							//alert(JSON.stringify(inResult));
+
+							$('#incomingSmsScreenMessageDiv').html(inResult);
+							IncomingSmsObject.load();
+							IncomingSmsObject.show(
+								{
+									speed:500,
+									duration:10000,
+									name:inJstruct.name,
+									phoneNumber:inJstruct.phoneNumber,
+									message:inJstruct.message,
+									imageUrl:inJstruct.imageUrl,
+									messageMaxCharLength:20,
+									onTimeout:function(){
+										IncomingSmsObject.hide(
+											{
+												speed:'slow',
+												onFinished:function(){
+												}
+											}
+										);
+
+									}
+								}
+							);
+						}
+					}
+				);
+
+				return;
+			}else{
+				IncomingSmsObject.show(
+					{
+						speed:500,
+						duration:10000,
+						name:inJstruct.name,
+						phoneNumber:inJstruct.phoneNumber,
+						message:inJstruct.message,
+						imageUrl:inJstruct.imageUrl,
+						messageMaxCharLength:20,
+						onTimeout:function(){
+							IncomingSmsObject.hide(
+								{
+									speed:'slow',
+									onFinished:function(){
+									}
+								}
+							);
+
+						}
+					}
+				);
+			}
+		}
+
+
+		//==================================================================
+		//--  PHONE HARDWARE OBJECT  ---------------------------------------
+		//==================================================================
+		var PhoneHardwareObject = new function(){
+			var _this = this;
+			var imageWakeState = '';
+			var imageSleepState = '';
+			var state = 'awake';
+			var options = 
+				{
+					sleep:
+						{
+							imageUrl:'/public/images/ui/phone_state_awake.png',
+							text:'Make Sleep',
+						},
+					awake:
+						{
+							imageUrl:'/public/images/ui/phone_state_sleep.png',
+							text:'Make Wake',
+						},
+				}
+			//@@@ EVENT SETUP -----------------------------
+			$('#hdr_bt_phoneState').click(function(){
+				if(state == 'sleep'){
+					_this.reportOnMakeWake();
+				}
+				if(state == 'awake'){
+					_this.reportOnMakeSleep();
+				}
+			});
+
+			this.reportOnSleep = function(inDataLayerFromDevice){
+				state = 'sleep';
+				//var imgHtml = $('#hdr_img_phoneState');
+				//$('#hdr_bt_phoneState').text(options.awake.text).append(imgHtml);
+				//$('#hdr_img_phoneState').attr('src', options.awake.imageUrl);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'phoneState',
+						state:state,
+					}
+				);
+			}
+
+			this.reportOnWake = function(inDataLayerFromDevice){
+				state = 'awake';
+				//var imgHtml = $('#hdr_img_phoneState');
+				//$('#hdr_bt_phoneState').text(options.sleep.text).append(imgHtml);
+				//$('#hdr_img_phoneState').attr('src', options.sleep.imageUrl);
+				$('#buttonNavBar_div').ButtonNavBar('changeState',
+					{
+						id:'phoneState',
+						state:state,
+					}
+				);
+			}
+
+			this.reportOnMakeWake = function(){
+				commManager.transactionToDeviceToken(
+				{
+					routing:
+						{
+							command:'hardware',
+							action:'makeWake',
+						},
+					data:
+						{
+						},
+
+					onComplete:function(inDataLayer, inTransportLayer){
+						console.log('reportOnMakeWake BACK from device... ');
+					}
+				}
+			);
+
+			}
+
+			this.reportOnMakeSleep = function(){
+				alert('reportOnMakeSleep');
+			}
+		}();
+
+		//==================================================================
+		//--  POPUP LIST VIEW  ---------------------------------------------
+		//==================================================================
+		$('#eventLogDiv').PopupListView('create', 
+			{
+				headingCaption:'Event Log',
+				css:
+					{
+						width:'425px',
+					},
+				onClick:function(inId, inData){
+					console.log('On CLICK:' + inId);
+					console.dir(inData);
+					//$('#eventLogDiv').PopupListView('deleteItem', inId);
+				},
+
+			}
+		);
+
+		//==================================================================
+		//--  POPUP MESSAGE  -----------------------------------------------
+		//==================================================================
+			$('#msgEvent_div').PopupListView('create', 
+				{
+					timedClose:15000,
+					overlayTheme:'',
+					css:
+						{
+							width:'425px',
+						},
+					onClick:function(inId, inData){
+
+					},
+
+				}
+			);
+
+
+
+			//==================================================================
+			//--  Connected Device's Hardware Network Status  ------------------
+			//==================================================================
+			var getConnectionStatus = function(inPostFunction){
+				commManager.transactionToDeviceToken(
+					{
+						routing:
+							{
+								command:'hardware',
+								action:'getConnectionStatus'
+							},
+						data:
+							{
+								//url:"/webmenu/normalmenu"
+								//url:"arfsync"
+							},
+
+						onComplete:function(inDataLayer, inTransportLayer){
+							console.log('onComplete getConnectionStatus call back entered');
+							if(inPostFunction){inPostFunction(inDataLayer);}
+							//eventObject.reportOn('onGetConnectionStatus', inDataLayer);
+						}
+					}
+				);
+			}
 
 
 
 
 
+
+
+			//==================================================================
+			//--  GOOGLE LOGIN  ------------------------------------------------
+			//==================================================================
+			var apiKey = 'AIzaSyDFWqJ6clc5pfIOZX9MU5EelTXtBFC8MmY';
+			var clientId = '35896864065-0hju6gipg0o6eg3kti7bgtf7skgmochk.apps.googleusercontent.com';
+
+			//@@@@@ BUTTON EVENT
+			$('#google_forced_login').click(function(){
+				GoogleObject.forceLogin(function(inUserData){
+					console.log('GOOGLE USER DATA');
+					console.dir(inUserData);
+					var userDataOut = 
+						{
+							accessToken:inUserData.accessToken,
+							apiKey:inUserData.apiKey,
+							clientId:inUserData.clientId,
+							email:inUserData.email,
+							idToken:inUserData.idToken,
+							id:inUserData.id,
+						}
+					console.log('test_0');
+					commManager.loginByGoogle(userDataOut, function(googleWsResult){
+						// callback not going to happen, commanger sends out at login sucess.....
+						console.log('commManager.loginByGoogle CALLBACK:');
+						console.dir(googleWsResult);
+						//- googleSessionSetupAndValidation(userDataOut, function(googleExpResult){
+						//- 	console.log('googleSessionSetupAndValidation CALLBACK:');
+						//- 	console.dir(googleExpResult);
+						//- });
+
+					});
 
 
 				});
+			});
 
+			var google_onLoadCallback = function(){
+				gapi.client.setApiKey(apiKey); //set your API KEY
+				gapi.client.load('plus', 'v1',function(){});//Load Google + API
+			}
 
-				
+			var GoogleObject = new function(){
+				var _this = this;
+				this.isLoggedIn = false;
+				var userData = {};
 
+				var loginPostFunction = false;
 
-		
+				this.login = function(inPostFunction){
+					var myParams = 
+						{
+							'clientid' : clientId,
+							'cookiepolicy' : 'single_host_origin',
+							'callback' : GoogleObject.loginCallback,
+							'approvalprompt':'auto',
+							//'scope' : 'https://www.googleapis.com/auth/plus.login' // https://www.googleapis.com/auth/plus.profile.emails.read'
+						};
+						gapi.auth.signIn(myParams);
+					loginPostFunction = inPostFunction;
+				}
+
+				this.forceLogin = function(inPostFunction){
+					var myParams = 
+						{
+							'clientid' : clientId,
+							'cookiepolicy' : 'single_host_origin',
+							'callback' : GoogleObject.loginCallback,
+							'approvalprompt':'force',
+							'scope' : 'email'
+							//'scope' : 'https://www.googleapis.com/auth/plus.login' // https://www.googleapis.com/auth/plus.profile.emails.read'
+						};
+						gapi.auth.signIn(myParams);
+					loginPostFunction = inPostFunction;
+				}
+
+				this.logout = function(inPostFunction){
+					gapi.auth.signOut();
+				}
+
+				this.disconnectUser = function(access_token){
+					var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + userData.accessToken;
+					//var revokeUrl = 'https://accounts.google.com/logout';
+					// Perform an asynchronous GET request.
+					$.ajax({
+						type: 'GET',
+						url: revokeUrl,
+						async: false,
+						contentType: "application/json",
+						dataType: 'jsonp',
+						success: function(nullResponse){
+							console.log('disconnectUser success');
+							// Do something now that user is disconnected
+							// The response is always undefined.
+						},
+						error: function(e){
+							console.log('disconnectUser error');
+							// Handle the error
+							// console.log(e);
+							// You could point users to manually disconnect if unsuccessful
+							// https://plus.google.com/apps
+						}
+					});
+				}
+
+				this.loginCallback = function(result){
+					var resultInfo = {};
+					if(result['status']['signed_in']){
+						console.log('result');
+						console.dir(result);
+						var request = gapi.client.plus.people.get(
+							{
+								'userId': 'me'
+							}
+						);
+						request.execute(function (resp){
+							console.log('GOOGLE loginCallback:');
+							console.dir(resp);
+							var email = '';
+							if(resp['emails']){
+								for(i = 0; i < resp['emails'].length; i++)
+								{
+									if(resp['emails'][i]['type'] == 'account'){
+										email = resp['emails'][i]['value'];
+										userData['email'] = resp['emails'][i]['value'];
+									}
+								}
+							}
+
+							userData['idToken'] = result.id_token;
+							userData['clientId'] = result.client_id;
+							userData['apiKey'] = apiKey;
+							userData['name'] = resp['displayName'];
+							userData['imageUrl'] = resp['image']['url'];
+							userData['url'] = resp['url'];
+							userData['accessToken'] = result['access_token'];
+							userData['id'] = resp['id'];
+
+							if(loginPostFunction){loginPostFunction(userData)}
+						});
+					}
+			}
+			}();

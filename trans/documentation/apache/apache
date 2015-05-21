@@ -1,0 +1,14 @@
+==== APACHE =========================================================
+kill apache:
+sudo /etc/init.d/apache2 restart
+sudo /etc/init.d/apache2 start
+sudo /etc/init.d/cd
+
+wally-- apache
+/etc/init.d/httpd start
+/etc/init.d/httpd st
+
+
+
+==== INSTALL =========================================================
+sudo apt-get install apache2
